@@ -666,6 +666,47 @@ export default function CalendarPage() {
   }
 
   // ── Active filter pill label helpers ──
+  // ── Sport column: "Running · Trail", "Triathlon · Half IM", etc. ──
+  function formatSportCell(type: string, distanceLabel: string): { main: string; sub: string | null } {
+    const dl = (distanceLabel ?? "").trim();
+    switch (type) {
+      case "running":
+        return { main: "Running", sub: "Road" };
+      case "trail":
+        return { main: "Running", sub: "Trail" };
+      case "triathlon": {
+        // distanceLabel: "Half IM", "IM", "Olympic", "Sprint", "Super Sprint", "Various"
+        const sub = dl && dl !== "Various" ? dl : null;
+        return { main: "Triathlon", sub };
+      }
+      case "ocean-swim": {
+        // distanceLabel: "5K · Ocean", "2K · Ocean"
+        // Extract venue (Ocean/Lake/River) if present
+        const parts = dl.split("·").map((p: string) => p.trim());
+        const venue = parts.find((p: string) => ["Ocean","Lake","River"].includes(p)) ?? "Ocean";
+        return { main: "Swim", sub: venue };
+      }
+      case "swimrun": {
+        // distanceLabel may contain venue info
+        const parts = dl.split("·").map((p: string) => p.trim());
+        const venue = parts.find((p: string) => ["Ocean","Lake","River","Coast"].includes(p));
+        return { main: "SwimRun", sub: venue ?? null };
+      }
+      case "hyrox":
+        return { main: "Hyrox", sub: "8K + 8 Stations" };
+      case "ocr": {
+        // distanceLabel may contain brand like "Spartan"
+        const parts = dl.split("·").map((p: string) => p.trim());
+        const brand = parts.find((p: string) => ["Spartan","Tough Mudder","OCR"].includes(p));
+        return { main: "OCR", sub: brand ?? null };
+      }
+      case "xenom":
+        return { main: "Xenom", sub: "10 Events · 2 Days" };
+      default:
+        return { main: type.charAt(0).toUpperCase() + type.slice(1), sub: null };
+    }
+  }
+
   function getSportLabel(key: string): string {
     const pill = SIMPLE_SPORT_PILLS.find(p => p.value === key);
     if (pill) return pill.label;
@@ -1395,7 +1436,7 @@ export default function CalendarPage() {
                 <tr className="border-b border-border bg-muted/40">
                   <th style={{ width: COL_WIDTHS[0] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">★</th>
                   <th style={{ minWidth: COL_WIDTHS[1] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Name</th>
-                  <th style={{ minWidth: COL_WIDTHS[2] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Race</th>
+                  <th style={{ minWidth: COL_WIDTHS[2] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Sport</th>
                   <th style={{ minWidth: COL_WIDTHS[3] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Location</th>
                   <th style={{ minWidth: COL_WIDTHS[4] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Date</th>
                   <th style={{ minWidth: COL_WIDTHS[5] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Weather</th>
@@ -1439,9 +1480,17 @@ export default function CalendarPage() {
                             {race.name}
                           </div>
                         </td>
-                        {/* Race (sport type pill) */}
-                        <td className="py-3.5 px-3" style={{ minWidth: COL_WIDTHS[2] }}>
-                          <SportPill cls={race.badgeClass} />
+                        {/* Sport column */}
+                        <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[2] }}>
+                          {(() => {
+                            const { main, sub } = formatSportCell(race.type, race.distanceLabel ?? "");
+                            return (
+                              <div>
+                                <div className="text-sm font-semibold text-foreground leading-snug">{main}</div>
+                                {sub && <div className="text-xs text-muted-foreground mt-0.5">{sub}</div>}
+                              </div>
+                            );
+                          })()}
                         </td>
                         {/* Location (flag + country + city) */}
                         <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[3] }}>
