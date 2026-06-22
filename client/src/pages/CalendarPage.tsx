@@ -666,44 +666,41 @@ export default function CalendarPage() {
   }
 
   // ── Active filter pill label helpers ──
-  // ── Sport column: "Running · Trail", "Triathlon · Half IM", etc. ──
-  function formatSportCell(type: string, distanceLabel: string): { main: string; sub: string | null } {
-    const dl = (distanceLabel ?? "").trim();
+  // ── Sport column: pill + condition tag (Road, Trail, Ocean, Xterra, Spartan, etc.) ──
+  // Returns the condition string to show below the SportPill, or null if none.
+  function getSportCondition(type: string, raceName: string): string | null {
+    const name = (raceName ?? "").toLowerCase();
     switch (type) {
       case "running":
-        return { main: "Running", sub: "Road" };
-      case "trail":
-        return { main: "Running", sub: "Trail" };
+        return "Road";
+      case "trail": {
+        // Named brands take priority
+        if (name.includes("skyrun") || name.includes("sky run")) return "Skyrun";
+        if (name.includes("xterra")) return "Xterra";
+        return "Trail";
+      }
       case "triathlon": {
-        // distanceLabel: "Half IM", "IM", "Olympic", "Sprint", "Super Sprint", "Various"
-        const sub = dl && dl !== "Various" ? dl : null;
-        return { main: "Triathlon", sub };
+        if (name.includes("xterra")) return "Xterra";
+        return null; // distance already in Distance col
       }
-      case "ocean-swim": {
-        // distanceLabel: "5K · Ocean", "2K · Ocean"
-        // Extract venue (Ocean/Lake/River) if present
-        const parts = dl.split("·").map((p: string) => p.trim());
-        const venue = parts.find((p: string) => ["Ocean","Lake","River"].includes(p)) ?? "Ocean";
-        return { main: "Swim", sub: venue };
-      }
+      case "ocean-swim":
+        return "Ocean";
       case "swimrun": {
-        // distanceLabel may contain venue info
-        const parts = dl.split("·").map((p: string) => p.trim());
-        const venue = parts.find((p: string) => ["Ocean","Lake","River","Coast"].includes(p));
-        return { main: "SwimRun", sub: venue ?? null };
+        if (name.includes("ocean") || name.includes("sea") || name.includes("coast")) return "Ocean";
+        if (name.includes("lake")) return "Lake";
+        if (name.includes("river")) return "River";
+        return null;
       }
       case "hyrox":
-        return { main: "Hyrox", sub: "8K + 8 Stations" };
+        return null; // distance already in Distance col
       case "ocr": {
-        // distanceLabel may contain brand like "Spartan"
-        const parts = dl.split("·").map((p: string) => p.trim());
-        const brand = parts.find((p: string) => ["Spartan","Tough Mudder","OCR"].includes(p));
-        return { main: "OCR", sub: brand ?? null };
+        if (name.includes("spartan")) return "Spartan";
+        return null;
       }
       case "xenom":
-        return { main: "Xenom", sub: "10 Events · 2 Days" };
+        return null;
       default:
-        return { main: type.charAt(0).toUpperCase() + type.slice(1), sub: null };
+        return null;
     }
   }
 
@@ -1480,17 +1477,15 @@ export default function CalendarPage() {
                             {race.name}
                           </div>
                         </td>
-                        {/* Sport column */}
+                        {/* Sport column: pill + condition tag */}
                         <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[2] }}>
-                          {(() => {
-                            const { main, sub } = formatSportCell(race.type, race.distanceLabel ?? "");
-                            return (
-                              <div>
-                                <div className="text-sm font-semibold text-foreground leading-snug">{main}</div>
-                                {sub && <div className="text-xs text-muted-foreground mt-0.5">{sub}</div>}
-                              </div>
-                            );
-                          })()}
+                          <div>
+                            <SportPill cls={race.badgeClass} />
+                            {(() => {
+                              const cond = getSportCondition(race.type, race.name);
+                              return cond ? <div className="text-xs text-muted-foreground mt-1">{cond}</div> : null;
+                            })()}
+                          </div>
                         </td>
                         {/* Location (flag + country + city) */}
                         <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[3] }}>
