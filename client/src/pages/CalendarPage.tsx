@@ -666,35 +666,49 @@ export default function CalendarPage() {
   }
 
   // ── Active filter pill label helpers ──
-  // ── Sport column: pill + condition tag (Road, Trail, Ocean, Xterra, Spartan, etc.) ──
-  // Returns the condition string to show below the SportPill, or null if none.
+  // ── Sport column: pill + condition tag ──
+  // Condition = surface / venue / brand modifier shown below the SportPill.
+  // Priority order within each type: brand > surface > default.
   function getSportCondition(type: string, raceName: string): string | null {
-    const name = (raceName ?? "").toLowerCase();
+    const n = (raceName ?? "").toLowerCase();
     switch (type) {
-      case "running":
+      case "running": {
+        // Sky races
+        if (n.includes("skyrace") || n.includes("skyrun") || n.includes("sky run") || n.includes("skyultra")) return "Skyrun";
+        // All road marathons / half marathons / 10K etc
         return "Road";
+      }
       case "trail": {
-        // Named brands take priority
-        if (name.includes("skyrun") || name.includes("sky run")) return "Skyrun";
-        if (name.includes("xterra")) return "Xterra";
+        // Sky-branded first
+        if (n.includes("skyrace") || n.includes("skyrun") || n.includes("sky run") || n.includes("skyultra") || n.includes("sky camp")) return "Skyrun";
+        // Branded series
+        if (n.includes("xterra")) return "Xterra";
+        if (n.includes("utmb") || n.includes("ultra-trail") || n.includes("ultra trail")) return "UTMB";
+        if (n.includes("spartan")) return "Spartan";
+        // Default
         return "Trail";
       }
       case "triathlon": {
-        if (name.includes("xterra")) return "Xterra";
-        return null; // distance already in Distance col
-      }
-      case "ocean-swim":
-        return "Ocean";
-      case "swimrun": {
-        if (name.includes("ocean") || name.includes("sea") || name.includes("coast")) return "Ocean";
-        if (name.includes("lake")) return "Lake";
-        if (name.includes("river")) return "River";
+        if (n.includes("xterra")) return "Xterra";
+        // Everything else: condition from distance col is enough
         return null;
       }
+      case "ocean-swim": {
+        if (n.includes("lake") || n.includes("sun moon")) return "Lake";
+        if (n.includes("river")) return "River";
+        return "Ocean";
+      }
+      case "swimrun": {
+        if (n.includes("ocean") || n.includes("sea") || n.includes("coast") || n.includes("bay") || n.includes("island")) return "Ocean";
+        if (n.includes("lake")) return "Lake";
+        if (n.includes("river")) return "River";
+        return "Multi";
+      }
       case "hyrox":
-        return null; // distance already in Distance col
+        return null; // 8K + 8 Stations says it all in Distance col
       case "ocr": {
-        if (name.includes("spartan")) return "Spartan";
+        if (n.includes("spartan") || n.includes("deka")) return "Spartan";
+        if (n.includes("tough mudder")) return "Tough Mudder";
         return null;
       }
       case "xenom":
