@@ -6,9 +6,15 @@ import { races, exploreSites } from "../shared/schema.js";
 const router = Router();
 const ADMIN_KEY = process.env.ADMIN_KEY || "";
 
+// Fail fast at startup if ADMIN_KEY is not configured
+if (!ADMIN_KEY) {
+  console.warn("[WARN] ADMIN_KEY is not set — admin routes are disabled");
+}
+
 function requireAdmin(req: any, res: any, next: any) {
+  if (!ADMIN_KEY) return res.status(403).json({ error: "Admin routes disabled: ADMIN_KEY not configured" });
   const key = req.headers["x-admin-key"];
-  if (!ADMIN_KEY || key !== ADMIN_KEY) return res.status(403).json({ error: "Forbidden" });
+  if (key !== ADMIN_KEY) return res.status(403).json({ error: "Forbidden" });
   next();
 }
 
@@ -27,14 +33,20 @@ router.get("/favourites", async (req, res) => {
 router.post("/favourites", async (req, res) => {
   const { raceId, voterName } = req.body;
   if (!raceId || !voterName) return res.status(400).json({ error: "Missing raceId or voterName" });
-  res.json(await addFavourite(Number(raceId), voterName));
+  // Validate voterName: max 50 chars, no HTML tags
+  const nameStr = String(voterName).trim();
+  if (nameStr.length === 0 || nameStr.length > 50) return res.status(400).json({ error: "voterName must be 1–50 characters" });
+  if (/<|>/.test(nameStr)) return res.status(400).json({ error: "voterName contains invalid characters" });
+  res.json(await addFavourite(Number(raceId), nameStr));
 });
 
 router.delete("/favourites/:raceId", async (req, res) => {
   const { raceId } = req.params;
   const { voterName } = req.body;
   if (!voterName) return res.status(400).json({ error: "Missing voterName" });
-  await removeFavourite(Number(raceId), voterName);
+  const nameStr = String(voterName).trim();
+  if (nameStr.length === 0 || nameStr.length > 50) return res.status(400).json({ error: "voterName must be 1–50 characters" });
+  await removeFavourite(Number(raceId), nameStr);
   res.json({ ok: true });
 });
 
@@ -50,8 +62,11 @@ router.delete("/admin/votes", requireAdmin, async (req, res) => {
 });
 
 router.post("/admin/races", requireAdmin, async (req, res) => {
-  const race = req.body;
-  const result = db.insert(races).values(race).returning().get();
+  const { name, location, country, date, distance, type, team, url, note, status, badgeClass, lat, lng } = req.body;
+  if (!name || !location || !country || !date || !distance || !type) {
+    return res.status(400).json({ error: "Missing required race fields" });
+  }
+  const result = db.insert(races).values({ name, location, country, date, distance, type, team: team ?? "", url: url ?? "", note: note ?? "", status: status ?? "active", badgeClass: badgeClass ?? "", lat: lat ?? null, lng: lng ?? null }).returning().get();
   res.json(result);
 });
 
@@ -70,8 +85,11 @@ router.delete("/admin/races/:id", requireAdmin, async (req, res) => {
 });
 
 router.post("/admin/explore", requireAdmin, async (req, res) => {
-  const site = req.body;
-  const result = db.insert(exploreSites).values(site).returning().get();
+  const { name, country, region, category, description, bestMonths, url, emoji, lat, lng } = req.body;
+  if (!name || !country || !category || !description) {
+    return res.status(400).json({ error: "Missing required explore site fields" });
+  }
+  const result = db.insert(exploreSites).values({ name, country, region: region ?? "", category, description, bestMonths: bestMonths ?? "", url: url ?? "", emoji: emoji ?? "", lat: lat ?? null, lng: lng ?? null }).returning().get();
   res.json(result);
 });
 

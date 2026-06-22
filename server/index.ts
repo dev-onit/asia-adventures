@@ -8,8 +8,26 @@ import { seedIfEmpty } from "./storage.js";
 const __dirname = path.dirname(process.argv[1]);
 
 const app = express();
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://unpkg.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://unpkg.com"],
+      imgSrc: ["'self'", "data:", "https://*.tile.openstreetmap.org", "https://unpkg.com"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      frameAncestors: ["'none'"],
+    },
+  },
+}));
+
+// Global rate limit
 app.use(rateLimit({ windowMs: 60_000, max: 200 }));
+// Tighter limit on write endpoints
+const writeLimiter = rateLimit({ windowMs: 60_000, max: 30, message: { error: "Too many requests" } });
+app.use("/api/favourites", writeLimiter);
 app.use(express.json());
 
 app.use("/api", router);

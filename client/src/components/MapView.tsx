@@ -235,13 +235,16 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     return () => { map.remove(); mapInstanceRef.current = null; };
   }, []);
 
+  // ── HTML escape helper (prevent XSS in popup strings) ──
+  const esc = (s: string) => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
   // ── Popup builders ──
   function buildGroupPopup(groupRaces: Race[], isFav: boolean, voters: string[]): string {
     const rep = groupRaces[0];
     const fill = TYPE_COLORS[rep.type] ?? "#6366f1";
     const label = TYPE_LABELS[rep.type] ?? rep.type;
     const flag = COUNTRY_WEATHER[rep.country]?.flag ?? "";
-    const votersHtml = voters.length > 0 ? `<div class="mp-row">👥 ${voters.join(", ")}</div>` : "";
+    const votersHtml = voters.length > 0 ? `<div class="mp-row">👥 ${voters.map(esc).join(", ")}</div>` : "";
     const getYear = (d: string) => { const m = d.match(/(202\d)/); return m ? m[1] : d; };
     const sorted = [...groupRaces].sort((a, b) => getYear(a.date).localeCompare(getYear(b.date)));
 
