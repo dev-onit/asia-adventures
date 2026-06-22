@@ -1,8 +1,9 @@
-import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Star, Filter, X, Globe2, Users, Moon, Sun, Search, AlertTriangle, ExternalLink, ChevronDown, ChevronRight, Eye, EyeOff } from "lucide-react";
 import type { Race, Favourite, ExploreSite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
+import { getRaceWeather } from "../lib/weatherData";
 import { API_BASE } from "../App";
 import MapView from "../components/MapView";
 import ExploreSection from "../components/ExploreSection";
@@ -96,9 +97,33 @@ const EXPLORE_CATEGORIES = ["Mountains","Islands","Cities","Temples","Nature","B
 const SIMPLE_SPORT_PILLS = [
   { value: "hyrox", label: "Hyrox" },
   { value: "swimrun", label: "SwimRun" },
-  { value: "duathlon", label: "Duathlon" },
-  { value: "adventure", label: "Adventure" },
+  { value: "ocr", label: "OCR" },
+  { value: "xenom", label: "Xenom" },
 ];
+
+const TYPE_LABELS: Record<string, string> = {
+  "badge-tri": "Triathlon",
+  "badge-run": "Running",
+  "badge-hyrox": "Hyrox",
+  "badge-swim": "Swim",
+  "badge-trail": "Trail",
+  "badge-ocr": "OCR",
+  "badge-xenom": "Xenom",
+  "ocean-swim": "Swim",
+  "swimrun": "SwimRun",
+  "ocr": "OCR",
+  "xenom": "Xenom",
+};
+
+const PILL_COLORS: Record<string, string> = {
+  "badge-tri": "bg-blue-500/15 border-blue-500/60 text-blue-400",
+  "badge-run": "bg-green-500/15 border-green-500/60 text-green-400",
+  "badge-hyrox": "bg-yellow-400/15 border-yellow-400/60 text-yellow-400",
+  "badge-swim": "bg-cyan-500/15 border-cyan-500/60 text-cyan-400",
+  "badge-trail": "bg-orange-500/15 border-orange-500/60 text-orange-400",
+  "badge-ocr": "bg-red-500/15 border-red-500/60 text-red-400",
+  "badge-xenom": "bg-purple-500/15 border-purple-500/60 text-purple-400",
+};
 
 // Expandable sport sections with distance sub-filters
 const SPORT_SECTIONS = [
@@ -162,12 +187,19 @@ function formatTeamDisplay(team: string): string {
   return parts.length > 0 ? parts.join(" · ") : team;
 }
 
+function SportPill({ cls }: { cls: string }) {
+  const colorClass = PILL_COLORS[cls] ?? "bg-muted border-border text-muted-foreground";
+  const label = TYPE_LABELS[cls] ?? cls;
+  return (
+    <span className={`inline-block text-xs px-2 py-0.5 rounded-full font-semibold border ${colorClass}`}>
+      {label}
+    </span>
+  );
+}
+
+// Keep BadgeClass as alias for backward compatibility
 function BadgeClass({ cls }: { cls: string }) {
-  const labels: Record<string, string> = {
-    "badge-tri": "Triathlon", "badge-swim": "Ocean Swim", "badge-run": "Running",
-    "badge-trail": "Trail", "badge-hyrox": "Hyrox", "badge-adv": "Adventure", "badge-duo": "Duathlon",
-  };
-  return <span className={`inline-block text-xs px-2 py-0.5 rounded-full font-medium ${cls}`}>{labels[cls] ?? cls}</span>;
+  return <SportPill cls={cls} />;
 }
 
 // ── Sub-filter matching helper ──
@@ -216,7 +248,7 @@ function matchesSportFilters(race: Race, sportFilters: Set<string>, subFilters: 
   const type = (race.type ?? "").toLowerCase();
 
   // Check simple pills
-  for (const pill of ["duathlon", "adventure"]) {
+  for (const pill of ["hyrox", "swimrun", "ocr", "xenom"]) {
     if (sportFilters.has(pill) && type === pill) return true;
   }
 
@@ -615,7 +647,23 @@ export default function CalendarPage() {
     );
   }
 
-  const COL_WIDTHS = [40, 200, 130, 90, 110, 150, 120, 110, 160, 80];
+  const COL_WIDTHS = [40, 200, 110, 130, 120, 110, 130, 110, 60];
+
+  // ── Date formatter: "Jan 12, 2026" → "Sun · 12 Jan · 2026" ──
+  function formatRaceDate(dateStr: string): string {
+    const months: Record<string, number> = {
+      Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+      Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
+    };
+    const m = dateStr.match(/^([A-Za-z]{3})\s+(\d{1,2}),\s*(\d{4})$/);
+    if (!m) return dateStr;
+    const [, mon, day, year] = m;
+    const monthIdx = months[mon];
+    if (monthIdx === undefined) return dateStr;
+    const date = new Date(parseInt(year), monthIdx, parseInt(day));
+    const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()];
+    return `${dayOfWeek} · ${day} ${mon} · ${year}`;
+  }
 
   // ── Active filter pill label helpers ──
   function getSportLabel(key: string): string {
@@ -1345,16 +1393,15 @@ export default function CalendarPage() {
             <table className="w-full min-w-[900px]" style={{ borderCollapse: "collapse" }}>
               <thead>
                 <tr className="border-b border-border bg-muted/40">
-                  <th style={{ width: 40 }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">★</th>
-                  <th style={{ minWidth: 200 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Race</th>
-                  <th style={{ minWidth: 130 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Location</th>
-                  <th style={{ minWidth: 90 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Country</th>
-                  <th style={{ minWidth: 110 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Date</th>
-                  <th style={{ minWidth: 150 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Distance</th>
-                  <th style={{ minWidth: 120 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Type</th>
-                  <th style={{ minWidth: 110 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Team</th>
-                  <th style={{ minWidth: 160 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Votes</th>
-                  <th style={{ minWidth: 80 }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Link</th>
+                  <th style={{ width: COL_WIDTHS[0] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">★</th>
+                  <th style={{ minWidth: COL_WIDTHS[1] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Name</th>
+                  <th style={{ minWidth: COL_WIDTHS[2] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Race</th>
+                  <th style={{ minWidth: COL_WIDTHS[3] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Location</th>
+                  <th style={{ minWidth: COL_WIDTHS[4] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Date</th>
+                  <th style={{ minWidth: COL_WIDTHS[5] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Weather</th>
+                  <th style={{ minWidth: COL_WIDTHS[6] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Distance</th>
+                  <th style={{ minWidth: COL_WIDTHS[7] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Format</th>
+                  <th style={{ minWidth: COL_WIDTHS[8] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">↗</th>
                 </tr>
               </thead>
               <tbody>
@@ -1362,58 +1409,101 @@ export default function CalendarPage() {
                   const isFav = favSet.has(race.id);
                   const isScratched = race.status === "scratched";
                   const isWatchlist = race.status === "watchlist";
-                  const voters = votesByRace.get(race.id) ?? [];
-                  const voteCount = voters.length;
+                  const weather = getRaceWeather(race.location, race.date);
+                  const showWaterTemp = weather?.waterTemp != null && ["triathlon", "ocean-swim", "swimrun"].includes(race.type);
+                  const flag = COUNTRY_WEATHER[race.country]?.flag ?? "";
+                  const city = race.location.split(",")[0].trim();
+                  const distPills = (race.distanceLabel ?? "").split("·").map((p: string) => p.trim()).filter(Boolean);
+                  const formatDisplay = formatTeamDisplay(race.team ?? "");
+                  const rowBg = isScratched ? "row-scratch" : isFav ? "row-fav" : isWatchlist ? "row-watchlist" : "hover:bg-muted/30";
                   return (
-                    <tr
-                      key={race.id}
-                      className={`border-b border-border transition-colors ${
-                        isScratched ? "row-scratch" : isFav ? "row-fav" : isWatchlist ? "row-watchlist" : "hover:bg-muted/30"
-                      }`}
-                    >
-                      <td className="text-center py-3.5 px-3" style={{ width: COL_WIDTHS[0] }}>
-                        {!isScratched && (
-                          <button
-                            onClick={() => isFav ? removeFav.mutate(race.id) : addFav.mutate(race.id)}
-                            disabled={addFav.isPending || removeFav.isPending}
-                            className={`star-btn text-muted-foreground/40 ${isFav ? "starred" : "hover:text-yellow-400/70"} disabled:opacity-50`}
-                            title={isFav ? "Unstar" : "Star to vote"}
-                          >
-                            <Star size={15} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
-                          </button>
-                        )}
-                      </td>
-                      <td className="py-3.5 px-3" style={{ minWidth: COL_WIDTHS[1] }}>
-                        <div className="font-semibold text-sm text-foreground leading-snug">{race.name}</div>
-                        {isWatchlist && <div className="flex items-center gap-1 mt-0.5 text-xs text-amber-400"><AlertTriangle size={10} /><span>{race.note}</span></div>}
-                        {!isWatchlist && race.note && <div className="text-xs text-muted-foreground mt-0.5 italic">{race.note}</div>}
-                      </td>
-                      <td className="py-3.5 px-3 text-sm text-muted-foreground align-top" style={{ minWidth: COL_WIDTHS[2] }}>{race.location}</td>
-                      <td className="py-3.5 px-3 text-sm text-muted-foreground align-top" style={{ minWidth: COL_WIDTHS[3] }}>{race.country}</td>
-                      <td className="py-3.5 px-3 text-sm text-muted-foreground whitespace-nowrap" style={{ minWidth: COL_WIDTHS[4] }}>{race.date}</td>
-                      <td className="py-3.5 px-3 text-sm text-muted-foreground align-top" style={{ minWidth: COL_WIDTHS[5] }}>{race.distance}</td>
-                      <td className="py-3.5 px-3" style={{ minWidth: COL_WIDTHS[6] }}><BadgeClass cls={race.badgeClass} /></td>
-                      <td className="py-3.5 px-3 text-xs text-muted-foreground align-top" style={{ minWidth: COL_WIDTHS[7] }}>{formatTeamDisplay(race.team ?? "")}</td>
-                      <td className="py-3.5 px-3" style={{ minWidth: COL_WIDTHS[8] }}>
-                        {voteCount > 0 ? (
-                          <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold flex-shrink-0 ${voteCount >= 2 ? "bg-primary/20 text-primary border border-primary/40" : "bg-muted text-muted-foreground border border-border"}`}>{voteCount}</span>
+                    <React.Fragment key={race.id}>
+                      <tr className={`border-b border-border transition-colors ${rowBg}`}>
+                        {/* ★ Star */}
+                        <td className="text-center py-3.5 px-3" style={{ width: COL_WIDTHS[0] }}>
+                          {!isScratched && (
+                            <button
+                              onClick={() => isFav ? removeFav.mutate(race.id) : addFav.mutate(race.id)}
+                              disabled={addFav.isPending || removeFav.isPending}
+                              className={`star-btn text-muted-foreground/40 ${isFav ? "starred" : "hover:text-yellow-400/70"} disabled:opacity-50`}
+                              title={isFav ? "Unstar" : "Star to vote"}
+                            >
+                              <Star size={15} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
+                            </button>
+                          )}
+                        </td>
+                        {/* Name */}
+                        <td className="py-3.5 px-3" style={{ minWidth: COL_WIDTHS[1] }}>
+                          <div className="font-bold text-sm text-foreground leading-snug">
+                            {isWatchlist && <AlertTriangle size={11} className="inline text-amber-400 mr-1 mb-0.5" />}
+                            {race.name}
+                          </div>
+                        </td>
+                        {/* Race (sport type pill) */}
+                        <td className="py-3.5 px-3" style={{ minWidth: COL_WIDTHS[2] }}>
+                          <SportPill cls={race.badgeClass} />
+                        </td>
+                        {/* Location (flag + country + city) */}
+                        <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[3] }}>
+                          <div className="text-sm text-foreground">{flag} {race.country}</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">{city}</div>
+                        </td>
+                        {/* Date */}
+                        <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[4] }}>
+                          <div className="text-sm text-foreground whitespace-nowrap">{formatRaceDate(race.date)}</div>
+                          {isWatchlist && (
+                            <div className="flex items-center gap-1 mt-0.5 text-[11px] text-amber-400">
+                              <AlertTriangle size={9} /><span>Unconfirmed</span>
+                            </div>
+                          )}
+                        </td>
+                        {/* Weather */}
+                        <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[5] }}>
+                          {weather ? (
+                            <div>
+                              <div className="text-xs text-muted-foreground">{weather.temp}°C · {weather.condition}</div>
+                              {showWaterTemp && (
+                                <div className="text-xs text-muted-foreground mt-0.5">🌊 {weather.waterTemp}°C</div>
+                              )}
+                            </div>
+                          ) : <span className="text-xs text-muted-foreground">—</span>}
+                        </td>
+                        {/* Distance */}
+                        <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[6] }}>
+                          {distPills.length > 0 ? (
+                            <div className="text-xs text-muted-foreground">{distPills.join(" · ")}</div>
+                          ) : <span className="text-xs text-muted-foreground">—</span>}
+                        </td>
+                        {/* Format (team pills) */}
+                        <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[7] }}>
+                          {formatDisplay ? (
                             <div className="flex flex-wrap gap-1">
-                              {voters.map(name => (
-                                <span key={name} className={`text-xs px-1.5 py-0.5 rounded font-medium ${name === voterName ? "bg-yellow-400/20 text-yellow-300 border border-yellow-400/30" : "bg-muted text-muted-foreground border border-border/60"}`}>{name}</span>
+                              {formatDisplay.split(" · ").map((f: string, i: number) => (
+                                <span key={i} className="text-[11px] text-muted-foreground bg-muted/50 border border-border/60 px-1.5 py-0.5 rounded">
+                                  {f}
+                                </span>
                               ))}
                             </div>
-                          </div>
-                        ) : <span className="votes-dash text-xs">—</span>}
-                      </td>
-                      <td className="py-3.5 px-3" style={{ minWidth: COL_WIDTHS[9] }}>
-                        {race.url && (
-                          <a href={race.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
-                            <ExternalLink size={12} /><span className="hidden sm:inline">Visit</span>
-                          </a>
-                        )}
-                      </td>
-                    </tr>
+                          ) : <span className="text-xs text-muted-foreground">—</span>}
+                        </td>
+                        {/* Link */}
+                        <td className="py-3.5 px-3 text-center" style={{ minWidth: COL_WIDTHS[8] }}>
+                          {race.url && (
+                            <a href={race.url} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:text-primary/70 transition-colors" title="Visit race page">
+                              ↗
+                            </a>
+                          )}
+                        </td>
+                      </tr>
+                      {/* Sub-row for notes */}
+                      {race.note && (
+                        <tr className={`border-b border-border/40 ${isScratched ? "row-scratch" : isWatchlist ? "row-watchlist" : "bg-muted/10"}`}>
+                          <td colSpan={9} className="py-1.5 px-6 text-[11px] text-muted-foreground/70 italic">
+                            {isWatchlist ? "⚠️ " : "📝 "}{race.note}
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
                   );
                 })}
               </tbody>

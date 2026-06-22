@@ -7,6 +7,7 @@ export const races = sqliteTable("races", {
   country: text("country").notNull(),
   date: text("date").notNull(),
   distance: text("distance").notNull(),
+  distanceLabel: text("distance_label").notNull().default(""),
   type: text("type").notNull(),
   team: text("team").notNull().default(""),
   url: text("url").notNull().default(""),

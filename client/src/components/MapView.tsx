@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Race, ExploreSite } from "../../../shared/schema";
 import { getCoords, COUNTRY_WEATHER } from "../lib/raceGeo";
+import { getRaceWeather } from "../lib/weatherData";
 
 interface Props {
   races: Race[];
@@ -39,8 +40,8 @@ const TYPE_LETTERS: Record<string, string> = {
 
 const TYPE_LABELS: Record<string, string> = {
   running: "Running", triathlon: "Triathlon", trail: "Trail",
-  hyrox: "HYROX", "ocean-swim": "Ocean Swim", duathlon: "Duathlon",
-  adventure: "Adventure", swimrun: "SwimRun",
+  hyrox: "Hyrox", "ocean-swim": "Swim", duathlon: "Duathlon",
+  adventure: "Adventure", swimrun: "SwimRun", ocr: "OCR", xenom: "Xenom",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -245,6 +246,11 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const label = TYPE_LABELS[rep.type] ?? rep.type;
     const flag = COUNTRY_WEATHER[rep.country]?.flag ?? "";
     const votersHtml = voters.length > 0 ? `<div class="mp-row">👥 ${voters.map(esc).join(", ")}</div>` : "";
+    const weather = getRaceWeather(rep.location, rep.date);
+    const showWaterTemp = weather?.waterTemp != null && ["triathlon", "ocean-swim", "swimrun"].includes(rep.type);
+    const weatherHtml = weather
+      ? `<div class="mp-row">🌡️ ${weather.temp}°C · ${esc(weather.condition)}${showWaterTemp ? ` <span style="margin-left:4px">🌊 ${weather.waterTemp}°C</span>` : ""}</div>`
+      : "";
     const getYear = (d: string) => { const m = d.match(/(202\d)/); return m ? m[1] : d; };
     const sorted = [...groupRaces].sort((a, b) => getYear(a.date).localeCompare(getYear(b.date)));
 
@@ -254,9 +260,10 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       return `<div class="map-popup">
         <span class="mp-badge" style="background:${fill}22;color:${fill};border:1px solid ${fill}55">${label}</span>
         <div class="mp-name">${rep.name}</div>
-        <div class="mp-row">📍 ${rep.location}, ${flag} ${rep.country}</div>
-        <div class="mp-row">📅 ${r.date} · ${r.distance}</div>
+        <div class="mp-row">📍 ${esc(rep.location)}, ${flag} ${esc(rep.country)}</div>
+        <div class="mp-row">📅 ${esc(r.date)} · ${esc(r.distance)}</div>
         ${votersHtml}
+        ${weatherHtml}
         <div class="mp-actions">
           <button class="mp-star-btn ${rIsFav ? "starred" : ""}" data-race-id="${r.id}" data-is-fav="${rIsFav}">${rIsFav ? "★ Starred" : "☆ Star"}</button>
           ${visitBtn}
@@ -280,8 +287,9 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     return `<div class="map-popup">
       <span class="mp-badge" style="background:${fill}22;color:${fill};border:1px solid ${fill}55">${label}</span>
       <div class="mp-name">${rep.name}</div>
-      <div class="mp-row">📍 ${rep.location}, ${flag} ${rep.country}</div>
+      <div class="mp-row">📍 ${esc(rep.location)}, ${flag} ${esc(rep.country)}</div>
       ${votersHtml}
+      ${weatherHtml}
       <div class="mp-editions">${editionsHtml}</div>
     </div>`;
   }

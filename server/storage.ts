@@ -21,6 +21,7 @@ sqlite.exec(`
     country TEXT NOT NULL,
     date TEXT NOT NULL,
     distance TEXT NOT NULL,
+    distance_label TEXT NOT NULL DEFAULT '',
     type TEXT NOT NULL,
     team TEXT NOT NULL DEFAULT '',
     url TEXT NOT NULL DEFAULT '',
@@ -85,8 +86,14 @@ export async function seedIfEmpty() {
   // If the DB has fewer than 340 races, wipe races and reseed from canonical data.
   // This handles stale sandbox snapshots from old deploys.
   const count = db.select().from(races).all().length;
-  if (count < 490) {
-    console.log(`[seed] count=${count} < 340 — wiping and reseeding all races`);
+  // Add distance_label column if missing (migration for existing DBs)
+  try {
+    sqlite.exec("ALTER TABLE races ADD COLUMN distance_label TEXT NOT NULL DEFAULT ''");
+    console.log('[migration] Added distance_label column');
+  } catch { /* column already exists */ }
+
+  if (count < 600) {
+    console.log(`[seed] count=${count} < 600 — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
     const { syncAllRaces } = await import("./seed.js");
