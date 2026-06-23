@@ -133,8 +133,8 @@ const PILL_COLORS: Record<string, string> = {
   // Road running — green
   "badge-run":        "bg-green-100 border-green-500 text-green-700 dark:bg-green-500/15 dark:border-green-500/60 dark:text-green-400",
   // Trail running — amber/brown (distinct from road)
-  "badge-run-trail":  "bg-amber-100 border-amber-500 text-amber-700 dark:bg-amber-500/15 dark:border-amber-500/60 dark:text-amber-400",
-  "badge-trail":      "bg-amber-100 border-amber-500 text-amber-700 dark:bg-amber-500/15 dark:border-amber-500/60 dark:text-amber-400",
+  "badge-run-trail":  "bg-orange-100 border-orange-500 text-orange-700 dark:bg-orange-500/15 dark:border-orange-500/60 dark:text-orange-400",
+  "badge-trail":      "bg-orange-100 border-orange-500 text-orange-700 dark:bg-orange-500/15 dark:border-orange-500/60 dark:text-orange-400",
   // Hyrox — yellow
   "badge-hyrox":      "bg-yellow-100 border-yellow-500 text-yellow-700 dark:bg-yellow-400/15 dark:border-yellow-400/60 dark:text-yellow-400",
   // Swim — cyan
@@ -149,7 +149,7 @@ const PILL_COLORS: Record<string, string> = {
   // fallback: type used directly as cls
   "triathlon":   "bg-blue-100 border-blue-400 text-blue-700 dark:bg-blue-500/15 dark:border-blue-500/60 dark:text-blue-400",
   "running":     "bg-green-100 border-green-500 text-green-700 dark:bg-green-500/15 dark:border-green-500/60 dark:text-green-400",
-  "trail":       "bg-amber-100 border-amber-500 text-amber-700 dark:bg-amber-500/15 dark:border-amber-500/60 dark:text-amber-400",
+  "trail":       "bg-orange-100 border-orange-500 text-orange-700 dark:bg-orange-500/15 dark:border-orange-500/60 dark:text-orange-400",
   "hyrox":       "bg-yellow-100 border-yellow-500 text-yellow-700 dark:bg-yellow-400/15 dark:border-yellow-400/60 dark:text-yellow-400",
   "ocean-swim":  "bg-cyan-100 border-cyan-500 text-cyan-700 dark:bg-cyan-500/15 dark:border-cyan-500/60 dark:text-cyan-400",
   "swimrun":     "bg-teal-100 border-teal-500 text-teal-700 dark:bg-teal-500/15 dark:border-teal-500/60 dark:text-teal-400",
@@ -784,7 +784,7 @@ export default function CalendarPage() {
       <div className="min-h-screen flex items-center justify-center bg-background px-4">
         <div className="w-full max-w-sm space-y-4 text-center">
           <img src="/logo.jpg" alt="Adventure Crew" className="w-16 h-16 rounded-full mx-auto object-cover" />
-          <h1 className="text-2xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventure Calendar</h1>
+          <h1 className="text-2xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
           <p className="text-sm text-muted-foreground">Enter your name to star events and vote with friends.</p>
           <input
             type="text"
@@ -915,7 +915,7 @@ export default function CalendarPage() {
         <div className="flex items-center gap-3 px-4 pt-4 pb-2">
           <img src="/logo.jpg" alt="Adventure Crew" className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0">
-            <h1 className="text-2xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventure Calendar</h1>
+            <h1 className="text-2xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
             <p className="text-sm text-foreground/70 truncate italic font-medium">We Take Fun Seriously</p>
           </div>
         </div>

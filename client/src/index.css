@@ -53,7 +53,7 @@ h1, h2, h3 {
 .badge-tri   { background: hsl(183 85% 42% / 0.15); color: hsl(183 85% 62%); border: 1px solid hsl(183 85% 42% / 0.3); }
 .badge-swim  { background: hsl(210 85% 42% / 0.15); color: hsl(210 85% 68%); border: 1px solid hsl(210 85% 42% / 0.3); }
 .badge-run   { background: hsl(280 70% 55% / 0.15); color: hsl(280 70% 78%); border: 1px solid hsl(280 70% 55% / 0.3); }
-.badge-trail { background: hsl(35 85% 50% / 0.15);  color: hsl(35 85% 70%);  border: 1px solid hsl(35 85% 50% / 0.3); }
+.badge-trail { background: hsl(25 90% 50% / 0.15);  color: hsl(25 90% 68%);  border: 1px solid hsl(25 90% 50% / 0.3); }
 .badge-hyrox { background: hsl(0 75% 50% / 0.15);   color: hsl(0 75% 74%);   border: 1px solid hsl(0 75% 50% / 0.3); }
 .badge-adv   { background: hsl(145 60% 40% / 0.15); color: hsl(145 60% 62%); border: 1px solid hsl(145 60% 40% / 0.3); }
 .badge-duo   { background: hsl(50 80% 45% / 0.15);  color: hsl(50 80% 68%);  border: 1px solid hsl(50 80% 45% / 0.3); }
@@ -61,7 +61,7 @@ h1, h2, h3 {
 .light .badge-tri   { background: hsl(183 85% 42% / 0.12); color: hsl(183 85% 22%); border-color: hsl(183 85% 42% / 0.3); }
 .light .badge-swim  { background: hsl(210 85% 42% / 0.12); color: hsl(210 85% 28%); border-color: hsl(210 85% 42% / 0.3); }
 .light .badge-run   { background: hsl(280 70% 55% / 0.12); color: hsl(280 70% 36%); border-color: hsl(280 70% 55% / 0.3); }
-.light .badge-trail { background: hsl(35 85% 50% / 0.12);  color: hsl(35 85% 28%);  border-color: hsl(35 85% 50% / 0.3); }
+.light .badge-trail { background: hsl(25 90% 50% / 0.12);  color: hsl(25 90% 28%);  border-color: hsl(25 90% 50% / 0.3); }
 .light .badge-hyrox { background: hsl(0 75% 50% / 0.12);   color: hsl(0 75% 32%);   border-color: hsl(0 75% 50% / 0.3); }
 .light .badge-adv   { background: hsl(145 60% 40% / 0.12); color: hsl(145 60% 24%); border-color: hsl(145 60% 40% / 0.3); }
 

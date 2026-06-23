@@ -82,7 +82,7 @@ export async function getExploreSites() {
 }
 
 // Bump this whenever seedData changes — forces a full wipe+reseed on next deploy
-const SEED_VERSION = "v10-date-audit-2026-06-23";
+const SEED_VERSION = "v11-badge-fix-2026-06-23";
 
 export async function seedIfEmpty() {
   // ── Migrations FIRST — must run before any drizzle SELECT uses the schema ──
@@ -94,6 +94,25 @@ export async function seedIfEmpty() {
     sqlite.exec("ALTER TABLE races ADD COLUMN dates TEXT NOT NULL DEFAULT '[]'");
     console.log('[migration] Added dates column');
   } catch { /* column already exists */ }
+  // ── Badge class migration: re-derive badge_class from type on every startup ─
+  // Ensures badge colors are always correct regardless of seed history.
+  try {
+    sqlite.exec(`
+      UPDATE races SET badge_class = CASE
+        WHEN type = 'triathlon'  THEN 'badge-tri'
+        WHEN type = 'trail'      THEN 'badge-run-trail'
+        WHEN type = 'running'    THEN 'badge-run'
+        WHEN type = 'ocean-swim' THEN 'badge-swim'
+        WHEN type = 'swimrun'    THEN 'badge-swimrun'
+        WHEN type = 'hyrox'      THEN 'badge-hyrox'
+        WHEN type = 'ocr' AND (LOWER(name) LIKE '%spartan%' OR LOWER(name) LIKE '%deka%') THEN 'badge-spartan'
+        WHEN type = 'ocr'        THEN 'badge-ocr'
+        WHEN type = 'xenom'      THEN 'badge-xenom'
+        ELSE badge_class
+      END
+    `);
+    console.log('[migration] Badge classes re-derived from type');
+  } catch (e) { console.warn('[migration] Badge class migration failed:', e); }
   // ── Seed version table ─────────────────────────────────────────────────────
   sqlite.exec(`CREATE TABLE IF NOT EXISTS seed_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)`);
   const storedVersion = (sqlite.prepare("SELECT value FROM seed_meta WHERE key='seed_version'").get() as any)?.value ?? null;
