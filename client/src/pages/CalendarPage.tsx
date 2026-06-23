@@ -1488,7 +1488,10 @@ export default function CalendarPage() {
                   const isScratched = race.status === "scratched";
                   const isWatchlist = race.status === "watchlist";
                   const weather = getRaceWeather(race.location, race.date);
-                  const showWaterTemp = weather?.waterTemp != null && ["triathlon", "ocean-swim", "swimrun"].includes(race.type);
+                  const showWaterTemp = weather?.waterTemp != null && (
+                    ["triathlon", "ocean-swim", "swimrun"].includes(race.type) ||
+                    (race.type === "ocr" && /swim|river|lake|aqua|water/i.test(race.name))
+                  );
                   const flag = COUNTRY_WEATHER[race.country]?.flag ?? "";
                   const city = race.location.split(",")[0].trim();
                   const distPills = (race.distanceLabel ?? "").split("·").map((p: string) => p.trim()).filter(Boolean);
