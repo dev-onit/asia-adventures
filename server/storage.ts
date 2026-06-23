@@ -119,7 +119,7 @@ export async function seedIfEmpty() {
   // ── Now safe to query via drizzle ──────────────────────────────────────────
   const count = db.select().from(races).all().length;
 
-  if (storedVersion !== SEED_VERSION || count < 391) {
+  if (storedVersion !== SEED_VERSION || count < 392) {
     console.log(`[seed] version=${storedVersion} → ${SEED_VERSION}, count=${count} — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
