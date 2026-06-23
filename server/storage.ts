@@ -92,7 +92,7 @@ export async function seedIfEmpty() {
     console.log('[migration] Added distance_label column');
   } catch { /* column already exists */ }
 
-  if (count < 690) {
+  if (count < 695) {
     console.log(`[seed] count=${count} < 690 — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}

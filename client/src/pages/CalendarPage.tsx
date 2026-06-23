@@ -1521,7 +1521,7 @@ export default function CalendarPage() {
                           </div>
                           {race.note && (
                             <div className="text-[11px] text-muted-foreground/70 mt-0.5 leading-snug">
-                              {isWatchlist ? "⚠️ " : ""}{race.note}
+                              {race.note}
                             </div>
                           )}
                         </td>
