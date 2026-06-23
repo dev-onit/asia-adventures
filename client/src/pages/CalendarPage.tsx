@@ -336,25 +336,26 @@ function matchesSportFilters(race: Race, sportFilters: Set<string>, subFilters: 
 function VoterChips({ voters }: { voters: string[] }) {
   const [expanded, setExpanded] = React.useState(false);
   const MAX = 3;
+  const needsExpand = voters.length > MAX;
   const visible = expanded ? voters : voters.slice(0, MAX);
   const overflow = voters.length - MAX;
   return (
     <div className="flex flex-wrap gap-1 items-center">
       {visible.map((v, i) => (
-        <span key={i} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400/15 border border-yellow-400/40 text-yellow-700 dark:text-yellow-300 whitespace-nowrap">
-          ★ {v}
+        <span key={i} title={v} className="inline-flex items-center justify-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400/15 border border-yellow-400/40 text-yellow-700 dark:text-yellow-300 whitespace-nowrap cursor-default">
+          ★ {expanded ? v : v.charAt(0).toUpperCase()}
         </span>
       ))}
-      {!expanded && overflow > 0 && (
+      {!expanded && needsExpand && (
         <button onClick={e => { e.stopPropagation(); setExpanded(true); }}
           className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors whitespace-nowrap">
           +{overflow}
         </button>
       )}
-      {expanded && voters.length > MAX && (
+      {expanded && (
         <button onClick={e => { e.stopPropagation(); setExpanded(false); }}
           className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-muted border border-border text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
-          ↑ less
+          ↑
         </button>
       )}
     </div>
