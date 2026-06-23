@@ -236,7 +236,10 @@ export async function seedAdditionalRaces() {
 }
 
 // Derive badgeClass from type
-function typeToBadge(type: string): string {
+function typeToBadge(type: string, name = ""): string {
+  const n = name.toLowerCase();
+  // OCR: Spartan and DEKA are branded — get their own badge
+  if (type === "ocr" && (n.includes("spartan") || n.includes("deka"))) return "badge-spartan";
   const map: Record<string, string> = {
     triathlon:    "badge-tri",
     running:      "badge-run",
@@ -269,7 +272,7 @@ export async function syncAllRaces() {
     try {
       const entry = {
         ...r,
-        badgeClass: typeToBadge((r as any).type ?? ""),
+        badgeClass: typeToBadge((r as any).type ?? "", (r as any).name ?? ""),
         distanceLabel: cleanDistanceLabel((r as any).distanceLabel ?? ""),
       };
       db.insert(races).values(entry as any).run();

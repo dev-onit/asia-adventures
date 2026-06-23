@@ -111,6 +111,7 @@ const TYPE_LABELS: Record<string, string> = {
   "badge-swimrun":    "SwimRun",
   "badge-trail":      "Running",  // same label, different color
   "badge-ocr":        "OCR",
+  "badge-spartan":    "Spartan",
   "badge-xenom":      "Xenom",
   // fallback: type used directly
   "triathlon":  "Triathlon",
@@ -121,6 +122,7 @@ const TYPE_LABELS: Record<string, string> = {
   "hyrox":      "Hyrox",
   "ocr":        "OCR",
   "xenom":      "Xenom",
+  "spartan":    "Spartan",
 };
 
 // Pills use explicit light/dark colors for readability in both modes.
@@ -139,6 +141,8 @@ const PILL_COLORS: Record<string, string> = {
   "badge-swimrun":    "bg-teal-100 border-teal-500 text-teal-700 dark:bg-teal-500/15 dark:border-teal-500/60 dark:text-teal-400",
   // OCR — red
   "badge-ocr":        "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/60 dark:text-red-400",
+  // Spartan (brand OCR) — same red family
+  "badge-spartan":    "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/60 dark:text-red-400",
   // Xenom — purple
   "badge-xenom":      "bg-purple-100 border-purple-500 text-purple-700 dark:bg-purple-500/15 dark:border-purple-500/60 dark:text-purple-400",
   // fallback: type used directly as cls
@@ -149,6 +153,7 @@ const PILL_COLORS: Record<string, string> = {
   "ocean-swim":  "bg-cyan-100 border-cyan-500 text-cyan-700 dark:bg-cyan-500/15 dark:border-cyan-500/60 dark:text-cyan-400",
   "swimrun":     "bg-teal-100 border-teal-500 text-teal-700 dark:bg-teal-500/15 dark:border-teal-500/60 dark:text-teal-400",
   "ocr":         "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/60 dark:text-red-400",
+  "spartan":     "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/60 dark:text-red-400",
   "xenom":       "bg-purple-100 border-purple-500 text-purple-700 dark:bg-purple-500/15 dark:border-purple-500/60 dark:text-purple-400",
 };
 
@@ -731,14 +736,29 @@ export default function CalendarPage() {
         return null; // no Multi — if venue unknown, show nothing
       }
       case "hyrox":
-        return null;
+        return "Stadium";
       case "ocr": {
-        if (n.includes("spartan") || n.includes("deka")) return "Spartan";
-        if (n.includes("tough mudder")) return "Tough Mudder";
-        return null;
+        // Nature signals
+        if (
+          n.includes("trail") || n.includes("mountain") || n.includes("fuji") ||
+          n.includes("park") || n.includes("ranch") || n.includes("forest") ||
+          n.includes("peak") || n.includes("ivory rock") || n.includes("chiang") ||
+          n.includes("chongli") || n.includes("niigata") || n.includes("oita") ||
+          n.includes("lakes entrance") || n.includes("shepparton") ||
+          n.includes("kawasaki") || n.includes("cavite") || n.includes("sto.") ||
+          n.includes("susono") || n.includes("pasig") || n.includes("pattaya") ||
+          n.includes("werribee") || n.includes("myoko") || n.includes("singha")
+        ) return "Nature";
+        // Urban/stadium signals
+        if (
+          n.includes("stadion") || n.includes("citywalk") || n.includes("deka") ||
+          n.includes("kids") || n.includes("singapore") || n.includes("wollongong")
+        ) return "Urban";
+        // Default: Nature
+        return "Nature";
       }
       case "xenom":
-        return null;
+        return "Stadium";
       default:
         return null;
     }
