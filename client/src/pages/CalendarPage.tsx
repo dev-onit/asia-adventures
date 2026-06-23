@@ -683,6 +683,7 @@ export default function CalendarPage() {
         if (earliest !== null && earliest < today) return false;
       }
       if (showFavs && !favSet.has(r.id)) return false;
+      if (sortMode === "votes" && (votesByRace.get(r.id) ?? []).length === 0) return false;
       if (raceFiltersActive && !matchesSportFilters(r, sportFilters, subFilters)) return false;
       if (teamFilters.size > 0) {
         const t = (r.team ?? "").toLowerCase();
@@ -730,7 +731,7 @@ export default function CalendarPage() {
       }
       return true;
     });
-  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast, dateRange]);
+  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast, dateRange, sortMode]);
 
   // ── Sorted + filtered races (year-aware sort key, or vote count) ──
   const sortedFiltered = useMemo(() => {
@@ -961,6 +962,7 @@ export default function CalendarPage() {
                 setSportFilters(new Set()); setSubFilters(new Set()); setTeamFilters(new Set());
                 setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters([]); setHidePast(true);
                 setPersonFilter(null); setMinVotesFilter(false); setExploreCategoryFilters([]);
+                setSortMode("date"); // reset Most Voted when entering Favourites
                 setShowFavs(true);
               } else {
                 setShowFavs(false);
@@ -999,7 +1001,7 @@ export default function CalendarPage() {
           </button>
           {/* Most Voted sort button */}
           <button
-            onClick={() => setSortMode(m => m === "votes" ? "date" : "votes")}
+            onClick={() => { setSortMode(m => m === "votes" ? "date" : "votes"); setShowFavs(false); }}
             className={`flex items-center gap-1.5 px-3 h-9 rounded-full border text-xs font-semibold transition-all leading-none ${
               sortMode === "votes"
                 ? "bg-orange-400 border-orange-400 text-black"
@@ -1009,11 +1011,12 @@ export default function CalendarPage() {
             <TrendingUp size={12} className="shrink-0" />
             <span className="leading-none">Most Voted</span>
             {(() => {
-              const total = favourites.length;
-              return total > 0 ? (
-                <span className={`ml-0.5 text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+              // Number of distinct races that have at least one vote
+              const racesWithVotes = votesByRace.size;
+              return racesWithVotes > 0 ? (
+                <span className={`ml-0.5 text-[9px] font-bold flex items-center justify-center rounded-full ${
                   sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/15 text-orange-600 dark:text-orange-400"
-                }`}>{total}</span>
+                }`} style={{ minWidth: "20px", height: "20px", padding: "0 5px" }}>{racesWithVotes}</span>
               ) : null;
             })()}
           </button>
@@ -1663,6 +1666,9 @@ export default function CalendarPage() {
         <span className="ml-2 text-xs text-muted-foreground/50">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
         {showFavs && (
           <span className="ml-2 text-[10px] font-semibold" style={{ color: "#ca8a04" }}>★ Showing Favourites</span>
+        )}
+        {sortMode === "votes" && !showFavs && (
+          <span className="ml-2 text-[10px] font-semibold text-orange-500">↑ Most Voted</span>
         )}
         {!showFavs && activeFilterCount > 0 && (
           <span className="ml-2 text-[10px] text-primary font-semibold flex items-center gap-0.5">
