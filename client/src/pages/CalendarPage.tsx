@@ -1011,8 +1011,9 @@ export default function CalendarPage() {
             <TrendingUp size={12} className="shrink-0" />
             <span className="leading-none">Most Voted</span>
             {(() => {
-              // Number of distinct races that have at least one vote
-              const racesWithVotes = votesByRace.size;
+              // Number of distinct races that have at least one vote AND are in the current race list
+              const raceIdSet = new Set(races.map((r: any) => r.id));
+              const racesWithVotes = [...votesByRace.keys()].filter(id => raceIdSet.has(id)).length;
               return racesWithVotes > 0 ? (
                 <span className={`ml-0.5 text-[9px] font-bold flex items-center justify-center rounded-full ${
                   sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/15 text-orange-600 dark:text-orange-400"
@@ -1695,7 +1696,7 @@ export default function CalendarPage() {
             <div className="flex items-center justify-center py-20 text-muted-foreground">
               <div className="text-center space-y-2">
                 <Globe2 size={32} className="mx-auto opacity-30" />
-                <p className="text-sm">No races match your filters</p>
+                <p className="text-sm">{sortMode === "votes" ? "No voted races yet — star a race to vote" : "No races match your filters"}</p>
 
               </div>
             </div>
