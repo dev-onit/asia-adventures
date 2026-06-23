@@ -81,6 +81,9 @@ export async function getExploreSites() {
   return db.select().from(exploreSites).all();
 }
 
+// Bump this whenever seedData changes — forces a full wipe+reseed on next deploy
+const SEED_VERSION = "v7-bracket-cleanup-2026-06-23";
+
 export async function seedIfEmpty() {
   // ── Migrations FIRST — must run before any drizzle SELECT uses the schema ──
   try {
@@ -91,16 +94,19 @@ export async function seedIfEmpty() {
     sqlite.exec("ALTER TABLE races ADD COLUMN dates TEXT NOT NULL DEFAULT '[]'");
     console.log('[migration] Added dates column');
   } catch { /* column already exists */ }
+  // ── Seed version table ─────────────────────────────────────────────────────
+  sqlite.exec(`CREATE TABLE IF NOT EXISTS seed_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)`);
+  const storedVersion = (sqlite.prepare("SELECT value FROM seed_meta WHERE key='seed_version'").get() as any)?.value ?? null;
   // ── Now safe to query via drizzle ──────────────────────────────────────────
-  // If the DB has fewer than 500 races, wipe and reseed.
   const count = db.select().from(races).all().length;
 
-  if (count < 482) {
-    console.log(`[seed] count=${count} < 482 — wiping and reseeding all races`);
+  if (storedVersion !== SEED_VERSION || count < 482) {
+    console.log(`[seed] version=${storedVersion} → ${SEED_VERSION}, count=${count} — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
     const { syncAllRaces } = await import("./seed.js");
     await syncAllRaces();
+    sqlite.prepare("INSERT OR REPLACE INTO seed_meta (key, value) VALUES ('seed_version', ?)").run(SEED_VERSION);
   } else {
     // Healthy count — just deduplicate
     sqlite.prepare(`
