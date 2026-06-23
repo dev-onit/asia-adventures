@@ -28,6 +28,7 @@ if (!document.getElementById(leafletJsId)) {
 const STORAGE_KEY = "asia-cal-voter";
 const STORAGE_RACE_FILTER_OPEN = "asia-cal-race-filter-open";
 const STORAGE_RACE_FILTER_SECTIONS = "asia-cal-race-filter-sections";
+const STORAGE_HIDE_PAST = "asia-cal-hide-past";
 const STORAGE_SHOW_UNCONFIRMED = "asia-cal-show-unconfirmed";
 const STORAGE_SPORT_FILTERS = "asia-cal-sport-filters";
 const STORAGE_SUB_FILTERS = "asia-cal-sub-filters";
@@ -349,6 +350,11 @@ export default function CalendarPage() {
     try { return localStorage.getItem(STORAGE_SHOW_UNCONFIRMED) === "true"; } catch { return false; }
   });
 
+  // ── Hide past races toggle (default: true = hide past) ──
+  const [hidePast, setHidePast] = useState(() => {
+    try { const v = localStorage.getItem(STORAGE_HIDE_PAST); return v === null ? true : v === "true"; } catch { return true; }
+  });
+
   // Persist to localStorage
   useEffect(() => {
     try { localStorage.setItem(STORAGE_RACE_FILTER_OPEN, String(raceFilterOpen)); } catch {}
@@ -359,6 +365,9 @@ export default function CalendarPage() {
   useEffect(() => {
     try { localStorage.setItem(STORAGE_SHOW_UNCONFIRMED, String(showUnconfirmed)); } catch {}
   }, [showUnconfirmed]);
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_HIDE_PAST, String(hidePast)); } catch {}
+  }, [hidePast]);
 
   // ── Filters (all persisted to localStorage) ──
   const [sportFilters, setSportFilters] = useState<Set<string>>(() => {
@@ -377,7 +386,7 @@ export default function CalendarPage() {
     try { const v = localStorage.getItem(STORAGE_MONTH_FILTERS); return v ? JSON.parse(v) : []; } catch { return []; }
   });
   const [yearFilters, setYearFilters] = useState<string[]>(() => {
-    try { const v = localStorage.getItem(STORAGE_YEAR_FILTERS); return v ? JSON.parse(v) : []; } catch { return []; }
+    try { const v = localStorage.getItem(STORAGE_YEAR_FILTERS); return v ? JSON.parse(v) : ["2026", "2027"]; } catch { return ["2026", "2027"]; }
   });
   const [exploreCategoryFilters, setExploreCategoryFilters] = useState<string[]>(() => {
     try { const v = localStorage.getItem(STORAGE_EXPLORE_FILTERS); return v ? JSON.parse(v) : []; } catch { return []; }
@@ -569,6 +578,27 @@ export default function CalendarPage() {
     return races.filter(r => {
       // Hide watchlist (unconfirmed) unless toggle is on
       if (!showUnconfirmed && r.status === "watchlist") return false;
+      // Hide past races unless toggle is off
+      if (hidePast) {
+        const today = new Date(); today.setHours(0,0,0,0);
+        let earliest: Date | null = null;
+        try {
+          const ds: {date:string,status:string}[] = JSON.parse((r as any).dates ?? "[]");
+          const allD = ds.length > 0 ? ds.map(d => d.date) : [r.date];
+          for (const ds of allD) {
+            const parsed = new Date(ds);
+            if (!isNaN(parsed.getTime())) {
+              if (earliest === null || parsed < earliest) earliest = parsed;
+            }
+          }
+        } catch {}
+        if (earliest === null) {
+          // try parsing r.date directly
+          const parsed = new Date(r.date);
+          if (!isNaN(parsed.getTime())) earliest = parsed;
+        }
+        if (earliest !== null && earliest < today) return false;
+      }
       if (showFavs && !favSet.has(r.id)) return false;
       if (raceFiltersActive && !matchesSportFilters(r, sportFilters, subFilters)) return false;
       if (teamFilters.size > 0) {
@@ -606,7 +636,7 @@ export default function CalendarPage() {
       }
       return true;
     });
-  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive]);
+  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast]);
 
   // Countries present in filtered races (for side quest sync)
   const filteredRaceCountries = useMemo(() => new Set(filtered.map(r => r.country)), [filtered]);
@@ -809,7 +839,7 @@ export default function CalendarPage() {
               if (!showFavs) {
                 prevFilters.current = { sportFilters: new Set(sportFilters), subFilters: new Set(subFilters), teamFilters: new Set(teamFilters), countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters };
                 setSportFilters(new Set()); setSubFilters(new Set()); setTeamFilters(new Set());
-                setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters([]);
+                setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters(["2026","2027"]); setHidePast(true);
                 setPersonFilter(null); setMinVotesFilter(false); setExploreCategoryFilters([]);
                 setShowFavs(true);
               } else {
@@ -1507,7 +1537,19 @@ export default function CalendarPage() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((race) => {
+                {(() => {
+                  let lastMonthGroup = "";
+                  const getMonthGroup = (r: any) => {
+                    let primary = r.date as string;
+                    try { const ds = JSON.parse((r as any).dates ?? "[]"); if (ds.length > 0) primary = ds[0].date; } catch {}
+                    const parts = primary.trim().split(" ");
+                    if (parts.length >= 2) return `${parts[0]} ${parts[parts.length - 1]}`;
+                    return primary;
+                  };
+                  return filtered.map((race) => {
+                    const monthGroup = getMonthGroup(race);
+                    const showGroupHeader = monthGroup !== lastMonthGroup;
+                    lastMonthGroup = monthGroup;
                   const isFav = favSet.has(race.id);
                   const isScratched = race.status === "scratched";
                   const isWatchlist = race.status === "watchlist";
@@ -1522,7 +1564,15 @@ export default function CalendarPage() {
                   const formatDisplay = formatTeamDisplay(race.team ?? "");
                   const rowBg = isScratched ? "row-scratch" : isFav ? "row-fav" : isWatchlist ? "row-watchlist" : "hover:bg-muted/30";
                   return (
-                    <React.Fragment key={race.id}>
+                    <>
+                      {showGroupHeader && (
+                        <tr className="bg-muted/50 border-y border-border/60">
+                          <td colSpan={8} className="px-4 py-1.5">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 select-none">{monthGroup}</span>
+                          </td>
+                        </tr>
+                      )}
+                      <React.Fragment key={race.id}>
                       <tr className={`border-b border-border transition-colors ${rowBg}`}>
                         {/* ★ Star */}
                         <td className="text-center py-4 px-3 align-middle" style={{ width: COL_WIDTHS[0] }}>
@@ -1604,10 +1654,12 @@ export default function CalendarPage() {
                         </td>
                         {/* Distance */}
                         <td className="py-4 px-3 align-middle">
-                          {race.type === "hyrox" ? (
-                            <div className="text-sm text-foreground whitespace-nowrap">8K · 8 Stations</div>
-                          ) : distPills.length > 0 ? (
-                            <div className="text-sm text-foreground">{distPills.join(" · ")}</div>
+                          {distPills.length > 0 ? (
+                            <div className="flex flex-wrap gap-1">
+                              {distPills.map((p: string, i: number) => (
+                                <span key={i} className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] font-semibold leading-none whitespace-nowrap ${getDistPillClass(p)}`}>{p}</span>
+                              ))}
+                            </div>
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Format (team pills) */}
@@ -1626,8 +1678,10 @@ export default function CalendarPage() {
                       </tr>
                       {/* Note moved into Name cell — sub-row removed */}
                     </React.Fragment>
+                    </>
                   );
-                })}
+                  });
+                })()}
               </tbody>
             </table>
           )}
