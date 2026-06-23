@@ -998,18 +998,6 @@ export default function CalendarPage() {
             <ChevronDown size={12} className={`transition-transform ${showFilterBar ? "rotate-180" : ""}`} />
           </button>
 
-          {/* Show Past pill — always visible */}
-          <button
-            onClick={() => setHidePast(v => !v)}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-semibold transition-all leading-none ${
-              !hidePast
-                ? "bg-slate-500/15 border-slate-400/60 text-slate-300"
-                : "border-border text-muted-foreground hover:border-slate-400/50 hover:text-slate-400"
-            }`}
-          >
-            Show Past
-          </button>
-
           {/* Clear All — only visible when filters are active */}
           {activeFilterCount > 0 && (
             <button
@@ -1602,7 +1590,17 @@ export default function CalendarPage() {
             <Filter size={9} /> Active Filters
           </span>
         )}
-        <span className="ml-auto p-1 text-muted-foreground">
+        <button
+          onClick={e => { e.stopPropagation(); setHidePast(v => !v); }}
+          className={`ml-auto mr-2 flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full border font-medium transition-all leading-none ${
+            !hidePast
+              ? "bg-slate-500/15 border-slate-400/60 text-slate-300"
+              : "border-border text-muted-foreground hover:border-slate-400/50 hover:text-slate-400"
+          }`}
+        >
+          Show Past
+        </button>
+        <span className="p-1 text-muted-foreground">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${showRaceList ? "rotate-180" : ""}`}>
             <path d="M6 9l6 6 6-6"/>
           </svg>
