@@ -164,10 +164,10 @@ const SPORT_SECTIONS = [
     label: "Triathlon",
     types: ["triathlon"],
     subFilters: [
-      { value: "tri-full", label: "Full Ironman" },
-      { value: "tri-half", label: "Half Ironman" },
-      { value: "tri-olympic", label: "Olympic" },
       { value: "tri-sprint", label: "Sprint" },
+      { value: "tri-olympic", label: "Olympic" },
+      { value: "tri-half", label: "Half IM" },
+      { value: "tri-full", label: "IM" },
     ],
   },
   {
@@ -179,11 +179,10 @@ const SPORT_SECTIONS = [
       { value: "run-trail", label: "Trail" },
       { value: "run-5k", label: "5K" },
       { value: "run-10k", label: "10K" },
-      { value: "run-half", label: "Half Marathon" },
-      { value: "run-marathon", label: "Marathon" },
-      { value: "run-50k", label: "Ultra 50K" },
-      { value: "run-100k", label: "Ultra 100K" },
-      { value: "run-100mi", label: "Ultra 100mi+" },
+      { value: "run-half", label: "21.1K" },
+      { value: "run-marathon", label: "42.2K" },
+      { value: "run-50k", label: "50K+" },
+      { value: "run-100k", label: "100K+" },
     ],
   },
   {
@@ -191,15 +190,15 @@ const SPORT_SECTIONS = [
     label: "Ocean Swim",
     types: ["ocean-swim"],
     subFilters: [
-      { value: "swim-2k", label: "2km" },
-      { value: "swim-3k", label: "3km" },
-      { value: "swim-5k", label: "5km" },
-      { value: "swim-10k", label: "10km+" },
+      { value: "swim-2k", label: "2K" },
+      { value: "swim-5k", label: "5K" },
+      { value: "swim-10k", label: "10K" },
+      { value: "swim-10kplus", label: "10K+" },
     ],
   },
 ];
 
-// Team filter pills — apply across all sports
+// Format filter pills — apply across all sports
 const TEAM_PILLS = [
   { value: "team-solo", label: "Solo", matches: ["solo"] },
   { value: "team-doubles", label: "Doubles", matches: ["doubles", "team of 2"] },
@@ -240,30 +239,30 @@ function matchesSubFilter(race: Race, subKey: string): boolean {
   const t = (race.team ?? "").toLowerCase();
   const type = (race.type ?? "").toLowerCase();
 
-  if (subKey === "tri-full") return d.includes("full ironman") || d.includes("140.6");
-  if (subKey === "tri-half") return d.includes("half ironman") || d.includes("70.3");
-  if (subKey === "tri-olympic") return d.includes("olympic") || d.includes("51.5");
-  if (subKey === "tri-sprint") return d.includes("sprint") || d.includes("25.75");
+  // Triathlon — match against distanceLabel field
+  const dl = ((race as any).distanceLabel ?? "").toLowerCase();
+  if (subKey === "tri-full") return dl.includes("im") && !dl.includes("half");
+  if (subKey === "tri-half") return dl.includes("half im");
+  if (subKey === "tri-olympic") return dl.includes("olympic");
+  if (subKey === "tri-sprint") return dl.includes("sprint");
 
   if (subKey === "run-road") return type === "running";
   if (subKey === "run-trail") return type === "trail";
-  if (subKey === "run-ultra") return d.includes("ultra") || d.includes("50k") || d.includes("100k") || d.includes("100mi");
-  if (subKey === "run-5k") return /\b5k\b/.test(d) || d.includes("5km");
-  if (subKey === "run-10k") return /\b10k\b/.test(d) || d.includes("10km");
-  if (subKey === "run-half") return d.includes("half marathon") || d.includes("21.1") || d.includes("21km");
-  if (subKey === "run-marathon") return (d.includes("marathon") && !d.includes("half") && !d.includes("ultra")) || d.includes("42.2") || d.includes("42km");
-  if (subKey === "run-50k") return d.includes("50k") || d.includes("ultra 50");
-  if (subKey === "run-100k") return d.includes("100k") || d.includes("ultra 100k");
-  if (subKey === "run-100mi") return d.includes("100mi") || d.includes("ultra 100mi");
+  if (subKey === "run-5k") return /\b5k\b/i.test(d) || d.includes("5km");
+  if (subKey === "run-10k") return /\b10k\b/i.test(d) || d.includes("10km");
+  if (subKey === "run-half") return d.includes("21.1") || d.includes("21k") || d.includes("half marathon");
+  if (subKey === "run-marathon") return d.includes("42.2") || d.includes("42k") || (d.includes("marathon") && !d.includes("half"));
+  if (subKey === "run-50k") return /\b(50|51|52|53|56|60|68)k\b/i.test(d);
+  if (subKey === "run-100k") return /\b(96|97|98|100|101|102|104|116|148|161|168)k\b/i.test(d) || d.includes("100mi");
 
   if (subKey === "hyrox-solo") return t.includes("solo") && !t.includes("doubles") && !t.includes("relay");
   if (subKey === "hyrox-doubles") return t.includes("doubles");
   if (subKey === "hyrox-relay") return t.includes("relay");
 
-  if (subKey === "swim-2k") return /\b2\s*km/.test(d) || d.includes("2km");
-  if (subKey === "swim-3k") return /\b3\s*km/.test(d) || d.includes("3km");
-  if (subKey === "swim-5k") return /\b5\s*km/.test(d) || d.includes("5km");
-  if (subKey === "swim-10k") return d.includes("10km") || d.includes("12km") || d.includes("15km");
+  if (subKey === "swim-2k") return /\b2k\b/i.test(d) || d.includes("2km");
+  if (subKey === "swim-5k") return /\b5k\b/i.test(d) || d.includes("5km");
+  if (subKey === "swim-10k") return /\b10k\b/i.test(d) || d.includes("10km");
+  if (subKey === "swim-10kplus") return /\b(21|25|40)k\b/i.test(d) || d.includes("21km") || d.includes("25km") || d.includes("40km");
 
   if (subKey === "sr-solo") return t.includes("solo");
   if (subKey === "sr-team") return t.includes("team of 2");
@@ -1133,9 +1132,9 @@ export default function CalendarPage() {
               </div>
             </div>
 
-            {/* ── Teams ── */}
+            {/* ── Format ── */}
             <div>
-              <div className="filter-label mb-2">Teams</div>
+              <div className="filter-label mb-2">Format</div>
               <div className="flex flex-wrap gap-1.5 items-center">
                 {TEAM_PILLS.map(pill => (
                   <button
@@ -1292,11 +1291,11 @@ export default function CalendarPage() {
                   onClick={() => setShowUnconfirmed(v => !v)}
                   className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none ${
                     showUnconfirmed
-                      ? "bg-violet-400/15 border-violet-400/50 text-violet-400"
-                      : "border-border text-muted-foreground hover:border-violet-400/30 hover:text-violet-400"
+                      ? "bg-amber-400/15 border-amber-500 text-amber-600 dark:bg-amber-400/10 dark:border-amber-400/50 dark:text-amber-400"
+                      : "border-border text-muted-foreground hover:border-amber-400/50 hover:text-amber-500 dark:hover:text-amber-400"
                   }`}
                 >
-                  {showUnconfirmed ? <Eye size={10} /> : <EyeOff size={10} />}
+                  <AlertTriangle size={10} />
                   {showUnconfirmed ? "Unconfirmed ON" : "Show Unconfirmed"}
                 </button>
               </div>
@@ -1409,8 +1408,8 @@ export default function CalendarPage() {
               </span>
             ))}
             {showUnconfirmed && (
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
-                <Eye size={10} className="shrink-0" />Unconfirmed ON<button onClick={() => setShowUnconfirmed(false)} className="hover:opacity-70 leading-none"><X size={10} /></button>
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-400/10 border border-amber-400/40 text-amber-500 dark:text-amber-400 font-medium">
+                <AlertTriangle size={10} className="shrink-0" />Unconfirmed ON<button onClick={() => setShowUnconfirmed(false)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             )}
             {/* Search */}
@@ -1558,8 +1557,8 @@ export default function CalendarPage() {
                           </div>
                         </td>
                         {/* Location (flag + country + city) */}
-                        <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[3] }}>
-                          <div className="text-sm text-foreground whitespace-nowrap">{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
+                        <td className="py-3 px-3 align-middle overflow-hidden" style={{ minWidth: COL_WIDTHS[3], maxWidth: 160 }}>
+                          <div className="truncate text-sm text-foreground" title={`${race.country} · ${city}`}>{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
                         </td>
                         {/* Date */}
                         <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[4] }}>
