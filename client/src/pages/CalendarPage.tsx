@@ -27,7 +27,7 @@ if (!document.getElementById(leafletJsId)) {
   document.head.appendChild(script);
 }
 
-const S = "v3:"; // bump this prefix to invalidate all users' localStorage
+const S = "v4:"; // bump this prefix to invalidate all users' localStorage
 const STORAGE_KEY = S+"asia-cal-voter";
 const STORAGE_RACE_FILTER_OPEN = S+"asia-cal-race-filter-open";
 const STORAGE_RACE_FILTER_SECTIONS = S+"asia-cal-race-filter-sections";
