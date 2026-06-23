@@ -717,8 +717,7 @@ export default function CalendarPage() {
       }
       case "triathlon": {
         if (n.includes("xterra")) return "Xterra";
-        // Everything else: condition from distance col is enough
-        return null;
+        return "Road"; // all standard triathlons are road
       }
       case "ocean-swim": {
         if (n.includes("lake") || n.includes("sun moon")) return "Lake";
@@ -729,10 +728,10 @@ export default function CalendarPage() {
         if (n.includes("ocean") || n.includes("sea") || n.includes("coast") || n.includes("bay") || n.includes("island")) return "Ocean";
         if (n.includes("lake")) return "Lake";
         if (n.includes("river")) return "River";
-        return "Multi";
+        return null; // no Multi — if venue unknown, show nothing
       }
       case "hyrox":
-        return null; // 8K + 8 Stations says it all in Distance col
+        return null;
       case "ocr": {
         if (n.includes("spartan") || n.includes("deka")) return "Spartan";
         if (n.includes("tough mudder")) return "Tough Mudder";
@@ -1571,9 +1570,9 @@ export default function CalendarPage() {
                         {/* Format (team pills) */}
                         <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[7] }}>
                           {formatDisplay ? (
-                            <div className="flex flex-wrap gap-1">
+                            <div className="flex flex-nowrap items-center gap-1">
                               {formatDisplay.split(" · ").map((f: string, i: number) => (
-                                <span key={i} className="text-[11px] text-muted-foreground bg-muted/50 border border-border/60 px-1.5 py-0.5 rounded">
+                                <span key={i} className="text-xs font-medium leading-none whitespace-nowrap px-2 py-1 rounded-full border border-border/70 text-muted-foreground bg-muted/40">
                                   {f}
                                 </span>
                               ))}
