@@ -792,7 +792,7 @@ export default function CalendarPage() {
           <img src="/logo.jpg" alt="Adventure Crew" className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0">
             <h1 className="text-2xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventure Calendar</h1>
-            <p className="text-xs text-foreground/60 truncate italic">We take Fun Seriously</p>
+            <p className="text-sm text-foreground/70 truncate italic font-medium">We Take Fun Seriously</p>
           </div>
         </div>
 
