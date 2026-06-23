@@ -1569,6 +1569,8 @@ export default function CalendarPage() {
         countryFilters={countryFilters}
         onToggleFav={(raceId, isFav) => isFav ? removeFav.mutate(raceId) : addFav.mutate(raceId)}
         isDark={isDark}
+        hidePast={hidePast}
+        onToggleHidePast={() => setHidePast(v => !v)}
       />
 
       {/* ── Races section ── */}
@@ -1590,18 +1592,7 @@ export default function CalendarPage() {
             <Filter size={9} /> Active Filters
           </span>
         )}
-        <button
-          onClick={e => { e.stopPropagation(); setHidePast(v => !v); }}
-          className={`ml-auto mr-2 flex items-center gap-1.5 text-[11px] px-2.5 py-1.5 rounded-md border font-semibold transition-all leading-none ${
-            !hidePast
-              ? "bg-amber-500/15 border-amber-400/60 text-amber-400"
-              : "border-border text-muted-foreground hover:border-amber-400/40 hover:text-amber-400/70"
-          }`}
-        >
-          {!hidePast ? <Eye size={12} /> : <EyeOff size={12} />}
-          {!hidePast ? "Hide Past" : "Show Past"}
-        </button>
-        <span className="p-1 text-muted-foreground">
+        <span className="ml-auto p-1 text-muted-foreground">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${showRaceList ? "rotate-180" : ""}`}>
             <path d="M6 9l6 6 6-6"/>
           </svg>
