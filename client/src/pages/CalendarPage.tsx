@@ -101,42 +101,55 @@ const SIMPLE_SPORT_PILLS = [
   { value: "xenom", label: "Xenom" },
 ];
 
+// All TYPE_LABELS show the sport name only — conditions live separately in the cell.
 const TYPE_LABELS: Record<string, string> = {
-  "badge-tri":   "Triathlon",
-  "badge-run":   "Running",
-  "badge-hyrox": "Hyrox",
-  "badge-swim":  "Swim",
-  "badge-trail": "Trail",
-  "badge-ocr":   "OCR",
-  "badge-xenom": "Xenom",
-  // fallback keys (type used directly)
-  "triathlon":   "Triathlon",
-  "running":     "Running",
-  "trail":       "Trail",
-  "ocean-swim":  "Swim",
-  "swimrun":     "SwimRun",
-  "hyrox":       "Hyrox",
-  "ocr":         "OCR",
-  "xenom":       "Xenom",
+  "badge-tri":        "Triathlon",
+  "badge-run":        "Running",
+  "badge-run-trail":  "Running",  // same label, different color
+  "badge-hyrox":      "Hyrox",
+  "badge-swim":       "Swim",
+  "badge-swimrun":    "SwimRun",
+  "badge-trail":      "Running",  // same label, different color
+  "badge-ocr":        "OCR",
+  "badge-xenom":      "Xenom",
+  // fallback: type used directly
+  "triathlon":  "Triathlon",
+  "running":    "Running",
+  "trail":      "Running",
+  "ocean-swim": "Swim",
+  "swimrun":    "SwimRun",
+  "hyrox":      "Hyrox",
+  "ocr":        "OCR",
+  "xenom":      "Xenom",
 };
 
+// Pills use explicit light/dark colors for readability in both modes.
 const PILL_COLORS: Record<string, string> = {
-  "badge-tri":    "bg-blue-500/15 border-blue-500/60 text-blue-400",
-  "badge-run":    "bg-green-500/15 border-green-500/60 text-green-400",
-  "badge-hyrox":  "bg-yellow-400/15 border-yellow-400/60 text-yellow-400",
-  "badge-swim":   "bg-cyan-500/15 border-cyan-500/60 text-cyan-400",
-  "badge-trail":  "bg-orange-500/15 border-orange-500/60 text-orange-400",
-  "badge-ocr":    "bg-red-500/15 border-red-500/60 text-red-400",
-  "badge-xenom":  "bg-purple-500/15 border-purple-500/60 text-purple-400",
+  // Triathlon — blue
+  "badge-tri":        "bg-blue-100 border-blue-400 text-blue-700 dark:bg-blue-500/15 dark:border-blue-500/60 dark:text-blue-400",
+  // Road running — green
+  "badge-run":        "bg-green-100 border-green-500 text-green-700 dark:bg-green-500/15 dark:border-green-500/60 dark:text-green-400",
+  // Trail running — amber/brown (distinct from road)
+  "badge-run-trail":  "bg-amber-100 border-amber-500 text-amber-700 dark:bg-amber-500/15 dark:border-amber-500/60 dark:text-amber-400",
+  "badge-trail":      "bg-amber-100 border-amber-500 text-amber-700 dark:bg-amber-500/15 dark:border-amber-500/60 dark:text-amber-400",
+  // Hyrox — yellow
+  "badge-hyrox":      "bg-yellow-100 border-yellow-500 text-yellow-700 dark:bg-yellow-400/15 dark:border-yellow-400/60 dark:text-yellow-400",
+  // Swim — cyan
+  "badge-swim":       "bg-cyan-100 border-cyan-500 text-cyan-700 dark:bg-cyan-500/15 dark:border-cyan-500/60 dark:text-cyan-400",
+  "badge-swimrun":    "bg-teal-100 border-teal-500 text-teal-700 dark:bg-teal-500/15 dark:border-teal-500/60 dark:text-teal-400",
+  // OCR — red
+  "badge-ocr":        "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/60 dark:text-red-400",
+  // Xenom — purple
+  "badge-xenom":      "bg-purple-100 border-purple-500 text-purple-700 dark:bg-purple-500/15 dark:border-purple-500/60 dark:text-purple-400",
   // fallback: type used directly as cls
-  "triathlon":    "bg-blue-500/15 border-blue-500/60 text-blue-400",
-  "running":      "bg-green-500/15 border-green-500/60 text-green-400",
-  "hyrox":        "bg-yellow-400/15 border-yellow-400/60 text-yellow-400",
-  "ocean-swim":   "bg-cyan-500/15 border-cyan-500/60 text-cyan-400",
-  "swimrun":      "bg-cyan-500/15 border-cyan-500/60 text-cyan-400",
-  "trail":        "bg-orange-500/15 border-orange-500/60 text-orange-400",
-  "ocr":          "bg-red-500/15 border-red-500/60 text-red-400",
-  "xenom":        "bg-purple-500/15 border-purple-500/60 text-purple-400",
+  "triathlon":   "bg-blue-100 border-blue-400 text-blue-700 dark:bg-blue-500/15 dark:border-blue-500/60 dark:text-blue-400",
+  "running":     "bg-green-100 border-green-500 text-green-700 dark:bg-green-500/15 dark:border-green-500/60 dark:text-green-400",
+  "trail":       "bg-amber-100 border-amber-500 text-amber-700 dark:bg-amber-500/15 dark:border-amber-500/60 dark:text-amber-400",
+  "hyrox":       "bg-yellow-100 border-yellow-500 text-yellow-700 dark:bg-yellow-400/15 dark:border-yellow-400/60 dark:text-yellow-400",
+  "ocean-swim":  "bg-cyan-100 border-cyan-500 text-cyan-700 dark:bg-cyan-500/15 dark:border-cyan-500/60 dark:text-cyan-400",
+  "swimrun":     "bg-teal-100 border-teal-500 text-teal-700 dark:bg-teal-500/15 dark:border-teal-500/60 dark:text-teal-400",
+  "ocr":         "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/60 dark:text-red-400",
+  "xenom":       "bg-purple-100 border-purple-500 text-purple-700 dark:bg-purple-500/15 dark:border-purple-500/60 dark:text-purple-400",
 };
 
 // Expandable sport sections with distance sub-filters
@@ -1498,20 +1511,27 @@ export default function CalendarPage() {
                             </button>
                           )}
                         </td>
-                        {/* Name */}
+                        {/* Name + note */}
                         <td className="py-3.5 px-3" style={{ minWidth: COL_WIDTHS[1] }}>
                           <div className="font-bold text-sm text-foreground leading-snug">
                             {isWatchlist && <AlertTriangle size={11} className="inline text-amber-400 mr-1 mb-0.5" />}
                             {race.name}
                           </div>
+                          {race.note && (
+                            <div className="text-[11px] text-muted-foreground/70 mt-0.5 leading-snug">
+                              {isWatchlist ? "⚠️ " : ""}{race.note}
+                            </div>
+                          )}
                         </td>
-                        {/* Sport column: pill + condition tag */}
+                        {/* Sport column: pill + condition inline */}
                         <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[2] }}>
-                          <div>
+                          <div className="flex items-center gap-1.5 flex-nowrap">
                             <SportPill cls={race.badgeClass} />
                             {(() => {
                               const cond = getSportCondition(race.type, race.name);
-                              return cond ? <div className="text-xs text-muted-foreground mt-1">{cond}</div> : null;
+                              return cond
+                                ? <span className="text-xs text-muted-foreground whitespace-nowrap">{cond}</span>
+                                : null;
                             })()}
                           </div>
                         </td>
@@ -1569,14 +1589,7 @@ export default function CalendarPage() {
                           )}
                         </td>
                       </tr>
-                      {/* Sub-row for notes */}
-                      {race.note && (
-                        <tr className={`border-b border-border/40 ${isScratched ? "row-scratch" : isWatchlist ? "row-watchlist" : "bg-muted/10"}`}>
-                          <td colSpan={9} className="py-1.5 px-6 text-[11px] text-muted-foreground/70 italic">
-                            {isWatchlist ? "⚠️ " : "📝 "}{race.note}
-                          </td>
-                        </tr>
-                      )}
+                      {/* Note moved into Name cell — sub-row removed */}
                     </React.Fragment>
                   );
                 })}

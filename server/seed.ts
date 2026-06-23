@@ -238,14 +238,14 @@ export async function seedAdditionalRaces() {
 // Derive badgeClass from type
 function typeToBadge(type: string): string {
   const map: Record<string, string> = {
-    triathlon:   "badge-tri",
-    running:     "badge-run",
-    trail:       "badge-trail",
+    triathlon:    "badge-tri",
+    running:      "badge-run",
+    trail:        "badge-run-trail",  // amber — distinct from road running
     "ocean-swim": "badge-swim",
-    swimrun:     "badge-swim",
-    hyrox:       "badge-hyrox",
-    ocr:         "badge-ocr",
-    xenom:       "badge-xenom",
+    swimrun:      "badge-swimrun",
+    hyrox:        "badge-hyrox",
+    ocr:          "badge-ocr",
+    xenom:        "badge-xenom",
   };
   return map[type] ?? "badge-run";
 }
