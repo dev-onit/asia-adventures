@@ -601,74 +601,6 @@ export default function CalendarPage() {
   function toggleYear(v: string) { setYearFilters(p => p.includes(v) ? p.filter(x => x !== v) : [...p, v]); }
   function toggleExploreCategory(v: string) { setExploreCategoryFilters(p => p.includes(v) ? p.filter(x => x !== v) : [...p, v]); }
 
-  // ── Filtering ──
-  const filtered = useMemo(() => {
-    return races.filter(r => {
-      // Hide watchlist (unconfirmed) unless toggle is on
-      if (!showUnconfirmed && r.status === "watchlist") return false;
-      // Hide past races unless:
-      //   a) toggle is off, OR
-      //   b) user explicitly selected a specific year (they want to see ALL of that year)
-      const userPickedYear = yearFilters.length > 0;
-      if (hidePast && !userPickedYear) {
-        const today = new Date(); today.setHours(0,0,0,0);
-        let earliest: Date | null = null;
-        try {
-          const ds: {date:string,status:string}[] = JSON.parse((r as any).dates ?? "[]");
-          const allD = ds.length > 0 ? ds.map(d => d.date) : [r.date];
-          for (const ds of allD) {
-            const parsed = new Date(ds);
-            if (!isNaN(parsed.getTime())) {
-              if (earliest === null || parsed < earliest) earliest = parsed;
-            }
-          }
-        } catch {}
-        if (earliest === null) {
-          // try parsing r.date directly
-          const parsed = new Date(r.date);
-          if (!isNaN(parsed.getTime())) earliest = parsed;
-        }
-        if (earliest !== null && earliest < today) return false;
-      }
-      if (showFavs && !favSet.has(r.id)) return false;
-      if (raceFiltersActive && !matchesSportFilters(r, sportFilters, subFilters)) return false;
-      if (teamFilters.size > 0) {
-        const t = (r.team ?? "").toLowerCase();
-        const matched = [...teamFilters].some(tf => {
-          if (tf === "team-solo") return t.includes("solo");
-          if (tf === "team-doubles") return t.includes("doubles") || t.includes("team of 2") || t.includes("solo or team") || t.includes("solo / doubles / relay") || t.includes("solo / team of 2");
-          if (tf === "team-relay") return t.includes("relay") || t.includes("solo or team") || t.includes("solo / doubles / relay") || t.includes("solo / team relay");
-          if (tf === "team-teams") return t.includes("doubles") || t.includes("relay") || t.includes("team of 2") || t.includes("team relay") || t.includes("solo or team") || t.includes("solo / doubles") || t.includes("solo / relay") || t.includes("/ team") || t.includes("solo / doubles / relay");
-          return false;
-        });
-        if (!matched) return false;
-      }
-      if (countryFilters.length > 0 && !countryFilters.includes(r.country)) return false;
-      if (cityFilters.length > 0 && !cityFilters.includes(extractCity(r.location))) return false;
-      if (monthFilters.length > 0 && !monthFilters.some(m => r.date.includes(m) || r.date.includes(MONTH_SHORT[m] ?? m))) return false;
-      if (yearFilters.length > 0) {
-        // Check against the dates array (multi-year races) OR the primary date
-        let rDates: {date: string, status: string}[] = [];
-        try { rDates = JSON.parse((r as any).dates ?? "[]"); } catch {}
-        const allDates = rDates.length > 0 ? rDates.map(d => d.date) : [r.date];
-        if (!yearFilters.some(y => allDates.some(d => d.includes(y)))) return false;
-      }
-      if (personFilter) {
-        const voters = votesByRace.get(r.id) ?? [];
-        if (!voters.includes(personFilter)) return false;
-      }
-      if (minVotesFilter) {
-        const voters = votesByRace.get(r.id) ?? [];
-        if (voters.length < 2) return false;
-      }
-      if (search) {
-        const q = search.toLowerCase();
-        if (!r.name.toLowerCase().includes(q) && !r.location.toLowerCase().includes(q) && !r.country.toLowerCase().includes(q)) return false;
-      }
-      return true;
-    });
-  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast]);
-
   // ── Fuzzy date parser: handles "Jan 9, 2026", "Jan 9–10, 2026", "May 28-Jun 6, 2026", "Nov 2027" ──
   function parseFuzzyDate(dateStr: string): Date | null {
     if (!dateStr) return null;
@@ -716,6 +648,68 @@ export default function CalendarPage() {
     const d = new Date(s);
     return isNaN(d.getTime()) ? null : d;
   }
+
+  // ── Filtering ──
+  const filtered = useMemo(() => {
+    return races.filter(r => {
+      // Hide watchlist (unconfirmed) unless toggle is on
+      if (!showUnconfirmed && r.status === "watchlist") return false;
+      // Hide past races unless:
+      //   a) toggle is off, OR
+      //   b) user explicitly selected a specific year (they want to see ALL of that year)
+      const userPickedYear = yearFilters.length > 0;
+      if (hidePast && !userPickedYear) {
+        const today = new Date(); today.setHours(0,0,0,0);
+        let earliest: Date | null = null;
+        try {
+          const ds: {date:string,status:string}[] = JSON.parse((r as any).dates ?? "[]");
+          const allD = ds.length > 0 ? ds.map(d => d.date) : [r.date];
+          for (const d of allD) {
+            const parsed = parseFuzzyDate(d);
+            if (parsed && (earliest === null || parsed < earliest)) earliest = parsed;
+          }
+        } catch {}
+        if (earliest === null) earliest = parseFuzzyDate(r.date);
+        if (earliest !== null && earliest < today) return false;
+      }
+      if (showFavs && !favSet.has(r.id)) return false;
+      if (raceFiltersActive && !matchesSportFilters(r, sportFilters, subFilters)) return false;
+      if (teamFilters.size > 0) {
+        const t = (r.team ?? "").toLowerCase();
+        const matched = [...teamFilters].some(tf => {
+          if (tf === "team-solo") return t.includes("solo");
+          if (tf === "team-doubles") return t.includes("doubles") || t.includes("team of 2") || t.includes("solo or team") || t.includes("solo / doubles / relay") || t.includes("solo / team of 2");
+          if (tf === "team-relay") return t.includes("relay") || t.includes("solo or team") || t.includes("solo / doubles / relay") || t.includes("solo / team relay");
+          if (tf === "team-teams") return t.includes("doubles") || t.includes("relay") || t.includes("team of 2") || t.includes("team relay") || t.includes("solo or team") || t.includes("solo / doubles") || t.includes("solo / relay") || t.includes("/ team") || t.includes("solo / doubles / relay");
+          return false;
+        });
+        if (!matched) return false;
+      }
+      if (countryFilters.length > 0 && !countryFilters.includes(r.country)) return false;
+      if (cityFilters.length > 0 && !cityFilters.includes(extractCity(r.location))) return false;
+      if (monthFilters.length > 0 && !monthFilters.some(m => r.date.includes(m) || r.date.includes(MONTH_SHORT[m] ?? m))) return false;
+      if (yearFilters.length > 0) {
+        // Check against the dates array (multi-year races) OR the primary date
+        let rDates: {date: string, status: string}[] = [];
+        try { rDates = JSON.parse((r as any).dates ?? "[]"); } catch {}
+        const allDates = rDates.length > 0 ? rDates.map(d => d.date) : [r.date];
+        if (!yearFilters.some(y => allDates.some(d => d.includes(y)))) return false;
+      }
+      if (personFilter) {
+        const voters = votesByRace.get(r.id) ?? [];
+        if (!voters.includes(personFilter)) return false;
+      }
+      if (minVotesFilter) {
+        const voters = votesByRace.get(r.id) ?? [];
+        if (voters.length < 2) return false;
+      }
+      if (search) {
+        const q = search.toLowerCase();
+        if (!r.name.toLowerCase().includes(q) && !r.location.toLowerCase().includes(q) && !r.country.toLowerCase().includes(q)) return false;
+      }
+      return true;
+    });
+  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast]);
 
   // ── Sorted + filtered races (year-aware sort key) ──
   const sortedFiltered = useMemo(() => {
