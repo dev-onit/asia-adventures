@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Star, Filter, X, Globe2, Users, Moon, Sun, Search, AlertTriangle, ChevronDown, ChevronRight, Eye, EyeOff } from "lucide-react";
+import { Star, Filter, X, Globe2, Users, Moon, Sun, Search, AlertTriangle, ChevronDown, ChevronRight, Eye, EyeOff, TrendingUp, Calendar } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
 import type { Race, Favourite, ExploreSite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
@@ -43,6 +45,7 @@ const STORAGE_CITY_FILTERS = S+"asia-cal-city-filters";
 const STORAGE_ACTIVE_SUB_PANEL = S+"asia-cal-active-sub-panel";
 const STORAGE_SHOW_FILTER_BAR = S+"asia-cal-show-filter-bar";
 const STORAGE_THEME = S+"asia-cal-theme";
+const STORAGE_SORT_MODE = S+"asia-cal-sort-mode";
 
 // Extract city = first segment before comma in location
 const extractCity = (location: string) => location.split(",")[0].trim();
@@ -360,6 +363,12 @@ export default function CalendarPage() {
   const [showSearch, setShowSearch] = useState(false);
   const [showRaceList, setShowRaceList] = useState(true);
   const [showFavs, setShowFavs] = useState(false);
+  const [sortMode, setSortMode] = useState<"date" | "votes">(() => {
+    try { return (localStorage.getItem(STORAGE_SORT_MODE) as any) ?? "date"; } catch { return "date"; }
+  });
+  // Date range filter: { from, to } — undefined means no range selected
+  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({ from: undefined, to: undefined });
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const prevFilters = useRef<any>(null);
 
   // ── Race Filters panel state (localStorage persisted) ──
@@ -443,6 +452,7 @@ export default function CalendarPage() {
   useEffect(() => { try { localStorage.setItem(STORAGE_EXPLORE_FILTERS, JSON.stringify(exploreCategoryFilters)); } catch {} }, [exploreCategoryFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_REGION_FILTERS, JSON.stringify(regionFilters)); } catch {} }, [regionFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_CITY_FILTERS, JSON.stringify(cityFilters)); } catch {} }, [cityFilters]);
+  useEffect(() => { try { localStorage.setItem(STORAGE_SORT_MODE, sortMode); } catch {} }, [sortMode]);
 
   // ── Data ──
   const { data: races = [], isLoading } = useQuery<Race[]>({ queryKey: ["/api/races"] });
@@ -545,8 +555,9 @@ export default function CalendarPage() {
     if (personFilter) n++;
     if (minVotesFilter) n++;
     if (search) n++;
+    if (dateRange.from || dateRange.to) n++;
     return n;
-  }, [sportFilters, subFilters, teamFilters, countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters, search]);
+  }, [sportFilters, subFilters, teamFilters, countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters, search, dateRange]);
 
   // ── Clear all filters ──
   const clearAll = useCallback(() => {
@@ -562,6 +573,7 @@ export default function CalendarPage() {
     setExploreCategoryFilters([]);
     setRegionFilters([]);
     setSearch("");
+    setDateRange({ from: undefined, to: undefined });
     setShowFilters(false);
     setShowTimeFilters(false);
     setRaceFilterOpen(false);
@@ -705,17 +717,27 @@ export default function CalendarPage() {
         const q = search.toLowerCase();
         if (!r.name.toLowerCase().includes(q) && !r.location.toLowerCase().includes(q) && !r.country.toLowerCase().includes(q)) return false;
       }
+      // Date range filter
+      if (dateRange.from || dateRange.to) {
+        let rDates: {date: string, status: string}[] = [];
+        try { rDates = JSON.parse((r as any).dates ?? "[]"); } catch {}
+        const allD = rDates.length > 0 ? rDates.map(d => d.date) : [r.date];
+        const parsed = allD.map(d => parseFuzzyDate(d)).filter((d): d is Date => d !== null);
+        if (parsed.length === 0) return false;
+        const earliest = new Date(Math.min(...parsed.map(d => d.getTime())));
+        if (dateRange.from && earliest < dateRange.from) return false;
+        if (dateRange.to) { const to = new Date(dateRange.to); to.setHours(23,59,59,999); if (earliest > to) return false; }
+      }
       return true;
     });
-  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast]);
+  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast, dateRange]);
 
-  // ── Sorted + filtered races (year-aware sort key) ──
+  // ── Sorted + filtered races (year-aware sort key, or vote count) ──
   const sortedFiltered = useMemo(() => {
     const getSortKey = (r: any): number => {
       try {
         const ds: {date: string, status: string}[] = JSON.parse((r as any).dates ?? "[]");
         const allD = ds.length > 0 ? ds.map(d => d.date) : [r.date];
-        // Within active year filters, prefer the earliest matching date
         const yearSet = yearFilters.length > 0 ? new Set(yearFilters) : null;
         const candidates = allD.filter(d => yearSet === null || [...yearSet].some(y => d.includes(y)));
         const toSearch = candidates.length > 0 ? candidates : allD;
@@ -725,8 +747,16 @@ export default function CalendarPage() {
       const fallback = parseFuzzyDate(r.date);
       return fallback ? fallback.getTime() : 0;
     };
+    if (sortMode === "votes") {
+      return [...filtered].sort((a, b) => {
+        const va = (votesByRace.get(b.id) ?? []).length;
+        const vb = (votesByRace.get(a.id) ?? []).length;
+        if (va !== vb) return va - vb; // desc by votes
+        return getSortKey(a) - getSortKey(b); // then asc by date
+      });
+    }
     return [...filtered].sort((a, b) => getSortKey(a) - getSortKey(b));
-  }, [filtered, yearFilters]);
+  }, [filtered, yearFilters, sortMode, votesByRace]);
 
   // Countries present in filtered races (for side quest sync)
   const filteredRaceCountries = useMemo(() => new Set(filtered.map(r => r.country)), [filtered]);
@@ -965,6 +995,26 @@ export default function CalendarPage() {
                   <text x="14" y="18" textAnchor="middle" fontSize="8" fontFamily="system-ui,sans-serif" fontWeight="900" fill={numColor} letterSpacing="-0.3">{count}</text>
                 </svg>
               );
+            })()}
+          </button>
+          {/* Most Voted sort button */}
+          <button
+            onClick={() => setSortMode(m => m === "votes" ? "date" : "votes")}
+            className={`flex items-center gap-1.5 px-3 h-9 rounded-full border text-xs font-semibold transition-all leading-none ${
+              sortMode === "votes"
+                ? "bg-orange-400 border-orange-400 text-black"
+                : "bg-transparent border-orange-500/60 text-orange-600 hover:bg-orange-100 hover:border-orange-500 dark:border-orange-400/60 dark:text-orange-400 dark:hover:bg-orange-400/15"
+            }`}
+          >
+            <TrendingUp size={12} className="shrink-0" />
+            <span className="leading-none">Most Voted</span>
+            {(() => {
+              const total = favourites.length;
+              return total > 0 ? (
+                <span className={`ml-0.5 text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                  sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/15 text-orange-600 dark:text-orange-400"
+                }`}>{total}</span>
+              ) : null;
             })()}
           </button>
           <button onClick={() => setIsDark(d => !d)} className="ml-auto p-2 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
@@ -1409,7 +1459,47 @@ export default function CalendarPage() {
         {/* Dates sub-panel */}
         {showFilterBar && activeSubPanel === 'dates' && (
           <div className="relative">
-          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "3rem" }}>
+          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "65vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "3rem" }}>
+            {/* Quick presets */}
+            <div>
+              <div className="filter-label">Quick Select</div>
+              <div className="flex flex-wrap gap-1.5">
+                {([
+                  { label: "Next 3 months", fn: () => { const f = new Date(); const t = new Date(); t.setMonth(t.getMonth()+3); setDateRange({from:f,to:t}); setMonthFilters([]); setYearFilters([]); } },
+                  { label: "Rest of 2026", fn: () => { setDateRange({ from: new Date(), to: new Date("2026-12-31") }); setMonthFilters([]); setYearFilters([]); } },
+                  { label: "All of 2027", fn: () => { setDateRange({ from: new Date("2027-01-01"), to: new Date("2027-12-31") }); setMonthFilters([]); setYearFilters([]); } },
+                ] as {label:string,fn:()=>void}[]).map(({label,fn}) => (
+                  <button key={label} onClick={fn} className="flex items-center justify-center text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none border-border text-muted-foreground hover:border-violet-400/50 hover:text-violet-400">{label}</button>
+                ))}
+              </div>
+              {(dateRange.from || dateRange.to) && (
+                <div className="mt-2 flex items-center gap-1.5 text-xs text-violet-500 font-semibold">
+                  <Calendar size={11} />
+                  <span>{dateRange.from ? dateRange.from.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "Any"}</span>
+                  <span className="text-muted-foreground">→</span>
+                  <span>{dateRange.to ? dateRange.to.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "Any"}</span>
+                  <button onClick={() => setDateRange({from:undefined,to:undefined})} className="ml-1 hover:text-red-400"><X size={10}/></button>
+                </div>
+              )}
+            </div>
+            {/* Calendar picker */}
+            <div>
+              <div className="filter-label flex items-center gap-1.5 cursor-pointer select-none" onClick={() => setShowDatePicker(v => !v)}>
+                <Calendar size={11} /> Custom Range <span className="text-muted-foreground/50 text-[10px]">{showDatePicker ? "▲" : "▼"}</span>
+              </div>
+              {showDatePicker && (
+                <div className="mt-2 rounded-xl border border-border bg-card p-2 overflow-x-auto rdp-compact">
+                  <DayPicker
+                    mode="range"
+                    selected={dateRange.from ? { from: dateRange.from, to: dateRange.to } : undefined}
+                    onSelect={(range: any) => setDateRange({ from: range?.from, to: range?.to })}
+                    fromYear={2026}
+                    toYear={2028}
+                    showOutsideDays
+                  />
+                </div>
+              )}
+            </div>
             <div>
               <div className="filter-label">Month</div>
               <div className="flex flex-wrap gap-1.5">
@@ -1518,6 +1608,14 @@ export default function CalendarPage() {
               </span>
             ))}
 
+            {/* Date range pill */}
+            {(dateRange.from || dateRange.to) && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
+                <Calendar size={10} />
+                {dateRange.from ? dateRange.from.toLocaleDateString("en-GB",{day:"numeric",month:"short"}) : "?"} → {dateRange.to ? dateRange.to.toLocaleDateString("en-GB",{day:"numeric",month:"short"}) : "?"}
+                <button onClick={() => setDateRange({from:undefined,to:undefined})} className="hover:opacity-70 leading-none"><X size={10} /></button>
+              </span>
+            )}
             {/* Search */}
             {search && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary font-medium">
@@ -1600,6 +1698,7 @@ export default function CalendarPage() {
               <thead>
                 <tr className="border-b border-border bg-muted/40">
                   <th style={{ width: COL_WIDTHS[0] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">★</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Voters</th>
                   <th style={{ minWidth: COL_WIDTHS[1] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Name</th>
                   <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Sport</th>
                   <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Location</th>
@@ -1659,7 +1758,7 @@ export default function CalendarPage() {
                     <React.Fragment key={race.id}>
                       {showGroupHeader && (
                         <tr className="bg-muted/50 border-y border-border/60">
-                          <td colSpan={8} className="px-4 py-1.5">
+                          <td colSpan={9} className="px-4 py-1.5">
                             <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 select-none">{monthGroup}</span>
                           </td>
                         </tr>
@@ -1678,6 +1777,22 @@ export default function CalendarPage() {
                               <Star size={15} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
                             </button>
                           )}
+                        </td>
+                        {/* Voters chips */}
+                        <td className="py-4 px-3 align-middle" style={{ minWidth: 80, maxWidth: 160 }}>
+                          {(() => {
+                            const voters = votesByRace.get(race.id) ?? [];
+                            if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
+                            return (
+                              <div className="flex flex-wrap gap-1">
+                                {voters.map((v, i) => (
+                                  <span key={i} className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400/15 border border-yellow-400/40 text-yellow-700 dark:text-yellow-300 whitespace-nowrap">
+                                    ★ {v}
+                                  </span>
+                                ))}
+                              </div>
+                            );
+                          })()}
                         </td>
                         {/* Name + note (name is a link if URL exists) */}
                         <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 240 }}>
