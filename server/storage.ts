@@ -91,9 +91,13 @@ export async function seedIfEmpty() {
     sqlite.exec("ALTER TABLE races ADD COLUMN distance_label TEXT NOT NULL DEFAULT ''");
     console.log('[migration] Added distance_label column');
   } catch { /* column already exists */ }
+  try {
+    sqlite.exec("ALTER TABLE races ADD COLUMN dates TEXT NOT NULL DEFAULT '[]'");
+    console.log('[migration] Added dates column');
+  } catch { /* column already exists */ }
 
-  if (count < 710) {
-    console.log(`[seed] count=${count} < 710 — wiping and reseeding all races`);
+  if (count < 510) {
+    console.log(`[seed] count=${count} < 510 — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
     const { syncAllRaces } = await import("./seed.js");

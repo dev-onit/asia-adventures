@@ -585,7 +585,13 @@ export default function CalendarPage() {
       if (countryFilters.length > 0 && !countryFilters.includes(r.country)) return false;
       if (cityFilters.length > 0 && !cityFilters.includes(extractCity(r.location))) return false;
       if (monthFilters.length > 0 && !monthFilters.some(m => r.date.includes(m) || r.date.includes(MONTH_SHORT[m] ?? m))) return false;
-      if (yearFilters.length > 0 && !yearFilters.some(y => r.date.includes(y))) return false;
+      if (yearFilters.length > 0) {
+        // Check against the dates array (multi-year races) OR the primary date
+        let rDates: {date: string, status: string}[] = [];
+        try { rDates = JSON.parse((r as any).dates ?? "[]"); } catch {}
+        const allDates = rDates.length > 0 ? rDates.map(d => d.date) : [r.date];
+        if (!yearFilters.some(y => allDates.some(d => d.includes(y)))) return false;
+      }
       if (personFilter) {
         const voters = votesByRace.get(r.id) ?? [];
         if (!voters.includes(personFilter)) return false;
@@ -678,7 +684,7 @@ export default function CalendarPage() {
     );
   }
 
-  const COL_WIDTHS = [40, 240, 110, 130, 120, 110, 130, 110];
+  const COL_WIDTHS = [40, 240, 0, 0, 0, 0, 0, 0]; // 0 = flex to content
 
   // ── Date formatter: "Jan 12, 2026" → "Sun · 12 Jan · 2026" ──
   function formatRaceDate(dateStr: string): string {
@@ -1492,12 +1498,12 @@ export default function CalendarPage() {
                 <tr className="border-b border-border bg-muted/40">
                   <th style={{ width: COL_WIDTHS[0] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">★</th>
                   <th style={{ minWidth: COL_WIDTHS[1] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Name</th>
-                  <th style={{ minWidth: COL_WIDTHS[2] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Sport</th>
-                  <th style={{ minWidth: COL_WIDTHS[3] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Location</th>
-                  <th style={{ minWidth: COL_WIDTHS[4] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Date</th>
-                  <th style={{ minWidth: COL_WIDTHS[5] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Weather</th>
-                  <th style={{ minWidth: COL_WIDTHS[6] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Distance</th>
-                  <th style={{ minWidth: COL_WIDTHS[7] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Format</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Sport</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Location</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Date</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Weather</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Distance</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Format</th>
                 </tr>
               </thead>
               <tbody>
@@ -1517,9 +1523,9 @@ export default function CalendarPage() {
                   const rowBg = isScratched ? "row-scratch" : isFav ? "row-fav" : isWatchlist ? "row-watchlist" : "hover:bg-muted/30";
                   return (
                     <React.Fragment key={race.id}>
-                      <tr className={`border-b border-border transition-colors h-[64px] ${rowBg}`}>
+                      <tr className={`border-b border-border transition-colors ${rowBg}`}>
                         {/* ★ Star */}
-                        <td className="text-center py-4 px-3 align-middle" style={{ width: COL_WIDTHS[0] }}>
+                        <td className="text-center py-4 px-3 align-top" style={{ width: COL_WIDTHS[0] }}>
                           {!isScratched && (
                             <button
                               onClick={() => isFav ? removeFav.mutate(race.id) : addFav.mutate(race.id)}
@@ -1532,7 +1538,7 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Name + note (name is a link if URL exists) */}
-                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 280 }}>
+                        <td className="py-4 px-3 align-top" style={{ minWidth: COL_WIDTHS[1], maxWidth: 280 }}>
                           <div className="truncate font-bold text-sm leading-snug" title={race.name}>
                             {isWatchlist && <AlertTriangle size={11} className="inline text-amber-400 mr-1 mb-0.5" />}
                             {race.url ? (
@@ -1550,7 +1556,7 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Sport column: pill + condition inline */}
-                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[2] }}>
+                        <td className="py-4 px-3 align-top">
                           <div className="flex items-center gap-1.5 flex-nowrap">
                             <SportPill cls={race.badgeClass} />
                             {(() => {
@@ -1562,20 +1568,29 @@ export default function CalendarPage() {
                           </div>
                         </td>
                         {/* Location (flag + country + city) */}
-                        <td className="py-4 px-3 align-middle overflow-hidden" style={{ minWidth: COL_WIDTHS[3], maxWidth: 160 }}>
-                          <div className="truncate text-sm text-foreground" title={`${race.country} · ${city}`}>{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
+                        <td className="py-4 px-3 align-top">
+                          <div className="text-sm text-foreground whitespace-nowrap">{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
                         </td>
-                        {/* Date */}
-                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[4] }}>
-                          <div className="text-sm text-foreground whitespace-nowrap">{formatRaceDate(race.date)}</div>
-                          {isWatchlist && (
-                            <div className="flex items-center gap-1 mt-0.5 text-[11px] text-amber-400">
-                              <AlertTriangle size={9} /><span>Unconfirmed</span>
-                            </div>
-                          )}
+                        {/* Date — multi-year support */}
+                        <td className="py-4 px-3 align-top">
+                          {(() => {
+                            let raceDates: {date: string, status: string}[] = [];
+                            try { raceDates = JSON.parse((race as any).dates ?? "[]"); } catch {}
+                            if (raceDates.length === 0) raceDates = [{date: race.date, status: race.status}];
+                            return raceDates.map((d, i) => (
+                              <div key={i} className={i > 0 ? "mt-1" : ""}>
+                                <div className="text-sm text-foreground whitespace-nowrap">{formatRaceDate(d.date)}</div>
+                                {d.status === "watchlist" && (
+                                  <div className="flex items-center gap-1 text-[11px] text-amber-400">
+                                    <AlertTriangle size={9} /><span>Unconfirmed</span>
+                                  </div>
+                                )}
+                              </div>
+                            ));
+                          })()}
                         </td>
                         {/* Weather */}
-                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[5] }}>
+                        <td className="py-4 px-3 align-top">
                           {weather ? (
                             <div>
                               <div className="text-xs text-muted-foreground">
@@ -1590,7 +1605,7 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Distance */}
-                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[6] }}>
+                        <td className="py-4 px-3 align-top">
                           {race.type === "hyrox" ? (
                             <div className="text-sm text-foreground whitespace-nowrap">8K · 8 Stations</div>
                           ) : distPills.length > 0 ? (
@@ -1598,7 +1613,7 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Format (team pills) */}
-                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[7] }}>
+                        <td className="py-4 px-3 align-top">
                           {formatDisplay ? (
                             <div className="flex flex-nowrap items-center gap-1">
                               {formatDisplay.split(" · ").map((f: string, i: number) => (

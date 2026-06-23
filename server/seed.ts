@@ -1,6 +1,23 @@
 import { db } from "./storage.js";
 import { races } from "../shared/schema.js";
 
+export type RaceSeed = {
+  name: string;
+  location: string;
+  country: string;
+  date: string;
+  distance: string;
+  distanceLabel: string;
+  type: string;
+  team: string;
+  url: string;
+  note: string;
+  status: string;
+  dates?: string;  // JSON: [{date, status}]
+  lat?: string;
+  lng?: string;
+};
+
 export async function seedRaces() {
   const data = [
     // India
@@ -274,6 +291,7 @@ export async function syncAllRaces() {
         ...r,
         badgeClass: typeToBadge((r as any).type ?? "", (r as any).name ?? ""),
         distanceLabel: cleanDistanceLabel((r as any).distanceLabel ?? ""),
+        dates: (r as any).dates ?? JSON.stringify([{date: (r as any).date ?? "", status: (r as any).status ?? "active"}]),
       };
       db.insert(races).values(entry as any).run();
       existing.add(r.name);

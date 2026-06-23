@@ -14,6 +14,7 @@ export const races = sqliteTable("races", {
   note: text("note").notNull().default(""),
   status: text("status").notNull().default("active"),
   badgeClass: text("badge_class").notNull().default(""),
+  dates: text("dates").notNull().default("[]"),  // JSON: [{date, status}]
   lat: text("lat"),
   lng: text("lng"),
 });
