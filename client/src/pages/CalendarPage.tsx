@@ -1599,7 +1599,7 @@ export default function CalendarPage() {
           }`}
         >
           {!hidePast ? <Eye size={12} /> : <EyeOff size={12} />}
-          Past
+          {!hidePast ? "Hide Past" : "Show Past"}
         </button>
         <span className="p-1 text-muted-foreground">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${showRaceList ? "rotate-180" : ""}`}>
