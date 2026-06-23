@@ -102,27 +102,41 @@ const SIMPLE_SPORT_PILLS = [
 ];
 
 const TYPE_LABELS: Record<string, string> = {
-  "badge-tri": "Triathlon",
-  "badge-run": "Running",
+  "badge-tri":   "Triathlon",
+  "badge-run":   "Running",
   "badge-hyrox": "Hyrox",
-  "badge-swim": "Swim",
+  "badge-swim":  "Swim",
   "badge-trail": "Trail",
-  "badge-ocr": "OCR",
+  "badge-ocr":   "OCR",
   "badge-xenom": "Xenom",
-  "ocean-swim": "Swim",
-  "swimrun": "SwimRun",
-  "ocr": "OCR",
-  "xenom": "Xenom",
+  // fallback keys (type used directly)
+  "triathlon":   "Triathlon",
+  "running":     "Running",
+  "trail":       "Trail",
+  "ocean-swim":  "Swim",
+  "swimrun":     "SwimRun",
+  "hyrox":       "Hyrox",
+  "ocr":         "OCR",
+  "xenom":       "Xenom",
 };
 
 const PILL_COLORS: Record<string, string> = {
-  "badge-tri": "bg-blue-500/15 border-blue-500/60 text-blue-400",
-  "badge-run": "bg-green-500/15 border-green-500/60 text-green-400",
-  "badge-hyrox": "bg-yellow-400/15 border-yellow-400/60 text-yellow-400",
-  "badge-swim": "bg-cyan-500/15 border-cyan-500/60 text-cyan-400",
-  "badge-trail": "bg-orange-500/15 border-orange-500/60 text-orange-400",
-  "badge-ocr": "bg-red-500/15 border-red-500/60 text-red-400",
-  "badge-xenom": "bg-purple-500/15 border-purple-500/60 text-purple-400",
+  "badge-tri":    "bg-blue-500/15 border-blue-500/60 text-blue-400",
+  "badge-run":    "bg-green-500/15 border-green-500/60 text-green-400",
+  "badge-hyrox":  "bg-yellow-400/15 border-yellow-400/60 text-yellow-400",
+  "badge-swim":   "bg-cyan-500/15 border-cyan-500/60 text-cyan-400",
+  "badge-trail":  "bg-orange-500/15 border-orange-500/60 text-orange-400",
+  "badge-ocr":    "bg-red-500/15 border-red-500/60 text-red-400",
+  "badge-xenom":  "bg-purple-500/15 border-purple-500/60 text-purple-400",
+  // fallback: type used directly as cls
+  "triathlon":    "bg-blue-500/15 border-blue-500/60 text-blue-400",
+  "running":      "bg-green-500/15 border-green-500/60 text-green-400",
+  "hyrox":        "bg-yellow-400/15 border-yellow-400/60 text-yellow-400",
+  "ocean-swim":   "bg-cyan-500/15 border-cyan-500/60 text-cyan-400",
+  "swimrun":      "bg-cyan-500/15 border-cyan-500/60 text-cyan-400",
+  "trail":        "bg-orange-500/15 border-orange-500/60 text-orange-400",
+  "ocr":          "bg-red-500/15 border-red-500/60 text-red-400",
+  "xenom":        "bg-purple-500/15 border-purple-500/60 text-purple-400",
 };
 
 // Expandable sport sections with distance sub-filters
@@ -1526,10 +1540,12 @@ export default function CalendarPage() {
                             </div>
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
-                        {/* Distance */}
+                        {/* Distance — blank for Hyrox (format is the distance) */}
                         <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[6] }}>
-                          {distPills.length > 0 ? (
-                            <div className="text-xs text-muted-foreground">{distPills.join(" · ")}</div>
+                          {race.type === "hyrox" ? (
+                            <span className="text-xs text-muted-foreground">—</span>
+                          ) : distPills.length > 0 ? (
+                            <div className="text-sm text-foreground">{distPills.join(" · ")}</div>
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Format (team pills) */}

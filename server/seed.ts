@@ -235,6 +235,28 @@ export async function seedAdditionalRaces() {
   console.log(`[seed] inserted up to ${count} additional races`);
 }
 
+// Derive badgeClass from type
+function typeToBadge(type: string): string {
+  const map: Record<string, string> = {
+    triathlon:   "badge-tri",
+    running:     "badge-run",
+    trail:       "badge-trail",
+    "ocean-swim": "badge-swim",
+    swimrun:     "badge-swim",
+    hyrox:       "badge-hyrox",
+    ocr:         "badge-ocr",
+    xenom:       "badge-xenom",
+  };
+  return map[type] ?? "badge-run";
+}
+
+// Strip venue suffixes from distanceLabel (e.g. "5K · Ocean" → "5K")
+// Venue info now lives in the Sport column condition tag.
+function cleanDistanceLabel(dl: string): string {
+  if (!dl) return dl;
+  return dl.replace(/\s*[·•]\s*(Ocean|Lake|River|Trail|Road|Multi|Coast)$/i, "").trim();
+}
+
 // ── syncAllRaces — upserts the full canonical race list from seedData.ts ──
 // Checks by name before inserting to prevent duplicates.
 export async function syncAllRaces() {
@@ -245,7 +267,12 @@ export async function syncAllRaces() {
   for (const r of ALL_SEED_RACES) {
     if (existing.has(r.name)) continue; // skip already present
     try {
-      db.insert(races).values(r as any).run();
+      const entry = {
+        ...r,
+        badgeClass: typeToBadge((r as any).type ?? ""),
+        distanceLabel: cleanDistanceLabel((r as any).distanceLabel ?? ""),
+      };
+      db.insert(races).values(entry as any).run();
       existing.add(r.name);
       added++;
     } catch {}
