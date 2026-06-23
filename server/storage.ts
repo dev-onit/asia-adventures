@@ -82,7 +82,7 @@ export async function getExploreSites() {
 }
 
 // Bump this whenever seedData changes — forces a full wipe+reseed on next deploy
-const SEED_VERSION = "v19-hyd-dedup-2026-06-23";
+const SEED_VERSION = "v20-hyrox-dedup-2026-06-23";
 
 export async function seedIfEmpty() {
   // ── Migrations FIRST — must run before any drizzle SELECT uses the schema ──
@@ -119,7 +119,7 @@ export async function seedIfEmpty() {
   // ── Now safe to query via drizzle ──────────────────────────────────────────
   const count = db.select().from(races).all().length;
 
-  if (storedVersion !== SEED_VERSION || count < 482) {
+  if (storedVersion !== SEED_VERSION || count < 395) {
     console.log(`[seed] version=${storedVersion} → ${SEED_VERSION}, count=${count} — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
