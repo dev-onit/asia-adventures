@@ -82,11 +82,7 @@ export async function getExploreSites() {
 }
 
 export async function seedIfEmpty() {
-  // ── Schema version gate ──────────────────────────────────────────────
-  // If the DB has fewer than 340 races, wipe races and reseed from canonical data.
-  // This handles stale sandbox snapshots from old deploys.
-  const count = db.select().from(races).all().length;
-  // Add distance_label column if missing (migration for existing DBs)
+  // ── Migrations FIRST — must run before any drizzle SELECT uses the schema ──
   try {
     sqlite.exec("ALTER TABLE races ADD COLUMN distance_label TEXT NOT NULL DEFAULT ''");
     console.log('[migration] Added distance_label column');
@@ -95,6 +91,9 @@ export async function seedIfEmpty() {
     sqlite.exec("ALTER TABLE races ADD COLUMN dates TEXT NOT NULL DEFAULT '[]'");
     console.log('[migration] Added dates column');
   } catch { /* column already exists */ }
+  // ── Now safe to query via drizzle ──────────────────────────────────────────
+  // If the DB has fewer than 500 races, wipe and reseed.
+  const count = db.select().from(races).all().length;
 
   if (count < 510) {
     console.log(`[seed] count=${count} < 510 — wiping and reseeding all races`);
