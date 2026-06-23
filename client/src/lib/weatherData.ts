@@ -1827,11 +1827,24 @@ export function parseMonth(dateStr: string): number {
 }
 
 // Get weather for a race given its city and date string
+// Falls back progressively: exact first token → each comma-separated token → country name
 export function getRaceWeather(location: string, dateStr: string): WeatherInfo | null {
-  const city = location.split(",")[0].trim();
   const month = parseMonth(dateStr);
   if (!month) return null;
-  const cityData = CITY_WEATHER[city];
-  if (!cityData) return null;
-  return cityData[month] ?? null;
+
+  // Build candidate list from location tokens
+  const tokens = location.split(",").map(t => t.trim()).filter(Boolean);
+
+  // Also try splitting the first token on spaces/parens for compound venue names
+  // e.g. "Makuhari Messe" → try "Makuhari" too
+  const firstTokenWords = tokens[0].replace(/[()]/g, ' ').split(/\s+/).filter(w => w.length > 3);
+  const extraCandidates = firstTokenWords.slice(1).map((_, i) => firstTokenWords.slice(i + 1).join(' '));
+
+  const candidates = [...tokens, ...extraCandidates];
+
+  for (const candidate of candidates) {
+    const cityData = CITY_WEATHER[candidate];
+    if (cityData) return cityData[month] ?? null;
+  }
+  return null;
 }
