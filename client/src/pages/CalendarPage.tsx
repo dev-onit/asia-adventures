@@ -980,23 +980,23 @@ export default function CalendarPage() {
     <div className="min-h-screen bg-background">
       {/* ── Sticky header ── */}
       <header ref={headerRef} className="sticky top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border">
-        {/* Row 1: Logo + title */}
+        {/* Row 1: Logo + title + name chip */}
         <div className="flex items-center gap-3 px-4 pt-4 pb-2">
           <img src="/logo.jpg" alt="Adventure Crew" className="w-20 h-20 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0">
             <h1 className="text-2xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
             <p className="text-base text-foreground/70 truncate font-medium">We Take Fun Seriously</p>
           </div>
-        </div>
-
-        {/* Row 2: name chip + My Favourites + theme toggle */}
-        <div className="flex items-center gap-3 px-4 pt-1 pb-4">
           {voterName && (
-            <div className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary">
+            <div className="ml-auto flex items-center gap-1.5 px-3 h-9 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
               <Users size={12} />
               <span>{voterName}</span>
             </div>
           )}
+        </div>
+
+        {/* Row 2: My Favourites + Most Voted + theme toggle */}
+        <div className="flex items-center gap-3 px-4 pt-1 pb-4">
           <button
             onClick={() => {
               if (!showFavs) {
