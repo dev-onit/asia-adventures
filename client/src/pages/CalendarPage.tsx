@@ -605,8 +605,11 @@ export default function CalendarPage() {
     return races.filter(r => {
       // Hide watchlist (unconfirmed) unless toggle is on
       if (!showUnconfirmed && r.status === "watchlist") return false;
-      // Hide past races unless toggle is off
-      if (hidePast) {
+      // Hide past races unless:
+      //   a) toggle is off, OR
+      //   b) user explicitly selected a specific year (they want to see ALL of that year)
+      const userPickedYear = yearFilters.length > 0;
+      if (hidePast && !userPickedYear) {
         const today = new Date(); today.setHours(0,0,0,0);
         let earliest: Date | null = null;
         try {
