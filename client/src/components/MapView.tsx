@@ -427,6 +427,22 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   return (
     <div className="relative">
       <div ref={mapRef} className="map-container w-full" style={{ height: "450px", zIndex: 1, touchAction: "pan-y" }} />
+      {/* Explore button — top-right */}
+      <div className="absolute top-3 right-3 z-10" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
+        <button
+          onClick={handleToggleExplore}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all hover:brightness-110 ${
+            showExplore ? "bg-card border-orange-500/70 text-orange-400" : "bg-card border-border text-muted-foreground"
+          }`}
+        >
+          {showExplore
+            ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+          }
+          Explore
+        </button>
+      </div>
+      {/* Show Unconfirmed + Show Past — bottom-right */}
       <div className="absolute bottom-3 right-3 z-10 flex flex-wrap justify-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", maxWidth: "calc(100% - 60px)" }}>
         <button
           onClick={onToggleUnconfirmed}
@@ -434,8 +450,11 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
             showUnconfirmed ? "bg-card border-red-400/60 text-red-400" : "bg-card border-border text-muted-foreground"
           }`}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          {showUnconfirmed ? "Hide Unconfirmed" : "Unconfirmed"}
+          {showUnconfirmed
+            ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+          }
+          {showUnconfirmed ? "Hide Unconfirmed" : "Show Unconfirmed"}
         </button>
         <button
           onClick={onToggleHidePast}
@@ -448,18 +467,6 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
             : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
           }
           {!hidePast ? "Hide Past" : "Show Past"}
-        </button>
-        <button
-          onClick={handleToggleExplore}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all hover:brightness-110 ${
-            showExplore ? "bg-card border-orange-500/70 text-orange-400" : "bg-card border-border text-muted-foreground"
-          }`}
-        >
-          {showExplore
-            ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-          }
-          Explore
         </button>
       </div>
     </div>
