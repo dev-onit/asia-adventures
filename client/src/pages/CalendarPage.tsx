@@ -343,7 +343,7 @@ function VoterChips({ voters }: { voters: string[] }) {
     <div className="flex flex-wrap gap-1 items-center">
       {visible.map((v, i) => (
         <span key={i} title={v} className="inline-flex items-center justify-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400/15 border border-yellow-400/40 text-yellow-700 dark:text-yellow-300 whitespace-nowrap cursor-default">
-          ★ {expanded ? v : v.charAt(0).toUpperCase()}
+          <TrendingUp size={9} className="shrink-0" /> {expanded ? v : v.charAt(0).toUpperCase()}
         </span>
       ))}
       {!expanded && needsExpand && (
