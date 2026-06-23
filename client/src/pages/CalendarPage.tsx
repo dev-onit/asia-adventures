@@ -684,7 +684,7 @@ export default function CalendarPage() {
     );
   }
 
-  const COL_WIDTHS = [40, 240, 0, 0, 0, 0, 0, 0]; // 0 = flex to content
+  const COL_WIDTHS = [40, 200, 0, 0, 0, 0, 0, 0]; // 0 = flex to content
 
   // ── Date formatter: "Jan 12, 2026" → "Sun · 12 Jan · 2026" ──
   function formatRaceDate(dateStr: string): string {
@@ -789,10 +789,10 @@ export default function CalendarPage() {
       <header ref={headerRef} className="sticky top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border">
         {/* Row 1: Logo + title */}
         <div className="flex items-center gap-3 px-4 pt-4 pb-2">
-          <img src="/logo.jpg" alt="Adventure Crew" className="w-14 h-14 rounded-full object-cover flex-shrink-0" />
+          <img src="/logo.jpg" alt="Adventure Crew" className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0">
-            <h1 className="text-xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventure Calendar</h1>
-            <p className="text-xs text-foreground/60 truncate">{races.length} races · Triathlon · Hyrox · Swimming · Trail · SwimRun</p>
+            <h1 className="text-2xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventure Calendar</h1>
+            <p className="text-xs text-foreground/60 truncate italic">We take Fun Seriously</p>
           </div>
         </div>
 
@@ -1538,7 +1538,7 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Name + note (name is a link if URL exists) */}
-                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 280 }}>
+                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 240 }}>
                           <div className="truncate font-bold text-sm leading-snug" title={race.name}>
                             {isWatchlist && <AlertTriangle size={11} className="inline text-red-500 dark:text-red-400 mr-1 mb-0.5" />}
                             {race.url ? (
@@ -1568,7 +1568,7 @@ export default function CalendarPage() {
                           </div>
                         </td>
                         {/* Location (flag + country + city) */}
-                        <td className="py-4 px-3 align-middle" style={{ maxWidth: 130 }}>
+                        <td className="py-4 px-3 align-middle" style={{ maxWidth: 170 }}>
                           <div className="truncate text-sm text-foreground whitespace-nowrap" title={`${race.country} · ${city}`}>{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
                         </td>
                         {/* Date — multi-year support */}
@@ -1578,12 +1578,10 @@ export default function CalendarPage() {
                             try { raceDates = JSON.parse((race as any).dates ?? "[]"); } catch {}
                             if (raceDates.length === 0) raceDates = [{date: race.date, status: race.status}];
                             return raceDates.map((d, i) => (
-                              <div key={i} className={i > 0 ? "mt-1" : ""}>
+                              <div key={i} className={`flex items-center gap-1 ${i > 0 ? "mt-1" : ""}`}>
                                 <div className="text-sm text-foreground whitespace-nowrap">{formatRaceDate(d.date)}</div>
                                 {d.status === "watchlist" && (
-                                  <div className="flex items-center gap-1 text-[11px] text-red-500 dark:text-red-400 font-medium">
-                                    <AlertTriangle size={9} /><span>Unconfirmed</span>
-                                  </div>
+                                  <AlertTriangle size={10} className="text-red-500 dark:text-red-400 flex-shrink-0" title="Unconfirmed" />
                                 )}
                               </div>
                             ));
