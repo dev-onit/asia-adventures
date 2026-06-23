@@ -674,7 +674,7 @@ export default function CalendarPage() {
     );
   }
 
-  const COL_WIDTHS = [40, 200, 110, 130, 120, 110, 130, 110, 60];
+  const COL_WIDTHS = [40, 240, 110, 130, 120, 110, 130, 110, 60];
 
   // ── Date formatter: "Jan 12, 2026" → "Sun · 12 Jan · 2026" ──
   function formatRaceDate(dateStr: string): string {
@@ -1499,9 +1499,9 @@ export default function CalendarPage() {
                   const rowBg = isScratched ? "row-scratch" : isFav ? "row-fav" : isWatchlist ? "row-watchlist" : "hover:bg-muted/30";
                   return (
                     <React.Fragment key={race.id}>
-                      <tr className={`border-b border-border transition-colors ${rowBg}`}>
+                      <tr className={`border-b border-border transition-colors h-[52px] ${rowBg}`}>
                         {/* ★ Star */}
-                        <td className="text-center py-3.5 px-3 align-middle" style={{ width: COL_WIDTHS[0] }}>
+                        <td className="text-center py-3 px-3 align-middle" style={{ width: COL_WIDTHS[0] }}>
                           {!isScratched && (
                             <button
                               onClick={() => isFav ? removeFav.mutate(race.id) : addFav.mutate(race.id)}
@@ -1514,19 +1514,19 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Name + note */}
-                        <td className="py-3.5 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1] }}>
-                          <div className="flex items-baseline gap-1.5 flex-wrap">
-                            <span className="font-bold text-sm text-foreground leading-snug whitespace-nowrap">
-                              {isWatchlist && <AlertTriangle size={11} className="inline text-amber-400 mr-1 mb-0.5" />}
-                              {race.name}
-                            </span>
-                            {race.note && (
-                              <span className="text-[11px] text-muted-foreground/60 leading-snug">{race.note}</span>
-                            )}
+                        <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 280 }}>
+                          <div className="truncate font-bold text-sm text-foreground leading-snug" title={race.name}>
+                            {isWatchlist && <AlertTriangle size={11} className="inline text-amber-400 mr-1 mb-0.5" />}
+                            {race.name}
                           </div>
+                          {race.note && (
+                            <div className="truncate text-[11px] text-muted-foreground/60 mt-0.5 leading-snug" title={race.note}>
+                              {race.note}
+                            </div>
+                          )}
                         </td>
                         {/* Sport column: pill + condition inline */}
-                        <td className="py-3.5 px-3 align-middle" style={{ minWidth: COL_WIDTHS[2] }}>
+                        <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[2] }}>
                           <div className="flex items-center gap-1.5 flex-nowrap">
                             <SportPill cls={race.badgeClass} />
                             {(() => {
@@ -1538,11 +1538,11 @@ export default function CalendarPage() {
                           </div>
                         </td>
                         {/* Location (flag + country + city) */}
-                        <td className="py-3.5 px-3 align-middle" style={{ minWidth: COL_WIDTHS[3] }}>
+                        <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[3] }}>
                           <div className="text-sm text-foreground whitespace-nowrap">{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
                         </td>
                         {/* Date */}
-                        <td className="py-3.5 px-3 align-middle" style={{ minWidth: COL_WIDTHS[4] }}>
+                        <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[4] }}>
                           <div className="text-sm text-foreground whitespace-nowrap">{formatRaceDate(race.date)}</div>
                           {isWatchlist && (
                             <div className="flex items-center gap-1 mt-0.5 text-[11px] text-amber-400">
@@ -1551,7 +1551,7 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Weather */}
-                        <td className="py-3.5 px-3 align-middle" style={{ minWidth: COL_WIDTHS[5] }}>
+                        <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[5] }}>
                           {weather ? (
                             <div>
                               <div className="text-xs text-muted-foreground">
@@ -1566,7 +1566,7 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Distance */}
-                        <td className="py-3.5 px-3 align-middle" style={{ minWidth: COL_WIDTHS[6] }}>
+                        <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[6] }}>
                           {race.type === "hyrox" ? (
                             <div className="text-sm text-foreground whitespace-nowrap">8K · 8 Stations</div>
                           ) : distPills.length > 0 ? (
@@ -1574,7 +1574,7 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Format (team pills) */}
-                        <td className="py-3.5 px-3 align-middle" style={{ minWidth: COL_WIDTHS[7] }}>
+                        <td className="py-3 px-3 align-middle" style={{ minWidth: COL_WIDTHS[7] }}>
                           {formatDisplay ? (
                             <div className="flex flex-nowrap items-center gap-1">
                               {formatDisplay.split(" · ").map((f: string, i: number) => (
@@ -1586,7 +1586,7 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Link */}
-                        <td className="py-3.5 px-3 text-center align-middle" style={{ minWidth: COL_WIDTHS[8] }}>
+                        <td className="py-3 px-3 text-center align-middle" style={{ minWidth: COL_WIDTHS[8] }}>
                           {race.url && (
                             <a href={race.url} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:text-primary/70 transition-colors" title="Visit race page">
                               ↗
