@@ -333,6 +333,34 @@ function matchesSportFilters(race: Race, sportFilters: Set<string>, subFilters: 
   return false;
 }
 
+function VoterChips({ voters }: { voters: string[] }) {
+  const [expanded, setExpanded] = React.useState(false);
+  const MAX = 3;
+  const visible = expanded ? voters : voters.slice(0, MAX);
+  const overflow = voters.length - MAX;
+  return (
+    <div className="flex flex-wrap gap-1 items-center">
+      {visible.map((v, i) => (
+        <span key={i} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400/15 border border-yellow-400/40 text-yellow-700 dark:text-yellow-300 whitespace-nowrap">
+          ★ {v}
+        </span>
+      ))}
+      {!expanded && overflow > 0 && (
+        <button onClick={e => { e.stopPropagation(); setExpanded(true); }}
+          className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors whitespace-nowrap">
+          +{overflow}
+        </button>
+      )}
+      {expanded && voters.length > MAX && (
+        <button onClick={e => { e.stopPropagation(); setExpanded(false); }}
+          className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-muted border border-border text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
+          ↑ less
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function CalendarPage() {
   const qc = useQueryClient();
 
@@ -1785,41 +1813,12 @@ export default function CalendarPage() {
                             </button>
                           )}
                         </td>
-                        {/* Voters avatars */}
-                        <td className="py-2 px-3 align-middle" style={{ minWidth: 72, maxWidth: 120 }}>
+                        {/* Voters chips — 3 visible, expand on click */}
+                        <td className="py-2 px-3 align-middle" style={{ minWidth: 80, maxWidth: 200 }}>
                           {(() => {
                             const voters = votesByRace.get(race.id) ?? [];
                             if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
-                            const AVATAR_COLORS = [
-                              ["#f59e0b","#1a1a1a"],["#3b82f6","#fff"],["#10b981","#fff"],
-                              ["#8b5cf6","#fff"],["#ef4444","#fff"],["#ec4899","#fff"],
-                              ["#f97316","#fff"],["#06b6d4","#fff"],["#84cc16","#fff"],["#a78bfa","#fff"],
-                            ];
-                            const getColor = (name: string) => {
-                              let h = 0; for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
-                              return AVATAR_COLORS[h % AVATAR_COLORS.length];
-                            };
-                            const MAX = 4;
-                            const visible = voters.slice(0, MAX);
-                            const overflow = voters.length - MAX;
-                            return (
-                              <div className="flex items-center" style={{ gap: "-4px" }}>
-                                {visible.map((v, i) => {
-                                  const [bg, fg] = getColor(v);
-                                  const initials = v.split(" ").map((w:string) => w[0]).join("").slice(0,2).toUpperCase();
-                                  return (
-                                    <span key={i} title={v} className="flex items-center justify-center rounded-full text-[9px] font-black border-2 border-background shrink-0 cursor-default"
-                                      style={{ width:24, height:24, background:bg, color:fg, marginLeft: i > 0 ? -6 : 0, zIndex: MAX - i }}>
-                                      {initials}
-                                    </span>
-                                  );
-                                })}
-                                {overflow > 0 && (
-                                  <span className="flex items-center justify-center rounded-full text-[9px] font-black border-2 border-background bg-muted text-muted-foreground shrink-0"
-                                    style={{ width:24, height:24, marginLeft:-6 }}>+{overflow}</span>
-                                )}
-                              </div>
-                            );
+                            return <VoterChips voters={voters} />;
                           })()}
                         </td>
                         {/* Name + note (name is a link if URL exists) */}
