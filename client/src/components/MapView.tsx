@@ -431,8 +431,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       <div className="absolute top-3 right-3 z-10" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
         <button
           onClick={handleToggleExplore}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all hover:brightness-110 ${
-            showExplore ? "bg-card border-orange-500/70 text-orange-400" : "bg-card border-border text-muted-foreground"
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            showExplore ? "bg-white/90 dark:bg-zinc-800/90 border-orange-400 text-orange-500 dark:text-orange-400" : "bg-white/90 dark:bg-zinc-800/90 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           {showExplore
@@ -446,8 +446,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       <div className="absolute bottom-3 right-3 z-10 flex flex-wrap justify-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", maxWidth: "calc(100% - 60px)" }}>
         <button
           onClick={onToggleUnconfirmed}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all hover:brightness-110 ${
-            showUnconfirmed ? "bg-card border-red-400/60 text-red-400" : "bg-card border-border text-muted-foreground"
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            showUnconfirmed ? "bg-white/90 dark:bg-zinc-800/90 border-red-400 text-red-500 dark:text-red-400" : "bg-white/90 dark:bg-zinc-800/90 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -455,8 +455,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </button>
         <button
           onClick={onToggleHidePast}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all hover:brightness-110 ${
-            !hidePast ? "bg-card border-amber-400/60 text-amber-400" : "bg-card border-border text-muted-foreground"
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            !hidePast ? "bg-white/90 dark:bg-zinc-800/90 border-amber-400 text-amber-500 dark:text-amber-400" : "bg-white/90 dark:bg-zinc-800/90 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           {!hidePast
