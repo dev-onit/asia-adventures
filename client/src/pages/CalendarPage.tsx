@@ -668,7 +668,19 @@ export default function CalendarPage() {
   // ── Fuzzy date parser: handles "Jan 9, 2026", "Jan 9–10, 2026", "May 28-Jun 6, 2026", "Nov 2027" ──
   function parseFuzzyDate(dateStr: string): Date | null {
     if (!dateStr) return null;
-    const s = dateStr.trim();
+    // Strip junk suffixes and normalize before matching
+    let s = dateStr.trim();
+    // "TBC YYYY" → Jan 1 YYYY
+    const tbcYear = s.match(/^TBC\s+(\d{4})$/);
+    if (tbcYear) return new Date(parseInt(tbcYear[1]), 0, 1);
+    // Strip parenthetical junk: "(TBC)", "(exact TBC)", "(early)", "(late)" etc.
+    s = s.replace(/\s*\(.*?\)/g, '').trim();
+    // Strip "pattern / YYYY TBC" and similar tail garbage
+    s = s.replace(/\s*pattern\s*\/.*$/i, '').trim();
+    s = s.replace(/\s*\/\s*\d{4}.*$/i, '').trim();
+    // "Sep/Oct YYYY" → take second month "Oct YYYY"
+    const slashMonth = s.match(/^[A-Za-z]{3}\/([A-Za-z]{3})\s+(\d{4})$/);
+    if (slashMonth) s = `${slashMonth[1]} ${slashMonth[2]}`;
     // Standard: "Jan 12, 2026"
     const std = s.match(/^([A-Za-z]{3})\s+(\d{1,2}),\s*(\d{4})$/);
     if (std) {
@@ -687,7 +699,7 @@ export default function CalendarPage() {
       const d = new Date(`${crossMonth[1]} ${crossMonth[2]}, ${crossMonth[3]}`);
       return isNaN(d.getTime()) ? null : d;
     }
-    // Month + year only: "Nov 2027"
+    // Month + year only: "Nov 2027", "Feb 2027" (after stripping parens above)
     const monthYear = s.match(/^([A-Za-z]{3})\s+(\d{4})$/);
     if (monthYear) {
       const d = new Date(`${monthYear[1]} 1, ${monthYear[2]}`);
