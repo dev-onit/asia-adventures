@@ -16,6 +16,8 @@ interface Props {
   isDark: boolean;
   hidePast: boolean;
   onToggleHidePast: () => void;
+  showUnconfirmed: boolean;
+  onToggleUnconfirmed: () => void;
 }
 
 const TYPE_COLORS: Record<string, string> = {
@@ -151,7 +153,7 @@ const POPUP_STYLE = `
   .leaflet-popup-close-button { color: hsl(var(--muted-foreground)) !important; font-size: 20px !important; width: 28px !important; height: 28px !important; top: 6px !important; right: 6px !important; }
 `;
 
-export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark, hidePast, onToggleHidePast }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const tileLayerRef = useRef<any>(null);
@@ -425,7 +427,16 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   return (
     <div className="relative">
       <div ref={mapRef} className="map-container w-full" style={{ height: "450px", zIndex: 1, touchAction: "pan-y" }} />
-      <div className="absolute bottom-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
+      <div className="absolute bottom-3 right-3 z-10 flex flex-wrap justify-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", maxWidth: "calc(100% - 60px)" }}>
+        <button
+          onClick={onToggleUnconfirmed}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all hover:brightness-110 ${
+            showUnconfirmed ? "bg-card border-red-400/60 text-red-400" : "bg-card border-border text-muted-foreground"
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          {showUnconfirmed ? "Hide Unconfirmed" : "Unconfirmed"}
+        </button>
         <button
           onClick={onToggleHidePast}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all hover:brightness-110 ${

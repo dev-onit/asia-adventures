@@ -1413,21 +1413,6 @@ export default function CalendarPage() {
           <div className="relative">
           <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "3rem" }}>
             <div>
-              <div className="filter-label">Status</div>
-              <div className="flex flex-wrap gap-1.5">
-                <button
-                  onClick={() => setShowUnconfirmed(v => !v)}
-                  className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none ${
-                    showUnconfirmed
-                      ? "bg-red-500/15 border-red-500 text-red-600 dark:bg-red-500/10 dark:border-red-400/60 dark:text-red-400"
-                      : "border-border text-muted-foreground hover:border-red-400/50 hover:text-red-500 dark:hover:text-red-400"
-                  }`}
-                >
-                  <AlertTriangle size={10} />
-                  {showUnconfirmed ? "Unconfirmed ON" : "Show Unconfirmed"}
-                </button>
-              </div>
-            </div>
             <div>
               <div className="filter-label">Month</div>
               <div className="flex flex-wrap gap-1.5">
@@ -1571,6 +1556,8 @@ export default function CalendarPage() {
         isDark={isDark}
         hidePast={hidePast}
         onToggleHidePast={() => setHidePast(v => !v)}
+        showUnconfirmed={showUnconfirmed}
+        onToggleUnconfirmed={() => setShowUnconfirmed(v => !v)}
       />
 
       {/* ── Races section ── */}
