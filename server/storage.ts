@@ -82,7 +82,7 @@ export async function getExploreSites() {
 }
 
 // Bump this whenever seedData changes — forces a full wipe+reseed on next deploy
-const SEED_VERSION = "v18-hyderabad-2026-06-23";
+const SEED_VERSION = "v19-hyd-dedup-2026-06-23";
 
 export async function seedIfEmpty() {
   // ── Migrations FIRST — must run before any drizzle SELECT uses the schema ──
