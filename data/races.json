@@ -4427,7 +4427,7 @@
     "name": "BTN Jakarta International Marathon",
     "location": "Jakarta",
     "country": "Indonesia",
-    "date": "Jun 13, 2026",
+    "date": "Jun 14, 2026",
     "distance": "Marathon 42.2km / Half / 10km / 5km",
     "distanceLabel": "5K · 10K · 42.2K · Road",
     "type": "running",
@@ -4435,7 +4435,7 @@
     "url": "https://jakim.id",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 13, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]"
   },
   {
     "name": "Ironman 70.3 Higashimikawa Japan",
