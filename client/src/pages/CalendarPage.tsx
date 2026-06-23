@@ -538,6 +538,16 @@ export default function CalendarPage() {
     return s;
   }, [favSet, races]);
 
+  const mostVotedCountries = useMemo(() => {
+    const s = new Set<string>();
+    for (const [raceId, voters] of votesByRace) {
+      if (voters.length === 0) continue;
+      const r = races.find(x => x.id === raceId);
+      if (r) s.add(r.country);
+    }
+    return s;
+  }, [votesByRace, races]);
+
   const allVoters = useMemo(() => [...new Set(favourites.map(f => f.voterName))].sort(), [favourites]);
 
   // ── Sport filter helpers ──
@@ -799,6 +809,9 @@ export default function CalendarPage() {
       if (showFavs) {
         if (favCountries.size === 0) return false;
         if (!favCountries.has(s.country)) return false;
+      } else if (sortMode === "votes") {
+        if (mostVotedCountries.size === 0) return false;
+        if (!mostVotedCountries.has(s.country)) return false;
       } else if (anyRaceFilterActive) {
         if (!filteredRaceCountries.has(s.country)) return false;
       }
@@ -809,7 +822,7 @@ export default function CalendarPage() {
       }
       return true;
     });
-  }, [exploreSites, showFavs, favCountries, countryFilters, exploreCategoryFilters, search, filteredRaceCountries, raceFiltersActive, monthFilters, yearFilters, personFilter, minVotesFilter, teamFilters]);
+  }, [exploreSites, showFavs, favCountries, sortMode, mostVotedCountries, countryFilters, exploreCategoryFilters, search, filteredRaceCountries, raceFiltersActive, monthFilters, yearFilters, personFilter, minVotesFilter, teamFilters]);
 
   // ── Header height measurement ──
   const headerRef = useRef<HTMLElement>(null);
