@@ -234,4 +234,8 @@ export const COUNTRY_WEATHER: Record<string, { flag: string; best: string }> = {
   "Pakistan": { flag: "🇵🇰", best: "Mar–May, Sep–Nov" },
   "Bangladesh": { flag: "🇧🇩", best: "Nov–Feb" },
   "New Zealand": { flag: "🇳🇿", best: "Nov–Apr" },
+  "Uzbekistan": { flag: "🇺🇿", best: "Apr–Jun, Sep–Oct" },
+  "Australia": { flag: "🇦🇺", best: "Mar–May, Sep–Nov" },
+  "Hong Kong": { flag: "🇭🇰", best: "Oct–Dec" },
+  "Bahrain": { flag: "🇧🇭", best: "Nov–Mar" },
 };

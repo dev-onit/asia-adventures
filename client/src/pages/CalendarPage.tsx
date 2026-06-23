@@ -665,6 +665,61 @@ export default function CalendarPage() {
     });
   }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast]);
 
+  // ── Fuzzy date parser: handles "Jan 9, 2026", "Jan 9–10, 2026", "May 28-Jun 6, 2026", "Nov 2027" ──
+  function parseFuzzyDate(dateStr: string): Date | null {
+    if (!dateStr) return null;
+    const s = dateStr.trim();
+    // Standard: "Jan 12, 2026"
+    const std = s.match(/^([A-Za-z]{3})\s+(\d{1,2}),\s*(\d{4})$/);
+    if (std) {
+      const d = new Date(s);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    // Range same month: "Jan 9–10, 2026" or "Jan 9-10, 2026"
+    const sameMonth = s.match(/^([A-Za-z]{3})\s+(\d{1,2})[\u2013\-]\d{1,2},?\s*(\d{4})$/);
+    if (sameMonth) {
+      const d = new Date(`${sameMonth[1]} ${sameMonth[2]}, ${sameMonth[3]}`);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    // Cross-month range: "May 28-Jun 6, 2026"
+    const crossMonth = s.match(/^([A-Za-z]{3})\s+(\d{1,2})[\u2013\-][A-Za-z]{3}\s+\d{1,2},?\s*(\d{4})$/);
+    if (crossMonth) {
+      const d = new Date(`${crossMonth[1]} ${crossMonth[2]}, ${crossMonth[3]}`);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    // Month + year only: "Nov 2027"
+    const monthYear = s.match(/^([A-Za-z]{3})\s+(\d{4})$/);
+    if (monthYear) {
+      const d = new Date(`${monthYear[1]} 1, ${monthYear[2]}`);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    // Year only: "2027"
+    const yearOnly = s.match(/^(\d{4})$/);
+    if (yearOnly) return new Date(parseInt(yearOnly[1]), 0, 1);
+    // Fallback
+    const d = new Date(s);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  // ── Sorted + filtered races (year-aware sort key) ──
+  const sortedFiltered = useMemo(() => {
+    const getSortKey = (r: any): number => {
+      try {
+        const ds: {date: string, status: string}[] = JSON.parse((r as any).dates ?? "[]");
+        const allD = ds.length > 0 ? ds.map(d => d.date) : [r.date];
+        // Within active year filters, prefer the earliest matching date
+        const yearSet = yearFilters.length > 0 ? new Set(yearFilters) : null;
+        const candidates = allD.filter(d => yearSet === null || [...yearSet].some(y => d.includes(y)));
+        const toSearch = candidates.length > 0 ? candidates : allD;
+        const parsed = toSearch.map(d => parseFuzzyDate(d)).filter((d): d is Date => d !== null);
+        if (parsed.length > 0) return Math.min(...parsed.map(d => d.getTime()));
+      } catch {}
+      const fallback = parseFuzzyDate(r.date);
+      return fallback ? fallback.getTime() : 0;
+    };
+    return [...filtered].sort((a, b) => getSortKey(a) - getSortKey(b));
+  }, [filtered, yearFilters]);
+
   // Countries present in filtered races (for side quest sync)
   const filteredRaceCountries = useMemo(() => new Set(filtered.map(r => r.country)), [filtered]);
 
@@ -1565,27 +1620,21 @@ export default function CalendarPage() {
               </thead>
               <tbody>
                 {(() => {
-                  // Sort filtered by earliest date before grouping
-                  const MONTH_ORDER: Record<string,number> = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
-                  const getEarliestDate = (r: any): number => {
-                    try {
-                      const ds: {date:string}[] = JSON.parse((r as any).dates ?? "[]");
-                      const allD = ds.length > 0 ? ds.map(d => d.date) : [r.date];
-                      const parsed = allD.map((d: string) => new Date(d)).filter((d: Date) => !isNaN(d.getTime()));
-                      if (parsed.length > 0) return Math.min(...parsed.map((d: Date) => d.getTime()));
-                    } catch {}
-                    return new Date(r.date).getTime() || 0;
-                  };
-                  const sorted = [...filtered].sort((a, b) => getEarliestDate(a) - getEarliestDate(b));
-                  let lastMonthGroup = "";
-                  const getMonthGroup = (r: any) => {
+                  // Month group label using parseFuzzyDate for accurate month/year
+                  const getMonthGroup = (r: any): string => {
                     let primary = r.date as string;
                     try { const ds = JSON.parse((r as any).dates ?? "[]"); if (ds.length > 0) primary = ds[0].date; } catch {}
+                    const parsed = parseFuzzyDate(primary.trim());
+                    if (parsed) {
+                      const mon = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][parsed.getMonth()];
+                      return `${mon} ${parsed.getFullYear()}`;
+                    }
+                    // Fallback: first word + last word
                     const parts = primary.trim().split(" ");
-                    if (parts.length >= 2) return `${parts[0]} ${parts[parts.length - 1]}`;
-                    return primary;
+                    return parts.length >= 2 ? `${parts[0]} ${parts[parts.length - 1]}` : primary;
                   };
-                  return sorted.map((race) => {
+                  let lastMonthGroup = "";
+                  return sortedFiltered.map((race) => {
                     const monthGroup = getMonthGroup(race);
                     const showGroupHeader = monthGroup !== lastMonthGroup;
                     lastMonthGroup = monthGroup;
@@ -1613,7 +1662,7 @@ export default function CalendarPage() {
                     } catch { return false; }
                   })();
                   return (
-                    <>
+                    <React.Fragment key={race.id}>
                       {showGroupHeader && (
                         <tr className="bg-muted/50 border-y border-border/60">
                           <td colSpan={8} className="px-4 py-1.5">
@@ -1621,7 +1670,7 @@ export default function CalendarPage() {
                           </td>
                         </tr>
                       )}
-                      <React.Fragment key={race.id}>
+                      <>
                       <tr className={`border-b border-border transition-colors ${rowBg} ${isPast ? "opacity-40 grayscale-[60%]" : ""}`}>
                         {/* ★ Star */}
                         <td className="text-center py-4 px-3 align-middle" style={{ width: COL_WIDTHS[0] }}>
@@ -1726,8 +1775,8 @@ export default function CalendarPage() {
 
                       </tr>
                       {/* Note moved into Name cell — sub-row removed */}
-                    </React.Fragment>
                     </>
+                    </React.Fragment>
                   );
                   });
                 })()}
