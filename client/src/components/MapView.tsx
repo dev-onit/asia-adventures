@@ -151,7 +151,7 @@ const POPUP_STYLE = `
   .leaflet-popup-close-button { color: hsl(var(--muted-foreground)) !important; font-size: 20px !important; width: 28px !important; height: 28px !important; top: 6px !important; right: 6px !important; }
 `;
 
-export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark, hidePast, onToggleHidePast }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const tileLayerRef = useRef<any>(null);
