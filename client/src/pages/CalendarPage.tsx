@@ -375,7 +375,7 @@ export default function CalendarPage() {
 
   // ── Show Unconfirmed toggle ──
   const [showUnconfirmed, setShowUnconfirmed] = useState(() => {
-    try { return localStorage.getItem(STORAGE_SHOW_UNCONFIRMED) === "true"; } catch { return false; }
+    try { const v = localStorage.getItem(STORAGE_SHOW_UNCONFIRMED); return v === null ? true : v === "true"; } catch { return true; }
   });
 
   // ── Hide past races toggle (default: true = hide past) ──
@@ -544,10 +544,9 @@ export default function CalendarPage() {
     n += countryFilters.length + monthFilters.length + yearFilters.length + exploreCategoryFilters.length + cityFilters.length;
     if (personFilter) n++;
     if (minVotesFilter) n++;
-    if (showUnconfirmed) n++;
     if (search) n++;
     return n;
-  }, [sportFilters, subFilters, teamFilters, countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters, search, showUnconfirmed]);
+  }, [sportFilters, subFilters, teamFilters, countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters, search]);
 
   // ── Clear all filters ──
   const clearAll = useCallback(() => {
@@ -563,7 +562,6 @@ export default function CalendarPage() {
     setExploreCategoryFilters([]);
     setRegionFilters([]);
     setSearch("");
-    setShowUnconfirmed(false);
     setShowFilters(false);
     setShowTimeFilters(false);
     setRaceFilterOpen(false);
@@ -1029,15 +1027,15 @@ export default function CalendarPage() {
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-all border rounded-lg hover:bg-violet-500/10 hover:text-violet-400 ${
                   activeSubPanel === 'dates'
                     ? "bg-violet-500/15 text-violet-400 border-violet-400"
-                    : monthFilters.length > 0 || yearFilters.length > 0 || showUnconfirmed
+                    : monthFilters.length > 0 || yearFilters.length > 0
                     ? "text-violet-400 border-transparent"
                     : "text-violet-400/70 border-transparent"
                 }`}
               >
                 Dates
-                {(monthFilters.length + yearFilters.length + (showUnconfirmed ? 1 : 0)) > 0 && (
+                {(monthFilters.length + yearFilters.length) > 0 && (
                   <span className="bg-violet-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
-                    {monthFilters.length + yearFilters.length + (showUnconfirmed ? 1 : 0)}
+                    {monthFilters.length + yearFilters.length}
                   </span>
                 )}
               </button>
@@ -1519,11 +1517,7 @@ export default function CalendarPage() {
                 {y}<button onClick={() => toggleYear(y)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
-            {showUnconfirmed && (
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-red-500/10 border border-red-400/40 text-red-600 dark:text-red-400 font-medium">
-                <AlertTriangle size={10} className="shrink-0" />Unconfirmed ON<button onClick={() => setShowUnconfirmed(false)} className="hover:opacity-70 leading-none"><X size={10} /></button>
-              </span>
-            )}
+
             {/* Search */}
             {search && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary font-medium">
@@ -1538,7 +1532,6 @@ export default function CalendarPage() {
       {/* Result bar */}
       <div className="px-4 py-2 text-xs text-muted-foreground border-b border-border">
         {filtered.length} {filtered.length === 1 ? "race" : "races"}{filtered.length < races.length ? ` of ${races.length}` : ""}
-        {!showUnconfirmed && <span className="ml-2 text-muted-foreground/50">· unconfirmed hidden</span>}
       </div>
 
       {/* Map */}
