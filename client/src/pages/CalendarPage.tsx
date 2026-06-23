@@ -996,7 +996,7 @@ export default function CalendarPage() {
         </div>
 
         {/* Row 2: My Favourites + Most Voted + theme toggle */}
-        <div className="flex items-center gap-5 px-4 pt-1 pb-4">
+        <div className="flex items-center gap-3 px-4 pt-3 pb-4">
           <button
             onClick={() => {
               if (!showFavs) {
