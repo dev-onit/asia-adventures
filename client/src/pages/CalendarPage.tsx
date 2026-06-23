@@ -25,23 +25,24 @@ if (!document.getElementById(leafletJsId)) {
   document.head.appendChild(script);
 }
 
-const STORAGE_KEY = "asia-cal-voter";
-const STORAGE_RACE_FILTER_OPEN = "asia-cal-race-filter-open";
-const STORAGE_RACE_FILTER_SECTIONS = "asia-cal-race-filter-sections";
-const STORAGE_HIDE_PAST = "asia-cal-hide-past";
-const STORAGE_SHOW_UNCONFIRMED = "asia-cal-show-unconfirmed";
-const STORAGE_SPORT_FILTERS = "asia-cal-sport-filters";
-const STORAGE_SUB_FILTERS = "asia-cal-sub-filters";
-const STORAGE_TEAM_FILTERS = "asia-cal-team-filters";
-const STORAGE_COUNTRY_FILTERS = "asia-cal-country-filters";
-const STORAGE_MONTH_FILTERS = "asia-cal-month-filters";
-const STORAGE_YEAR_FILTERS = "asia-cal-year-filters";
-const STORAGE_EXPLORE_FILTERS = "asia-cal-explore-filters";
-const STORAGE_REGION_FILTERS = "asia-cal-region-filters";
-const STORAGE_CITY_FILTERS = "asia-cal-city-filters";
-const STORAGE_ACTIVE_SUB_PANEL = "asia-cal-active-sub-panel";
-const STORAGE_SHOW_FILTER_BAR = "asia-cal-show-filter-bar";
-const STORAGE_THEME = "asia-cal-theme";
+const S = "v2:"; // bump this prefix to invalidate all users' localStorage
+const STORAGE_KEY = S+"asia-cal-voter";
+const STORAGE_RACE_FILTER_OPEN = S+"asia-cal-race-filter-open";
+const STORAGE_RACE_FILTER_SECTIONS = S+"asia-cal-race-filter-sections";
+const STORAGE_HIDE_PAST = S+"asia-cal-hide-past";
+const STORAGE_SHOW_UNCONFIRMED = S+"asia-cal-show-unconfirmed";
+const STORAGE_SPORT_FILTERS = S+"asia-cal-sport-filters";
+const STORAGE_SUB_FILTERS = S+"asia-cal-sub-filters";
+const STORAGE_TEAM_FILTERS = S+"asia-cal-team-filters";
+const STORAGE_COUNTRY_FILTERS = S+"asia-cal-country-filters";
+const STORAGE_MONTH_FILTERS = S+"asia-cal-month-filters";
+const STORAGE_YEAR_FILTERS = S+"asia-cal-year-filters";
+const STORAGE_EXPLORE_FILTERS = S+"asia-cal-explore-filters";
+const STORAGE_REGION_FILTERS = S+"asia-cal-region-filters";
+const STORAGE_CITY_FILTERS = S+"asia-cal-city-filters";
+const STORAGE_ACTIVE_SUB_PANEL = S+"asia-cal-active-sub-panel";
+const STORAGE_SHOW_FILTER_BAR = S+"asia-cal-show-filter-bar";
+const STORAGE_THEME = S+"asia-cal-theme";
 
 // Extract city = first segment before comma in location
 const extractCity = (location: string) => location.split(",")[0].trim();
