@@ -40,7 +40,7 @@ const TYPE_LETTERS: Record<string, string> = {
 
 const TYPE_LABELS: Record<string, string> = {
   running: "Running", triathlon: "Triathlon", trail: "Trail",
-  hyrox: "Hyrox", "ocean-swim": "Swim", duathlon: "Duathlon",
+  hyrox: "Hyrox", "ocean-swim": "Swimming", duathlon: "Duathlon",
   adventure: "Adventure", swimrun: "SwimRun", ocr: "OCR", xenom: "Xenom",
 };
 
