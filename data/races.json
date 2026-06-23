@@ -3770,12 +3770,12 @@
     "location": "Myoko City, Niigata",
     "country": "Japan",
     "date": "Sep 20, 2026",
-    "distance": "5K",
+    "distance": "23.5km / 11km / 5km",
     "distanceLabel": "Various",
     "type": "trail",
     "team": "Solo",
     "url": "https://goldentrailseries.com/race/myoko-trail/",
-    "note": "",
+    "note": "Golden Trail Series. Suginohara Ski Resort. 1,783m elevation gain. 400 runners.",
     "status": "active",
     "dates": "[{\"date\": \"Sep 20, 2026\", \"status\": \"active\"}]"
   },
@@ -4450,20 +4450,6 @@
     "note": "",
     "status": "watchlist",
     "dates": "[{\"date\": \"Jun 1, 2026\", \"status\": \"watchlist\"}]"
-  },
-  {
-    "name": "Myoko Trail",
-    "location": "Myoko, Niigata",
-    "country": "Japan",
-    "date": "Sep 20, 2026",
-    "distance": "23.5km trail",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://goldentrailseries.com/race/myoko-trail/",
-    "note": "Golden Trail Series. Suginohara Ski Resort. 1,783m elevation gain. 400 runners.",
-    "status": "active",
-    "dates": "[{\"date\": \"Sep 20, 2026\", \"status\": \"active\"}]"
   },
   {
     "name": "Gold Coast Marathon",
@@ -5626,20 +5612,6 @@
     "note": "",
     "status": "active",
     "dates": "[{\"date\": \"Feb 1, 2026\", \"status\": \"active\"}]"
-  },
-  {
-    "name": "Golden Trail World Series Myoko Trail",
-    "location": "Myoko City, Niigata",
-    "country": "Japan",
-    "date": "Sep 19, 2026",
-    "distance": "23.5km / 11km / 5km",
-    "distanceLabel": "5K · Trail",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://goldentrailseries.com",
-    "note": "",
-    "status": "active",
-    "dates": "[{\"date\": \"Sep 19, 2026\", \"status\": \"active\"}]"
   },
   {
     "name": "Daisetsuzan Trail Journey",
