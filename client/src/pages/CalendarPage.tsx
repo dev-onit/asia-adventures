@@ -1565,10 +1565,10 @@ export default function CalendarPage() {
                             </div>
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
-                        {/* Distance — blank for Hyrox (format is the distance) */}
+                        {/* Distance */}
                         <td className="py-3.5 px-3 align-middle" style={{ minWidth: COL_WIDTHS[6] }}>
                           {race.type === "hyrox" ? (
-                            <span className="text-xs text-muted-foreground">—</span>
+                            <div className="text-sm text-foreground whitespace-nowrap">8K · 8 Stations</div>
                           ) : distPills.length > 0 ? (
                             <div className="text-sm text-foreground">{distPills.join(" · ")}</div>
                           ) : <span className="text-xs text-muted-foreground">—</span>}
