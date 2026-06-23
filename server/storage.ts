@@ -95,8 +95,8 @@ export async function seedIfEmpty() {
   // If the DB has fewer than 500 races, wipe and reseed.
   const count = db.select().from(races).all().length;
 
-  if (count < 510) {
-    console.log(`[seed] count=${count} < 510 — wiping and reseeding all races`);
+  if (count < 482) {
+    console.log(`[seed] count=${count} < 482 — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
     const { syncAllRaces } = await import("./seed.js");

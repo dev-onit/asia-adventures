@@ -13,7 +13,7 @@
     "status": "active"
   },
   {
-    "name": "Mumbai Marathon (Tata)",
+    "name": "Mumbai Marathon",
     "location": "Mumbai",
     "country": "India",
     "date": "Jan 19, 2026",
@@ -26,7 +26,7 @@
     "status": "active"
   },
   {
-    "name": "Coastal Odyssey Goa (20K Sea Swim)",
+    "name": "Coastal Odyssey Goa",
     "location": "Benaulim, South Goa",
     "country": "India",
     "date": "Jan 25, 2026",
@@ -91,7 +91,7 @@
     "status": "watchlist"
   },
   {
-    "name": "HYROX India Mumbai",
+    "name": "Hyrox India Mumbai",
     "location": "Mumbai",
     "country": "India",
     "date": "Mar 1, 2026",
@@ -133,12 +133,12 @@
     "name": "Ironman 70.3 Goa",
     "location": "Goa",
     "country": "India",
-    "date": "Nov 16, 2026",
+    "date": "Nov 1, 2026",
     "distance": "Half Ironman (70.3mi)",
     "distanceLabel": "Half IM",
     "type": "triathlon",
     "team": "Solo / Relay",
-    "url": "https://ironman.com",
+    "url": "https://www.indiarunning.com/events/ironman_703_goa_22384",
     "note": "",
     "status": "active"
   },
@@ -164,7 +164,7 @@
     "distanceLabel": "Olympic+",
     "type": "triathlon",
     "team": "Solo / Relay",
-    "url": "https://lagunaphuket.com/triathlon",
+    "url": "https://lagunaphuket.com/triathlon/",
     "note": "",
     "status": "active"
   },
@@ -221,16 +221,16 @@
     "status": "active"
   },
   {
-    "name": "HYROX Bangkok",
-    "location": "Bangkok",
+    "name": "Hyrox Bangkok",
+    "location": "Bangkok, Thailand",
     "country": "Thailand",
-    "date": "Sep 20, 2026",
+    "date": "Mar 20, 2026",
     "distance": "8km + 8 stations",
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "",
+    "note": "Season 9 announced city. 2026 was Mar 20-22. Predicted Mar 2027.",
     "status": "active"
   },
   {
@@ -243,7 +243,7 @@
     "type": "running",
     "team": "Solo",
     "url": "https://marathon.tokyo",
-    "note": "",
+    "note": "Confirmed date from aims-worldrunning.org",
     "status": "active"
   },
   {
@@ -256,7 +256,7 @@
     "type": "running",
     "team": "Solo",
     "url": "https://www.osaka-marathon.com/2026/en/",
-    "note": "",
+    "note": "Confirmed date from rundida.com",
     "status": "active"
   },
   {
@@ -269,7 +269,7 @@
     "type": "running",
     "team": "Solo",
     "url": "https://kyoto-marathon.com/en/",
-    "note": "",
+    "note": "Confirmed date from kyoto-marathon.com",
     "status": "active"
   },
   {
@@ -286,7 +286,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Tokyo",
+    "name": "Hyrox Tokyo",
     "location": "Tokyo",
     "country": "Japan",
     "date": "Nov 8, 2026",
@@ -372,12 +372,12 @@
     "distanceLabel": "IM",
     "type": "triathlon",
     "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "Full distance Ironman in Subic Bay, Philippines. 3.8km swim, 180km bike, 42.2km run.",
+    "url": "https://www.ironman.com/races",
+    "note": "",
     "status": "active"
   },
   {
-    "name": "Ironman 70.3 Philippines (Cebu)",
+    "name": "Ironman 70.3 Philippines",
     "location": "Mactan, Cebu",
     "country": "Philippines",
     "date": "Aug 10, 2026",
@@ -429,7 +429,7 @@
     "status": "active"
   },
   {
-    "name": "KL City Marathon 2026",
+    "name": "KL City Marathon",
     "location": "Kuala Lumpur",
     "country": "Malaysia",
     "date": "Jun 29, 2026",
@@ -481,7 +481,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Singapore",
+    "name": "Hyrox Singapore",
     "location": "Singapore",
     "country": "Singapore",
     "date": "Sep 6, 2026",
@@ -503,7 +503,7 @@
     "type": "running",
     "team": "Solo",
     "url": "https://en.seoul-marathon.com",
-    "note": "",
+    "note": "Confirmed date from seoul-marathon.com",
     "status": "active"
   },
   {
@@ -520,7 +520,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Seoul",
+    "name": "Hyrox Seoul",
     "location": "Seoul",
     "country": "South Korea",
     "date": "Oct 18, 2026",
@@ -581,7 +581,7 @@
     "type": "triathlon",
     "team": "Solo / Relay",
     "url": "https://ironman.com",
-    "note": "Full distance Ironman in Penghu, Taiwan. 3.8km swim, 180km bike, 42.2km run.",
+    "note": "",
     "status": "active"
   },
   {
@@ -702,7 +702,7 @@
     "status": "active"
   },
   {
-    "name": "Gobi March (4 Deserts)",
+    "name": "Gobi March",
     "location": "Gobi Desert",
     "country": "Mongolia",
     "date": "Jun 15, 2026",
@@ -801,7 +801,7 @@
     "distanceLabel": "Various",
     "type": "trail",
     "team": "Solo",
-    "url": "https://thehellrace.com/goa-ultra-02-03-aug-2025-the-hell-race/",
+    "url": "https://thehellrace.com/",
     "note": "",
     "status": "watchlist"
   },
@@ -871,15 +871,15 @@
     "status": "active"
   },
   {
-    "name": "HYROX Bengaluru",
-    "location": "Bengaluru",
+    "name": "Hyrox Bengaluru",
+    "location": "Bengaluru, Karnataka",
     "country": "India",
-    "date": "Nov 1, 2026",
-    "distance": "8km + 8 stations",
+    "date": "Apr 11, 2026",
+    "distance": "8km run + 8 workout stations",
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
+    "team": "Solo · Relay · Doubles",
+    "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active"
   },
@@ -897,16 +897,16 @@
     "status": "active"
   },
   {
-    "name": "HYROX Osaka",
-    "location": "Osaka",
+    "name": "Hyrox Osaka",
+    "location": "Osaka, Japan",
     "country": "Japan",
-    "date": "Dec 6, 2026",
+    "date": "Jan 30, 2026",
     "distance": "8km + 8 stations",
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "",
+    "note": "Predicted Jan 2027 from 2026 (Jan 30). Exact date TBC.",
     "status": "active"
   },
   {
@@ -1209,7 +1209,7 @@
     "status": "watchlist"
   },
   {
-    "name": "India HYROX Championship",
+    "name": "India Hyrox Championship",
     "location": "New Delhi",
     "country": "India",
     "date": "Mar 22, 2026",
@@ -1313,7 +1313,7 @@
     "status": "active"
   },
   {
-    "name": "Nagoya Women's Marathon",
+    "name": "Nagoya Women",
     "location": "Nagoya",
     "country": "Japan",
     "date": "Mar 9, 2026",
@@ -1322,7 +1322,7 @@
     "type": "running",
     "team": "Solo",
     "url": "https://womens-marathon.nagoya/en/",
-    "note": "",
+    "note": "Confirmed date from hashirun.com",
     "status": "active"
   },
   {
@@ -1348,7 +1348,7 @@
     "type": "triathlon",
     "team": "Solo / Relay",
     "url": "https://ironman.com",
-    "note": "Full distance Ironman in Gamagori, Aichi, Japan. 3.8km swim, 180km bike, 42.2km run.",
+    "note": "",
     "status": "active"
   },
   {
@@ -1387,7 +1387,7 @@
     "type": "running",
     "team": "Solo",
     "url": "https://www.phuketmarathon.com",
-    "note": "",
+    "note": "Predicted from 2026 (Jun 1). Exact date TBC.",
     "status": "active"
   },
   {
@@ -1443,7 +1443,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Seoul Spring",
+    "name": "Hyrox Seoul Spring",
     "location": "Seoul",
     "country": "South Korea",
     "date": "Apr 12, 2026",
@@ -1469,20 +1469,7 @@
     "status": "active"
   },
   {
-    "name": "Ironman 70.3 Philippines (Clark)",
-    "location": "Cebu",
-    "country": "Philippines",
-    "date": "Aug 3, 2026",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Manila",
+    "name": "Hyrox Manila",
     "location": "Manila",
     "country": "Philippines",
     "date": "Sep 27, 2026",
@@ -1495,7 +1482,7 @@
     "status": "active"
   },
   {
-    "name": "Standard Chartered KL Marathon 2026",
+    "name": "Standard Chartered KL Marathon",
     "location": "Kuala Lumpur",
     "country": "Malaysia",
     "date": "Jun 22, 2026",
@@ -1517,7 +1504,7 @@
     "type": "triathlon",
     "team": "Solo / Relay",
     "url": "https://ironman.com",
-    "note": "",
+    "note": "Predicted from 2026 (Nov 2). Exact date TBC.",
     "status": "active"
   },
   {
@@ -1633,259 +1620,12 @@
     "distanceLabel": "Various · Ocean",
     "type": "ocean-swim",
     "team": "Solo",
-    "url": "https://www.worldsmarathons.com/marathon/hainan-open-water-swim",
+    "url": "https://www.worldsmarathons.com/marathon/hainan-open-water-swim-festival",
     "note": "",
     "status": "active"
   },
   {
-    "name": "Vasai-Virar Marathon 2027",
-    "location": "Mumbai",
-    "country": "India",
-    "date": "Jan 4, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://vasaivirarmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Goa Open Water Swim 2027",
-    "location": "Candolim Beach, Goa",
-    "country": "India",
-    "date": "Jan 10, 2027",
-    "distance": "3km",
-    "distanceLabel": "3K · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo",
-    "url": "https://goaswim.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Freshworks Chennai Marathon 2027",
-    "location": "Chennai",
-    "country": "India",
-    "date": "Jan 11, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://chennaihalf.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Mumbai Marathon 2027 (Tata)",
-    "location": "Mumbai",
-    "country": "India",
-    "date": "Jan 18, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://tatamumbaimarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Kaveri Trail Marathon 2027",
-    "location": "Mysuru",
-    "country": "India",
-    "date": "Jan 18, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://kaveritrail.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Coastal Odyssey Goa 2027",
-    "location": "Benaulim, South Goa",
-    "country": "India",
-    "date": "Jan 24, 2027",
-    "distance": "2km",
-    "distanceLabel": "2K · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo",
-    "url": "https://coastalodyssey.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Jaipur Marathon 2027",
-    "location": "Jaipur",
-    "country": "India",
-    "date": "Jan 25, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://jaipurmarathon.org",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Tata Steel Kolkata 25K 2027",
-    "location": "Kolkata",
-    "country": "India",
-    "date": "Jan 25, 2027",
-    "distance": "5K",
-    "distanceLabel": "5K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://kolkata25k.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Hyderabad Marathon 2027 (Jan)",
-    "location": "Hyderabad",
-    "country": "India",
-    "date": "Jan 25, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://hyderabadmarathon.com",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "KAPCH Challenge 2027",
-    "location": "Kevadia, Gujarat",
-    "country": "India",
-    "date": "Jan 31, 2027",
-    "distance": "Various",
-    "distanceLabel": "Sprint",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://kapchchallenge.com",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Rann Utsav Run 2027",
-    "location": "Kutch, Gujarat",
-    "country": "India",
-    "date": "Jan 31, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://rannrun.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Bengaluru Midnight Marathon 2027",
-    "location": "Bengaluru",
-    "country": "India",
-    "date": "Feb 14, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://bengalurunightmarathon.com",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Desert Storm Bikaner 2027",
-    "location": "Bikaner, Rajasthan",
-    "country": "India",
-    "date": "Feb 14, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://deserstorm.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "MG Vadodara Marathon 2027",
-    "location": "Vadodara, Gujarat",
-    "country": "India",
-    "date": "Feb 8, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://vadodamamarathon.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Auroville Trail 2027",
-    "location": "Auroville, Tamil Nadu",
-    "country": "India",
-    "date": "Feb 21, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://aurovilletrail.com",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX India Mumbai 2027",
-    "location": "Mumbai",
-    "country": "India",
-    "date": "Mar 7, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Kolkata Marathon 2027",
-    "location": "Kolkata",
-    "country": "India",
-    "date": "Mar 8, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://kolkatamarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Delhi Half Marathon 2027",
-    "location": "New Delhi",
-    "country": "India",
-    "date": "Mar 15, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://airteldelhalfmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "India HYROX Championship 2027",
-    "location": "New Delhi",
-    "country": "India",
-    "date": "Mar 21, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "TCS World 10K Bengaluru 2027",
+    "name": "TCS World 10K Bengaluru",
     "location": "Bengaluru",
     "country": "India",
     "date": "May 17, 2027",
@@ -1898,150 +1638,7 @@
     "status": "active"
   },
   {
-    "name": "Himachal Triathlon 2027",
-    "location": "Shimla, HP",
-    "country": "India",
-    "date": "Jun 13, 2027",
-    "distance": "Various",
-    "distanceLabel": "Olympic",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://himachaltriathlon.in",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Spiti Valley Ultramarathon 2027",
-    "location": "Spiti Valley, HP",
-    "country": "India",
-    "date": "Jun 27, 2027",
-    "distance": "Ultra 100K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://spitivalleyultra.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ultramarathon Manali 2027",
-    "location": "Manali, HP",
-    "country": "India",
-    "date": "Jul 5, 2027",
-    "distance": "Ultra 50K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://manaliumarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Cherrapunji Rain Run 2027",
-    "location": "Cherrapunji, Meghalaya",
-    "country": "India",
-    "date": "Jul 19, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://cherrapunjirun.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Hyderabad Marathon 2027 (Aug)",
-    "location": "Hyderabad",
-    "country": "India",
-    "date": "Aug 23, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://hyderabadmarathon.com",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Ladakh Marathon 2027",
-    "location": "Leh, Ladakh",
-    "country": "India",
-    "date": "Sep 5, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://ladakhmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Pune Marathon 2027",
-    "location": "Pune",
-    "country": "India",
-    "date": "Sep 13, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://punemarathon.in",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Sikkim Himalayan Ultra 2027",
-    "location": "Gangtok, Sikkim",
-    "country": "India",
-    "date": "Oct 10, 2027",
-    "distance": "Ultra 50K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://sikkimultra.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Kolkata 2027",
-    "location": "Kolkata",
-    "country": "India",
-    "date": "Oct 11, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Airtel Delhi Half Marathon 2027",
-    "location": "New Delhi",
-    "country": "India",
-    "date": "Oct 18, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://airteldelhalfmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Vedanta Delhi Half Marathon 2027",
-    "location": "New Delhi",
-    "country": "India",
-    "date": "Oct 18, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://vdhlm.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Vishakhapatnam 2027",
+    "name": "Ironman 70.3 Vishakhapatnam",
     "location": "Vizag",
     "country": "India",
     "date": "Oct 25, 2027",
@@ -2054,284 +1651,11 @@
     "status": "active"
   },
   {
-    "name": "Kochi Ironkid Triathlon 2027",
-    "location": "Kochi, Kerala",
-    "country": "India",
-    "date": "Nov 7, 2027",
-    "distance": "Various",
-    "distanceLabel": "Sprint",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironkid.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Ironman 70.3 Goa 2027",
-    "location": "Goa",
-    "country": "India",
-    "date": "Nov 15, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Spicejet Hyderabad Half Marathon 2027",
-    "location": "Hyderabad",
-    "country": "India",
-    "date": "Nov 15, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://hyderabadhalf.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Bengaluru 2027",
-    "location": "Bengaluru",
-    "country": "India",
-    "date": "Nov 2, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Coastal Trail Run Goa 2027",
-    "location": "Goa",
-    "country": "India",
-    "date": "Nov 28, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://coastaltrailgoa.com",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Ironman 70.3 Bengaluru 2027",
-    "location": "Bengaluru",
-    "country": "India",
-    "date": "Dec 6, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Pinkathon Mumbai 2027",
-    "location": "Mumbai",
-    "country": "India",
-    "date": "Dec 13, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://pinkathon.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Mumbai Ocean Swim 2027",
-    "location": "Juhu Beach, Mumbai",
-    "country": "India",
-    "date": "Dec 13, 2027",
-    "distance": "5km",
-    "distanceLabel": "5K · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo",
-    "url": "https://mumbaioceanswim.com",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Sundarban Trail Run 2027",
-    "location": "West Bengal",
-    "country": "India",
-    "date": "Dec 20, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://sundabantrail.in",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "Kyoto Marathon 2027",
-    "location": "Kyoto",
+    "name": "Kobe Marathon",
+    "location": "Kobe, Hyogo",
     "country": "Japan",
-    "date": "Feb 21, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://kyoto-marathon.com",
-    "note": "Confirmed date from kyoto-marathon.com",
-    "status": "active"
-  },
-  {
-    "name": "Osaka Marathon 2027",
-    "location": "Osaka",
-    "country": "Japan",
-    "date": "Feb 28, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://osaka-marathon.com",
-    "note": "Confirmed date from rundida.com",
-    "status": "active"
-  },
-  {
-    "name": "Nagoya Women's Marathon 2027",
-    "location": "Nagoya",
-    "country": "Japan",
-    "date": "Mar 14, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://nagoya-womens-marathon.jp",
-    "note": "Confirmed date from hashirun.com",
-    "status": "active"
-  },
-  {
-    "name": "Tokyo Marathon 2027",
-    "location": "Tokyo",
-    "country": "Japan",
-    "date": "Mar 7, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://marathon.tokyo",
-    "note": "Confirmed date from aims-worldrunning.org",
-    "status": "active"
-  },
-  {
-    "name": "Nagano Marathon 2027",
-    "location": "Nagano",
-    "country": "Japan",
-    "date": "Apr 19, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://naganomarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ultramarathon Aso 2027",
-    "location": "Kumamoto",
-    "country": "Japan",
-    "date": "May 17, 2027",
-    "distance": "Ultra 100K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://asokazan100.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Noto Triathlon 2027",
-    "location": "Noto, Ishikawa",
-    "country": "Japan",
-    "date": "Jul 12, 2027",
-    "distance": "Various",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://noto-triathlon.jp",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Mt Fuji Trail Run 2027",
-    "location": "Fujiyoshida",
-    "country": "Japan",
-    "date": "Jul 26, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://ultratrailmtfuji.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Fuji Mountain Race 2027",
-    "location": "Mount Fuji",
-    "country": "Japan",
-    "date": "Jul 26, 2027",
-    "distance": "21km",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://fujisan-race.jp",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Hokkaido Marathon 2027",
-    "location": "Sapporo",
-    "country": "Japan",
-    "date": "Aug 30, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://hokkaido-marathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Japan 2027",
-    "location": "Nagoya",
-    "country": "Japan",
-    "date": "Sep 20, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman Japan 2027",
-    "location": "Gamagori, Aichi",
-    "country": "Japan",
-    "date": "Oct 4, 2027",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "Full distance Ironman in Gamagori, Aichi, Japan. 3.8km swim, 180km bike, 42.2km run.",
-    "status": "active"
-  },
-  {
-    "name": "Kobe Marathon 2027",
-    "location": "Kobe",
-    "country": "Japan",
-    "date": "Nov 15, 2027",
-    "distance": "Marathon (42.2km)",
+    "date": "Nov 15, 2026",
+    "distance": "Marathon 42.2km",
     "distanceLabel": "42.2K",
     "type": "running",
     "team": "Solo",
@@ -2340,33 +1664,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Tokyo 2027 (Nov 7)",
-    "location": "Tokyo",
-    "country": "Japan",
-    "date": "Nov 7, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Tokyo 2027 (Nov 21)",
-    "location": "Tokyo",
-    "country": "Japan",
-    "date": "Nov 21, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Fukuoka Marathon 2027",
+    "name": "Fukuoka Marathon",
     "location": "Fukuoka",
     "country": "Japan",
     "date": "Dec 7, 2027",
@@ -2379,20 +1677,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Osaka 2027",
-    "location": "Osaka",
-    "country": "Japan",
-    "date": "Dec 5, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Chiang Mai Trail 2027",
+    "name": "Chiang Mai Trail",
     "location": "Chiang Mai",
     "country": "Thailand",
     "date": "Jan 18, 2027",
@@ -2405,20 +1690,7 @@
     "status": "active"
   },
   {
-    "name": "Chiang Rai Half Marathon 2027",
-    "location": "Chiang Rai",
-    "country": "Thailand",
-    "date": "Mar 8, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://chiangrai-halfmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Phuket Swimrun 2027",
+    "name": "Phuket Swimrun",
     "location": "Phuket",
     "country": "Thailand",
     "date": "Apr 27, 2027",
@@ -2431,150 +1703,7 @@
     "status": "active"
   },
   {
-    "name": "Phuket Marathon 2027",
-    "location": "Phuket",
-    "country": "Thailand",
-    "date": "May 31, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://phuketmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Phuket International Marathon 2027",
-    "location": "Phuket",
-    "country": "Thailand",
-    "date": "Jun 7, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://phuketmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Koh Samui Triathlon 2027",
-    "location": "Koh Samui",
-    "country": "Thailand",
-    "date": "Aug 16, 2027",
-    "distance": "Various",
-    "distanceLabel": "Olympic",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://kohsamuitriathlon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Bangkok 2027",
-    "location": "Bangkok",
-    "country": "Thailand",
-    "date": "Mar 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Season 9 announced city. 2026 was Mar 20-22. Predicted Mar 2027.",
-    "status": "active"
-  },
-  {
-    "name": "Chiang Rai Trail 2027",
-    "location": "Chiang Rai",
-    "country": "Thailand",
-    "date": "Oct 3, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://chiangraitrail.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Phuket 2027",
-    "location": "Phuket",
-    "country": "Thailand",
-    "date": "Nov 8, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Bangkok Marathon 2027",
-    "location": "Bangkok",
-    "country": "Thailand",
-    "date": "Nov 22, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://bangkokmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Laguna Phuket Triathlon 2027",
-    "location": "Phuket",
-    "country": "Thailand",
-    "date": "Nov 29, 2027",
-    "distance": "1.8km/55km/12km",
-    "distanceLabel": "Olympic+",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://lagunaphuket.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Thailand 2027",
-    "location": "Phuket",
-    "country": "Thailand",
-    "date": "Dec 6, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Chiang Mai Marathon 2027",
-    "location": "Chiang Mai",
-    "country": "Thailand",
-    "date": "Dec 20, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://chiangmaimarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ho Chi Minh City Marathon 2027",
-    "location": "Ho Chi Minh City",
-    "country": "Vietnam",
-    "date": "Jan 11, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://hcmcmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Hanoi Trail Run 2027",
+    "name": "Hanoi Trail Run",
     "location": "Hanoi",
     "country": "Vietnam",
     "date": "Mar 1, 2027",
@@ -2587,98 +1716,7 @@
     "status": "active"
   },
   {
-    "name": "Mekong Delta Marathon 2027",
-    "location": "Can Tho",
-    "country": "Vietnam",
-    "date": "Apr 5, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://mekongmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Vietnam Da Nang 2027",
-    "location": "Da Nang",
-    "country": "Vietnam",
-    "date": "May 10, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Vietnam Mountain Marathon 2027",
-    "location": "Sapa",
-    "country": "Vietnam",
-    "date": "Aug 8, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://vietnammountainmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Da Nang International Marathon 2027",
-    "location": "Da Nang",
-    "country": "Vietnam",
-    "date": "Aug 16, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://dananginternationalmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Hanoi Marathon 2027",
-    "location": "Hanoi",
-    "country": "Vietnam",
-    "date": "Nov 1, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://hanoimarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ha Long Bay Heritage Marathon 2027",
-    "location": "Ha Long",
-    "country": "Vietnam",
-    "date": "Nov 22, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://halongheritagemarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Malaysia 2027",
-    "location": "Putrajaya",
-    "country": "Malaysia",
-    "date": "Mar 22, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Penang Hill Ultra 2027",
+    "name": "Penang Hill Ultra",
     "location": "Penang",
     "country": "Malaysia",
     "date": "Mar 8, 2027",
@@ -2691,20 +1729,7 @@
     "status": "active"
   },
   {
-    "name": "Borneo International Marathon 2027",
-    "location": "Kota Kinabalu, Sabah",
-    "country": "Malaysia",
-    "date": "May 17, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://borneomarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Kuala Lumpur Marathon 2027",
+    "name": "Kuala Lumpur Marathon",
     "location": "Kuala Lumpur",
     "country": "Malaysia",
     "date": "Jun 21, 2027",
@@ -2717,7 +1742,7 @@
     "status": "active"
   },
   {
-    "name": "Sabah Hash Trail 2027",
+    "name": "Sabah Hash Trail",
     "location": "Kota Kinabalu, Sabah",
     "country": "Malaysia",
     "date": "Jul 13, 2027",
@@ -2730,46 +1755,7 @@
     "status": "active"
   },
   {
-    "name": "Borneo Ultra Trail Marathon 2027",
-    "location": "Sabah",
-    "country": "Malaysia",
-    "date": "Sep 5, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://borneoultratail.com",
-    "note": "UTMB World Series ultra trail race in Sabah, Malaysia.",
-    "status": "active"
-  },
-  {
-    "name": "Sabah XTERRA Triathlon 2027",
-    "location": "Kota Kinabalu, Sabah",
-    "country": "Malaysia",
-    "date": "Oct 4, 2027",
-    "distance": "Various",
-    "distanceLabel": "Olympic",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://xterraplanet.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Penang Bridge International Marathon 2027",
-    "location": "Penang",
-    "country": "Malaysia",
-    "date": "Nov 1, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://penangmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Bintan Triathlon 2027",
+    "name": "Bintan Triathlon",
     "location": "Bintan Island",
     "country": "Indonesia",
     "date": "Apr 5, 2027",
@@ -2782,111 +1768,7 @@
     "status": "active"
   },
   {
-    "name": "Bromo Tengger Semeru Ultra 2027",
-    "location": "East Java",
-    "country": "Indonesia",
-    "date": "Jun 6, 2027",
-    "distance": "Ultra 50K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://btsu.id",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Rinjani 100 2027",
-    "location": "Lombok",
-    "country": "Indonesia",
-    "date": "Aug 1, 2027",
-    "distance": "Ultra 100K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://rinjani100.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Lombok Sumbawa Ultra 2027",
-    "location": "Lombok",
-    "country": "Indonesia",
-    "date": "Aug 2, 2027",
-    "distance": "Ultra 50K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://lsultra.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Bali Marathon 2027",
-    "location": "Gianyar, Bali",
-    "country": "Indonesia",
-    "date": "Sep 6, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://balimarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Lombok 2027",
-    "location": "Lombok",
-    "country": "Indonesia",
-    "date": "Sep 27, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Bali Hope Swimrun 2027",
-    "location": "Nusa Lembongan, Bali",
-    "country": "Indonesia",
-    "date": "Oct 11, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various · Ocean",
-    "type": "swimrun",
-    "team": "Solo / Team of 2",
-    "url": "https://balihope.org",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Jakarta Marathon 2027",
-    "location": "Jakarta",
-    "country": "Indonesia",
-    "date": "Oct 18, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://jakartamarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Cebu City Marathon 2027",
-    "location": "Cebu City",
-    "country": "Philippines",
-    "date": "Jan 4, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://cebucitymarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Camiguin Island Trail Run 2027",
+    "name": "Camiguin Island Trail Run",
     "location": "Camiguin Island",
     "country": "Philippines",
     "date": "Feb 8, 2027",
@@ -2899,7 +1781,7 @@
     "status": "active"
   },
   {
-    "name": "Palawan Ultra 2027",
+    "name": "Palawan Ultra",
     "location": "Puerto Princesa",
     "country": "Philippines",
     "date": "Mar 15, 2027",
@@ -2912,7 +1794,7 @@
     "status": "active"
   },
   {
-    "name": "Boracay Triathlon 2027",
+    "name": "Boracay Triathlon",
     "location": "Boracay",
     "country": "Philippines",
     "date": "Apr 19, 2027",
@@ -2925,540 +1807,7 @@
     "status": "active"
   },
   {
-    "name": "Ironman Philippines 2027",
-    "location": "Subic Bay",
-    "country": "Philippines",
-    "date": "Aug 2, 2027",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "Full distance Ironman in Subic Bay, Philippines. 3.8km swim, 180km bike, 42.2km run.",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Philippines 2027 (Cebu)",
-    "location": "Cebu",
-    "country": "Philippines",
-    "date": "Aug 2, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Philippines 2027 (Mactan)",
-    "location": "Mactan, Cebu",
-    "country": "Philippines",
-    "date": "Aug 9, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Manila Marathon 2027",
-    "location": "Manila",
-    "country": "Philippines",
-    "date": "Sep 13, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://manilamarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Manila 2027",
-    "location": "Manila",
-    "country": "Philippines",
-    "date": "Sep 26, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Seoul Marathon 2027",
-    "location": "Seoul",
-    "country": "South Korea",
-    "date": "Mar 21, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://seoulmarathon.org",
-    "note": "Confirmed date from seoul-marathon.com",
-    "status": "active"
-  },
-  {
-    "name": "Busan International Marathon 2027",
-    "location": "Busan",
-    "country": "South Korea",
-    "date": "Apr 5, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://busanmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Gyeongju International Marathon 2027",
-    "location": "Gyeongju",
-    "country": "South Korea",
-    "date": "Apr 5, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://gjmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Seoul Spring 2027",
-    "location": "Seoul",
-    "country": "South Korea",
-    "date": "Apr 11, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman Korea 2027",
-    "location": "Gurye, Jeolla",
-    "country": "South Korea",
-    "date": "Oct 2027",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "Predicted Oct 2027 from 2026 (Oct 4 Gurye). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "Jeju Triathlon 2027",
-    "location": "Jeju Island",
-    "country": "South Korea",
-    "date": "Sep 6, 2027",
-    "distance": "Various",
-    "distanceLabel": "Olympic",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://jejutriathlon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Seoul 2027",
-    "location": "Seoul",
-    "country": "South Korea",
-    "date": "Oct 17, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Hong Kong Marathon 2027",
-    "location": "Hong Kong",
-    "country": "China",
-    "date": "Feb 15, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://hkmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Hainan Ocean Swim 2027",
-    "location": "Sanya, Hainan",
-    "country": "China",
-    "date": "Mar 8, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo",
-    "url": "https://hainanswim.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Chengdu Panda Marathon 2027",
-    "location": "Chengdu",
-    "country": "China",
-    "date": "Apr 12, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://chengdumarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Beijing Marathon 2027",
-    "location": "Beijing",
-    "country": "China",
-    "date": "Nov 1, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://bjmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Chengdu Marathon 2027",
-    "location": "Chengdu",
-    "country": "China",
-    "date": "Nov 1, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://chengdumarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Shanghai Marathon 2027",
-    "location": "Shanghai",
-    "country": "China",
-    "date": "Nov 29, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://shmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Guangzhou Marathon 2027",
-    "location": "Guangzhou",
-    "country": "China",
-    "date": "Dec 6, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://gzmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Singapore 2027 (Apr)",
-    "location": "Singapore",
-    "country": "Singapore",
-    "date": "Apr 4, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Singapore Swim For Hope 2027",
-    "location": "Singapore",
-    "country": "Singapore",
-    "date": "Sep 27, 2027",
-    "distance": "5km",
-    "distanceLabel": "5K · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo",
-    "url": "https://swimforhope.sg",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Singapore 2027 (Sep)",
-    "location": "Singapore",
-    "country": "Singapore",
-    "date": "Sep 5, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Singapore 2027",
-    "location": "Singapore",
-    "country": "Singapore",
-    "date": "Nov 8, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Standard Chartered Singapore Marathon 2027",
-    "location": "Singapore",
-    "country": "Singapore",
-    "date": "Dec 6, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://singaporemarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Kathmandu Ultra 2027",
-    "location": "Kathmandu",
-    "country": "Nepal",
-    "date": "Mar 21, 2027",
-    "distance": "Ultra 50K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://kathmanduultra.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Everest Marathon 2027",
-    "location": "Namche Bazaar, Nepal",
-    "country": "Nepal",
-    "date": "May 29, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://everestmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Annapurna Trail Race 2027",
-    "location": "Pokhara, Nepal",
-    "country": "Nepal",
-    "date": "Oct 17, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://annapurnatrailrace.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Annapurna 100 2027",
-    "location": "Pokhara",
-    "country": "Nepal",
-    "date": "Oct 17, 2027",
-    "distance": "Ultra 100K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://annapurna100.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Taroko Gorge Marathon 2027",
-    "location": "Hualien",
-    "country": "Taiwan",
-    "date": "Mar 21, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://tarokomarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Sun Moon Lake Swim 2027",
-    "location": "Nantou",
-    "country": "Taiwan",
-    "date": "Sep 13, 2027",
-    "distance": "3km",
-    "distanceLabel": "3K · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo",
-    "url": "https://sunmoonlakeswim.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Ironman Taiwan 2027",
-    "location": "Penghu",
-    "country": "Taiwan",
-    "date": "Oct 18, 2027",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://ironman.com",
-    "note": "Full distance Ironman in Penghu, Taiwan. 3.8km swim, 180km bike, 42.2km run.",
-    "status": "active"
-  },
-  {
-    "name": "Taipei Marathon 2027",
-    "location": "Taipei",
-    "country": "Taiwan",
-    "date": "Dec 20, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://taipeimarathon.com.tw",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Gobi March 2027 (4 Deserts)",
-    "location": "Gobi Desert",
-    "country": "Mongolia",
-    "date": "Jun 14, 2027",
-    "distance": "Ultra 50K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://4deserts.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Maldives Ocean Swim 2027 (Feb)",
-    "location": "North Malé Atoll",
-    "country": "Maldives",
-    "date": "Feb 21, 2027",
-    "distance": "Various",
-    "distanceLabel": "Various · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo",
-    "url": "https://maldivesswim.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Maldives Ocean Swim 2027 (Oct)",
-    "location": "Malé Atoll",
-    "country": "Maldives",
-    "date": "Oct 24, 2027",
-    "distance": "5km",
-    "distanceLabel": "5K · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo",
-    "url": "https://maldivesswim.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Angkor Wat Half Marathon 2027",
-    "location": "Siem Reap",
-    "country": "Cambodia",
-    "date": "Dec 6, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://angkormarathon.org",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Colombo Marathon 2027 (Jan)",
-    "location": "Colombo",
-    "country": "Sri Lanka",
-    "date": "Jan 18, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://colombomarathon.lk",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Colombo Marathon 2027 (Oct)",
-    "location": "Colombo",
-    "country": "Sri Lanka",
-    "date": "Oct 4, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://colombomarathon.lk",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Bagan Temple Marathon 2027",
-    "location": "Bagan",
-    "country": "Myanmar",
-    "date": "Jan 18, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://baganmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Bhutan International Marathon 2027",
-    "location": "Thimphu",
-    "country": "Bhutan",
-    "date": "Nov 8, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://bhutanmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Luang Prabang Half Marathon 2027",
-    "location": "Luang Prabang",
-    "country": "Laos",
-    "date": "Dec 13, 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://luangprabangmarathon.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX World Championships Hong Kong",
+    "name": "Hyrox World Championships Hong Kong",
     "location": "AsiaWorld-Expo, Hong Kong",
     "country": "China",
     "date": "Jun 10, 2027",
@@ -3466,12 +1815,12 @@
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com/event/hyrox-world-championships-hong-kong-2027/",
+    "url": "https://hyrox.com/events/",
     "note": "HYROX World Championships 2027 confirmed AsiaWorld-Expo Jun 10-13",
     "status": "active"
   },
   {
-    "name": "HYROX Delhi",
+    "name": "Hyrox Delhi",
     "location": "Delhi, India",
     "country": "India",
     "date": "Jul 24, 2026",
@@ -3479,12 +1828,12 @@
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "HYROX Delhi Jul 24-26 2026 confirmed",
+    "url": "https://hyrox.com/find-my-race/",
+    "note": "Predicted from 2026 HYROX Delhi (Jul 24-26). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "HYROX Mumbai",
+    "name": "Hyrox Mumbai",
     "location": "Mumbai, India",
     "country": "India",
     "date": "Sep 18, 2026",
@@ -3493,11 +1842,11 @@
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "HYROX Mumbai Sep 18-20 2026 confirmed",
+    "note": "Predicted from 2026 HYROX Mumbai (Sep 18-20). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "HYROX Hangzhou",
+    "name": "Hyrox Hangzhou",
     "location": "Hangzhou, China",
     "country": "China",
     "date": "Jul 4, 2026",
@@ -3505,12 +1854,12 @@
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "HYROX Hangzhou Jul 4-5 2026 confirmed",
+    "url": "https://hyrox.com/find-my-race/",
+    "note": "Predicted from 2026 HYROX Hangzhou (Jul 4-5). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "HYROX Chengdu",
+    "name": "Hyrox Chengdu",
     "location": "Chengdu, China",
     "country": "China",
     "date": "Aug 1, 2026",
@@ -3519,11 +1868,11 @@
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "HYROX Chengdu Aug 1-2 2026 confirmed",
+    "note": "Predicted from 2026 HYROX Chengdu (Aug 1-2). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "HYROX Shenzhen",
+    "name": "Hyrox Shenzhen",
     "location": "Shenzhen, China",
     "country": "China",
     "date": "Aug 15, 2026",
@@ -3531,25 +1880,25 @@
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "HYROX Shenzhen Aug 15-16 2026 confirmed",
+    "url": "https://hyrox.com/find-my-race/",
+    "note": "Predicted from 2026 HYROX Shenzhen (Aug 15-16). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "HYROX Beijing",
+    "name": "Hyrox Beijing",
     "location": "Beijing, China",
     "country": "China",
-    "date": "Sep 12, 2026",
+    "date": "Mar 21, 2026",
     "distance": "8km + 8 stations",
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "HYROX Beijing Sep 12-13 2026 confirmed",
+    "note": "Predicted from 2026 HYROX Beijing (Sep 12-13). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "HYROX Shanghai",
+    "name": "Hyrox Shanghai",
     "location": "Shanghai, China",
     "country": "China",
     "date": "Oct 31, 2026",
@@ -3558,11 +1907,11 @@
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "HYROX Shanghai Oct 31-Nov 1 2026 confirmed",
+    "note": "Predicted from 2026 HYROX Shanghai (Oct 31). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "HYROX Guangzhou",
+    "name": "Hyrox Guangzhou",
     "location": "Guangzhou, China",
     "country": "China",
     "date": "Nov 21, 2026",
@@ -3571,128 +1920,11 @@
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "HYROX Guangzhou Nov 21-22 2026 confirmed",
+    "note": "Predicted from 2026 HYROX Guangzhou (Nov 21-22). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "HYROX Delhi 2027",
-    "location": "Delhi, India",
-    "country": "India",
-    "date": "Jul 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Delhi (Jul 24-26). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Mumbai 2027",
-    "location": "Mumbai, India",
-    "country": "India",
-    "date": "Sep 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Mumbai (Sep 18-20). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Hangzhou 2027",
-    "location": "Hangzhou, China",
-    "country": "China",
-    "date": "Jul 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Hangzhou (Jul 4-5). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Chengdu 2027",
-    "location": "Chengdu, China",
-    "country": "China",
-    "date": "Aug 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Chengdu (Aug 1-2). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Shenzhen 2027",
-    "location": "Shenzhen, China",
-    "country": "China",
-    "date": "Aug 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Shenzhen (Aug 15-16). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Beijing 2027",
-    "location": "Beijing, China",
-    "country": "China",
-    "date": "Sep 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Beijing (Sep 12-13). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Shanghai 2027",
-    "location": "Shanghai, China",
-    "country": "China",
-    "date": "Oct 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Shanghai (Oct 31). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Guangzhou 2027",
-    "location": "Guangzhou, China",
-    "country": "China",
-    "date": "Nov 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Guangzhou (Nov 21-22). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "Ironman 70.3 Putrajaya 2027",
-    "location": "Putrajaya, Malaysia",
-    "country": "Malaysia",
-    "date": "Nov 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com",
-    "note": "Predicted from 2026 (Nov 2). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "Ironman Vietnam 2027",
+    "name": "Ironman Vietnam",
     "location": "Da Nang, Vietnam",
     "country": "Vietnam",
     "date": "May 2027",
@@ -3702,10 +1934,10 @@
     "team": "Solo / Relay",
     "url": "https://www.ironman.com/races/im-vietnam",
     "note": "Full distance Ironman Vietnam — debut in 2026 (May 10). Predicted 2027 continuation.",
-    "status": "watchlist"
+    "status": "active"
   },
   {
-    "name": "HYROX Chiba",
+    "name": "Hyrox Chiba",
     "location": "Makuhari Messe, Chiba, Japan",
     "country": "Japan",
     "date": "Aug 7, 2026",
@@ -3718,20 +1950,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Chiba 2027",
-    "location": "Makuhari Messe, Chiba, Japan",
-    "country": "Japan",
-    "date": "Aug 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Chiba (Aug 7-9). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Jakarta",
+    "name": "Hyrox Jakarta",
     "location": "Jakarta, Indonesia",
     "country": "Indonesia",
     "date": "Jun 27, 2026",
@@ -3742,19 +1961,6 @@
     "url": "https://hyrox.com",
     "note": "Confirmed Jun 27-28, 2026, Jakarta. Confirmed via hyroxmap.xyz and redbull.com.",
     "status": "active"
-  },
-  {
-    "name": "HYROX Jakarta 2027",
-    "location": "Jakarta, Indonesia",
-    "country": "Indonesia",
-    "date": "Jun 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted from 2026 HYROX Jakarta (Jun 27-28). Exact date TBC.",
-    "status": "watchlist"
   },
   {
     "name": "Daegu Marathon",
@@ -3770,19 +1976,6 @@
     "status": "active"
   },
   {
-    "name": "Daegu Marathon 2027",
-    "location": "Daegu Stadium, Daegu",
-    "country": "South Korea",
-    "date": "Feb 28, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://daegumarathon.daegu.go.kr",
-    "note": "Predicted Feb 28 2027 (4th Sunday of Feb). 2026 was Feb 22.",
-    "status": "watchlist"
-  },
-  {
     "name": "JTBC Seoul Marathon",
     "location": "Sangam World Cup Park, Seoul",
     "country": "South Korea",
@@ -3794,19 +1987,6 @@
     "url": "https://marathon.jtbc.com",
     "note": "Major Seoul autumn marathon. Full + Half + 10K. Confirmed Nov 1, 2026.",
     "status": "active"
-  },
-  {
-    "name": "JTBC Seoul Marathon 2027",
-    "location": "Sangam World Cup Park, Seoul",
-    "country": "South Korea",
-    "date": "Nov 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://marathon.jtbc.com",
-    "note": "Predicted Nov 2027 from 2026 (Nov 1). Exact date TBC.",
-    "status": "watchlist"
   },
   {
     "name": "Scenic Half Marathon Krabi",
@@ -3822,20 +2002,7 @@
     "status": "active"
   },
   {
-    "name": "Scenic Half Marathon Krabi 2027",
-    "location": "Ao Nang, Krabi",
-    "country": "Thailand",
-    "date": "Sep 2027",
-    "distance": "Half Marathon (21.1km)",
-    "distanceLabel": "21.1K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://www.scenicmarathon.com",
-    "note": "Predicted Sep 2027 from 2026 (Sep 11-12). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "Ultra Trail Angkor 2027",
+    "name": "Ultra Trail Angkor",
     "location": "Siem Reap, Cambodia",
     "country": "Cambodia",
     "date": "Jan 23, 2027",
@@ -3861,19 +2028,6 @@
     "status": "active"
   },
   {
-    "name": "Angkor Empire Marathon 2027",
-    "location": "Siem Reap, Cambodia",
-    "country": "Cambodia",
-    "date": "Aug 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://kh.checkpointspot.asia",
-    "note": "Predicted Aug 2027 from 2026 (Aug 1-2). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
     "name": "Oceanman Krabi",
     "location": "Dusit Thani Krabi Beach Resort, Krabi",
     "country": "Thailand",
@@ -3885,19 +2039,6 @@
     "url": "https://worldsmarathons.com/marathon/oceanman-krabi",
     "note": "Open water ocean swim. Multiple distances. Confirmed Mar 28-29, 2026.",
     "status": "active"
-  },
-  {
-    "name": "Oceanman Krabi 2027",
-    "location": "Krabi, Thailand",
-    "country": "Thailand",
-    "date": "Mar 2027",
-    "distance": "10km+",
-    "distanceLabel": "10K · Ocean",
-    "type": "ocean-swim",
-    "team": "Solo / Team Relay",
-    "url": "https://worldsmarathons.com/marathon/oceanman-krabi",
-    "note": "Predicted Mar 2027 from 2026 (Mar 28-29). Exact date TBC.",
-    "status": "watchlist"
   },
   {
     "name": "Ironman New Zealand",
@@ -3952,19 +2093,6 @@
     "status": "active"
   },
   {
-    "name": "Runaway Auckland Marathon 2027",
-    "location": "Auckland, New Zealand",
-    "country": "New Zealand",
-    "date": "Nov 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://www.aucklandmarathon.co.nz",
-    "note": "Predicted Nov 2027. 2026 was Nov 1. Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
     "name": "Queenstown Marathon",
     "location": "Arrowtown to Queenstown, Otago",
     "country": "New Zealand",
@@ -3978,20 +2106,7 @@
     "status": "active"
   },
   {
-    "name": "Queenstown Marathon 2027",
-    "location": "Arrowtown to Queenstown, Otago",
-    "country": "New Zealand",
-    "date": "Nov 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://www.queenstown-marathon.co.nz",
-    "note": "Predicted Nov 2027 from 2026 (Nov 14). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "Motatapu Trail Race 2027",
+    "name": "Motatapu Trail Race",
     "location": "Arrowtown to Wanaka, Otago",
     "country": "New Zealand",
     "date": "Mar 6, 2027",
@@ -4004,7 +2119,7 @@
     "status": "active"
   },
   {
-    "name": "Challenge Wanaka Half Triathlon 2027",
+    "name": "Challenge Wanaka Half Triathlon",
     "location": "Wānaka, Otago",
     "country": "New Zealand",
     "date": "Feb 20, 2027",
@@ -4017,7 +2132,7 @@
     "status": "active"
   },
   {
-    "name": "Vietnam Highlands Trail by UTMB 2027",
+    "name": "Vietnam Highlands Trail by UTMB",
     "location": "Da Lat, Lam Dong, Vietnam",
     "country": "Vietnam",
     "date": "Jan 8, 2027",
@@ -4030,7 +2145,7 @@
     "status": "active"
   },
   {
-    "name": "Ultra Trail Chiang Mai 2027",
+    "name": "Ultra Trail Chiang Mai",
     "location": "Chiang Dao, Chiang Mai, Thailand",
     "country": "Thailand",
     "date": "Jan 8, 2027",
@@ -4043,7 +2158,7 @@
     "status": "active"
   },
   {
-    "name": "Amazean Jungle Thailand by UTMB 2027",
+    "name": "Amazean Jungle Thailand by UTMB",
     "location": "Betong, Southern Thailand",
     "country": "Thailand",
     "date": "Feb 2027",
@@ -4053,10 +2168,10 @@
     "team": "Solo",
     "url": "https://utmb.world",
     "note": "UTMB World Series. Feb 2027 (exact date TBC). Jungle trail race in southernmost Thailand.",
-    "status": "watchlist"
+    "status": "active"
   },
   {
-    "name": "Xtrail Kenting by UTMB 2027",
+    "name": "Xtrail Kenting by UTMB",
     "location": "Kenting National Park, Taiwan",
     "country": "Taiwan",
     "date": "Mar 6, 2027",
@@ -4082,7 +2197,7 @@
     "status": "active"
   },
   {
-    "name": "Xiamen Marathon 2027",
+    "name": "Xiamen Marathon",
     "location": "Xiamen, Fujian, China",
     "country": "China",
     "date": "Jan 2027",
@@ -4095,7 +2210,7 @@
     "status": "watchlist"
   },
   {
-    "name": "Chongqing Marathon 2027",
+    "name": "Chongqing Marathon",
     "location": "Chongqing, China",
     "country": "China",
     "date": "Jan 2027",
@@ -4108,7 +2223,7 @@
     "status": "watchlist"
   },
   {
-    "name": "Wuhan Marathon 2027",
+    "name": "Wuhan Marathon",
     "location": "Wuhan, Hubei, China",
     "country": "China",
     "date": "Mar 2027",
@@ -4121,7 +2236,7 @@
     "status": "watchlist"
   },
   {
-    "name": "Great Wall of China Marathon 2027",
+    "name": "Great Wall of China Marathon",
     "location": "Huangyaguan, Beijing, China",
     "country": "China",
     "date": "May 1, 2027",
@@ -4134,7 +2249,7 @@
     "status": "active"
   },
   {
-    "name": "Qingdao Marathon 2027",
+    "name": "Qingdao Marathon",
     "location": "Qingdao, Shandong, China",
     "country": "China",
     "date": "Apr 2027",
@@ -4147,7 +2262,7 @@
     "status": "watchlist"
   },
   {
-    "name": "Hangzhou International Marathon 2027",
+    "name": "Hangzhou International Marathon",
     "location": "Hangzhou, Zhejiang, China",
     "country": "China",
     "date": "Nov 2027",
@@ -4160,7 +2275,7 @@
     "status": "watchlist"
   },
   {
-    "name": "Jeju International Marathon 2027",
+    "name": "Jeju International Marathon",
     "location": "Jeju Island, South Korea",
     "country": "South Korea",
     "date": "Jun 2027",
@@ -4173,24 +2288,24 @@
     "status": "watchlist"
   },
   {
-    "name": "Techcombank Hanoi International Marathon 2027",
-    "location": "Hanoi, Vietnam",
+    "name": "Techcombank Hanoi International Marathon",
+    "location": "Hanoi",
     "country": "Vietnam",
-    "date": "Oct 2027",
+    "date": "Oct 4, 2026",
     "distance": "Marathon (42.2km)",
     "distanceLabel": "42.2K",
     "type": "running",
     "team": "Solo",
     "url": "https://www.hanoiinternationalmarathon.com",
     "note": "Major Hanoi marathon. 2026 was Oct 3-4. Predicted Oct 2027. Exact date TBC.",
-    "status": "watchlist"
+    "status": "active"
   },
   {
-    "name": "Vietnam Trail Marathon 2027",
-    "location": "Vietnam",
+    "name": "Vietnam Trail Marathon",
+    "location": "Moc Chau, Son La",
     "country": "Vietnam",
-    "date": "Jan 16, 2027",
-    "distance": "Marathon (42.2km)",
+    "date": "Jan 31, 2026",
+    "distance": "5km / 10km / 21km / 42km / 70km",
     "distanceLabel": "Various",
     "type": "trail",
     "team": "Solo",
@@ -4199,7 +2314,7 @@
     "status": "active"
   },
   {
-    "name": "Chiang Mai Sri Lanna Triathlon 2027",
+    "name": "Chiang Mai Sri Lanna Triathlon",
     "location": "Sri Lanna, Chiang Mai, Thailand",
     "country": "Thailand",
     "date": "Jan 13, 2027",
@@ -4212,7 +2327,7 @@
     "status": "active"
   },
   {
-    "name": "Dalian International Marathon 2027",
+    "name": "Dalian International Marathon",
     "location": "Dalian, Liaoning, China",
     "country": "China",
     "date": "Apr 2027",
@@ -4225,7 +2340,7 @@
     "status": "watchlist"
   },
   {
-    "name": "Ironman 70.3 Desaru Coast 2027",
+    "name": "Ironman 70.3 Desaru Coast",
     "location": "Desaru Coast, Johor, Malaysia",
     "country": "Malaysia",
     "date": "May 2027",
@@ -4247,24 +2362,11 @@
     "type": "trail",
     "team": "Solo",
     "url": "https://utmb.world",
-    "note": "UTMB World Series. Confirmed Sep 11-13, 2026, Taiping Perak.",
+    "note": "UTMB World Series. Predicted Sep 2027 from 2026 (Sep 11-13). Exact date TBC.",
     "status": "active"
   },
   {
-    "name": "Malaysia Ultra-Trail by UTMB 2027",
-    "location": "Taiping, Perak, Malaysia",
-    "country": "Malaysia",
-    "date": "Sep 2027",
-    "distance": "Ultra 50K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://utmb.world",
-    "note": "UTMB World Series. Predicted Sep 2027 from 2026 (Sep 11-13). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "Ironman Philippines Subic Bay 2027",
+    "name": "Ironman Philippines Subic Bay",
     "location": "Subic Bay, Philippines",
     "country": "Philippines",
     "date": "Jun 2027",
@@ -4277,7 +2379,7 @@
     "status": "watchlist"
   },
   {
-    "name": "Ironman 70.3 Subic Bay Philippines 2027",
+    "name": "Ironman 70.3 Subic Bay Philippines",
     "location": "Subic Bay, Philippines",
     "country": "Philippines",
     "date": "Jun 2027",
@@ -4303,20 +2405,7 @@
     "status": "active"
   },
   {
-    "name": "Ironman Langkawi 2027",
-    "location": "Langkawi, Malaysia",
-    "country": "Malaysia",
-    "date": "Nov 2027",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com",
-    "note": "Predicted Nov 2027 from 2026 (Nov 21). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "Ironman 70.3 Phu Quoc 2027",
+    "name": "Ironman 70.3 Phu Quoc",
     "location": "Phu Quoc Island, Vietnam",
     "country": "Vietnam",
     "date": "Nov 2027",
@@ -4326,10 +2415,10 @@
     "team": "Solo / Relay",
     "url": "https://www.ironman.com/races/im703-phu-quoc",
     "note": "Predicted Nov 2027. Ironman 70.3 on Phu Quoc island, Vietnam.",
-    "status": "watchlist"
+    "status": "active"
   },
   {
-    "name": "HYROX Auckland 2027",
+    "name": "Hyrox Auckland",
     "location": "Auckland, New Zealand",
     "country": "New Zealand",
     "date": "Jan 29, 2027",
@@ -4342,7 +2431,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Incheon 2026",
+    "name": "Hyrox Incheon",
     "location": "Incheon, South Korea",
     "country": "South Korea",
     "date": "May 15, 2026",
@@ -4355,20 +2444,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Incheon 2027",
-    "location": "Incheon, South Korea",
-    "country": "South Korea",
-    "date": "May 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted May 2027 from 2026 (May 15-17). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Wuhan",
+    "name": "Hyrox Wuhan",
     "location": "Wuhan, Hubei, China",
     "country": "China",
     "date": "Apr 11, 2026",
@@ -4376,12 +2452,12 @@
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
+    "url": "https://hyrox.com/find-my-race/",
     "note": "Confirmed Apr 11, 2026, Wuhan China. freeleticsgoals.com schedule.",
     "status": "active"
   },
   {
-    "name": "HYROX Hong Kong 2026",
+    "name": "Hyrox Hong Kong",
     "location": "Hong Kong",
     "country": "China",
     "date": "May 8, 2026",
@@ -4390,24 +2466,11 @@
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "Confirmed May 8-10, 2026. Cigna Healthcare HYROX Hong Kong.",
+    "note": "Predicted May 2027 from 2026 (May 8-10). Separate from World Champs Jun 10-13.",
     "status": "active"
   },
   {
-    "name": "HYROX Hong Kong 2027",
-    "location": "Hong Kong",
-    "country": "China",
-    "date": "May 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Predicted May 2027 from 2026 (May 8-10). Separate from World Champs Jun 10-13.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Taipei",
+    "name": "Hyrox Taipei",
     "location": "Taipei, Taiwan",
     "country": "Taiwan",
     "date": "Feb 28, 2026",
@@ -4416,33 +2479,7 @@
     "type": "hyrox",
     "team": "Solo / Doubles / Relay",
     "url": "https://hyrox.com",
-    "note": "Confirmed Feb 28–Mar 1, 2026, Taipei Taiwan.",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Taipei 2027",
-    "location": "Taipei, Taiwan",
-    "country": "Taiwan",
-    "date": "Feb 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
     "note": "Predicted Feb 2027 from 2026 (Feb 28–Mar 1). Exact date TBC.",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Beijing (Mar)",
-    "location": "Beijing, China",
-    "country": "China",
-    "date": "Mar 21, 2026",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com",
-    "note": "Confirmed Mar 21-22, 2026 Beijing. Season 8 event.",
     "status": "active"
   },
   {
@@ -4457,19 +2494,6 @@
     "url": "https://www.ironman.com",
     "note": "Confirmed Oct 6, 2026. Tropical southern Taiwan triathlon.",
     "status": "active"
-  },
-  {
-    "name": "Ironman 70.3 Kenting Taiwan 2027",
-    "location": "Kenting, Kaohsiung, Taiwan",
-    "country": "Taiwan",
-    "date": "Oct 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com",
-    "note": "Predicted Oct 2027 from 2026 (Oct 6). Exact date TBC.",
-    "status": "watchlist"
   },
   {
     "name": "EAA Tri Challenge",
@@ -4511,7 +2535,7 @@
     "status": "active"
   },
   {
-    "name": "Full IRONMAN Dharoi (S.Asia 1st!)",
+    "name": "Full Ironman Dharoi",
     "location": "Dharoi, Gujarat",
     "country": "India",
     "date": "Feb 2027",
@@ -4520,11 +2544,11 @@
     "type": "triathlon",
     "team": "Solo / Relay",
     "url": "https://www.ironman.com/races",
-    "note": "Full distance Ironman in Dharoi, Gujarat, India. 3.8km swim, 180km bike, 42.2km run.",
+    "note": "",
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Colombo",
+    "name": "Ironman 70.3 Colombo",
     "location": "Colombo",
     "country": "Sri Lanka",
     "date": "Feb 2027",
@@ -4683,12 +2707,12 @@
     "name": "Challenge Taiwan",
     "location": "Taitung",
     "country": "Taiwan",
-    "date": "Apr 24, 2027",
-    "distance": "226K / 113K",
+    "date": "Apr 25, 2026",
+    "distance": "Full (3.8km/180km/42.2km) + Half (1.9km/90km/21.1km)",
     "distanceLabel": "IM + Half IM",
     "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.challenge-family.com/taiwan",
+    "team": "Solo",
+    "url": "https://www.challenge-family.com/races/challenge-taiwan/",
     "note": "",
     "status": "active"
   },
@@ -4732,7 +2756,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Da Nang",
+    "name": "Ironman 70.3 Da Nang",
     "location": "Da Nang",
     "country": "Vietnam",
     "date": "May 2027",
@@ -4784,7 +2808,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Subic Bay",
+    "name": "Ironman 70.3 Subic Bay",
     "location": "Zambales",
     "country": "Philippines",
     "date": "Jun 2027",
@@ -4798,10 +2822,10 @@
   },
   {
     "name": "Sinhagad Epic Trail",
-    "location": "Aatekar Vasti, Maharashtra",
+    "location": "Aatekar Vasti (Pune area), Maharashtra",
     "country": "India",
-    "date": "Jun 2027",
-    "distance": "Marathon (42.2km)",
+    "date": "Jun 1, 2026",
+    "distance": "11km / 21km / 32km / 42km",
     "distanceLabel": "Various",
     "type": "trail",
     "team": "Solo",
@@ -4810,7 +2834,7 @@
     "status": "active"
   },
   {
-    "name": "Foot Orienteering (NTH)",
+    "name": "Foot Orienteering",
     "location": "Bengaluru",
     "country": "India",
     "date": "Jul 2027",
@@ -4823,7 +2847,7 @@
     "status": "active"
   },
   {
-    "name": "Kayak Orienteering (NTH)",
+    "name": "Kayak Orienteering",
     "location": "Hoskote, Karnataka",
     "country": "India",
     "date": "Jul 2027",
@@ -4836,24 +2860,11 @@
     "status": "active"
   },
   {
-    "name": "HYROX Chiba (Japan)",
-    "location": "Chiba",
-    "country": "Japan",
-    "date": "Aug 7–9, 2027",
-    "distance": "8km + 8 stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo / Doubles / Relay",
-    "url": "https://hyrox.com/find-my-race/",
-    "note": "",
-    "status": "active"
-  },
-  {
     "name": "Maybank Marathon Bali",
     "location": "Bali",
     "country": "Indonesia",
-    "date": "Aug 2027",
-    "distance": "Marathon (42.2km)",
+    "date": "Aug 23, 2026",
+    "distance": "Marathon 42.2km / Half / 10km / 5km",
     "distanceLabel": "42.2K",
     "type": "running",
     "team": "Solo",
@@ -4876,19 +2887,19 @@
   },
   {
     "name": "Maldives Half Marathon",
-    "location": "Male",
+    "location": "Malé",
     "country": "Maldives",
-    "date": "Aug 2027",
-    "distance": "Marathon (42.2km)",
+    "date": "Aug 14, 2026",
+    "distance": "Half Marathon 21.1km / 10km / 5km",
     "distanceLabel": "42.2K",
     "type": "running",
     "team": "Solo",
-    "url": "https://www.finishers.com",
+    "url": "https://www.maldivesmarathon.com",
     "note": "",
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Lapu-Lapu",
+    "name": "Ironman 70.3 Lapu-Lapu",
     "location": "Cebu",
     "country": "Philippines",
     "date": "Aug 2027",
@@ -4940,7 +2951,7 @@
     "status": "watchlist"
   },
   {
-    "name": "Oceanman Malaysia (Sabah)",
+    "name": "Oceanman Malaysia",
     "location": "Kota Kinabalu",
     "country": "Malaysia",
     "date": "Oct 2027",
@@ -4948,7 +2959,7 @@
     "distanceLabel": "10K · Ocean",
     "type": "ocean-swim",
     "team": "Solo / Team Relay",
-    "url": "https://oceanmanswim.com/races/category/asia/",
+    "url": "https://oceanmanswim.com/",
     "note": "Oceanman open water swim series event in Kota Kinabalu, Malaysia.",
     "status": "active"
   },
@@ -4966,20 +2977,7 @@
     "status": "active"
   },
   {
-    "name": "Ultra Trail Chiang Mai (UTCM)",
-    "location": "Chiang Dao, Chiang Mai",
-    "country": "Thailand",
-    "date": "Jan 8–10, 2027",
-    "distance": "Ultra 50K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://www.ahotu.com/calendar/registration/thailand",
-    "note": "GT200: 54hr limit, 7800m elevation gain",
-    "status": "active"
-  },
-  {
-    "name": "Chiang Mai Thailand by UTMB (HOKA)",
+    "name": "Chiang Mai Thailand by UTMB",
     "location": "Chiang Mai",
     "country": "Thailand",
     "date": "Jan/Feb 2027",
@@ -4987,7 +2985,7 @@
     "distanceLabel": "Various",
     "type": "trail",
     "team": "Solo",
-    "url": "https://utmb.world/races/chiang-mai",
+    "url": "https://utmb.world/races/utmb/chiangmai",
     "note": "UTMB World Series qualifier",
     "status": "active"
   },
@@ -5005,12 +3003,12 @@
     "status": "active"
   },
   {
-    "name": "Buriram Marathon (Chang Mineral)",
+    "name": "Buriram Marathon",
     "location": "Buriram",
     "country": "Thailand",
-    "date": "Jan 23, 2027",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
+    "date": "Jan 24, 2026",
+    "distance": "Marathon 42.2km / Half / 10km",
+    "distanceLabel": "10K · 42.2K · Road",
     "type": "running",
     "team": "Solo",
     "url": "https://www.finishers.com/en/destinations/asia/thailand",
@@ -5031,7 +3029,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Bangsaen",
+    "name": "Ironman 70.3 Bangsaen",
     "location": "Ban Bang Saen, Chonburi",
     "country": "Thailand",
     "date": "Feb 2027",
@@ -5044,20 +3042,7 @@
     "status": "active"
   },
   {
-    "name": "Amazean Jungle Thailand by UTMB",
-    "location": "Betong, Yala",
-    "country": "Thailand",
-    "date": "Feb 2027",
-    "distance": "5K",
-    "distanceLabel": "Various",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://utmb.world/races/amazean-jungle",
-    "note": "Southernmost Thailand, UTMB qualifier",
-    "status": "active"
-  },
-  {
-    "name": "Tak Trail Series (Muser100)",
+    "name": "Tak Trail Series",
     "location": "Tak Province",
     "country": "Thailand",
     "date": "TBC 2027",
@@ -5070,33 +3055,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Goa",
-    "location": "Panaji, Goa",
-    "country": "India",
-    "date": "Nov 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.indiarunning.com/events/ironman_703_goa_22384",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN 70.3 Phu Quoc",
-    "location": "Phu Quoc",
-    "country": "Vietnam",
-    "date": "Nov 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com/im703-asia",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN Malaysia",
+    "name": "Ironman Malaysia",
     "location": "Langkawi",
     "country": "Malaysia",
     "date": "Nov 2027",
@@ -5105,11 +3064,11 @@
     "type": "triathlon",
     "team": "Solo / Relay",
     "url": "https://www.ironman.com/races",
-    "note": "Full distance Ironman in Langkawi, Malaysia. 3.8km swim, 180km bike, 42.2km run.",
+    "note": "",
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Langkawi",
+    "name": "Ironman 70.3 Langkawi",
     "location": "Langkawi",
     "country": "Malaysia",
     "date": "Nov 2027",
@@ -5169,7 +3128,7 @@
     "distanceLabel": "10K · Ocean",
     "type": "ocean-swim",
     "team": "Solo / Team Relay",
-    "url": "https://oceanmanswim.com/races/category/asia/",
+    "url": "https://oceanmanswim.com/",
     "note": "Oceanman open water swim series event in Phuket, Thailand.",
     "status": "active"
   },
@@ -5182,7 +3141,7 @@
     "distanceLabel": "10K · Ocean",
     "type": "ocean-swim",
     "team": "Solo / Team Relay",
-    "url": "https://oceanmanswim.com/races/category/asia/",
+    "url": "https://oceanmanswim.com/",
     "note": "Oceanman open water swim series event in Sabah, Malaysia.",
     "status": "active"
   },
@@ -5200,7 +3159,7 @@
     "status": "active"
   },
   {
-    "name": "All India Sea Swimming (Chorwad–Veraval)",
+    "name": "All India Sea Swimming",
     "location": "Chorwad to Veraval, Gujarat",
     "country": "India",
     "date": "TBC 2027",
@@ -5210,32 +3169,6 @@
     "team": "Solo",
     "url": "https://www.openwaterpedia.com/wiki/All_India_Sea_Swimming_Competition",
     "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN Vietnam",
-    "location": "Da Nang",
-    "country": "Vietnam",
-    "date": "TBC 2027",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com/races",
-    "note": "Full distance Ironman in Da Nang, Vietnam. 3.8km swim, 180km bike, 42.2km run.",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN Philippines",
-    "location": "Zambales",
-    "country": "Philippines",
-    "date": "TBC 2027",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com/races",
-    "note": "Full distance Ironman in Zambales, Philippines. 3.8km swim, 180km bike, 42.2km run.",
     "status": "active"
   },
   {
@@ -5265,7 +3198,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Vietnam",
+    "name": "Ironman 70.3 Vietnam",
     "location": "Da Nang",
     "country": "Vietnam",
     "date": "May 2027 (TBC)",
@@ -5278,20 +3211,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN Vietnam (Full Distance)",
-    "location": "Da Nang",
-    "country": "Vietnam",
-    "date": "2027 (TBC)",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com/races/im-vietnam",
-    "note": "Full distance Ironman in Da Nang, Vietnam. 3.8km swim, 180km bike, 42.2km run.",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN 70.3 Cebu",
+    "name": "Ironman 70.3 Cebu",
     "location": "Cebu",
     "country": "Philippines",
     "date": "2027 (TBC)",
@@ -5304,20 +3224,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Philippines",
-    "location": "Subic Bay",
-    "country": "Philippines",
-    "date": "2027 (TBC)",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN 70.3 Langkawi Asia Pac Champs",
+    "name": "Ironman 70.3 Langkawi Asia Pac Champs",
     "location": "Langkawi",
     "country": "Malaysia",
     "date": "2027 (TBC)",
@@ -5330,33 +3237,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN Malaysia (Full)",
-    "location": "Langkawi",
-    "country": "Malaysia",
-    "date": "2027 (TBC)",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com",
-    "note": "Full distance Ironman in Langkawi, Malaysia. 3.8km swim, 180km bike, 42.2km run.",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN 70.3 Kenting Taiwan",
-    "location": "Kenting",
-    "country": "Taiwan",
-    "date": "Nov 2026",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.ironman.com",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN 70.3 Goseong",
+    "name": "Ironman 70.3 Goseong",
     "location": "Goseong",
     "country": "South Korea",
     "date": "2027 (TBC)",
@@ -5369,7 +3250,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Hengqin",
+    "name": "Ironman 70.3 Hengqin",
     "location": "Hengqin",
     "country": "China",
     "date": "Mar 15, 2026",
@@ -5382,7 +3263,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN India Full (Dharoi)",
+    "name": "Ironman India Full",
     "location": "Dharoi",
     "country": "India",
     "date": "Feb 2027 (TBC)",
@@ -5391,7 +3272,7 @@
     "type": "triathlon",
     "team": "Solo / Relay",
     "url": "https://timesofindia.indiatimes.com",
-    "note": "Full distance Ironman in Dharoi, India. 3.8km swim, 180km bike, 42.2km run.",
+    "note": "",
     "status": "active"
   },
   {
@@ -5564,19 +3445,6 @@
     "status": "active"
   },
   {
-    "name": "Bali Hope SwimRun",
-    "location": "Nusa Penida, Bali",
-    "country": "Indonesia",
-    "date": "Oct 21, 2026",
-    "distance": "Swimrun solo / duo",
-    "distanceLabel": "Various · Ocean",
-    "type": "swimrun",
-    "team": "Solo / Team of 2",
-    "url": "https://www.ahotu.com/event/bali-hope-swimrun",
-    "note": "",
-    "status": "active"
-  },
-  {
     "name": "Phnom Penh International Half Marathon",
     "location": "Phnom Penh",
     "country": "Cambodia",
@@ -5586,19 +3454,6 @@
     "type": "running",
     "team": "Solo",
     "url": "https://www.cambodia-events.org/kh/blog/phnom-penh-international-half-marathon",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Techcombank Hanoi International Marathon",
-    "location": "Hanoi",
-    "country": "Vietnam",
-    "date": "Oct 4, 2026",
-    "distance": "Marathon (42.2km)",
-    "distanceLabel": "42.2K",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://worldsmarathons.com/marathon/hanoi-marathon",
     "note": "",
     "status": "active"
   },
@@ -5642,7 +3497,7 @@
     "status": "active"
   },
   {
-    "name": "Sky Camp Bo'stonliq",
+    "name": "Sky Camp Bo",
     "location": "Galvasay",
     "country": "Uzbekistan",
     "date": "Aug 22, 2026",
@@ -5678,32 +3533,6 @@
     "team": "Solo",
     "url": "https://www.finishers.com/en/destinations/asia/japan/okinawa",
     "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN 70.3 New Zealand",
-    "location": "Taupō",
-    "country": "New Zealand",
-    "date": "Mar 6, 2027",
-    "distance": "Half Ironman (70.3mi)",
-    "distanceLabel": "Half IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.runningcalendar.co.nz/organiser/ironman/",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN New Zealand",
-    "location": "Taupō",
-    "country": "New Zealand",
-    "date": "Mar 6, 2027",
-    "distance": "Full Ironman (140.6mi)",
-    "distanceLabel": "IM",
-    "type": "triathlon",
-    "team": "Solo / Relay",
-    "url": "https://www.runningcalendar.co.nz/organiser/ironman/",
-    "note": "Full distance Ironman in Taupō, New Zealand. 3.8km swim, 180km bike, 42.2km run.",
     "status": "active"
   },
   {
@@ -5785,7 +3614,7 @@
     "status": "active"
   },
   {
-    "name": "ASICS Runaway Hawke's Bay Marathon",
+    "name": "ASICS Runaway Hawke",
     "location": "Napier",
     "country": "New Zealand",
     "date": "May 15, 2027",
@@ -6045,7 +3874,7 @@
     "status": "active"
   },
   {
-    "name": "The 9 Dragons Ultra 2026",
+    "name": "The 9 Dragons Ultra",
     "location": "Hong Kong",
     "country": "Hong Kong",
     "date": "Feb 28, 2026",
@@ -6123,19 +3952,6 @@
     "status": "active"
   },
   {
-    "name": "Vietnam Trail Marathon",
-    "location": "Moc Chau, Son La",
-    "country": "Vietnam",
-    "date": "Jan 31, 2026",
-    "distance": "5km / 10km / 21km / 42km / 70km",
-    "distanceLabel": "5K · 10K · 21.1K · 70K · Trail",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://vietnamtrailseries.com",
-    "note": "",
-    "status": "active"
-  },
-  {
     "name": "Standard Chartered Hong Kong Marathon",
     "location": "Hong Kong",
     "country": "Hong Kong",
@@ -6175,7 +3991,7 @@
     "status": "active"
   },
   {
-    "name": "Taiwan Charity Marathon (Standard Chartered)",
+    "name": "Taiwan Charity Marathon",
     "location": "Taipei",
     "country": "Taiwan",
     "date": "Jan 11, 2026",
@@ -6184,19 +4000,6 @@
     "type": "running",
     "team": "Solo",
     "url": "https://www.taiwanmarathon.org",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Buriram Marathon",
-    "location": "Buriram",
-    "country": "Thailand",
-    "date": "Jan 24, 2026",
-    "distance": "Marathon 42.2km / Half / 10km",
-    "distanceLabel": "10K · 42.2K · Road",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://www.burirammarathon.com",
     "note": "",
     "status": "active"
   },
@@ -6279,7 +4082,7 @@
     "status": "active"
   },
   {
-    "name": "T100 Gold Coast (Women's)",
+    "name": "T100 Gold Coast (Women",
     "location": "Gold Coast, Queensland",
     "country": "Australia",
     "date": "Mar 20, 2026",
@@ -6292,33 +4095,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Bangkok (Spring)",
-    "location": "Bangkok",
-    "country": "Thailand",
-    "date": "Mar 20, 2026",
-    "distance": "8km run + 8 workout stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo · Relay · Doubles",
-    "url": "https://hyrox.com/find-my-race/",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Beijing (Spring)",
-    "location": "Beijing",
-    "country": "China",
-    "date": "Mar 21, 2026",
-    "distance": "8km run + 8 workout stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo · Relay · Doubles",
-    "url": "https://hyrox.com/find-my-race/",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN 70.3 Davao",
+    "name": "Ironman 70.3 Davao",
     "location": "Davao City",
     "country": "Philippines",
     "date": "Mar 22, 2026",
@@ -6331,7 +4108,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Geelong",
+    "name": "Ironman 70.3 Geelong",
     "location": "Geelong, Victoria",
     "country": "Australia",
     "date": "Mar 22, 2026",
@@ -6422,7 +4199,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN Penghu",
+    "name": "Ironman Penghu",
     "location": "Penghu Islands",
     "country": "Taiwan",
     "date": "Apr 12, 2026",
@@ -6487,7 +4264,7 @@
     "status": "active"
   },
   {
-    "name": "T100 Singapore (Men's)",
+    "name": "T100 Singapore (Men",
     "location": "Singapore",
     "country": "Singapore",
     "date": "Apr 25, 2026",
@@ -6552,7 +4329,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Shanghai Chongming",
+    "name": "Ironman 70.3 Shanghai Chongming",
     "location": "Shanghai (Chongming Island)",
     "country": "China",
     "date": "May 17, 2026",
@@ -6630,7 +4407,7 @@
     "status": "active"
   },
   {
-    "name": "OCR Community World Championships (hosted by Spartan)",
+    "name": "OCR Community World Championships",
     "location": "Ivory Rock, Queensland",
     "country": "Australia",
     "date": "May 21, 2026",
@@ -6669,7 +4446,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN Cairns",
+    "name": "Ironman Cairns",
     "location": "Cairns, Queensland",
     "country": "Australia",
     "date": "Jun 14, 2026",
@@ -6677,12 +4454,12 @@
     "distanceLabel": "IM",
     "type": "triathlon",
     "team": "Solo",
-    "url": "https://www.ironman.com/races/ironman-cairns",
+    "url": "https://www.ironman.com/races/im-cairns",
     "note": "",
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Cairns",
+    "name": "Ironman 70.3 Cairns",
     "location": "Cairns, Queensland",
     "country": "Australia",
     "date": "Jun 14, 2026",
@@ -6773,7 +4550,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Higashimikawa Japan",
+    "name": "Ironman 70.3 Higashimikawa Japan",
     "location": "Toyohashi / Tahara, Aichi",
     "country": "Japan",
     "date": "Jun 1, 2026",
@@ -6799,7 +4576,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Sydney",
+    "name": "Hyrox Sydney",
     "location": "Sydney",
     "country": "Australia",
     "date": "Jul 1, 2026",
@@ -6929,20 +4706,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Bangkok (Summer)",
-    "location": "Bangkok",
-    "country": "Thailand",
-    "date": "Aug 13, 2026",
-    "distance": "8km run + 8 workout stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo · Relay · Doubles",
-    "url": "https://hyrox.com/find-my-race/",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "HYROX Perth",
+    "name": "Hyrox Perth",
     "location": "Perth",
     "country": "Australia",
     "date": "Aug 21, 2026",
@@ -6981,7 +4745,7 @@
     "status": "active"
   },
   {
-    "name": "TMBT Ultra Trail Marathon (Sabah)",
+    "name": "TMBT Ultra Trail Marathon",
     "location": "Kota Kinabalu, Sabah",
     "country": "Malaysia",
     "date": "Aug 29, 2026",
@@ -7007,20 +4771,7 @@
     "status": "active"
   },
   {
-    "name": "HYROX Beijing (Autumn)",
-    "location": "Beijing",
-    "country": "China",
-    "date": "Sep 12, 2026",
-    "distance": "8km run + 8 workout stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo · Relay · Doubles",
-    "url": "https://hyrox.com/find-my-race/",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "IRONMAN Japan South Hokkaido",
+    "name": "Ironman Japan South Hokkaido",
     "location": "Hokuto / Kikonai, Hokkaido",
     "country": "Japan",
     "date": "Sep 13, 2026",
@@ -7028,12 +4779,12 @@
     "distanceLabel": "IM",
     "type": "triathlon",
     "team": "Solo",
-    "url": "https://www.ironman.com/races/ironman-japan-south-hokkaido",
+    "url": "https://www.ironman.com/races/ironman-japan",
     "note": "",
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Dali",
+    "name": "Ironman 70.3 Dali",
     "location": "Dali, Yunnan",
     "country": "China",
     "date": "Sep 13, 2026",
@@ -7059,7 +4810,7 @@
     "status": "active"
   },
   {
-    "name": "Chiang Mai Half Marathon (Bangkok Airways)",
+    "name": "Chiang Mai Half Marathon",
     "location": "Chiang Mai",
     "country": "Thailand",
     "date": "Sep 26, 2026",
@@ -7072,7 +4823,7 @@
     "status": "active"
   },
   {
-    "name": "Bengaluru Marathon (Wipro)",
+    "name": "Bengaluru Marathon",
     "location": "Bengaluru, Karnataka",
     "country": "India",
     "date": "Sep 27, 2026",
@@ -7098,7 +4849,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN Gurye Korea",
+    "name": "Ironman Gurye Korea",
     "location": "Gurye, Jeonnam",
     "country": "South Korea",
     "date": "Oct 4, 2026",
@@ -7106,7 +4857,7 @@
     "distanceLabel": "IM",
     "type": "triathlon",
     "team": "Solo",
-    "url": "https://www.ironman.com/races/ironman-gurye-korea",
+    "url": "https://www.ironman.com/races/im-gurye-korea",
     "note": "",
     "status": "active"
   },
@@ -7176,7 +4927,7 @@
     "status": "active"
   },
   {
-    "name": "Spartan Wollongong (Stadion)",
+    "name": "Spartan Wollongong",
     "location": "Wollongong, New South Wales",
     "country": "Australia",
     "date": "Oct 10, 2026",
@@ -7202,7 +4953,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN Australia",
+    "name": "Ironman Australia",
     "location": "Port Macquarie, New South Wales",
     "country": "Australia",
     "date": "Oct 18, 2026",
@@ -7210,7 +4961,7 @@
     "distanceLabel": "IM",
     "type": "triathlon",
     "team": "Solo",
-    "url": "https://www.ironman.com/races/ironman-australia",
+    "url": "https://www.ironman.com/races/im-australia",
     "note": "",
     "status": "active"
   },
@@ -7267,19 +5018,6 @@
     "status": "active"
   },
   {
-    "name": "HYROX Shanghai (Autumn)",
-    "location": "Shanghai",
-    "country": "China",
-    "date": "Oct 31, 2026",
-    "distance": "8km run + 8 workout stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo · Relay · Doubles",
-    "url": "https://hyrox.com/find-my-race/",
-    "note": "",
-    "status": "active"
-  },
-  {
     "name": "Challenge Xiamen",
     "location": "Xiamen, Fujian",
     "country": "China",
@@ -7306,7 +5044,7 @@
     "status": "active"
   },
   {
-    "name": "HOKA Chiang Mai Thailand by UTMB (Asia-Pacific Major)",
+    "name": "HOKA Chiang Mai Thailand by UTMB",
     "location": "Chiang Mai Province",
     "country": "Thailand",
     "date": "Nov 28, 2026",
@@ -7345,10 +5083,10 @@
     "status": "active"
   },
   {
-    "name": "AIA HYROX Singapore (Autumn)",
+    "name": "AIA Hyrox Singapore",
     "location": "Singapore",
     "country": "Singapore",
-    "date": "Nov 27, 2026",
+    "date": "Apr 3, 2026",
     "distance": "8km run + 8 workout stations",
     "distanceLabel": "8K + 8 Stations",
     "type": "hyrox",
@@ -7462,7 +5200,7 @@
     "status": "watchlist"
   },
   {
-    "name": "HYROX Abu Dhabi",
+    "name": "Hyrox Abu Dhabi",
     "location": "Abu Dhabi",
     "country": "UAE",
     "date": "Dec 31, 2026",
@@ -7475,7 +5213,7 @@
     "status": "watchlist"
   },
   {
-    "name": "HYROX Melbourne",
+    "name": "Hyrox Melbourne",
     "location": "Melbourne",
     "country": "Australia",
     "date": "Dec 31, 2026",
@@ -7488,20 +5226,7 @@
     "status": "watchlist"
   },
   {
-    "name": "HYROX Bangkok (Winter)",
-    "location": "Bangkok",
-    "country": "Thailand",
-    "date": "Dec 31, 2026",
-    "distance": "8km run + 8 workout stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo · Relay · Doubles",
-    "url": "https://hyrox.com/find-my-race/",
-    "note": "",
-    "status": "watchlist"
-  },
-  {
-    "name": "HYROX Kuala Lumpur",
+    "name": "Hyrox Kuala Lumpur",
     "location": "Kuala Lumpur",
     "country": "Malaysia",
     "date": "Dec 31, 2026",
@@ -7514,7 +5239,7 @@
     "status": "watchlist"
   },
   {
-    "name": "HYROX Sanya",
+    "name": "Hyrox Sanya",
     "location": "Sanya, Hainan",
     "country": "China",
     "date": "Dec 1, 2026",
@@ -7553,7 +5278,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Bahrain",
+    "name": "Ironman 70.3 Bahrain",
     "location": "Bahrain",
     "country": "Bahrain",
     "date": "Dec 5, 2026",
@@ -7579,20 +5304,7 @@
     "status": "active"
   },
   {
-    "name": "AIA HYROX Singapore (Spring)",
-    "location": "Singapore",
-    "country": "Singapore",
-    "date": "Apr 3, 2026",
-    "distance": "8km run + 8 workout stations",
-    "distanceLabel": "8K + 8 Stations",
-    "type": "hyrox",
-    "team": "Solo · Relay · Doubles",
-    "url": "https://hyrox.com/find-my-race/",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "BYD HYROX Brisbane + APAC Championship",
+    "name": "BYD Hyrox Brisbane + APAC Championship",
     "location": "Brisbane, Queensland",
     "country": "Australia",
     "date": "Apr 9, 2026",
@@ -7605,7 +5317,7 @@
     "status": "active"
   },
   {
-    "name": "Cigna Healthcare HYROX Hong Kong",
+    "name": "Cigna Healthcare Hyrox Hong Kong",
     "location": "Hong Kong",
     "country": "Hong Kong",
     "date": "May 8, 2026",
@@ -7618,7 +5330,7 @@
     "status": "active"
   },
   {
-    "name": "AirAsia HYROX Incheon",
+    "name": "AirAsia Hyrox Incheon",
     "location": "Incheon",
     "country": "South Korea",
     "date": "May 15, 2026",
@@ -7631,7 +5343,7 @@
     "status": "active"
   },
   {
-    "name": "24/7 Fitness HYROX Shanghai (Spring)",
+    "name": "24/7 Fitness Hyrox Shanghai",
     "location": "Shanghai",
     "country": "China",
     "date": "May 16, 2026",
@@ -7644,7 +5356,7 @@
     "status": "active"
   },
   {
-    "name": "AirAsia HYROX Jakarta",
+    "name": "AirAsia Hyrox Jakarta",
     "location": "Jakarta",
     "country": "Indonesia",
     "date": "Jun 27, 2026",
@@ -7865,7 +5577,7 @@
     "status": "active"
   },
   {
-    "name": "Southeast Asian Trail Running Cup (SEATRC)",
+    "name": "Southeast Asian Trail Running Cup",
     "location": "Cibodas Botanical Garden, West Java",
     "country": "Indonesia",
     "date": "Jul 24, 2026",
@@ -7930,7 +5642,7 @@
     "status": "active"
   },
   {
-    "name": "Ultra-Trail Australia by UTMB (2026)",
+    "name": "Ultra-Trail Australia by UTMB",
     "location": "Katoomba, Blue Mountains",
     "country": "Australia",
     "date": "May 1, 2026",
@@ -8017,19 +5729,6 @@
     "type": "running",
     "team": "Solo",
     "url": "https://www.yokohamamarathon.jp",
-    "note": "",
-    "status": "active"
-  },
-  {
-    "name": "Kobe Marathon",
-    "location": "Kobe, Hyogo",
-    "country": "Japan",
-    "date": "Nov 15, 2026",
-    "distance": "Marathon 42.2km",
-    "distanceLabel": "42.2K · Road",
-    "type": "running",
-    "team": "Solo",
-    "url": "https://www.kobe-marathon.net",
     "note": "",
     "status": "active"
   },
@@ -8151,7 +5850,7 @@
     "status": "active"
   },
   {
-    "name": "Seoul Half Marathon (MBN)",
+    "name": "Seoul Half Marathon",
     "location": "Seoul",
     "country": "South Korea",
     "date": "Nov 15, 2026",
@@ -8190,7 +5889,7 @@
     "status": "active"
   },
   {
-    "name": "Seoul International Ultra Trail Race (SIUTR)",
+    "name": "Seoul International Ultra Trail Race",
     "location": "Seoul",
     "country": "South Korea",
     "date": "Oct 1, 2026",
@@ -8216,19 +5915,6 @@
     "status": "active"
   },
   {
-    "name": "Ultra Trail Kosciuszko by UTMB (New South Wales)",
-    "location": "Thredbo, New South Wales",
-    "country": "Australia",
-    "date": "Nov 20, 2026",
-    "distance": "32km / 50km / 102km / 161km",
-    "distanceLabel": "50K · 102K · 161K · Trail",
-    "type": "trail",
-    "team": "Solo",
-    "url": "https://utmb.world",
-    "note": "",
-    "status": "active"
-  },
-  {
     "name": "XTERRA Wellington Festival",
     "location": "Kāpiti Coast, Wellington",
     "country": "New Zealand",
@@ -8250,7 +5936,7 @@
     "distanceLabel": "Sprint",
     "type": "triathlon",
     "team": "Solo",
-    "url": "https://www.xterraplanet.com/race/xterra-rotorua",
+    "url": "https://www.xterraplanet.com/",
     "note": "",
     "status": "active"
   },
@@ -8281,7 +5967,7 @@
     "status": "active"
   },
   {
-    "name": "Perak Triathlon (Perak Multisport Festival)",
+    "name": "Perak Triathlon",
     "location": "Lumut, Perak",
     "country": "Malaysia",
     "date": "Jun 5, 2026",
@@ -8333,7 +6019,7 @@
     "status": "active"
   },
   {
-    "name": "TriFactor Run & RunSwim Singapore (Spring)",
+    "name": "TriFactor Run & RunSwim Singapore",
     "location": "East Coast Park, Singapore",
     "country": "Singapore",
     "date": "May 10, 2026",
@@ -8346,7 +6032,7 @@
     "status": "active"
   },
   {
-    "name": "TriFactor Triathlon & Duathlon Singapore (Autumn)",
+    "name": "TriFactor Triathlon & Duathlon Singapore",
     "location": "East Coast Park, Singapore",
     "country": "Singapore",
     "date": "Sep 13, 2026",
@@ -8424,7 +6110,7 @@
     "status": "active"
   },
   {
-    "name": "IRONMAN 70.3 Goseong Korea 2027",
+    "name": "Ironman 70.3 Goseong Korea",
     "location": "Goseong, Gyeongnam",
     "country": "South Korea",
     "date": "Jun 1, 2027",

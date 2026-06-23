@@ -1,49 +1,49 @@
 name,location,country,date,distance,distanceLabel,type,team,url,note,status
 Freshworks Chennai Marathon,Chennai,India,"Jan 12, 2026",Marathon (42.2km),42.2K,running,Solo,https://chennaithon.com,,active
-Mumbai Marathon (Tata),Mumbai,India,"Jan 19, 2026",Marathon (42.2km),42.2K,running,Solo,https://tatamumbaimarathon.procam.in,,active
-Coastal Odyssey Goa (20K Sea Swim),"Benaulim, South Goa",India,"Jan 25, 2026",2km,2K · Ocean,ocean-swim,Solo,https://coastalodyssey.in,,active
+Mumbai Marathon,Mumbai,India,"Jan 19, 2026",Marathon (42.2km),42.2K,running,Solo,https://tatamumbaimarathon.procam.in,,active
+Coastal Odyssey Goa,"Benaulim, South Goa",India,"Jan 25, 2026",2km,2K · Ocean,ocean-swim,Solo,https://coastalodyssey.in,,active
 KAPCH Challenge,"Kevadia, Gujarat",India,"Feb 1, 2026",Various,Sprint,triathlon,Solo / Relay,https://www.kapch.in,,watchlist
 MG Vadodara Marathon,"Vadodara, Gujarat",India,"Feb 9, 2026",Marathon (42.2km),42.2K,running,Solo,https://mgvadodaramarathon.com,,watchlist
 Bengaluru Midnight Marathon,Bengaluru,India,"Feb 15, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.midnightmarathon.in,,watchlist
 Auroville Trail,"Auroville, Tamil Nadu",India,"Feb 22, 2026",Various,Various,trail,Solo,https://www.aurovillemarathon.com,,watchlist
-HYROX India Mumbai,Mumbai,India,"Mar 1, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+Hyrox India Mumbai,Mumbai,India,"Mar 1, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
 Kolkata Marathon,Kolkata,India,"Mar 9, 2026",Marathon (42.2km),42.2K,running,Solo,https://jbgkolkatamarathon.com,,active
 Delhi Half Marathon,New Delhi,India,"Mar 16, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://vedantadelhihalfmarathon.procam.in,,active
-Ironman 70.3 Goa,Goa,India,"Nov 16, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
+Ironman 70.3 Goa,Goa,India,"Nov 1, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.indiarunning.com/events/ironman_703_goa_22384,,active
 Ironman 70.3 Bengaluru,Bengaluru,India,"Dec 7, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Laguna Phuket Triathlon,Phuket,Thailand,"Nov 30, 2026",1.8km/55km/12km,Olympic+,triathlon,Solo / Relay,https://lagunaphuket.com/triathlon,,active
+Laguna Phuket Triathlon,Phuket,Thailand,"Nov 30, 2026",1.8km/55km/12km,Olympic+,triathlon,Solo / Relay,https://lagunaphuket.com/triathlon/,,active
 Ironman 70.3 Thailand,Phuket,Thailand,"Dec 7, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
 Bangkok Marathon,Bangkok,Thailand,"Nov 23, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.bkkmarathon.com,,active
 Chiang Mai Marathon,Chiang Mai,Thailand,"Dec 21, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.chiangmaimarathon.com,,active
 Koh Samui Triathlon,Koh Samui,Thailand,"Aug 17, 2026",Various,Olympic,triathlon,Solo / Relay,https://www.xmultisport.com,,active
-HYROX Bangkok,Bangkok,Thailand,"Sep 20, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Tokyo Marathon,Tokyo,Japan,"Mar 2, 2026",Marathon (42.2km),42.2K,running,Solo,https://marathon.tokyo,,active
-Osaka Marathon,Osaka,Japan,"Feb 23, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.osaka-marathon.com/2026/en/,,active
-Kyoto Marathon,Kyoto,Japan,"Feb 16, 2026",Marathon (42.2km),42.2K,running,Solo,https://kyoto-marathon.com/en/,,active
+Hyrox Bangkok,"Bangkok, Thailand",Thailand,"Mar 20, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Season 9 announced city. 2026 was Mar 20-22. Predicted Mar 2027.,active
+Tokyo Marathon,Tokyo,Japan,"Mar 2, 2026",Marathon (42.2km),42.2K,running,Solo,https://marathon.tokyo,Confirmed date from aims-worldrunning.org,active
+Osaka Marathon,Osaka,Japan,"Feb 23, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.osaka-marathon.com/2026/en/,Confirmed date from rundida.com,active
+Kyoto Marathon,Kyoto,Japan,"Feb 16, 2026",Marathon (42.2km),42.2K,running,Solo,https://kyoto-marathon.com/en/,Confirmed date from kyoto-marathon.com,active
 Ironman 70.3 Japan,Nagoya,Japan,"Sep 21, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-HYROX Tokyo,Tokyo,Japan,"Nov 8, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+Hyrox Tokyo,Tokyo,Japan,"Nov 8, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
 Noto Triathlon,"Noto, Ishikawa",Japan,"Jul 13, 2026",Various,Half IM,triathlon,Solo / Relay,https://www.notojima-triathlon.com/,,active
 Ho Chi Minh City Marathon,Ho Chi Minh City,Vietnam,"Jan 12, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.hcmcmarathon.com,,active
 Hanoi Marathon,Hanoi,Vietnam,"Nov 2, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.hanoi-marathon.com,,active
 Vietnam Mountain Marathon,Sapa,Vietnam,"Aug 9, 2026",Marathon (42.2km),Various,trail,Solo,https://vietnammountainmarathon.com,,active
 Da Nang International Marathon,Da Nang,Vietnam,"Aug 17, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.rundanang.com,,active
-Ironman Philippines,Subic Bay,Philippines,"Aug 3, 2026",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,"Full distance Ironman in Subic Bay, Philippines. 3.8km swim, 180km bike, 42.2km run.",active
-Ironman 70.3 Philippines (Cebu),"Mactan, Cebu",Philippines,"Aug 10, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
+Ironman Philippines,Subic Bay,Philippines,"Aug 3, 2026",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races,,active
+Ironman 70.3 Philippines,"Mactan, Cebu",Philippines,"Aug 10, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
 Manila Marathon,Manila,Philippines,"Sep 14, 2026",Marathon (42.2km),42.2K,running,Solo,https://manilamarathon.ph,,active
 Colombo Marathon,Colombo,Sri Lanka,"Oct 5, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.colombomarathon.com,,active
 Ironman 70.3 Malaysia,Putrajaya,Malaysia,"Mar 23, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-KL City Marathon 2026,Kuala Lumpur,Malaysia,"Jun 29, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.kl-marathon.com,,active
+KL City Marathon,Kuala Lumpur,Malaysia,"Jun 29, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.kl-marathon.com,,active
 Penang Bridge International Marathon,Penang,Malaysia,"Nov 2, 2026",Marathon (42.2km),42.2K,running,Solo,https://penangmarathon.gov.my,,active
 Borneo International Marathon,"Kota Kinabalu, Sabah",Malaysia,"May 18, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.borneomarathon.com,,active
 Ironman 70.3 Singapore,Singapore,Singapore,"Nov 9, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-HYROX Singapore,Singapore,Singapore,"Sep 6, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Seoul Marathon,Seoul,South Korea,"Mar 16, 2026",Marathon (42.2km),42.2K,running,Solo,https://en.seoul-marathon.com,,active
+Hyrox Singapore,Singapore,Singapore,"Sep 6, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+Seoul Marathon,Seoul,South Korea,"Mar 16, 2026",Marathon (42.2km),42.2K,running,Solo,https://en.seoul-marathon.com,Confirmed date from seoul-marathon.com,active
 Jeju Triathlon,Jeju Island,South Korea,"Sep 7, 2026",Various,Olympic,triathlon,Solo / Relay,https://www.ironman.com/races/im-gurye,,active
-HYROX Seoul,Seoul,South Korea,"Oct 18, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+Hyrox Seoul,Seoul,South Korea,"Oct 18, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
 Shanghai Marathon,Shanghai,China,"Nov 30, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.shang-ma.com,,active
 Beijing Marathon,Beijing,China,"Nov 2, 2026",Marathon (42.2km),42.2K,running,Solo,https://en.beijing-marathon.com,,active
 Hong Kong Marathon,Hong Kong,China,"Feb 16, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.hkmarathon.com,,active
-Ironman Taiwan,Penghu,Taiwan,"Oct 19, 2026",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,"Full distance Ironman in Penghu, Taiwan. 3.8km swim, 180km bike, 42.2km run.",active
+Ironman Taiwan,Penghu,Taiwan,"Oct 19, 2026",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,,active
 Taipei Marathon,Taipei,Taiwan,"Dec 21, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.taipeicitymarathon.com/en/,,active
 Bali Marathon,"Gianyar, Bali",Indonesia,"Sep 7, 2026",Marathon (42.2km),42.2K,running,Solo,https://balimarathon.com,,active
 Ironman 70.3 Lombok,Lombok,Indonesia,"Sep 28, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
@@ -53,22 +53,22 @@ Everest Marathon,"Namche Bazaar, Nepal",Nepal,"May 29, 2026",Marathon (42.2km),V
 Maldives Ocean Swim,Malé Atoll,Maldives,"Oct 25, 2026",5km,5K · Ocean,ocean-swim,Solo,https://oceanmanswim.com/maafushi-maldives/,,active
 Angkor Wat Half Marathon,Siem Reap,Cambodia,"Dec 7, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://angkorwathalf.com,,active
 Bagan Temple Marathon,Bagan,Myanmar,"Jan 19, 2026",Marathon (42.2km),42.2K,running,Solo,https://baganmarathon.com,,active
-Gobi March (4 Deserts),Gobi Desert,Mongolia,"Jun 15, 2026",Ultra 50K,Various,trail,Solo,https://4deserts.com,,active
+Gobi March,Gobi Desert,Mongolia,"Jun 15, 2026",Ultra 50K,Various,trail,Solo,https://4deserts.com,,active
 Bhutan International Marathon,Thimphu,Bhutan,"Nov 9, 2026",Marathon (42.2km),42.2K,running,Solo,https://bhutaninternationalmarathon.com,,active
 Luang Prabang Half Marathon,Luang Prabang,Laos,"Dec 14, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://luangprabangmarathon.com,,active
 Tata Consultancy Services World 10K,Bengaluru,India,"May 18, 2026",10K,10K,running,Solo,https://tcsworld10k.procam.in,,active
 Ladakh Marathon,"Leh, Ladakh",India,"Sep 6, 2026",Marathon (42.2km),42.2K,running,Solo,https://ladakhmarathon.com,,active
 Spiti Valley Ultramarathon,"Spiti Valley, HP",India,"Jun 28, 2026",Ultra 100K,Various,trail,Solo,https://www.suryaspitimarathon.com,,active
 Kaveri Trail Marathon,Mysuru,India,"Jan 19, 2026",Marathon (42.2km),Various,trail,Solo,https://kaveritrailmarathon.com,,active
-Coastal Trail Run Goa,Goa,India,"Nov 29, 2026",Various,Various,trail,Solo,https://thehellrace.com/goa-ultra-02-03-aug-2025-the-hell-race/,,watchlist
+Coastal Trail Run Goa,Goa,India,"Nov 29, 2026",Various,Various,trail,Solo,https://thehellrace.com/,,watchlist
 Pinkathon Mumbai,Mumbai,India,"Dec 14, 2026",Various,Various,running,Solo,https://www.pinkathon.com,,watchlist
 Ultramarathon Manali,"Manali, HP",India,"Jul 6, 2026",Ultra 50K,Various,trail,Solo,https://www.manalimarathon.org,,active
 Rann Utsav Run,"Kutch, Gujarat",India,"Feb 1, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://www.rannutsav.com,,watchlist
 Hyderabad Marathon,Hyderabad,India,"Aug 24, 2026",Marathon (42.2km),42.2K,running,Solo,https://nmdchyderabadmarathon.com,,active
 Pune Marathon,Pune,India,"Sep 14, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.marathonpune.com,,active
-HYROX Bengaluru,Bengaluru,India,"Nov 1, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+Hyrox Bengaluru,"Bengaluru, Karnataka",India,"Apr 11, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
 Ironman 70.3 Kolkata,Kolkata,India,"Oct 12, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-HYROX Osaka,Osaka,Japan,"Dec 6, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+Hyrox Osaka,"Osaka, Japan",Japan,"Jan 30, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted Jan 2027 from 2026 (Jan 30). Exact date TBC.,active
 Nagano Marathon,Nagano,Japan,"Apr 20, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.naganomarathon.gr.jp/english,,active
 Mt Fuji Trail Run,Fujiyoshida,Japan,"Jul 27, 2026",Various,Various,trail,Solo,https://mtfuji100.com/,,active
 Phuket International Marathon,Phuket,Thailand,"Jun 8, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.phuketmarathon.com,,active
@@ -92,7 +92,7 @@ Desert Storm Bikaner,"Bikaner, Rajasthan",India,"Feb 15, 2026",Marathon (42.2km)
 Sundarban Trail Run,West Bengal,India,"Dec 21, 2026",Various,Various,trail,Solo,https://www.indiarunning.in,,watchlist
 Mumbai Ocean Swim,"Juhu Beach, Mumbai",India,"Dec 14, 2026",5km,5K · Ocean,ocean-swim,Solo,https://maharashtraaquaticassociation.com,,watchlist
 Goa Open Water Swim,"Candolim Beach, Goa",India,"Jan 11, 2026",3km,3K · Ocean,ocean-swim,Solo,https://www.goaopenwaterswimmingclub.com,,watchlist
-India HYROX Championship,New Delhi,India,"Mar 22, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+India Hyrox Championship,New Delhi,India,"Mar 22, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
 Himachal Triathlon,"Shimla, HP",India,"Jun 14, 2026",Various,Olympic,triathlon,Solo / Relay,https://triathlonfederation.in,,active
 Tata Steel Kolkata 25K,Kolkata,India,"Jan 26, 2026",5K,5K,running,Solo,https://tatasteelworld25k.procam.in,,active
 Airtel Delhi Half Marathon,New Delhi,India,"Oct 19, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://vedantadelhihalfmarathon.procam.in,,active
@@ -100,22 +100,21 @@ Vedanta Delhi Half Marathon,New Delhi,India,"Oct 19, 2026",Half Marathon (21.1km
 Spicejet Hyderabad Half Marathon,Hyderabad,India,"Nov 16, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://hyderabadhalfmarathon.in,,active
 Vasai-Virar Marathon,Mumbai,India,"Jan 5, 2026",Marathon (42.2km),42.2K,running,Solo,https://vvmm.in,,active
 Ironman 70.3 India Vishakhapatnam,Vizag,India,"Oct 26, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Nagoya Women's Marathon,Nagoya,Japan,"Mar 9, 2026",Marathon (42.2km),42.2K,running,Solo,https://womens-marathon.nagoya/en/,,active
+Nagoya Women,Nagoya,Japan,"Mar 9, 2026",Marathon (42.2km),42.2K,running,Solo,https://womens-marathon.nagoya/en/,Confirmed date from hashirun.com,active
 Hokkaido Marathon,Sapporo,Japan,"Aug 31, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.hokkaido-marathon.com/,,active
-Ironman Japan,"Gamagori, Aichi",Japan,"Oct 5, 2026",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,"Full distance Ironman in Gamagori, Aichi, Japan. 3.8km swim, 180km bike, 42.2km run.",active
+Ironman Japan,"Gamagori, Aichi",Japan,"Oct 5, 2026",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,,active
 Fuji Mountain Race,Mount Fuji,Japan,"Jul 27, 2026",21km,Various,trail,Solo,https://fujimountainrace.city.fujiyoshida.yamanashi.jp/,,active
 Ultramarathon Aso,Kumamoto,Japan,"May 18, 2026",Ultra 100K,Various,trail,Solo,https://www.aso.ne.jp/~koiki/04_event/marathon_r05.html,,active
-Phuket Marathon,Phuket,Thailand,"Jun 1, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.phuketmarathon.com,,active
+Phuket Marathon,Phuket,Thailand,"Jun 1, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.phuketmarathon.com,Predicted from 2026 (Jun 1). Exact date TBC.,active
 Chiang Rai Trail,Chiang Rai,Thailand,"Oct 4, 2026",Various,Various,trail,Solo,https://www.utmb.world,,active
 Ironman 70.3 Phuket,Phuket,Thailand,"Nov 9, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
 Ironman 70.3 Vietnam Da Nang,Da Nang,Vietnam,"May 11, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
 Gyeongju International Marathon,Gyeongju,South Korea,"Oct 17, 2026",Marathon (42.2km),42.2K,running,Solo,https://en.gyeongjumarathon.com,"Confirmed Oct 17, 2026 from aims-worldrunning.org",active
-HYROX Seoul Spring,Seoul,South Korea,"Apr 12, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+Hyrox Seoul Spring,Seoul,South Korea,"Apr 12, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
 Ironman Korea,"Gurye, South Jeolla",South Korea,"Oct 4, 2026",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,"Confirmed Oct 4, 2026 in Gurye from gowod.app 2026 calendar",active
-Ironman 70.3 Philippines (Clark),Cebu,Philippines,"Aug 3, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-HYROX Manila,Manila,Philippines,"Sep 27, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Standard Chartered KL Marathon 2026,Kuala Lumpur,Malaysia,"Jun 22, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.kl-marathon.com,,active
-Ironman 70.3 Putrajaya,Putrajaya,Malaysia,"Nov 2, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
+Hyrox Manila,Manila,Philippines,"Sep 27, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
+Standard Chartered KL Marathon,Kuala Lumpur,Malaysia,"Jun 22, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.kl-marathon.com,,active
+Ironman 70.3 Putrajaya,Putrajaya,Malaysia,"Nov 2, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,Predicted from 2026 (Nov 2). Exact date TBC.,active
 Borneo Ultra Trail Marathon,Sabah,Malaysia,"Sep 6, 2026",Marathon (42.2km),Various,trail,Solo,https://www.borneoultra.com,"UTMB World Series ultra trail race in Sabah, Malaysia.",active
 Standard Chartered Singapore Marathon,Singapore,Singapore,"Dec 7, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.singaporemarathon.com,,active
 Bromo Tengger Semeru Ultra,East Java,Indonesia,"Jun 7, 2026",Ultra 50K,Various,trail,Solo,https://fonesport.id/bts100,,active
@@ -124,230 +123,79 @@ Annapurna 100,Pokhara,Nepal,"Oct 18, 2026",Ultra 100K,Various,trail,Solo,https:/
 Kathmandu Ultra,Kathmandu,Nepal,"Mar 22, 2026",Ultra 50K,Various,trail,Solo,https://ultratrailkathmandu.com,,active
 Taroko Gorge Marathon,Hualien,Taiwan,"Mar 22, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.taroko-marathon.com.tw/en/,,active
 Chengdu Panda Marathon,Chengdu,China,"Apr 13, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.runningtaiwan.com/overseas/chengdu-panda-marathon,,active
-Hainan Ocean Swim,"Sanya, Hainan",China,"Mar 9, 2026",Various,Various · Ocean,ocean-swim,Solo,https://www.worldsmarathons.com/marathon/hainan-open-water-swim,,active
-Vasai-Virar Marathon 2027,Mumbai,India,"Jan 4, 2027",Marathon (42.2km),42.2K,running,Solo,https://vasaivirarmarathon.com,,active
-Goa Open Water Swim 2027,"Candolim Beach, Goa",India,"Jan 10, 2027",3km,3K · Ocean,ocean-swim,Solo,https://goaswim.in,,watchlist
-Freshworks Chennai Marathon 2027,Chennai,India,"Jan 11, 2027",Marathon (42.2km),42.2K,running,Solo,https://chennaihalf.com,,active
-Mumbai Marathon 2027 (Tata),Mumbai,India,"Jan 18, 2027",Marathon (42.2km),42.2K,running,Solo,https://tatamumbaimarathon.com,,active
-Kaveri Trail Marathon 2027,Mysuru,India,"Jan 18, 2027",Marathon (42.2km),Various,trail,Solo,https://kaveritrail.com,,active
-Coastal Odyssey Goa 2027,"Benaulim, South Goa",India,"Jan 24, 2027",2km,2K · Ocean,ocean-swim,Solo,https://coastalodyssey.in,,watchlist
-Jaipur Marathon 2027,Jaipur,India,"Jan 25, 2027",Marathon (42.2km),42.2K,running,Solo,https://jaipurmarathon.org,,active
-Tata Steel Kolkata 25K 2027,Kolkata,India,"Jan 25, 2027",5K,5K,running,Solo,https://kolkata25k.com,,active
-Hyderabad Marathon 2027 (Jan),Hyderabad,India,"Jan 25, 2027",Marathon (42.2km),42.2K,running,Solo,https://hyderabadmarathon.com,,watchlist
-KAPCH Challenge 2027,"Kevadia, Gujarat",India,"Jan 31, 2027",Various,Sprint,triathlon,Solo / Relay,https://kapchchallenge.com,,watchlist
-Rann Utsav Run 2027,"Kutch, Gujarat",India,"Jan 31, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://rannrun.in,,watchlist
-Bengaluru Midnight Marathon 2027,Bengaluru,India,"Feb 14, 2027",Marathon (42.2km),42.2K,running,Solo,https://bengalurunightmarathon.com,,watchlist
-Desert Storm Bikaner 2027,"Bikaner, Rajasthan",India,"Feb 14, 2027",Marathon (42.2km),Various,trail,Solo,https://deserstorm.in,,watchlist
-MG Vadodara Marathon 2027,"Vadodara, Gujarat",India,"Feb 8, 2027",Marathon (42.2km),42.2K,running,Solo,https://vadodamamarathon.in,,watchlist
-Auroville Trail 2027,"Auroville, Tamil Nadu",India,"Feb 21, 2027",Various,Various,trail,Solo,https://aurovilletrail.com,,watchlist
-HYROX India Mumbai 2027,Mumbai,India,"Mar 7, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Kolkata Marathon 2027,Kolkata,India,"Mar 8, 2027",Marathon (42.2km),42.2K,running,Solo,https://kolkatamarathon.com,,active
-Delhi Half Marathon 2027,New Delhi,India,"Mar 15, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://airteldelhalfmarathon.com,,active
-India HYROX Championship 2027,New Delhi,India,"Mar 21, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-TCS World 10K Bengaluru 2027,Bengaluru,India,"May 17, 2027",10K,10K,running,Solo,https://tcsworld10k.com,,active
-Himachal Triathlon 2027,"Shimla, HP",India,"Jun 13, 2027",Various,Olympic,triathlon,Solo / Relay,https://himachaltriathlon.in,,active
-Spiti Valley Ultramarathon 2027,"Spiti Valley, HP",India,"Jun 27, 2027",Ultra 100K,Various,trail,Solo,https://spitivalleyultra.com,,active
-Ultramarathon Manali 2027,"Manali, HP",India,"Jul 5, 2027",Ultra 50K,Various,trail,Solo,https://manaliumarathon.com,,active
-Cherrapunji Rain Run 2027,"Cherrapunji, Meghalaya",India,"Jul 19, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://cherrapunjirun.in,,watchlist
-Hyderabad Marathon 2027 (Aug),Hyderabad,India,"Aug 23, 2027",Marathon (42.2km),42.2K,running,Solo,https://hyderabadmarathon.com,,watchlist
-Ladakh Marathon 2027,"Leh, Ladakh",India,"Sep 5, 2027",Marathon (42.2km),42.2K,running,Solo,https://ladakhmarathon.com,,active
-Pune Marathon 2027,Pune,India,"Sep 13, 2027",Marathon (42.2km),42.2K,running,Solo,https://punemarathon.in,,active
-Sikkim Himalayan Ultra 2027,"Gangtok, Sikkim",India,"Oct 10, 2027",Ultra 50K,Various,trail,Solo,https://sikkimultra.com,,active
-Ironman 70.3 Kolkata 2027,Kolkata,India,"Oct 11, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Airtel Delhi Half Marathon 2027,New Delhi,India,"Oct 18, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://airteldelhalfmarathon.com,,active
-Vedanta Delhi Half Marathon 2027,New Delhi,India,"Oct 18, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://vdhlm.com,,active
-Ironman 70.3 Vishakhapatnam 2027,Vizag,India,"Oct 25, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Kochi Ironkid Triathlon 2027,"Kochi, Kerala",India,"Nov 7, 2027",Various,Sprint,triathlon,Solo / Relay,https://ironkid.in,,watchlist
-Ironman 70.3 Goa 2027,Goa,India,"Nov 15, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Spicejet Hyderabad Half Marathon 2027,Hyderabad,India,"Nov 15, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://hyderabadhalf.com,,active
-HYROX Bengaluru 2027,Bengaluru,India,"Nov 2, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Coastal Trail Run Goa 2027,Goa,India,"Nov 28, 2027",Various,Various,trail,Solo,https://coastaltrailgoa.com,,watchlist
-Ironman 70.3 Bengaluru 2027,Bengaluru,India,"Dec 6, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Pinkathon Mumbai 2027,Mumbai,India,"Dec 13, 2027",Various,Various,running,Solo,https://pinkathon.in,,watchlist
-Mumbai Ocean Swim 2027,"Juhu Beach, Mumbai",India,"Dec 13, 2027",5km,5K · Ocean,ocean-swim,Solo,https://mumbaioceanswim.com,,watchlist
-Sundarban Trail Run 2027,West Bengal,India,"Dec 20, 2027",Various,Various,trail,Solo,https://sundabantrail.in,,watchlist
-Kyoto Marathon 2027,Kyoto,Japan,"Feb 21, 2027",Marathon (42.2km),42.2K,running,Solo,https://kyoto-marathon.com,Confirmed date from kyoto-marathon.com,active
-Osaka Marathon 2027,Osaka,Japan,"Feb 28, 2027",Marathon (42.2km),42.2K,running,Solo,https://osaka-marathon.com,Confirmed date from rundida.com,active
-Nagoya Women's Marathon 2027,Nagoya,Japan,"Mar 14, 2027",Marathon (42.2km),42.2K,running,Solo,https://nagoya-womens-marathon.jp,Confirmed date from hashirun.com,active
-Tokyo Marathon 2027,Tokyo,Japan,"Mar 7, 2027",Marathon (42.2km),42.2K,running,Solo,https://marathon.tokyo,Confirmed date from aims-worldrunning.org,active
-Nagano Marathon 2027,Nagano,Japan,"Apr 19, 2027",Marathon (42.2km),42.2K,running,Solo,https://naganomarathon.com,,active
-Ultramarathon Aso 2027,Kumamoto,Japan,"May 17, 2027",Ultra 100K,Various,trail,Solo,https://asokazan100.com,,active
-Noto Triathlon 2027,"Noto, Ishikawa",Japan,"Jul 12, 2027",Various,Half IM,triathlon,Solo / Relay,https://noto-triathlon.jp,,active
-Mt Fuji Trail Run 2027,Fujiyoshida,Japan,"Jul 26, 2027",Various,Various,trail,Solo,https://ultratrailmtfuji.com,,active
-Fuji Mountain Race 2027,Mount Fuji,Japan,"Jul 26, 2027",21km,Various,trail,Solo,https://fujisan-race.jp,,active
-Hokkaido Marathon 2027,Sapporo,Japan,"Aug 30, 2027",Marathon (42.2km),42.2K,running,Solo,https://hokkaido-marathon.com,,active
-Ironman 70.3 Japan 2027,Nagoya,Japan,"Sep 20, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Ironman Japan 2027,"Gamagori, Aichi",Japan,"Oct 4, 2027",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,"Full distance Ironman in Gamagori, Aichi, Japan. 3.8km swim, 180km bike, 42.2km run.",active
-Kobe Marathon 2027,Kobe,Japan,"Nov 15, 2027",Marathon (42.2km),42.2K,running,Solo,https://kobemarathon.jp,,active
-HYROX Tokyo 2027 (Nov 7),Tokyo,Japan,"Nov 7, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-HYROX Tokyo 2027 (Nov 21),Tokyo,Japan,"Nov 21, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Fukuoka Marathon 2027,Fukuoka,Japan,"Dec 7, 2027",Marathon (42.2km),42.2K,running,Solo,https://fukuokamarathon.com,,active
-HYROX Osaka 2027,Osaka,Japan,"Dec 5, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Chiang Mai Trail 2027,Chiang Mai,Thailand,"Jan 18, 2027",Various,Various,trail,Solo,https://chiangmaitrail.com,,active
-Chiang Rai Half Marathon 2027,Chiang Rai,Thailand,"Mar 8, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://chiangrai-halfmarathon.com,,active
-Phuket Swimrun 2027,Phuket,Thailand,"Apr 27, 2027",Various,Various · Ocean,swimrun,Solo / Team of 2,https://phuketswimrun.com,,active
-Phuket Marathon 2027,Phuket,Thailand,"May 31, 2027",Marathon (42.2km),42.2K,running,Solo,https://phuketmarathon.com,,active
-Phuket International Marathon 2027,Phuket,Thailand,"Jun 7, 2027",Marathon (42.2km),42.2K,running,Solo,https://phuketmarathon.com,,active
-Koh Samui Triathlon 2027,Koh Samui,Thailand,"Aug 16, 2027",Various,Olympic,triathlon,Solo / Relay,https://kohsamuitriathlon.com,,active
-HYROX Bangkok 2027,Bangkok,Thailand,Mar 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Season 9 announced city. 2026 was Mar 20-22. Predicted Mar 2027.,active
-Chiang Rai Trail 2027,Chiang Rai,Thailand,"Oct 3, 2027",Various,Various,trail,Solo,https://chiangraitrail.com,,active
-Ironman 70.3 Phuket 2027,Phuket,Thailand,"Nov 8, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Bangkok Marathon 2027,Bangkok,Thailand,"Nov 22, 2027",Marathon (42.2km),42.2K,running,Solo,https://bangkokmarathon.com,,active
-Laguna Phuket Triathlon 2027,Phuket,Thailand,"Nov 29, 2027",1.8km/55km/12km,Olympic+,triathlon,Solo / Relay,https://lagunaphuket.com,,active
-Ironman 70.3 Thailand 2027,Phuket,Thailand,"Dec 6, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Chiang Mai Marathon 2027,Chiang Mai,Thailand,"Dec 20, 2027",Marathon (42.2km),42.2K,running,Solo,https://chiangmaimarathon.com,,active
-Ho Chi Minh City Marathon 2027,Ho Chi Minh City,Vietnam,"Jan 11, 2027",Marathon (42.2km),42.2K,running,Solo,https://hcmcmarathon.com,,active
-Hanoi Trail Run 2027,Hanoi,Vietnam,"Mar 1, 2027",Various,Various,trail,Solo,https://hanoitrail.com,,active
-Mekong Delta Marathon 2027,Can Tho,Vietnam,"Apr 5, 2027",Marathon (42.2km),42.2K,running,Solo,https://mekongmarathon.com,,active
-Ironman 70.3 Vietnam Da Nang 2027,Da Nang,Vietnam,"May 10, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Vietnam Mountain Marathon 2027,Sapa,Vietnam,"Aug 8, 2027",Marathon (42.2km),Various,trail,Solo,https://vietnammountainmarathon.com,,active
-Da Nang International Marathon 2027,Da Nang,Vietnam,"Aug 16, 2027",Marathon (42.2km),42.2K,running,Solo,https://dananginternationalmarathon.com,,active
-Hanoi Marathon 2027,Hanoi,Vietnam,"Nov 1, 2027",Marathon (42.2km),42.2K,running,Solo,https://hanoimarathon.com,,active
-Ha Long Bay Heritage Marathon 2027,Ha Long,Vietnam,"Nov 22, 2027",Marathon (42.2km),42.2K,running,Solo,https://halongheritagemarathon.com,,active
-Ironman 70.3 Malaysia 2027,Putrajaya,Malaysia,"Mar 22, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Penang Hill Ultra 2027,Penang,Malaysia,"Mar 8, 2027",Ultra 50K,Various,trail,Solo,https://penanghillultra.com,,active
-Borneo International Marathon 2027,"Kota Kinabalu, Sabah",Malaysia,"May 17, 2027",Marathon (42.2km),42.2K,running,Solo,https://borneomarathon.com,,active
-Kuala Lumpur Marathon 2027,Kuala Lumpur,Malaysia,"Jun 21, 2027",Marathon (42.2km),42.2K,running,Solo,https://klmarathon.com.my,,active
-Sabah Hash Trail 2027,"Kota Kinabalu, Sabah",Malaysia,"Jul 13, 2027",Various,Various,trail,Solo,https://sabahhash.com,,active
-Borneo Ultra Trail Marathon 2027,Sabah,Malaysia,"Sep 5, 2027",Marathon (42.2km),Various,trail,Solo,https://borneoultratail.com,"UTMB World Series ultra trail race in Sabah, Malaysia.",active
-Sabah XTERRA Triathlon 2027,"Kota Kinabalu, Sabah",Malaysia,"Oct 4, 2027",Various,Olympic,triathlon,Solo / Relay,https://xterraplanet.com,,active
-Penang Bridge International Marathon 2027,Penang,Malaysia,"Nov 1, 2027",Marathon (42.2km),42.2K,running,Solo,https://penangmarathon.com,,active
-Bintan Triathlon 2027,Bintan Island,Indonesia,"Apr 5, 2027",Various,Olympic,triathlon,Solo / Relay,https://bintantriathlon.com,,active
-Bromo Tengger Semeru Ultra 2027,East Java,Indonesia,"Jun 6, 2027",Ultra 50K,Various,trail,Solo,https://btsu.id,,active
-Rinjani 100 2027,Lombok,Indonesia,"Aug 1, 2027",Ultra 100K,Various,trail,Solo,https://rinjani100.com,,active
-Lombok Sumbawa Ultra 2027,Lombok,Indonesia,"Aug 2, 2027",Ultra 50K,Various,trail,Solo,https://lsultra.com,,active
-Bali Marathon 2027,"Gianyar, Bali",Indonesia,"Sep 6, 2027",Marathon (42.2km),42.2K,running,Solo,https://balimarathon.com,,active
-Ironman 70.3 Lombok 2027,Lombok,Indonesia,"Sep 27, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Bali Hope Swimrun 2027,"Nusa Lembongan, Bali",Indonesia,"Oct 11, 2027",Various,Various · Ocean,swimrun,Solo / Team of 2,https://balihope.org,,active
-Jakarta Marathon 2027,Jakarta,Indonesia,"Oct 18, 2027",Marathon (42.2km),42.2K,running,Solo,https://jakartamarathon.com,,active
-Cebu City Marathon 2027,Cebu City,Philippines,"Jan 4, 2027",Marathon (42.2km),42.2K,running,Solo,https://cebucitymarathon.com,,active
-Camiguin Island Trail Run 2027,Camiguin Island,Philippines,"Feb 8, 2027",Various,Various,trail,Solo,https://camiguinultra.com,,active
-Palawan Ultra 2027,Puerto Princesa,Philippines,"Mar 15, 2027",Ultra 50K,Various,trail,Solo,https://palawanultra.com,,active
-Boracay Triathlon 2027,Boracay,Philippines,"Apr 19, 2027",Various,Sprint,triathlon,Solo / Relay,https://boracaytriathlon.com,,active
-Ironman Philippines 2027,Subic Bay,Philippines,"Aug 2, 2027",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,"Full distance Ironman in Subic Bay, Philippines. 3.8km swim, 180km bike, 42.2km run.",active
-Ironman 70.3 Philippines 2027 (Cebu),Cebu,Philippines,"Aug 2, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Ironman 70.3 Philippines 2027 (Mactan),"Mactan, Cebu",Philippines,"Aug 9, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Manila Marathon 2027,Manila,Philippines,"Sep 13, 2027",Marathon (42.2km),42.2K,running,Solo,https://manilamarathon.com,,active
-HYROX Manila 2027,Manila,Philippines,"Sep 26, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Seoul Marathon 2027,Seoul,South Korea,"Mar 21, 2027",Marathon (42.2km),42.2K,running,Solo,https://seoulmarathon.org,Confirmed date from seoul-marathon.com,active
-Busan International Marathon 2027,Busan,South Korea,"Apr 5, 2027",Marathon (42.2km),42.2K,running,Solo,https://busanmarathon.com,,active
-Gyeongju International Marathon 2027,Gyeongju,South Korea,"Apr 5, 2027",Marathon (42.2km),42.2K,running,Solo,https://gjmarathon.com,,active
-HYROX Seoul Spring 2027,Seoul,South Korea,"Apr 11, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Ironman Korea 2027,"Gurye, Jeolla",South Korea,Oct 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,Predicted Oct 2027 from 2026 (Oct 4 Gurye). Exact date TBC.,watchlist
-Jeju Triathlon 2027,Jeju Island,South Korea,"Sep 6, 2027",Various,Olympic,triathlon,Solo / Relay,https://jejutriathlon.com,,active
-HYROX Seoul 2027,Seoul,South Korea,"Oct 17, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Hong Kong Marathon 2027,Hong Kong,China,"Feb 15, 2027",Marathon (42.2km),42.2K,running,Solo,https://hkmarathon.com,,active
-Hainan Ocean Swim 2027,"Sanya, Hainan",China,"Mar 8, 2027",Various,Various · Ocean,ocean-swim,Solo,https://hainanswim.com,,active
-Chengdu Panda Marathon 2027,Chengdu,China,"Apr 12, 2027",Marathon (42.2km),42.2K,running,Solo,https://chengdumarathon.com,,active
-Beijing Marathon 2027,Beijing,China,"Nov 1, 2027",Marathon (42.2km),42.2K,running,Solo,https://bjmarathon.com,,active
-Chengdu Marathon 2027,Chengdu,China,"Nov 1, 2027",Marathon (42.2km),42.2K,running,Solo,https://chengdumarathon.com,,active
-Shanghai Marathon 2027,Shanghai,China,"Nov 29, 2027",Marathon (42.2km),42.2K,running,Solo,https://shmarathon.com,,active
-Guangzhou Marathon 2027,Guangzhou,China,"Dec 6, 2027",Marathon (42.2km),42.2K,running,Solo,https://gzmarathon.com,,active
-HYROX Singapore 2027 (Apr),Singapore,Singapore,"Apr 4, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Singapore Swim For Hope 2027,Singapore,Singapore,"Sep 27, 2027",5km,5K · Ocean,ocean-swim,Solo,https://swimforhope.sg,,active
-HYROX Singapore 2027 (Sep),Singapore,Singapore,"Sep 5, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,,active
-Ironman 70.3 Singapore 2027,Singapore,Singapore,"Nov 8, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
-Standard Chartered Singapore Marathon 2027,Singapore,Singapore,"Dec 6, 2027",Marathon (42.2km),42.2K,running,Solo,https://singaporemarathon.com,,active
-Kathmandu Ultra 2027,Kathmandu,Nepal,"Mar 21, 2027",Ultra 50K,Various,trail,Solo,https://kathmanduultra.com,,active
-Everest Marathon 2027,"Namche Bazaar, Nepal",Nepal,"May 29, 2027",Marathon (42.2km),Various,trail,Solo,https://everestmarathon.com,,active
-Annapurna Trail Race 2027,"Pokhara, Nepal",Nepal,"Oct 17, 2027",Various,Various,trail,Solo,https://annapurnatrailrace.com,,active
-Annapurna 100 2027,Pokhara,Nepal,"Oct 17, 2027",Ultra 100K,Various,trail,Solo,https://annapurna100.com,,active
-Taroko Gorge Marathon 2027,Hualien,Taiwan,"Mar 21, 2027",Marathon (42.2km),42.2K,running,Solo,https://tarokomarathon.com,,active
-Sun Moon Lake Swim 2027,Nantou,Taiwan,"Sep 13, 2027",3km,3K · Ocean,ocean-swim,Solo,https://sunmoonlakeswim.com,,active
-Ironman Taiwan 2027,Penghu,Taiwan,"Oct 18, 2027",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://ironman.com,"Full distance Ironman in Penghu, Taiwan. 3.8km swim, 180km bike, 42.2km run.",active
-Taipei Marathon 2027,Taipei,Taiwan,"Dec 20, 2027",Marathon (42.2km),42.2K,running,Solo,https://taipeimarathon.com.tw,,active
-Gobi March 2027 (4 Deserts),Gobi Desert,Mongolia,"Jun 14, 2027",Ultra 50K,Various,trail,Solo,https://4deserts.com,,active
-Maldives Ocean Swim 2027 (Feb),North Malé Atoll,Maldives,"Feb 21, 2027",Various,Various · Ocean,ocean-swim,Solo,https://maldivesswim.com,,active
-Maldives Ocean Swim 2027 (Oct),Malé Atoll,Maldives,"Oct 24, 2027",5km,5K · Ocean,ocean-swim,Solo,https://maldivesswim.com,,active
-Angkor Wat Half Marathon 2027,Siem Reap,Cambodia,"Dec 6, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://angkormarathon.org,,active
-Colombo Marathon 2027 (Jan),Colombo,Sri Lanka,"Jan 18, 2027",Marathon (42.2km),42.2K,running,Solo,https://colombomarathon.lk,,active
-Colombo Marathon 2027 (Oct),Colombo,Sri Lanka,"Oct 4, 2027",Marathon (42.2km),42.2K,running,Solo,https://colombomarathon.lk,,active
-Bagan Temple Marathon 2027,Bagan,Myanmar,"Jan 18, 2027",Marathon (42.2km),42.2K,running,Solo,https://baganmarathon.com,,active
-Bhutan International Marathon 2027,Thimphu,Bhutan,"Nov 8, 2027",Marathon (42.2km),42.2K,running,Solo,https://bhutanmarathon.com,,active
-Luang Prabang Half Marathon 2027,Luang Prabang,Laos,"Dec 13, 2027",Half Marathon (21.1km),21.1K,running,Solo,https://luangprabangmarathon.com,,active
-HYROX World Championships Hong Kong,"AsiaWorld-Expo, Hong Kong",China,"Jun 10, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com/event/hyrox-world-championships-hong-kong-2027/,HYROX World Championships 2027 confirmed AsiaWorld-Expo Jun 10-13,active
-HYROX Delhi,"Delhi, India",India,"Jul 24, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,HYROX Delhi Jul 24-26 2026 confirmed,active
-HYROX Mumbai,"Mumbai, India",India,"Sep 18, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,HYROX Mumbai Sep 18-20 2026 confirmed,active
-HYROX Hangzhou,"Hangzhou, China",China,"Jul 4, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,HYROX Hangzhou Jul 4-5 2026 confirmed,active
-HYROX Chengdu,"Chengdu, China",China,"Aug 1, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,HYROX Chengdu Aug 1-2 2026 confirmed,active
-HYROX Shenzhen,"Shenzhen, China",China,"Aug 15, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,HYROX Shenzhen Aug 15-16 2026 confirmed,active
-HYROX Beijing,"Beijing, China",China,"Sep 12, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,HYROX Beijing Sep 12-13 2026 confirmed,active
-HYROX Shanghai,"Shanghai, China",China,"Oct 31, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,HYROX Shanghai Oct 31-Nov 1 2026 confirmed,active
-HYROX Guangzhou,"Guangzhou, China",China,"Nov 21, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,HYROX Guangzhou Nov 21-22 2026 confirmed,active
-HYROX Delhi 2027,"Delhi, India",India,Jul 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Delhi (Jul 24-26). Exact date TBC.,watchlist
-HYROX Mumbai 2027,"Mumbai, India",India,Sep 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Mumbai (Sep 18-20). Exact date TBC.,watchlist
-HYROX Hangzhou 2027,"Hangzhou, China",China,Jul 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Hangzhou (Jul 4-5). Exact date TBC.,watchlist
-HYROX Chengdu 2027,"Chengdu, China",China,Aug 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Chengdu (Aug 1-2). Exact date TBC.,watchlist
-HYROX Shenzhen 2027,"Shenzhen, China",China,Aug 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Shenzhen (Aug 15-16). Exact date TBC.,watchlist
-HYROX Beijing 2027,"Beijing, China",China,Sep 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Beijing (Sep 12-13). Exact date TBC.,watchlist
-HYROX Shanghai 2027,"Shanghai, China",China,Oct 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Shanghai (Oct 31). Exact date TBC.,watchlist
-HYROX Guangzhou 2027,"Guangzhou, China",China,Nov 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Guangzhou (Nov 21-22). Exact date TBC.,watchlist
-Ironman 70.3 Putrajaya 2027,"Putrajaya, Malaysia",Malaysia,Nov 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,Predicted from 2026 (Nov 2). Exact date TBC.,watchlist
-Ironman Vietnam 2027,"Da Nang, Vietnam",Vietnam,May 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races/im-vietnam,Full distance Ironman Vietnam — debut in 2026 (May 10). Predicted 2027 continuation.,watchlist
-HYROX Chiba,"Makuhari Messe, Chiba, Japan",Japan,"Aug 7, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Aug 7-9, 2026, Makuhari Messe, Chiba. New Japan city for HYROX.",active
-HYROX Chiba 2027,"Makuhari Messe, Chiba, Japan",Japan,Aug 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Chiba (Aug 7-9). Exact date TBC.,watchlist
-HYROX Jakarta,"Jakarta, Indonesia",Indonesia,"Jun 27, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Jun 27-28, 2026, Jakarta. Confirmed via hyroxmap.xyz and redbull.com.",active
-HYROX Jakarta 2027,"Jakarta, Indonesia",Indonesia,Jun 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Jakarta (Jun 27-28). Exact date TBC.,watchlist
+Hainan Ocean Swim,"Sanya, Hainan",China,"Mar 9, 2026",Various,Various · Ocean,ocean-swim,Solo,https://www.worldsmarathons.com/marathon/hainan-open-water-swim-festival,,active
+TCS World 10K Bengaluru,Bengaluru,India,"May 17, 2027",10K,10K,running,Solo,https://tcsworld10k.com,,active
+Ironman 70.3 Vishakhapatnam,Vizag,India,"Oct 25, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://ironman.com,,active
+Kobe Marathon,"Kobe, Hyogo",Japan,"Nov 15, 2026",Marathon 42.2km,42.2K,running,Solo,https://kobemarathon.jp,,active
+Fukuoka Marathon,Fukuoka,Japan,"Dec 7, 2027",Marathon (42.2km),42.2K,running,Solo,https://fukuokamarathon.com,,active
+Chiang Mai Trail,Chiang Mai,Thailand,"Jan 18, 2027",Various,Various,trail,Solo,https://chiangmaitrail.com,,active
+Phuket Swimrun,Phuket,Thailand,"Apr 27, 2027",Various,Various · Ocean,swimrun,Solo / Team of 2,https://phuketswimrun.com,,active
+Hanoi Trail Run,Hanoi,Vietnam,"Mar 1, 2027",Various,Various,trail,Solo,https://hanoitrail.com,,active
+Penang Hill Ultra,Penang,Malaysia,"Mar 8, 2027",Ultra 50K,Various,trail,Solo,https://penanghillultra.com,,active
+Kuala Lumpur Marathon,Kuala Lumpur,Malaysia,"Jun 21, 2027",Marathon (42.2km),42.2K,running,Solo,https://klmarathon.com.my,,active
+Sabah Hash Trail,"Kota Kinabalu, Sabah",Malaysia,"Jul 13, 2027",Various,Various,trail,Solo,https://sabahhash.com,,active
+Bintan Triathlon,Bintan Island,Indonesia,"Apr 5, 2027",Various,Olympic,triathlon,Solo / Relay,https://bintantriathlon.com,,active
+Camiguin Island Trail Run,Camiguin Island,Philippines,"Feb 8, 2027",Various,Various,trail,Solo,https://camiguinultra.com,,active
+Palawan Ultra,Puerto Princesa,Philippines,"Mar 15, 2027",Ultra 50K,Various,trail,Solo,https://palawanultra.com,,active
+Boracay Triathlon,Boracay,Philippines,"Apr 19, 2027",Various,Sprint,triathlon,Solo / Relay,https://boracaytriathlon.com,,active
+Hyrox World Championships Hong Kong,"AsiaWorld-Expo, Hong Kong",China,"Jun 10, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com/events/,HYROX World Championships 2027 confirmed AsiaWorld-Expo Jun 10-13,active
+Hyrox Delhi,"Delhi, India",India,"Jul 24, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com/find-my-race/,Predicted from 2026 HYROX Delhi (Jul 24-26). Exact date TBC.,active
+Hyrox Mumbai,"Mumbai, India",India,"Sep 18, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Mumbai (Sep 18-20). Exact date TBC.,active
+Hyrox Hangzhou,"Hangzhou, China",China,"Jul 4, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com/find-my-race/,Predicted from 2026 HYROX Hangzhou (Jul 4-5). Exact date TBC.,active
+Hyrox Chengdu,"Chengdu, China",China,"Aug 1, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Chengdu (Aug 1-2). Exact date TBC.,active
+Hyrox Shenzhen,"Shenzhen, China",China,"Aug 15, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com/find-my-race/,Predicted from 2026 HYROX Shenzhen (Aug 15-16). Exact date TBC.,active
+Hyrox Beijing,"Beijing, China",China,"Mar 21, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Beijing (Sep 12-13). Exact date TBC.,active
+Hyrox Shanghai,"Shanghai, China",China,"Oct 31, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Shanghai (Oct 31). Exact date TBC.,active
+Hyrox Guangzhou,"Guangzhou, China",China,"Nov 21, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted from 2026 HYROX Guangzhou (Nov 21-22). Exact date TBC.,active
+Ironman Vietnam,"Da Nang, Vietnam",Vietnam,May 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races/im-vietnam,Full distance Ironman Vietnam — debut in 2026 (May 10). Predicted 2027 continuation.,active
+Hyrox Chiba,"Makuhari Messe, Chiba, Japan",Japan,"Aug 7, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Aug 7-9, 2026, Makuhari Messe, Chiba. New Japan city for HYROX.",active
+Hyrox Jakarta,"Jakarta, Indonesia",Indonesia,"Jun 27, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Jun 27-28, 2026, Jakarta. Confirmed via hyroxmap.xyz and redbull.com.",active
 Daegu Marathon,"Daegu Stadium, Daegu",South Korea,"Feb 22, 2026",Marathon (42.2km),42.2K,running,Solo,https://daegumarathon.daegu.go.kr,"AIMS certified World Athletics label marathon. 40,000 runners.",active
-Daegu Marathon 2027,"Daegu Stadium, Daegu",South Korea,"Feb 28, 2027",Marathon (42.2km),42.2K,running,Solo,https://daegumarathon.daegu.go.kr,Predicted Feb 28 2027 (4th Sunday of Feb). 2026 was Feb 22.,watchlist
 JTBC Seoul Marathon,"Sangam World Cup Park, Seoul",South Korea,"Nov 1, 2026",Marathon (42.2km),42.2K,running,Solo,https://marathon.jtbc.com,"Major Seoul autumn marathon. Full + Half + 10K. Confirmed Nov 1, 2026.",active
-JTBC Seoul Marathon 2027,"Sangam World Cup Park, Seoul",South Korea,Nov 2027,Marathon (42.2km),42.2K,running,Solo,https://marathon.jtbc.com,Predicted Nov 2027 from 2026 (Nov 1). Exact date TBC.,watchlist
 Scenic Half Marathon Krabi,"Ao Nang, Krabi",Thailand,"Sep 12, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://www.scenicmarathon.com,"AIMS certified. Limestone cliffs + Andaman Sea course. Sep 11-12, 2026.",active
-Scenic Half Marathon Krabi 2027,"Ao Nang, Krabi",Thailand,Sep 2027,Half Marathon (21.1km),21.1K,running,Solo,https://www.scenicmarathon.com,Predicted Sep 2027 from 2026 (Sep 11-12). Exact date TBC.,watchlist
-Ultra Trail Angkor 2027,"Siem Reap, Cambodia",Cambodia,"Jan 23, 2027",Ultra 100K,Various,trail,Solo,https://ultratrail-angkor.com,"Confirmed Jan 23, 2027. Multiple distances 10-100km through Angkor temples.",active
+Ultra Trail Angkor,"Siem Reap, Cambodia",Cambodia,"Jan 23, 2027",Ultra 100K,Various,trail,Solo,https://ultratrail-angkor.com,"Confirmed Jan 23, 2027. Multiple distances 10-100km through Angkor temples.",active
 Angkor Empire Marathon,"Siem Reap, Cambodia",Cambodia,"Aug 1, 2026",Marathon (42.2km),42.2K,running,Solo,https://kh.checkpointspot.asia/event/aem2026,"Royal Angkor Resort venue. Full, Half, 10km + Fun Run. Confirmed Aug 1-2, 2026.",active
-Angkor Empire Marathon 2027,"Siem Reap, Cambodia",Cambodia,Aug 2027,Marathon (42.2km),42.2K,running,Solo,https://kh.checkpointspot.asia,Predicted Aug 2027 from 2026 (Aug 1-2). Exact date TBC.,watchlist
 Oceanman Krabi,"Dusit Thani Krabi Beach Resort, Krabi",Thailand,"Mar 28, 2026",10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://worldsmarathons.com/marathon/oceanman-krabi,"Open water ocean swim. Multiple distances. Confirmed Mar 28-29, 2026.",active
-Oceanman Krabi 2027,"Krabi, Thailand",Thailand,Mar 2027,10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://worldsmarathons.com/marathon/oceanman-krabi,Predicted Mar 2027 from 2026 (Mar 28-29). Exact date TBC.,watchlist
 Ironman New Zealand,"Taupō, New Zealand",New Zealand,"Mar 6, 2027",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races/im-new-zealand,"Confirmed Mar 6, 2027 at Lake Taupō. 3.8km swim + 180km bike + 42.2km run.",active
 Ironman 70.3 New Zealand,"Taupō, New Zealand",New Zealand,"Mar 6, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-new-zealand,"Confirmed Mar 6, 2027 at Lake Taupō. Runs same weekend as full Ironman NZ.",active
 Tarawera Ultra-Trail by UTMB,"Rotorua, New Zealand",New Zealand,"Feb 13, 2027",Ultra 50K,Various,trail,Solo,https://utmb.world,"UTMB World Series. Feb 13-15, 2027. Rotorua lakefront. Multi-distance trail.",active
 Runaway Auckland Marathon,"Auckland, New Zealand",New Zealand,"Nov 1, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.aucklandmarathon.co.nz,"Confirmed Nov 1, 2026. Devonport to Victoria Park. Major NZ marathon.",active
-Runaway Auckland Marathon 2027,"Auckland, New Zealand",New Zealand,Nov 2027,Marathon (42.2km),42.2K,running,Solo,https://www.aucklandmarathon.co.nz,Predicted Nov 2027. 2026 was Nov 1. Exact date TBC.,watchlist
 Queenstown Marathon,"Arrowtown to Queenstown, Otago",New Zealand,"Nov 14, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.queenstown-marathon.co.nz,"Confirmed Nov 14, 2026. Iconic course through Central Otago wine country.",active
-Queenstown Marathon 2027,"Arrowtown to Queenstown, Otago",New Zealand,Nov 2027,Marathon (42.2km),42.2K,running,Solo,https://www.queenstown-marathon.co.nz,Predicted Nov 2027 from 2026 (Nov 14). Exact date TBC.,watchlist
-Motatapu Trail Race 2027,"Arrowtown to Wanaka, Otago",New Zealand,"Mar 6, 2027",5K,Various,trail,Solo,https://www.motatapu.com,"Confirmed Mar 6, 2027. Point-to-point trail through high country station.",active
-Challenge Wanaka Half Triathlon 2027,"Wānaka, Otago",New Zealand,"Feb 20, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.challengewanaka.com,"Confirmed Feb 20, 2027. Half-distance triathlon in scenic Wanaka.",active
-Vietnam Highlands Trail by UTMB 2027,"Da Lat, Lam Dong, Vietnam",Vietnam,"Jan 8, 2027",Ultra 100K,Various,trail,Solo,https://vietnamhighlands.utmb.world,"Confirmed Jan 8-10, 2027. New UTMB World Series debut. Da Lat highlands — 4 peaks.",active
-Ultra Trail Chiang Mai 2027,"Chiang Dao, Chiang Mai, Thailand",Thailand,"Jan 8, 2027",Ultra 50K,Various,trail,Solo,https://www.utcm.run,"Confirmed Jan 8-10, 2027. ITRA certified, UTMB Index. Asia Trail Master event.",active
-Amazean Jungle Thailand by UTMB 2027,"Betong, Southern Thailand",Thailand,Feb 2027,5K,Various,trail,Solo,https://utmb.world,UTMB World Series. Feb 2027 (exact date TBC). Jungle trail race in southernmost Thailand.,watchlist
-Xtrail Kenting by UTMB 2027,"Kenting National Park, Taiwan",Taiwan,"Mar 6, 2027",Ultra 100K,Various,trail,Solo,https://xtrail.utmb.world,"Confirmed Mar 6-7, 2027. Hengchun Peninsula. 100K, 50K, 25K, 10K distances.",active
+Motatapu Trail Race,"Arrowtown to Wanaka, Otago",New Zealand,"Mar 6, 2027",5K,Various,trail,Solo,https://www.motatapu.com,"Confirmed Mar 6, 2027. Point-to-point trail through high country station.",active
+Challenge Wanaka Half Triathlon,"Wānaka, Otago",New Zealand,"Feb 20, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.challengewanaka.com,"Confirmed Feb 20, 2027. Half-distance triathlon in scenic Wanaka.",active
+Vietnam Highlands Trail by UTMB,"Da Lat, Lam Dong, Vietnam",Vietnam,"Jan 8, 2027",Ultra 100K,Various,trail,Solo,https://vietnamhighlands.utmb.world,"Confirmed Jan 8-10, 2027. New UTMB World Series debut. Da Lat highlands — 4 peaks.",active
+Ultra Trail Chiang Mai,"Chiang Dao, Chiang Mai, Thailand",Thailand,"Jan 8, 2027",Ultra 50K,Various,trail,Solo,https://www.utcm.run,"Confirmed Jan 8-10, 2027. ITRA certified, UTMB Index. Asia Trail Master event.",active
+Amazean Jungle Thailand by UTMB,"Betong, Southern Thailand",Thailand,Feb 2027,5K,Various,trail,Solo,https://utmb.world,UTMB World Series. Feb 2027 (exact date TBC). Jungle trail race in southernmost Thailand.,active
+Xtrail Kenting by UTMB,"Kenting National Park, Taiwan",Taiwan,"Mar 6, 2027",Ultra 100K,Various,trail,Solo,https://xtrail.utmb.world,"Confirmed Mar 6-7, 2027. Hengchun Peninsula. 100K, 50K, 25K, 10K distances.",active
 Hoka Chiang Mai by UTMB,"Chiang Mai, Thailand",Thailand,"Nov 27, 2026",17km/39km/56km/96km/168km,Various,trail,Solo,https://utmb.world,"UTMB World Series Asia-Pacific Major. Nov 27–Dec 6, 2026. Confirmed.",active
-Xiamen Marathon 2027,"Xiamen, Fujian, China",China,Jan 2027,Marathon (42.2km),42.2K,running,Solo,https://marathontours.com/en-us/events/xiamen-marathon/,Major Chinese marathon. 2026 was Jan 11. Predicted Jan 2027. Exact date TBC.,watchlist
-Chongqing Marathon 2027,"Chongqing, China",China,Jan 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,Predicted Jan 2027 from 2026 pattern. Exact date TBC.,watchlist
-Wuhan Marathon 2027,"Wuhan, Hubei, China",China,Mar 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,Confirmed Mar 2027 on finishers.com China calendar. Exact date TBC.,watchlist
-Great Wall of China Marathon 2027,"Huangyaguan, Beijing, China",China,"May 1, 2027",Marathon (42.2km),42.2K,running,Solo,https://worldsmarathons.com/marathon/great-wall-of-china-marathon,"Confirmed May 1, 2027. Iconic race over 5,164 steps of the Great Wall.",active
-Qingdao Marathon 2027,"Qingdao, Shandong, China",China,Apr 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,Predicted Apr 2027 from prior year pattern. Coastal city marathon. Exact date TBC.,watchlist
-Hangzhou International Marathon 2027,"Hangzhou, Zhejiang, China",China,Nov 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,"Historic Nov race, running since 1987. Predicted Nov 2027. Exact date TBC.",watchlist
-Jeju International Marathon 2027,"Jeju Island, South Korea",South Korea,Jun 2027,10K,10K,running,Solo,https://www.jejumarathon.com,Annual Jeju tourism marathon. 2026 was Jun 7. Predicted Jun 2027. Exact date TBC.,watchlist
-Techcombank Hanoi International Marathon 2027,"Hanoi, Vietnam",Vietnam,Oct 2027,Marathon (42.2km),42.2K,running,Solo,https://www.hanoiinternationalmarathon.com,Major Hanoi marathon. 2026 was Oct 3-4. Predicted Oct 2027. Exact date TBC.,watchlist
-Vietnam Trail Marathon 2027,Vietnam,Vietnam,"Jan 16, 2027",Marathon (42.2km),Various,trail,Solo,https://www.asiatrailmaster.com,"Asia Trail Master Series. Confirmed Jan 16, 2027.",active
-Chiang Mai Sri Lanna Triathlon 2027,"Sri Lanna, Chiang Mai, Thailand",Thailand,"Jan 13, 2027",Various,Olympic,triathlon,Solo / Relay,https://www.triathlon-thailand.de,"Confirmed Jan 13-17, 2027. Lake triathlon in Chiang Mai.",active
-Dalian International Marathon 2027,"Dalian, Liaoning, China",China,Apr 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,"Major Chinese coastal marathon, running since 1987. Predicted Apr 2027. Exact date TBC.",watchlist
-Ironman 70.3 Desaru Coast 2027,"Desaru Coast, Johor, Malaysia",Malaysia,May 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-desaru-coast,Predicted May 2027 from 2026 (May 25). Ironman 70.3 at luxury resort in Johor.,watchlist
-Malaysia Ultra-Trail by UTMB,"Taiping, Perak, Malaysia",Malaysia,"Sep 11, 2026",Ultra 50K,Various,trail,Solo,https://utmb.world,"UTMB World Series. Confirmed Sep 11-13, 2026, Taiping Perak.",active
-Malaysia Ultra-Trail by UTMB 2027,"Taiping, Perak, Malaysia",Malaysia,Sep 2027,Ultra 50K,Various,trail,Solo,https://utmb.world,UTMB World Series. Predicted Sep 2027 from 2026 (Sep 11-13). Exact date TBC.,watchlist
-Ironman Philippines Subic Bay 2027,"Subic Bay, Philippines",Philippines,Jun 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races/im-philippines,"Predicted Jun 2027 from 2026 (Jun 7, Subic Bay). Exact date TBC.",watchlist
-Ironman 70.3 Subic Bay Philippines 2027,"Subic Bay, Philippines",Philippines,Jun 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-subic-bay-philippines,Predicted Jun 2027. Runs same weekend as full Ironman Subic Bay.,watchlist
+Xiamen Marathon,"Xiamen, Fujian, China",China,Jan 2027,Marathon (42.2km),42.2K,running,Solo,https://marathontours.com/en-us/events/xiamen-marathon/,Major Chinese marathon. 2026 was Jan 11. Predicted Jan 2027. Exact date TBC.,watchlist
+Chongqing Marathon,"Chongqing, China",China,Jan 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,Predicted Jan 2027 from 2026 pattern. Exact date TBC.,watchlist
+Wuhan Marathon,"Wuhan, Hubei, China",China,Mar 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,Confirmed Mar 2027 on finishers.com China calendar. Exact date TBC.,watchlist
+Great Wall of China Marathon,"Huangyaguan, Beijing, China",China,"May 1, 2027",Marathon (42.2km),42.2K,running,Solo,https://worldsmarathons.com/marathon/great-wall-of-china-marathon,"Confirmed May 1, 2027. Iconic race over 5,164 steps of the Great Wall.",active
+Qingdao Marathon,"Qingdao, Shandong, China",China,Apr 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,Predicted Apr 2027 from prior year pattern. Coastal city marathon. Exact date TBC.,watchlist
+Hangzhou International Marathon,"Hangzhou, Zhejiang, China",China,Nov 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,"Historic Nov race, running since 1987. Predicted Nov 2027. Exact date TBC.",watchlist
+Jeju International Marathon,"Jeju Island, South Korea",South Korea,Jun 2027,10K,10K,running,Solo,https://www.jejumarathon.com,Annual Jeju tourism marathon. 2026 was Jun 7. Predicted Jun 2027. Exact date TBC.,watchlist
+Techcombank Hanoi International Marathon,Hanoi,Vietnam,"Oct 4, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.hanoiinternationalmarathon.com,Major Hanoi marathon. 2026 was Oct 3-4. Predicted Oct 2027. Exact date TBC.,active
+Vietnam Trail Marathon,"Moc Chau, Son La",Vietnam,"Jan 31, 2026",5km / 10km / 21km / 42km / 70km,Various,trail,Solo,https://www.asiatrailmaster.com,"Asia Trail Master Series. Confirmed Jan 16, 2027.",active
+Chiang Mai Sri Lanna Triathlon,"Sri Lanna, Chiang Mai, Thailand",Thailand,"Jan 13, 2027",Various,Olympic,triathlon,Solo / Relay,https://www.triathlon-thailand.de,"Confirmed Jan 13-17, 2027. Lake triathlon in Chiang Mai.",active
+Dalian International Marathon,"Dalian, Liaoning, China",China,Apr 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,"Major Chinese coastal marathon, running since 1987. Predicted Apr 2027. Exact date TBC.",watchlist
+Ironman 70.3 Desaru Coast,"Desaru Coast, Johor, Malaysia",Malaysia,May 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-desaru-coast,Predicted May 2027 from 2026 (May 25). Ironman 70.3 at luxury resort in Johor.,watchlist
+Malaysia Ultra-Trail by UTMB,"Taiping, Perak, Malaysia",Malaysia,"Sep 11, 2026",Ultra 50K,Various,trail,Solo,https://utmb.world,UTMB World Series. Predicted Sep 2027 from 2026 (Sep 11-13). Exact date TBC.,active
+Ironman Philippines Subic Bay,"Subic Bay, Philippines",Philippines,Jun 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races/im-philippines,"Predicted Jun 2027 from 2026 (Jun 7, Subic Bay). Exact date TBC.",watchlist
+Ironman 70.3 Subic Bay Philippines,"Subic Bay, Philippines",Philippines,Jun 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-subic-bay-philippines,Predicted Jun 2027. Runs same weekend as full Ironman Subic Bay.,watchlist
 Ironman Langkawi,"Langkawi, Malaysia",Malaysia,"Nov 21, 2026",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com,"Full Ironman Langkawi, Malaysia. Confirmed Nov 21, 2026.",active
-Ironman Langkawi 2027,"Langkawi, Malaysia",Malaysia,Nov 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com,Predicted Nov 2027 from 2026 (Nov 21). Exact date TBC.,watchlist
-Ironman 70.3 Phu Quoc 2027,"Phu Quoc Island, Vietnam",Vietnam,Nov 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-phu-quoc,"Predicted Nov 2027. Ironman 70.3 on Phu Quoc island, Vietnam.",watchlist
-HYROX Auckland 2027,"Auckland, New Zealand",New Zealand,"Jan 29, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Jan 29–Feb 1, 2027. BYD HYROX Auckland.",active
-HYROX Incheon 2026,"Incheon, South Korea",South Korea,"May 15, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed May 15-17, 2026 Incheon. AirAsia HYROX Incheon.",active
-HYROX Incheon 2027,"Incheon, South Korea",South Korea,May 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted May 2027 from 2026 (May 15-17). Exact date TBC.,watchlist
-HYROX Wuhan,"Wuhan, Hubei, China",China,"Apr 11, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Apr 11, 2026, Wuhan China. freeleticsgoals.com schedule.",active
-HYROX Hong Kong 2026,Hong Kong,China,"May 8, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed May 8-10, 2026. Cigna Healthcare HYROX Hong Kong.",active
-HYROX Hong Kong 2027,Hong Kong,China,May 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted May 2027 from 2026 (May 8-10). Separate from World Champs Jun 10-13.,watchlist
-HYROX Taipei,"Taipei, Taiwan",Taiwan,"Feb 28, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Feb 28–Mar 1, 2026, Taipei Taiwan.",active
-HYROX Taipei 2027,"Taipei, Taiwan",Taiwan,Feb 2027,8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted Feb 2027 from 2026 (Feb 28–Mar 1). Exact date TBC.,watchlist
-HYROX Beijing (Mar),"Beijing, China",China,"Mar 21, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Mar 21-22, 2026 Beijing. Season 8 event.",active
+Ironman 70.3 Phu Quoc,"Phu Quoc Island, Vietnam",Vietnam,Nov 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-phu-quoc,"Predicted Nov 2027. Ironman 70.3 on Phu Quoc island, Vietnam.",active
+Hyrox Auckland,"Auckland, New Zealand",New Zealand,"Jan 29, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed Jan 29–Feb 1, 2027. BYD HYROX Auckland.",active
+Hyrox Incheon,"Incheon, South Korea",South Korea,"May 15, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,"Confirmed May 15-17, 2026 Incheon. AirAsia HYROX Incheon.",active
+Hyrox Wuhan,"Wuhan, Hubei, China",China,"Apr 11, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com/find-my-race/,"Confirmed Apr 11, 2026, Wuhan China. freeleticsgoals.com schedule.",active
+Hyrox Hong Kong,Hong Kong,China,"May 8, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted May 2027 from 2026 (May 8-10). Separate from World Champs Jun 10-13.,active
+Hyrox Taipei,"Taipei, Taiwan",Taiwan,"Feb 28, 2026",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com,Predicted Feb 2027 from 2026 (Feb 28–Mar 1). Exact date TBC.,active
 Ironman 70.3 Kenting Taiwan,"Kenting, Kaohsiung, Taiwan",Taiwan,"Oct 6, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,"Confirmed Oct 6, 2026. Tropical southern Taiwan triathlon.",active
-Ironman 70.3 Kenting Taiwan 2027,"Kenting, Kaohsiung, Taiwan",Taiwan,Oct 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,Predicted Oct 2027 from 2026 (Oct 6). Exact date TBC.,watchlist
 EAA Tri Challenge,"Porbandar, Gujarat",India,Jan 2027,Sprint (25.75km),Sprint,triathlon,Solo / Relay,https://www.nextlap.in/triathlon-calendar,,active
 Lantau 50,Lantau Island,Hong Kong,"Jan 9, 2027",Ultra 50K,Various,trail,Solo,https://actionasiaevents.com,,active
 The Jumping Gorilla Mountain Trail,Gaud Dara,India,Jan 2027,10K,Various,trail,Solo,https://www.finishers.com/en/destinations/asia/india,,active
-Full IRONMAN Dharoi (S.Asia 1st!),"Dharoi, Gujarat",India,Feb 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races,"Full distance Ironman in Dharoi, Gujarat, India. 3.8km swim, 180km bike, 42.2km run.",active
-IRONMAN 70.3 Colombo,Colombo,Sri Lanka,Feb 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://english.newsfirst.lk/2026/02/12/ironman-70-3-returns-to-colombo-after-six-years-over-1-000-athletes-set-to-compete,Returned Feb 2026 after 6-yr gap,active
+Full Ironman Dharoi,"Dharoi, Gujarat",India,Feb 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races,,active
+Ironman 70.3 Colombo,Colombo,Sri Lanka,Feb 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://english.newsfirst.lk/2026/02/12/ironman-70-3-returns-to-colombo-after-six-years-over-1-000-athletes-set-to-compete,Returned Feb 2026 after 6-yr gap,active
 HK50 West,"Tai Mo Shan, Hong Kong",Hong Kong,"Feb 20, 2027",54K / 24K / 6K,Various,trail,Solo,https://actionasiaevents.com,,active
 AU Jaipur Marathon,Jaipur,India,Feb 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/asia/india,,active
 Bodh Gaya Marathon,Bodh Gaya,India,"Feb 14, 2027",Marathon (42.2km),42.2K,running,Solo,https://aims-worldrunning.org/countries/3.html,,active
@@ -359,61 +207,50 @@ Bhatti Lakes Ultra,Faridabad,India,Mar 2027,Ultra 100K,Various,trail,Solo,https:
 Goa Sea Pride / OWAAF Nationals,"Colva Beach, Goa",India,Mar 2027,10km+,10K · Ocean,ocean-swim,Solo,https://dailynewsofopenwaterswimming.com/owaaf-announces-2026-national-sea-swimming-championship-in-india/,,active
 Ngorn Nak Trail Krabi,"Dragon Crest Hill, Krabi",Thailand,Jul 2027,5K,Various,trail,Solo,https://www.amari.com/vogue/happenings,,active
 Andaman Trail Krabi,"Khao Phanom Bencha Natl Park, Krabi",Thailand,"Jul 19, 2027",Trail distances TBC,Various,trail,Solo,https://www.runlah.com/en/calendar/location?province=Krabi,,active
-Challenge Taiwan,Taitung,Taiwan,"Apr 24, 2027",226K / 113K,IM + Half IM,triathlon,Solo / Relay,https://www.challenge-family.com/taiwan,,active
+Challenge Taiwan,Taitung,Taiwan,"Apr 25, 2026",Full (3.8km/180km/42.2km) + Half (1.9km/90km/21.1km),IM + Half IM,triathlon,Solo,https://www.challenge-family.com/races/challenge-taiwan/,,active
 World 10K Bengaluru,Bengaluru,India,Apr 2027,10K,10K,running,Solo,https://tcsworld10k.procam.in,,active
 The Ultra Beast Pokharan,"Pokharan, Rajasthan",India,Apr 2027,Ultra 100K,Various,trail,Solo,https://www.finishers.com/en/destinations/asia/india,,active
 Bali Hope Ultra + SwimRun,Bali,Indonesia,"May 19–25, 2027",Ultra 50K,Various · Ocean,swimrun,Solo / Team of 2,https://www.balihope.com,,active
-IRONMAN 70.3 Da Nang,Da Nang,Vietnam,May 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
+Ironman 70.3 Da Nang,Da Nang,Vietnam,May 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
 Munnar Mountain Trail,"Munnar, Kerala",India,May 2027,Marathon (42.2km),Various,trail,Solo,https://www.finishers.com/en/destinations/asia/india,,active
 OSIM Sundown Marathon,Singapore,Singapore,Jun 2027,Marathon (42.2km),42.2K,running,Solo,https://www.gotorace.com,,active
 Surya Spiti Marathon,"Spiti Valley, Himachal",India,Jun 2027,Marathon (42.2km),Various,trail,Solo,https://www.finishers.com/en/destinations/asia/india,,active
-IRONMAN 70.3 Subic Bay,Zambales,Philippines,Jun 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
-Sinhagad Epic Trail,"Aatekar Vasti, Maharashtra",India,Jun 2027,Marathon (42.2km),Various,trail,Solo,https://www.finishers.com/en/destinations/asia/india,,active
-Foot Orienteering (NTH),Bengaluru,India,Jul 2027,Navigated trail run,Trail,running,Solo,https://www.nthadventure.com/events,,active
-Kayak Orienteering (NTH),"Hoskote, Karnataka",India,Jul 2027,Paddling navigation,Various,running,Solo,https://www.nthadventure.com/events,,active
-HYROX Chiba (Japan),Chiba,Japan,"Aug 7–9, 2027",8km + 8 stations,8K + 8 Stations,hyrox,Solo / Doubles / Relay,https://hyrox.com/find-my-race/,,active
-Maybank Marathon Bali,Bali,Indonesia,Aug 2027,Marathon (42.2km),42.2K,running,Solo,https://bodyandsoulinternational.com/activities/3252-maybank-marathon-2027,,active
+Ironman 70.3 Subic Bay,Zambales,Philippines,Jun 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
+Sinhagad Epic Trail,"Aatekar Vasti (Pune area), Maharashtra",India,"Jun 1, 2026",11km / 21km / 32km / 42km,Various,trail,Solo,https://www.finishers.com/en/destinations/asia/india,,active
+Foot Orienteering,Bengaluru,India,Jul 2027,Navigated trail run,Trail,running,Solo,https://www.nthadventure.com/events,,active
+Kayak Orienteering,"Hoskote, Karnataka",India,Jul 2027,Paddling navigation,Various,running,Solo,https://www.nthadventure.com/events,,active
+Maybank Marathon Bali,Bali,Indonesia,"Aug 23, 2026",Marathon 42.2km / Half / 10km / 5km,42.2K,running,Solo,https://bodyandsoulinternational.com/activities/3252-maybank-marathon-2027,,active
 Sanur Bali International HM,"Sanur, Bali",Indonesia,Aug 2027,Marathon (42.2km),42.2K,running,Solo,https://www.instagram.com/sanurhalfmarathon/,,active
-Maldives Half Marathon,Male,Maldives,Aug 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com,,active
-IRONMAN 70.3 Lapu-Lapu,Cebu,Philippines,Aug 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
+Maldives Half Marathon,Malé,Maldives,"Aug 14, 2026",Half Marathon 21.1km / 10km / 5km,42.2K,running,Solo,https://www.maldivesmarathon.com,,active
+Ironman 70.3 Lapu-Lapu,Cebu,Philippines,Aug 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
 Ladakh Marathon and Ultra,Ladakh,India,Sep 2027,Marathon (42.2km),Various,trail,Solo,https://www.finishers.com/en/destinations/asia/india,,active
 Bali Mountain Marathon,"Bedugul, Bali",Indonesia,Sep/Oct 2027,Marathon (42.2km),Various,trail,Solo,https://itra.run/Races/RaceDetails/108167,,active
 Oceanman Goa,"Caranzalem Beach, Goa",India,Oct 2027,10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://oceanmanswim.com/goa/,⚠️ Oct 2025 stopped mid-race by authorities — verify 2027 permissions,watchlist
-Oceanman Malaysia (Sabah),Kota Kinabalu,Malaysia,Oct 2027,10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://oceanmanswim.com/races/category/asia/,"Oceanman open water swim series event in Kota Kinabalu, Malaysia.",active
+Oceanman Malaysia,Kota Kinabalu,Malaysia,Oct 2027,10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://oceanmanswim.com/,"Oceanman open water swim series event in Kota Kinabalu, Malaysia.",active
 Amazing Thailand Marathon BKK,Bangkok,Thailand,Nov 2027,Marathon (42.2km),42.2K,running,Solo,https://www.gotorace.com,,active
-Ultra Trail Chiang Mai (UTCM),"Chiang Dao, Chiang Mai",Thailand,"Jan 8–10, 2027",Ultra 50K,Various,trail,Solo,https://www.ahotu.com/calendar/registration/thailand,"GT200: 54hr limit, 7800m elevation gain",active
-Chiang Mai Thailand by UTMB (HOKA),Chiang Mai,Thailand,Jan/Feb 2027,Ultra 100K,Various,trail,Solo,https://utmb.world/races/chiang-mai,UTMB World Series qualifier,active
+Chiang Mai Thailand by UTMB,Chiang Mai,Thailand,Jan/Feb 2027,Ultra 100K,Various,trail,Solo,https://utmb.world/races/utmb/chiangmai,UTMB World Series qualifier,active
 Khao Yai Marathon,Nakhon Ratchasima,Thailand,"Jan 9–10, 2027",Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/asia/thailand,,active
-Buriram Marathon (Chang Mineral),Buriram,Thailand,"Jan 23, 2027",Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/asia/thailand,,active
+Buriram Marathon,Buriram,Thailand,"Jan 24, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.finishers.com/en/destinations/asia/thailand,,active
 Trail des Orchidées,Chiang Dao,Thailand,Feb 2027,Ultra 50K,Various,trail,Solo,https://www.finishers.com/en/destinations/asia/thailand,,active
-IRONMAN 70.3 Bangsaen,"Ban Bang Saen, Chonburi",Thailand,Feb 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-bangsaen,,active
-Amazean Jungle Thailand by UTMB,"Betong, Yala",Thailand,Feb 2027,5K,Various,trail,Solo,https://utmb.world/races/amazean-jungle,"Southernmost Thailand, UTMB qualifier",active
-Tak Trail Series (Muser100),Tak Province,Thailand,TBC 2027,Ultra 100K,Various,trail,Solo,https://taktrailseriesthailand.com,,active
-IRONMAN 70.3 Goa,"Panaji, Goa",India,Nov 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.indiarunning.com/events/ironman_703_goa_22384,,active
-IRONMAN 70.3 Phu Quoc,Phu Quoc,Vietnam,Nov 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
-IRONMAN Malaysia,Langkawi,Malaysia,Nov 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races,"Full distance Ironman in Langkawi, Malaysia. 3.8km swim, 180km bike, 42.2km run.",active
-IRONMAN 70.3 Langkawi,Langkawi,Malaysia,Nov 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
+Ironman 70.3 Bangsaen,"Ban Bang Saen, Chonburi",Thailand,Feb 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im703-bangsaen,,active
+Tak Trail Series,Tak Province,Thailand,TBC 2027,Ultra 100K,Various,trail,Solo,https://taktrailseriesthailand.com,,active
+Ironman Malaysia,Langkawi,Malaysia,Nov 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races,,active
+Ironman 70.3 Langkawi,Langkawi,Malaysia,Nov 2027,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/im703-asia,,active
 Nepal Action Asia 3-Day Ultra,Himalayas,Nepal,Nov 2027,Ultra 50K,Various,trail,Solo,https://actionasiaevents.com,,active
 Sindhudurg Ocean Swimathon,"Malvan, Maharashtra",India,Dec 2027,10km+,10K · Ocean,ocean-swim,Solo,https://sindhudurg-swimathon.com,,active
 SKF Goa River Marathon,"Dabolim, Goa",India,Dec 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/asia/india,,active
-Oceanman Phuket,Phuket,Thailand,TBC 2027,10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://oceanmanswim.com/races/category/asia/,"Oceanman open water swim series event in Phuket, Thailand.",active
-Oceanman Kota Kinabalu,Sabah,Malaysia,TBC 2027,10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://oceanmanswim.com/races/category/asia/,"Oceanman open water swim series event in Sabah, Malaysia.",active
+Oceanman Phuket,Phuket,Thailand,TBC 2027,10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://oceanmanswim.com/,"Oceanman open water swim series event in Phuket, Thailand.",active
+Oceanman Kota Kinabalu,Sabah,Malaysia,TBC 2027,10km+,10K · Ocean,ocean-swim,Solo / Team Relay,https://oceanmanswim.com/,"Oceanman open water swim series event in Sabah, Malaysia.",active
 Porbandar Swimathon,"Porbandar, Gujarat",India,TBC 2027,Open water swim,Various · Ocean,ocean-swim,Solo,https://www.nextlap.in/event/oceanman-goa-goa-2025-2,,active
-All India Sea Swimming (Chorwad–Veraval),"Chorwad to Veraval, Gujarat",India,TBC 2027,3km,3K · Ocean,ocean-swim,Solo,https://www.openwaterpedia.com/wiki/All_India_Sea_Swimming_Competition,,active
-IRONMAN Vietnam,Da Nang,Vietnam,TBC 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races,"Full distance Ironman in Da Nang, Vietnam. 3.8km swim, 180km bike, 42.2km run.",active
-IRONMAN Philippines,Zambales,Philippines,TBC 2027,Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races,"Full distance Ironman in Zambales, Philippines. 3.8km swim, 180km bike, 42.2km run.",active
+All India Sea Swimming,"Chorwad to Veraval, Gujarat",India,TBC 2027,3km,3K · Ocean,ocean-swim,Solo,https://www.openwaterpedia.com/wiki/All_India_Sea_Swimming_Competition,,active
 Running City Challenge,Hong Kong,Hong Kong,TBC 2027,City checkpoint race,Road,running,Solo,https://www.adventureasiahk.com/running-city,,active
 Asian Relays Championships,Chandigarh,India,TBC 2027,Track relay,Various,running,Solo,https://www.olympics.com/en/news/asian-relays-2027-indoor-championships-2028-athletics-hosts-india,,active
-IRONMAN 70.3 Vietnam,Da Nang,Vietnam,May 2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im-vietnam,,active
-IRONMAN Vietnam (Full Distance),Da Nang,Vietnam,2027 (TBC),Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com/races/im-vietnam,"Full distance Ironman in Da Nang, Vietnam. 3.8km swim, 180km bike, 42.2km run.",active
-IRONMAN 70.3 Cebu,Cebu,Philippines,2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,,active
-IRONMAN 70.3 Philippines,Subic Bay,Philippines,2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,,active
-IRONMAN 70.3 Langkawi Asia Pac Champs,Langkawi,Malaysia,2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,,active
-IRONMAN Malaysia (Full),Langkawi,Malaysia,2027 (TBC),Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.ironman.com,"Full distance Ironman in Langkawi, Malaysia. 3.8km swim, 180km bike, 42.2km run.",active
-IRONMAN 70.3 Kenting Taiwan,Kenting,Taiwan,Nov 2026,Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,,active
-IRONMAN 70.3 Goseong,Goseong,South Korea,2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,,active
-IRONMAN 70.3 Hengqin,Hengqin,China,"Mar 15, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.instagram.com/ironmanasia/,,active
-IRONMAN India Full (Dharoi),Dharoi,India,Feb 2027 (TBC),Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://timesofindia.indiatimes.com,"Full distance Ironman in Dharoi, India. 3.8km swim, 180km bike, 42.2km run.",active
+Ironman 70.3 Vietnam,Da Nang,Vietnam,May 2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com/races/im-vietnam,,active
+Ironman 70.3 Cebu,Cebu,Philippines,2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,,active
+Ironman 70.3 Langkawi Asia Pac Champs,Langkawi,Malaysia,2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,,active
+Ironman 70.3 Goseong,Goseong,South Korea,2027 (TBC),Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.ironman.com,,active
+Ironman 70.3 Hengqin,Hengqin,China,"Mar 15, 2026",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.instagram.com/ironmanasia/,,active
+Ironman India Full,Dharoi,India,Feb 2027 (TBC),Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://timesofindia.indiatimes.com,,active
 Jakarta International Marathon,Jakarta,Indonesia,2026 (exact TBC),Marathon (42.2km),42.2K,running,Solo,https://www.marathons.com/en/events/jakarta-marathon/,,active
 Halong Bay Heritage Marathon,Halong,Vietnam,"Nov 22, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.runfuntravel.com/events.php?c=2&cn=Asia,,active
 Dieng Caldera Race,Dieng Plateau,Indonesia,"Jun 19–21, 2026",Ultra 50K,Various,trail,Solo,https://indonesiamarathon.com,,active
@@ -427,24 +264,20 @@ Bandung 100,Bandung,Indonesia,"Aug 28–30, 2026",Ultra 100K,Various,trail,Solo,
 Merbabu Sky Run,Magelang,Indonesia,"Sep 5–6, 2026",Sky race,Various,trail,Solo,https://indonesiamarathon.com,,active
 GTR Ultra,Semarang,Indonesia,"Sep 26, 2026",Ultra 50K,Various,trail,Solo,https://indonesiamarathon.com,,active
 UGM Trail Run,Sleman,Indonesia,"Sep 26–27, 2026",Various,Various,trail,Solo,https://indonesiamarathon.com,,active
-Bali Hope SwimRun,"Nusa Penida, Bali",Indonesia,"Oct 21, 2026",Swimrun solo / duo,Various · Ocean,swimrun,Solo / Team of 2,https://www.ahotu.com/event/bali-hope-swimrun,,active
 Phnom Penh International Half Marathon,Phnom Penh,Cambodia,"Jun 14, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://www.cambodia-events.org/kh/blog/phnom-penh-international-half-marathon,,active
-Techcombank Hanoi International Marathon,Hanoi,Vietnam,"Oct 4, 2026",Marathon (42.2km),42.2K,running,Solo,https://worldsmarathons.com/marathon/hanoi-marathon,,active
 2026 World Triathlon Championship Series Samarkand,Samarkand,Uzbekistan,"Apr 25, 2026",Olympic (51.5km),Olympic,triathlon,Solo / Relay,https://events.triathlon.org/2026-wtcs-samarkand/start-lists,,active
 Bukhara Night Race,Bukhara,Uzbekistan,"Apr 18, 2026",Half Marathon (21.1km),21.1K,running,Solo,https://www.finishers.com/en/destinations/asia/uzbekistan,,active
 Silk Roads Trail,Urgench,Uzbekistan,"May 28-Jun 6, 2026",72K / 111K,Various,trail,Solo,https://www.finishers.com/en/destinations/asia/uzbekistan,,active
-Sky Camp Bo'stonliq,Galvasay,Uzbekistan,"Aug 22, 2026",10K,Various,trail,Solo,https://www.finishers.com/en/destinations/asia/uzbekistan,,active
+Sky Camp Bo,Galvasay,Uzbekistan,"Aug 22, 2026",10K,Various,trail,Solo,https://www.finishers.com/en/destinations/asia/uzbekistan,,active
 Samarkand Marathon,Samarkand,Uzbekistan,"Nov 8, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/asia/uzbekistan,,active
 Okinawa Marathon,Okinawa,Japan,Feb 2027 (TBC),Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/asia/japan/okinawa,,active
-IRONMAN 70.3 New Zealand,Taupō,New Zealand,"Mar 6, 2027",Half Ironman (70.3mi),Half IM,triathlon,Solo / Relay,https://www.runningcalendar.co.nz/organiser/ironman/,,active
-IRONMAN New Zealand,Taupō,New Zealand,"Mar 6, 2027",Full Ironman (140.6mi),IM,triathlon,Solo / Relay,https://www.runningcalendar.co.nz/organiser/ironman/,"Full distance Ironman in Taupō, New Zealand. 3.8km swim, 180km bike, 42.2km run.",active
 Wellington Marathon,Wellington,New Zealand,"Jun 28, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/oceania/new-zealand,,active
 ASB Auckland Marathon,Auckland,New Zealand,"Nov 1, 2026",Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/oceania/new-zealand,,active
 Kepler Challenge,Te Anau,New Zealand,Dec 2026 (early),60K / 27.6K,Various,trail,Solo,https://www.finishers.com/en/destinations/oceania/new-zealand,,active
 Tarawera Ultra-Trail New Zealand by UTMB,Rotorua,New Zealand,"Feb 13-14, 2027",Ultra 50K,Various,trail,Solo,https://www.runningcalendar.co.nz/organiser/ironman/,"UTMB World Series ultra trail race in Rotorua, New Zealand.",active
 Old Ghost Ultra,Westport,New Zealand,Feb 2027,5K,Various,trail,Solo,https://www.finishers.com/en/destinations/oceania/new-zealand,,active
 Rotorua Marathon,Rotorua,New Zealand,May 2027,Marathon (42.2km),42.2K,running,Solo,https://www.finishers.com/en/destinations/oceania/new-zealand,,active
-ASICS Runaway Hawke's Bay Marathon,Napier,New Zealand,"May 15, 2027",Marathon (42.2km),42.2K,running,Solo,https://www.runningcalendar.co.nz/organiser/ironman/,,active
+ASICS Runaway Hawke,Napier,New Zealand,"May 15, 2027",Marathon (42.2km),42.2K,running,Solo,https://www.runningcalendar.co.nz/organiser/ironman/,,active
 Stroke & Stride Series #4,"Mission Bay, Auckland",New Zealand,"Jan 14, 2026",10km+,10K · Ocean,ocean-swim,Solo,http://swimrun.org/race-information,,active
 Stroke & Stride Series #5,"Mission Bay, Auckland",New Zealand,"Jan 28, 2026",5km,5K · Ocean,ocean-swim,Solo,http://swimrun.org/race-information,,active
 Stroke & Stride Series #6,"Mission Bay, Auckland",New Zealand,"Feb 18, 2026",5km,5K · Ocean,ocean-swim,Solo,http://swimrun.org/race-information,,active
@@ -464,65 +297,61 @@ Kaga Spa by UTMB KAGASPA 20K,"Kenmin no Mori, Japan",Japan,"Jun 20, 2026",20K,Va
 Ehime Marathon,Ehime,Japan,"Feb 7, 2027",Marathon (42.2km),42.2K,running,Solo,https://aims-worldrunning.org/countries/51.html,,active
 Ohme-Hochi 30km Road Race & 10km,"Ome, Tokyo",Japan,"Feb 21, 2027",10K,10K,running,Solo,https://aims-worldrunning.org/countries/51.html,,active
 Myoko Trail,"Myoko City, Niigata",Japan,"Sep 20, 2026",5K,Various,trail,Solo,https://goldentrailseries.com/race/myoko-trail/,,active
-The 9 Dragons Ultra 2026,Hong Kong,Hong Kong,"Feb 28, 2026",Ultra 50K,Various,trail,Solo,https://www.the9dragons.asia/atmfinal,,active
+The 9 Dragons Ultra,Hong Kong,Hong Kong,"Feb 28, 2026",Ultra 50K,Various,trail,Solo,https://www.the9dragons.asia/atmfinal,,active
 World Triathlon Cup Hong Kong,Hong Kong,Hong Kong,"Nov 7-8, 2026",Olympic (51.5km),Olympic,triathlon,Solo / Relay,https://triathlon.org/news/the-new-world-triathlon-calendar-shaping-up-for-fireworks-in-2026,,active
 World Triathlon Cup Miyazaki,Miyazaki,Japan,"Nov 14-15, 2026",Olympic (51.5km),Olympic,triathlon,Solo / Relay,https://triathlon.org/news/the-new-world-triathlon-calendar-shaping-up-for-fireworks-in-2026,,active
 World Triathlon Cup Tauranga,Tauranga,New Zealand,"Nov 22, 2026",Triathlon World Cup,Olympic,triathlon,Solo / Relay,https://events.triathlon.org/2026-world-triathlon-cup-tauranga,,active
 Izu Trail Journey,Izu Peninsula Geopark,Japan,"Dec 14, 2025 pattern / 2026 TBC",69.1K / 28.9K,Various,trail,Solo,https://www.izutrailjourney.com/entop/course/,Course verified; 2026 date not yet confirmed on official page,active
 5150 Triathlon Chennai,"Kovalam, Chennai",India,"Jan 11, 2026",Olympic (1.5km swim / 40km bike / 10km run),Olympic,triathlon,Solo,https://www.ironman.com/races/5150-chennai,,active
-Vietnam Trail Marathon,"Moc Chau, Son La",Vietnam,"Jan 31, 2026",5km / 10km / 21km / 42km / 70km,5K · 10K · 21.1K · 70K · Trail,trail,Solo,https://vietnamtrailseries.com,,active
 Standard Chartered Hong Kong Marathon,Hong Kong,Hong Kong,"Jan 18, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.hkmarathon.com,,active
 Tata Mumbai Marathon,Mumbai,India,"Jan 18, 2026",Marathon 42.2km / Half / Dream Run,42.2K · Road,running,Solo,https://www.tatamumbaimarathon.com,,active
 HCMC Marathon,Ho Chi Minh City,Vietnam,"Jan 11, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://hcmcmarathon.com,,active
-Taiwan Charity Marathon (Standard Chartered),Taipei,Taiwan,"Jan 11, 2026",Marathon 42.2km,42.2K · Road,running,Solo,https://www.taiwanmarathon.org,,active
-Buriram Marathon,Buriram,Thailand,"Jan 24, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.burirammarathon.com,,active
+Taiwan Charity Marathon,Taipei,Taiwan,"Jan 11, 2026",Marathon 42.2km,42.2K · Road,running,Solo,https://www.taiwanmarathon.org,,active
 Dubai Marathon,Dubai,UAE,"Feb 1, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.dubaimarathon.org,,active
 Pokhara International Marathon,Pokhara,Nepal,"Feb 14, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://pokharamarathon.com,,active
 Ras Al Khaimah Half Marathon,Ras Al Khaimah,UAE,"Feb 14, 2026",Half Marathon 21.1km,21.1K · 42.2K · Road,running,Solo,https://www.rakhalfmarathon.com,,active
 Ayala Philippine Marathon,Manila,Philippines,"Feb 22, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://www.raceroster.com,,active
 HOKA Xtrail Kenting by UTMB,"Kenting (Hengchun), Pingtung",Taiwan,"Mar 6, 2026",11km / 26km / 50km / 98km,50K · 98K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,active
 War Horse Ultra-Trail Xiamen by UTMB,"Xiamen, Fujian",China,"Mar 14, 2026",10km / 29km / 53km / 96km,10K · 53K · 96K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,active
-T100 Gold Coast (Women's),"Gold Coast, Queensland",Australia,"Mar 20, 2026",T100 (2km swim / 80km bike / 18km run),Various,triathlon,Pro,https://t100triathlon.com,,active
-HYROX Bangkok (Spring),Bangkok,Thailand,"Mar 20, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-HYROX Beijing (Spring),Beijing,China,"Mar 21, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-IRONMAN 70.3 Davao,Davao City,Philippines,"Mar 22, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-davao,,active
-IRONMAN 70.3 Geelong,"Geelong, Victoria",Australia,"Mar 22, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-geelong,,active
+T100 Gold Coast (Women,"Gold Coast, Queensland",Australia,"Mar 20, 2026",T100 (2km swim / 80km bike / 18km run),Various,triathlon,Pro,https://t100triathlon.com,,active
+Ironman 70.3 Davao,Davao City,Philippines,"Mar 22, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-davao,,active
+Ironman 70.3 Geelong,"Geelong, Victoria",Australia,"Mar 22, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-geelong,,active
 Lumbini Peace Marathon,Lumbini,Nepal,"Mar 22, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://lumbinimarathon.org,,active
 Spartan Race Pasig,"Pasig, Metro Manila",Philippines,"Mar 21, 2026",Sprint 5km (20 obstacles),5K · Spartan,ocr,Solo,https://ph.spartan.com/en/race/find-race,,active
 WTCS Abu Dhabi,Abu Dhabi,UAE,"Mar 27, 2026",Olympic (1.5km swim / 40km bike / 10km run),Olympic,triathlon,Solo,https://www.triathlon.org,,active
 XTERRA Asia-Pacific Championship,"Dunsborough, Western Australia",Australia,"Mar 27, 2026",1.5km swim / 30.2km MTB / 10.5km trail run,Olympic,triathlon,Solo,https://www.xterraplanet.com,,active
 Spartan Race Beijing Trail Weekend,Beijing,China,"May 23, 2026",Trail 10km / Trail 21km,10K · 21K · Spartan,ocr,Solo,https://cn.spartan.com/en/race/find-race,,active
 OceanMan Maafushi Island Maldives,Maafushi Island,Maldives,"Apr 10, 2026",500m / 2km / 5km / 10km,2K · 5K · 10K · Ocean,ocean-swim,Solo,https://oceanmanswim.com/races/,,active
-IRONMAN Penghu,Penghu Islands,Taiwan,"Apr 12, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/ironman-penghu,,active
+Ironman Penghu,Penghu Islands,Taiwan,"Apr 12, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/ironman-penghu,,active
 Ishigaki Island Triathlon,"Ishigaki, Okinawa",Japan,"Apr 12, 2026",Olympic (1.5km swim / 40km bike / 10km run),Olympic,triathlon,Solo,https://www.jtu.or.jp,,active
 Miri Marathon,"Miri, Sarawak",Malaysia,"Apr 12, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.mirimarathon.com,,active
 Miyakojima Triathlon,"Miyakojima, Okinawa",Japan,"Apr 19, 2026",Long Distance (3km swim / 155km bike / 42.2km run),IM,triathlon,Solo,https://www.miyako-tri.jp,,active
 Spartan Race Kawasaki Kids,"Kawasaki, Kanagawa",Japan,"Apr 18, 2026",Kids Race 1-3km,3K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
-T100 Singapore (Men's),Singapore,Singapore,"Apr 25, 2026",T100 (2km swim / 80km bike / 18km run),Various,triathlon,Pro,https://t100triathlon.com,,active
+T100 Singapore (Men,Singapore,Singapore,"Apr 25, 2026",T100 (2km swim / 80km bike / 18km run),Various,triathlon,Pro,https://t100triathlon.com,,active
 Spartan Beijing National Series,Beijing,China,"May 16, 2026",Sprint 5km / Super 10km / Beast 21km,5K · 10K · 21K · Spartan,ocr,Solo,https://cn.spartan.com/en/race/find-race,,active
 Spartan Beijing Kids Race,Beijing,China,"May 1, 2026",Kids Race 1-3km,3K · Spartan,ocr,Solo,https://cn.spartan.com/en/race/find-race,,active
 Tough Mudder Pattaya,"Pattaya, Chonburi",Thailand,"May 2, 2026",15km (20+ obstacles) / 5km (13 obstacles),15K · 5K,ocr,Solo,https://toughmudderthailand.com/en/events/pattaya-en/,,active
 WTCS Yokohama,Yokohama,Japan,"May 16, 2026",Olympic (1.5km swim / 40km bike / 10km run),Olympic,triathlon,Solo,https://www.triathlon.org,,active
-IRONMAN 70.3 Shanghai Chongming,Shanghai (Chongming Island),China,"May 17, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-shanghai-chongming,,active
+Ironman 70.3 Shanghai Chongming,Shanghai (Chongming Island),China,"May 17, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-shanghai-chongming,,active
 Tenzing Hillary Everest Marathon,Everest Base Camp / Namche Bazar,Nepal,"May 29, 2026",Marathon 42.2km / Half / 60km,42.2K · 60K · Trail,running,Solo,https://www.everestmarathon.com,,active
 Spartan Race Chiba,"Sodegaura, Chiba",Japan,"May 30, 2026",Sprint 5km / Super 10km / Kids Race,5K · 10K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
 Spartan Race Cavite,"Trece Martires, Cavite",Philippines,"May 30, 2026",Sprint 5km / Super 10km / Trail 10km,5K · 10K · 10K · Spartan,ocr,Solo,https://ph.spartan.com/en/races/cavite-event-weekend-2026,,active
 Philippines Airlines Manila Marathon,Manila,Philippines,"May 31, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.manilamarathon.com,,active
 Osaka Castle Triathlon,Osaka,Japan,"May 31, 2026",Sprint + Standard,Sprint · Olympic,triathlon,Solo,https://www.osaka-castle-triathlon.com,,active
-OCR Community World Championships (hosted by Spartan),"Ivory Rock, Queensland",Australia,"May 21, 2026",3km / 6km Relay,3K · 6K,ocr,Solo,https://www.ocrseries.com,,active
+OCR Community World Championships,"Ivory Rock, Queensland",Australia,"May 21, 2026",3km / 6km Relay,3K · 6K,ocr,Solo,https://www.ocrseries.com,,active
 Spartan Ivory Rock Trifecta Weekend,"Ivory Rock (Peak Crossing), Queensland",Australia,"May 23, 2026",Sprint 5km / Super 10km / Beast 21km,5K · 10K · 21K · Spartan,ocr,Solo,https://www.spartan.com/en/race/detail/10133/overview,,active
 Spartan Chiang Mai Weekend,"Mae Rim District, Chiang Mai",Thailand,"Jun 6, 2026",Sprint 5km / Super 10km / Hurricane Heat 4HR,5K · 10K · Spartan,ocr,Solo,https://th.spartan.com/en/race/find-race,,active
-IRONMAN Cairns,"Cairns, Queensland",Australia,"Jun 14, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/ironman-cairns,,active
-IRONMAN 70.3 Cairns,"Cairns, Queensland",Australia,"Jun 14, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-cairns,,active
+Ironman Cairns,"Cairns, Queensland",Australia,"Jun 14, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/im-cairns,,active
+Ironman 70.3 Cairns,"Cairns, Queensland",Australia,"Jun 14, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-cairns,,active
 Goto Nagasaki International Triathlon,"Goto, Nagasaki",Japan,"Jun 14, 2026",Long Distance (2km swim / 100km bike / 20km run),IM,triathlon,Solo,https://www.jtu.or.jp,,active
 Laguna Phuket Marathon,"Thalang, Phuket",Thailand,"Jun 13, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://www.phuketmarathon.com,,active
 OceanMan Penghu,Penghu Islands,Taiwan,"Jun 12, 2026",500m / 2km / 5km / 10km,2K · 5K · 10K · Ocean,ocean-swim,Solo,https://oceanmanswim.com/races/,,active
 OceanMan Bali,"Kedonganan, Bali",Indonesia,"Jun 19, 2026",500m / 2km / 5km / 10km,2K · 5K · 10K · Ocean,ocean-swim,Solo,https://oceanmanswim.com/races/,,active
 Asian Open Water Swimming Championship,"Jimbaran, Bali",Indonesia,"Jun 13, 2026",5km / 10km / Mixed Relay,5K · 10K · Ocean,ocean-swim,Solo,https://triworldhub.com/oceanman-calendar/,,active
 BTN Jakarta International Marathon,Jakarta,Indonesia,"Jun 13, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://jakim.id,,active
-IRONMAN 70.3 Higashimikawa Japan,"Toyohashi / Tahara, Aichi",Japan,"Jun 1, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races,,watchlist
+Ironman 70.3 Higashimikawa Japan,"Toyohashi / Tahara, Aichi",Japan,"Jun 1, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races,,watchlist
 Gold Coast Marathon,"Gold Coast, Queensland",Australia,"Jul 4, 2026",Marathon 42.2km / Half / 10km / 5.7km,10K · 42.2K · Road,running,Solo,https://www.goldcoastmarathon.com.au,,active
-HYROX Sydney,Sydney,Australia,"Jul 1, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
+Hyrox Sydney,Sydney,Australia,"Jul 1, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
 Spartan Singapore Sprint,Singapore,Singapore,"Jul 1, 2026",Sprint 5km (20 obstacles),5K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
 SCORE Marathon Malaysia,Sarawak,Malaysia,"Jul 18, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.scoremarathon.com.my,,active
 Spartan Race Mt. Fuji Susono,"Susono, Shizuoka",Japan,"Jul 25, 2026",Sprint 5km / Super 10km / Kids Race,5K · 10K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
@@ -532,39 +361,36 @@ Spartan Pattaya Trifecta Weekend,Chonburi (Pattaya area),Thailand,"Aug 1, 2026",
 Spartan Chongli Trail Weekend,"Chongli, Zhangjiakou",China,"Aug 7, 2026",Sprint 5km / Super 10km / Beast 21km,5K · 10K · 21K · Spartan,ocr,Solo,https://cn.spartan.com/en/race/find-race,,active
 Spartan Melbourne Trifecta Weekend,"Werribee, Victoria",Australia,"Aug 8, 2026",Sprint 5km / Super 10km / Kids Race,5K · 10K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
 Spartan APAC Championship Chongli,"Chongli, Zhangjiakou",China,"Aug 15, 2026",Sprint 5km / Super 10km / Beast 21km / Ultra,5K · 10K · 21K · Spartan,ocr,Solo,https://www.spartan.com/en/race/detail/10133/overview,,active
-HYROX Bangkok (Summer),Bangkok,Thailand,"Aug 13, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-HYROX Perth,Perth,Australia,"Aug 21, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
+Hyrox Perth,Perth,Australia,"Aug 21, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
 TCS Sydney Marathon,Sydney,Australia,"Aug 30, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.sydneymarathon.com,,active
 WTCS Weihai,"Weihai, Shandong",China,"Aug 29, 2026",Olympic (1.5km swim / 40km bike / 10km run),Olympic,triathlon,Solo,https://www.triathlon.org,,active
-TMBT Ultra Trail Marathon (Sabah),"Kota Kinabalu, Sabah",Malaysia,"Aug 29, 2026",100km / 50km / 25km trail,5K · 100K · 50K · Trail,trail,Solo,https://www.borneoultra.com,,active
+TMBT Ultra Trail Marathon,"Kota Kinabalu, Sabah",Malaysia,"Aug 29, 2026",100km / 50km / 25km trail,5K · 100K · 50K · Trail,trail,Solo,https://www.borneoultra.com,,active
 Spartan Race Niigata,"Myoko, Niigata",Japan,"Sep 19, 2026",Beast 21km,21K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
-HYROX Beijing (Autumn),Beijing,China,"Sep 12, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-IRONMAN Japan South Hokkaido,"Hokuto / Kikonai, Hokkaido",Japan,"Sep 13, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/ironman-japan-south-hokkaido,,active
-IRONMAN 70.3 Dali,"Dali, Yunnan",China,"Sep 13, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-dali,,active
+Ironman Japan South Hokkaido,"Hokuto / Kikonai, Hokkaido",Japan,"Sep 13, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/ironman-japan,,active
+Ironman 70.3 Dali,"Dali, Yunnan",China,"Sep 13, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-dali,,active
 Sado International Triathlon,"Sado Island, Niigata",Japan,"Sep 6, 2026",Long Distance (4km swim / 190km bike / 42.2km run),IM,triathlon,Solo,https://www.sado-tri.jp,,active
-Chiang Mai Half Marathon (Bangkok Airways),Chiang Mai,Thailand,"Sep 26, 2026",Half Marathon 21.1km / 10km / 5km,5K · 10K · 21.1K · 42.2K · Road,running,Solo,https://www.chiangmaimarathon.com,,active
-Bengaluru Marathon (Wipro),"Bengaluru, Karnataka",India,"Sep 27, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://www.bengalurumarathon.in,,active
+Chiang Mai Half Marathon,Chiang Mai,Thailand,"Sep 26, 2026",Half Marathon 21.1km / 10km / 5km,5K · 10K · 21.1K · 42.2K · Road,running,Solo,https://www.chiangmaimarathon.com,,active
+Bengaluru Marathon,"Bengaluru, Karnataka",India,"Sep 27, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://www.bengalurumarathon.in,,active
 Malaysia Ultra Trail by UTMB,"Taiping, Perak",Malaysia,"Sep 1, 2026",13.9km / 25.9km / 54.5km / 97.7km,5K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,active
-IRONMAN Gurye Korea,"Gurye, Jeonnam",South Korea,"Oct 4, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/ironman-gurye-korea,,active
+Ironman Gurye Korea,"Gurye, Jeonnam",South Korea,"Oct 4, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/im-gurye-korea,,active
 Bergman Ozar Pune Triathlon,"Pune, Maharashtra",India,"Oct 4, 2026",Full (2km/80km/20km) + Olympic (1.5km/40km/10km),Olympic,triathlon,Solo,https://www.oztri.com,,active
 LSR Colombo Marathon,Colombo,Sri Lanka,"Oct 4, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://www.colombomarathon.com,,active
 Vietnam Jungle Marathon,"Pu Luong Nature Reserve, Thanh Hoa",Vietnam,"Oct 17, 2026",10km / 25km / 50km / 70km,5K · 10K · 50K · 70K · Trail,trail,Solo,https://vietnamtrailseries.com,,active
 Standard Chartered Kuala Lumpur Marathon,Kuala Lumpur,Malaysia,"Oct 3, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.klmarathon.com,,active
 Kathmandu Marathon,Kathmandu,Nepal,"Oct 10, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://www.kathmandumarathon.com,,active
-Spartan Wollongong (Stadion),"Wollongong, New South Wales",Australia,"Oct 10, 2026",Sprint 5km / Super 10km,5K · 10K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
+Spartan Wollongong,"Wollongong, New South Wales",Australia,"Oct 10, 2026",Sprint 5km / Super 10km,5K · 10K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
 Melbourne Marathon,"Melbourne, Victoria",Australia,"Oct 11, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://www.melbournemarathon.com.au,,active
-IRONMAN Australia,"Port Macquarie, New South Wales",Australia,"Oct 18, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/ironman-australia,,active
+Ironman Australia,"Port Macquarie, New South Wales",Australia,"Oct 18, 2026",Full Ironman (3.8km swim / 180km bike / 42.2km run),IM,triathlon,Solo,https://www.ironman.com/races/im-australia,,active
 Challenge Malaysia,"Forest City, Johor",Malaysia,"Oct 18, 2026",Half (1.9km/90km/21.1km) + Olympic (1.5km/40km/10km),Olympic,triathlon,Solo,https://challengemalaysia.com,,active
 TransJeju by UTMB,Jeju Island,South Korea,"Oct 2, 2026",20km / 60km / 104km / 148km,60K · 104K · 148K · Trail,trail,Solo,https://transjeju.utmb.world,,active
 Ultra-Trail Mount Yun by UTMB,"Linfen, Shanxi",China,"Oct 16, 2026",22km / 48km / 68km / 97km / 161km,48K · 68K · 97K · 161K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,active
 Spartan Bangkok DEKA FIT,Bangkok,Thailand,"Oct 31, 2026","DEKA FIT (10 stations, 1km each)",8K + 8 Stations,ocr,Solo,https://th.spartan.com/en/race/find-race,,active
-HYROX Shanghai (Autumn),Shanghai,China,"Oct 31, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
 Challenge Xiamen,"Xiamen, Fujian",China,"Nov 7, 2026",Half (1.9km/90km/21.1km) + Olympic (1.5km/40km/10km),Olympic,triathlon,Solo,https://challengexiamen.com,,active
 OceanMan Phang Nga,Phang Nga,Thailand,"Nov 21, 2026",500m / 2km / 5km / 10km,2K · 5K · 10K · Ocean,ocean-swim,Solo,https://oceanmanswim.com/races/,,active
-HOKA Chiang Mai Thailand by UTMB (Asia-Pacific Major),Chiang Mai Province,Thailand,"Nov 28, 2026",17km / 21km / 39km / 56km / 96km / 168km,21.1K · 56K · 96K · 168K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,active
+HOKA Chiang Mai Thailand by UTMB,Chiang Mai Province,Thailand,"Nov 28, 2026",17km / 21km / 39km / 56km / 96km / 168km,21.1K · 56K · 96K · 168K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,active
 TransLantau by UTMB,"Lantau Island, Hong Kong",Hong Kong,"Nov 13, 2026",15km / 25km / 52km / 79km / 116km,5K · 52K · 79K · 116K · Trail,trail,Solo,https://translantau.utmb.world,,active
 World Triathlon Multisport Championships,Abu Dhabi,UAE,"Nov 13, 2026",Multiple distances (Sprint / Olympic / Long),Sprint · Olympic,triathlon,Solo,https://www.triathlon.org,,active
-AIA HYROX Singapore (Autumn),Singapore,Singapore,"Nov 27, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
+AIA Hyrox Singapore,Singapore,Singapore,"Apr 3, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
 Spartan Race Sto. Tomas Trailfecta,"Sto. Tomas, Batangas",Philippines,"Sep 5, 2026",Trail 10km / Trail 21km / Trail 50km / Kids / HH12HR,10K · 21K · 50K · Spartan,ocr,Solo,https://ph.spartan.com/en/race/find-race,,active
 Spartan Lakes Entrance,"Lakes Entrance, Victoria",Australia,"Nov 21, 2026",Sprint 5km / Super 10km / Beast 21km / Ultra,5K · 10K · 21K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
 Amazing Thailand Marathon Bangkok,Bangkok,Thailand,"Nov 28, 2026",Marathon 42.2km / Half / 10.5km / 3.5km,5K · 42.2K · Road,running,Solo,https://www.amazingthailandmarathon.com,,active
@@ -573,21 +399,19 @@ BYD Singapore International Marathon,Singapore,Singapore,"Dec 6, 2026",Marathon 
 Spartan Chiang Rai Super World Championship,"Singha Park, Chiang Rai",Thailand,"Dec 12, 2026",Sprint 5km / Super 10km / Beast 21km,5K · 10K · 21K · Spartan,ocr,Solo,https://th.spartan.com/en/race/find-race,,active
 ADNOC Abu Dhabi Marathon,Abu Dhabi,UAE,"Dec 12, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.abudhabimarathon.com,,active
 Spartan Race Oita Japan,"Oita City, Oita",Japan,"Dec 19, 2026",TBA,Spartan,ocr,Solo,https://www.spartan.com/en/race,,watchlist
-HYROX Abu Dhabi,Abu Dhabi,UAE,"Dec 31, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
-HYROX Melbourne,Melbourne,Australia,"Dec 31, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
-HYROX Bangkok (Winter),Bangkok,Thailand,"Dec 31, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
-HYROX Kuala Lumpur,Kuala Lumpur,Malaysia,"Dec 31, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
-HYROX Sanya,"Sanya, Hainan",China,"Dec 1, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
+Hyrox Abu Dhabi,Abu Dhabi,UAE,"Dec 31, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
+Hyrox Melbourne,Melbourne,Australia,"Dec 31, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
+Hyrox Kuala Lumpur,Kuala Lumpur,Malaysia,"Dec 31, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
+Hyrox Sanya,"Sanya, Hainan",China,"Dec 1, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,watchlist
 ICA International Half-Marathon Colombo,Colombo (Galle Face Green),Sri Lanka,"Dec 13, 2026",Half Marathon 21.1km / 10km,10K · 21.1K · 42.2K · Road,running,Solo,https://icainternationalmarathon.com,,active
 Oman by UTMB,Oman (Muscat area),Bahrain,"Dec 10, 2026",Multiple trail distances,Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,active
-IRONMAN 70.3 Bahrain,Bahrain,Bahrain,"Dec 5, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-bahrain,,watchlist
+Ironman 70.3 Bahrain,Bahrain,Bahrain,"Dec 5, 2026",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-bahrain,,watchlist
 Ultra Trail Kosciuszko by UTMB,"Thredbo, New South Wales",Australia,"Nov 20, 2026",32km / 50km / 102km / 161km,50K · 102K · 161K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,active
-AIA HYROX Singapore (Spring),Singapore,Singapore,"Apr 3, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-BYD HYROX Brisbane + APAC Championship,"Brisbane, Queensland",Australia,"Apr 9, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-Cigna Healthcare HYROX Hong Kong,Hong Kong,Hong Kong,"May 8, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-AirAsia HYROX Incheon,Incheon,South Korea,"May 15, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-24/7 Fitness HYROX Shanghai (Spring),Shanghai,China,"May 16, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
-AirAsia HYROX Jakarta,Jakarta,Indonesia,"Jun 27, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
+BYD Hyrox Brisbane + APAC Championship,"Brisbane, Queensland",Australia,"Apr 9, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
+Cigna Healthcare Hyrox Hong Kong,Hong Kong,Hong Kong,"May 8, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
+AirAsia Hyrox Incheon,Incheon,South Korea,"May 15, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
+24/7 Fitness Hyrox Shanghai,Shanghai,China,"May 16, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
+AirAsia Hyrox Jakarta,Jakarta,Indonesia,"Jun 27, 2026",8km run + 8 workout stations,8K + 8 Stations,hyrox,Solo · Relay · Doubles,https://hyrox.com/find-my-race/,,active
 Spartan Race Japan – TBA November,TBA,Japan,"Nov 14, 2026",TBA,Spartan,ocr,Solo,https://www.spartan.com/en/race,,watchlist
 Jakarta Running Festival,Jakarta,Indonesia,"Oct 24, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://jakartarunningfestival.id,,active
 Spartan DEKA Beijing,Beijing,China,"Jun 6, 2026",DEKA FIT (10 stations x 1km),8K + 8 Stations,ocr,Solo,https://cn.spartan.com/en/race/find-race,,active
@@ -604,19 +428,18 @@ Vadodara International Marathon,"Vadodara, Gujarat",India,"Dec 1, 2026",Marathon
 Photak Marathon Nong Khai,"Pho Tak, Nong Khai",Thailand,"Dec 13, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,active
 Scenic Marathon Nakhon Phanom,Nakhon Phanom,Thailand,"Dec 13, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,active
 Spartan Beijing Kids Race Universal CityWalk,Beijing,China,"May 23, 2026",Kids Race,Spartan,ocr,Solo,https://cn.spartan.com/en/race/find-race,,active
-Southeast Asian Trail Running Cup (SEATRC),"Cibodas Botanical Garden, West Java",Indonesia,"Jul 24, 2026",5km / 10km / 42km / 75km,5K · 10K · 75K · Trail,trail,Solo,https://seatrc.jakartaopentrailrun.com,,active
+Southeast Asian Trail Running Cup,"Cibodas Botanical Garden, West Java",Indonesia,"Jul 24, 2026",5km / 10km / 42km / 75km,5K · 10K · 75K · Trail,trail,Solo,https://seatrc.jakartaopentrailrun.com,,active
 Dadi Prakashmani Mount Abu International Marathon,"Mount Abu, Rajasthan",India,"Aug 15, 2026",Half Marathon 21.1km,21.1K · 42.2K · Road,running,Solo,https://www.finishers.com/en/destinations/asia/india,,active
 Solang SkyUltra Manali,"Manali, Himachal Pradesh",India,"Sep 1, 2026",14km / 30km / 60km / 100km,60K · 100K · Trail,trail,Solo,https://www.finishers.com/en/destinations/asia/india,,active
 Spartan Race Ibaraki Japan,Ibaraki,Japan,"Feb 21, 2026",Sprint 5km / Super 10km,5K · 10K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
 Spartan Race Saitama Japan,Saitama,Japan,"Feb 21, 2026",Sprint 5km / Super 10km,5K · 10K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
-Ultra-Trail Australia by UTMB (2026),"Katoomba, Blue Mountains",Australia,"May 1, 2026",11.5km / 22km / 51km / 101km / 161.1km,5K · 51K · 101K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,watchlist
+Ultra-Trail Australia by UTMB,"Katoomba, Blue Mountains",Australia,"May 1, 2026",11.5km / 22km / 51km / 101km / 161.1km,5K · 51K · 101K · Trail,trail,Solo,https://utmb.world/utmb-world-series-events,,watchlist
 Spartan Race Shepparton Australia,"Shepparton, Victoria",Australia,"Aug 8, 2026",Sprint 5km / Super 10km,5K · 10K · Spartan,ocr,Solo,https://www.spartan.com/en/race,,active
 Naha Marathon Okinawa,"Naha, Okinawa",Japan,"Dec 6, 2026",Marathon 42.2km,42.2K · Road,running,Solo,https://www.naha-marathon.jp,,active
 Nara Marathon,Nara,Japan,"Dec 13, 2026",Marathon 42.2km / 10km,10K · 42.2K · Road,running,Solo,https://www.nara-marathon.jp,,active
 Mt. Fuji International Marathon,"Fujikawaguchiko, Yamanashi",Japan,"Dec 13, 2026",Marathon 42.2km / 17km / 10km,10K · 42.2K · Road,running,Solo,https://www.fujisan-marathon.jp,,active
 Hokkaido Marathon Sapporo,"Sapporo, Hokkaido",Japan,"Aug 30, 2026",Marathon 42.2km,42.2K · Road,running,Solo,https://www.hokkaido-marathon.com,,active
 Yokohama Marathon,"Yokohama, Kanagawa",Japan,"Oct 24, 2026",Marathon 42.2km,42.2K · Road,running,Solo,https://www.yokohamamarathon.jp,,active
-Kobe Marathon,"Kobe, Hyogo",Japan,"Nov 15, 2026",Marathon 42.2km,42.2K · Road,running,Solo,https://www.kobe-marathon.net,,active
 Shizuoka Marathon,Shizuoka,Japan,"Mar 8, 2026",Marathon 42.2km / 11.6km,42.2K · Road,running,Solo,https://www.shizuoka-marathon.com,,active
 Kagoshima Marathon,Kagoshima,Japan,"Mar 1, 2026",Marathon 42.2km,42.2K · Road,running,Solo,https://kagoshima-marathon.com,,active
 Beppu-Oita Mainichi Marathon,"Beppu / Oita, Oita",Japan,"Feb 1, 2026",Marathon 42.2km,42.2K · Road,running,Solo,https://www.betsudai.com,,active
@@ -626,25 +449,24 @@ Daisetsuzan Trail Journey,"Engaru / Shirataki, Hokkaido",Japan,"Jul 26, 2026",60
 SHIGA KOGEN 100,"Yamanouchi, Nagano",Japan,"Aug 29, 2026",100km / 40km / 18km,100K · Trail,running,Solo,https://runjapan.jp,,active
 Gyeongju Cherry Blossom Marathon,"Gyeongju, Gyeongbuk",South Korea,"Apr 4, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://cherrymarathon.co.kr,,active
 Chuncheon Marathon,"Chuncheon, Gangwon",South Korea,"Oct 25, 2026",Marathon 42.2km / 10km,10K · 42.2K · Road,running,Solo,https://www.chuncheonsmarathon.com,,active
-Seoul Half Marathon (MBN),Seoul,South Korea,"Nov 15, 2026",Half Marathon 21.1km / 10km,10K · 21.1K · 42.2K · Road,running,Solo,https://www.kormarathon.com,,active
+Seoul Half Marathon,Seoul,South Korea,"Nov 15, 2026",Half Marathon 21.1km / 10km,10K · 21.1K · 42.2K · Road,running,Solo,https://www.kormarathon.com,,active
 High1 Skyrace Seoul,Seoul,South Korea,"Aug 1, 2026",12km / 20km / 42km,Trail,trail,Solo,https://www.high1skyrace.com,,active
 Incheon Marathon,Incheon,South Korea,"Nov 22, 2026",Marathon 42.2km / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://runwithmeseoul.com/races/,,active
-Seoul International Ultra Trail Race (SIUTR),Seoul,South Korea,"Oct 1, 2026",50km / 100km,50K · 100K · Trail,trail,Solo,https://www.finishers.com/en/destinations/asia/south-korea,,watchlist
+Seoul International Ultra Trail Race,Seoul,South Korea,"Oct 1, 2026",50km / 100km,50K · 100K · Trail,trail,Solo,https://www.finishers.com/en/destinations/asia/south-korea,,watchlist
 EVA Air Brisbane Marathon Festival,"Brisbane, Queensland",Australia,"Jun 7, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://www.brisbanemarathon.com.au,,active
-Ultra Trail Kosciuszko by UTMB (New South Wales),"Thredbo, New South Wales",Australia,"Nov 20, 2026",32km / 50km / 102km / 161km,50K · 102K · 161K · Trail,trail,Solo,https://utmb.world,,active
 XTERRA Wellington Festival,"Kāpiti Coast, Wellington",New Zealand,"Feb 28, 2026",6km / 14km / 21km / 42km trail; Short + Long Triathlon + Duathlon,Olympic,triathlon,Solo,https://www.xterraplanet.com,,active
-XTERRA Rotorua Festival,"Blue Lake / Whakarewarewa Forest, Rotorua",New Zealand,"Apr 11, 2026",Sprint Tri (500m/9.1km/5.5km) + Long Tri (1km/26km/11km) + Trail 5.5/11/21km,Sprint,triathlon,Solo,https://www.xterraplanet.com/race/xterra-rotorua,,active
+XTERRA Rotorua Festival,"Blue Lake / Whakarewarewa Forest, Rotorua",New Zealand,"Apr 11, 2026",Sprint Tri (500m/9.1km/5.5km) + Long Tri (1km/26km/11km) + Trail 5.5/11/21km,Sprint,triathlon,Solo,https://www.xterraplanet.com/,,active
 Amazing Thailand Pattaya Marathon,"Pattaya, Chonburi",Thailand,"Jul 19, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://www.pattayamarathon.com,,active
 Songkhla Marathon,Songkhla,Thailand,"Aug 22, 2026",Marathon 42.2km / Half / 10km / 5km,5K · 10K · 42.2K · Road,running,Solo,https://songkhlamarathon.com,,active
-Perak Triathlon (Perak Multisport Festival),"Lumut, Perak",Malaysia,"Jun 5, 2026",Sprint Tri / Olympic Tri / Aquathlon,Sprint · Olympic,triathlon,Solo,https://www.racexasia.com/event/perak-multisport-festival-2026-perak-triathlon-pmtr26,,active
+Perak Triathlon,"Lumut, Perak",Malaysia,"Jun 5, 2026",Sprint Tri / Olympic Tri / Aquathlon,Sprint · Olympic,triathlon,Solo,https://www.racexasia.com/event/perak-multisport-festival-2026-perak-triathlon-pmtr26,,active
 Sarawak Energy Marathon,"Kuching, Sarawak",Malaysia,"Aug 9, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,active
 Taiping Half Marathon,"Taiping, Perak",Malaysia,"Aug 9, 2026",Half Marathon 21.1km / 10km,10K · 21.1K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,active
 Kota Bharu Half Marathon,"Kota Bharu, Kelantan",Malaysia,"Sep 5, 2026",Half Marathon 21.1km / 10km,10K · 21.1K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,active
-TriFactor Run & RunSwim Singapore (Spring),"East Coast Park, Singapore",Singapore,"May 10, 2026",21km / 10.5km RunSwim multi-sport / 5.25km RunSwim,21K · 5K · 25K · Ocean,swimrun,Solo,https://www.trifactor.asia/TFRunRunSwin2026,,active
-TriFactor Triathlon & Duathlon Singapore (Autumn),"East Coast Park, Singapore",Singapore,"Sep 13, 2026",Sprint + Olympic Tri / Duathlon,Sprint · Olympic,triathlon,Solo,https://worldsmarathons.com/marathon/trifactor-triathlon-singapore,,active
+TriFactor Run & RunSwim Singapore,"East Coast Park, Singapore",Singapore,"May 10, 2026",21km / 10.5km RunSwim multi-sport / 5.25km RunSwim,21K · 5K · 25K · Ocean,swimrun,Solo,https://www.trifactor.asia/TFRunRunSwin2026,,active
+TriFactor Triathlon & Duathlon Singapore,"East Coast Park, Singapore",Singapore,"Sep 13, 2026",Sprint + Olympic Tri / Duathlon,Sprint · Olympic,triathlon,Solo,https://worldsmarathons.com/marathon/trifactor-triathlon-singapore,,active
 Thimphu Marathon – Run for Global Peace,"Thimphu, Bhutan",India,"Sep 19, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,active
 Asia Triathlon Aquathlon Cup Tam Chuc,Ninh Binh (Tam Chuc Pagoda),Vietnam,"May 15, 2026",Triathlon Sprint (750m/20km/5km) + Duathlon + Aquathlon (500m swim/2.5km run),Sprint,triathlon,Solo,https://events.triathlon.org/2026-asia-triathlon-aquathlon-cup-tam-chuc,,active
 Brunei International Marathon,"Bandar Seri Begawan, Brunei",Indonesia,"Mar 14, 2026",Marathon / Half / 10km,10K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,watchlist
 Sarawak SCORE Marathon,"Bintulu, Sarawak",Malaysia,"Jul 18, 2026",Marathon 42.2km / Half / 10km,10K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,active
 Nong Khai Running Festival,Nong Khai,Thailand,"Aug 1, 2026",Marathon 42.2km / Half / 10km / Ultra,10K · 42.2K · Road,running,Solo,https://aims-worldrunning.org,,active
-IRONMAN 70.3 Goseong Korea 2027,"Goseong, Gyeongnam",South Korea,"Jun 1, 2027",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-goseong,,watchlist
+Ironman 70.3 Goseong Korea,"Goseong, Gyeongnam",South Korea,"Jun 1, 2027",Half Ironman (1.9km swim / 90km bike / 21.1km run),Half IM,triathlon,Solo,https://www.ironman.com/races/im703-goseong,,watchlist

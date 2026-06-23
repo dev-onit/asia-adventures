@@ -1568,8 +1568,8 @@ export default function CalendarPage() {
                           </div>
                         </td>
                         {/* Location (flag + country + city) */}
-                        <td className="py-4 px-3 align-top">
-                          <div className="text-sm text-foreground whitespace-nowrap">{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
+                        <td className="py-4 px-3 align-top" style={{ maxWidth: 130 }}>
+                          <div className="truncate text-sm text-foreground whitespace-nowrap" title={`${race.country} · ${city}`}>{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
                         </td>
                         {/* Date — multi-year support */}
                         <td className="py-4 px-3 align-top">
@@ -1590,14 +1590,14 @@ export default function CalendarPage() {
                           })()}
                         </td>
                         {/* Weather */}
-                        <td className="py-4 px-3 align-top">
+                        <td className="py-4 px-3 align-top" style={{ whiteSpace: "nowrap" }}>
                           {weather ? (
                             <div>
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-muted-foreground whitespace-nowrap">
                                 <span className="text-muted-foreground/60">Air: </span>{weather.temp}°C · {weather.condition}
                               </div>
                               {showWaterTemp && weather.waterTemp != null && (
-                                <div className="text-xs text-muted-foreground mt-0.5">
+                                <div className="text-xs text-muted-foreground mt-0.5 whitespace-nowrap">
                                   <span className="text-muted-foreground/60">Water: </span>{weather.waterTemp}°C
                                 </div>
                               )}
