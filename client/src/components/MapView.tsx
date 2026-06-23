@@ -196,8 +196,12 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
-    const L = (window as any).L;
-    if (!L) return;
+
+    // Poll until Leaflet script finishes loading (dynamic <script> tag may not be ready yet)
+    const tryInit = () => {
+      const L = (window as any).L;
+      if (!L || !mapRef.current || mapInstanceRef.current) return;
+      clearInterval(poll);
 
     const map = L.map(mapRef.current, {
       center: [20, 100], zoom: 4, zoomControl: false,
@@ -233,7 +237,15 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     mapRef.current.addEventListener("touchend", () => { map.dragging.disable(); }, { passive: true });
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
-    return () => { map.remove(); mapInstanceRef.current = null; };
+    }; // end tryInit
+
+    const poll = setInterval(tryInit, 100);
+    tryInit(); // try immediately in case Leaflet is already loaded
+
+    return () => {
+      clearInterval(poll);
+      if (mapInstanceRef.current) { mapInstanceRef.current.remove(); mapInstanceRef.current = null; }
+    };
   }, []);
 
   // ── HTML escape helper (prevent XSS in popup strings) ──
