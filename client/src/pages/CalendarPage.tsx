@@ -1297,8 +1297,8 @@ export default function CalendarPage() {
                   onClick={() => setShowUnconfirmed(v => !v)}
                   className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none ${
                     showUnconfirmed
-                      ? "bg-amber-400/15 border-amber-500 text-amber-600 dark:bg-amber-400/10 dark:border-amber-400/50 dark:text-amber-400"
-                      : "border-border text-muted-foreground hover:border-amber-400/50 hover:text-amber-500 dark:hover:text-amber-400"
+                      ? "bg-red-500/15 border-red-500 text-red-600 dark:bg-red-500/10 dark:border-red-400/60 dark:text-red-400"
+                      : "border-border text-muted-foreground hover:border-red-400/50 hover:text-red-500 dark:hover:text-red-400"
                   }`}
                 >
                   <AlertTriangle size={10} />
@@ -1354,7 +1354,7 @@ export default function CalendarPage() {
               </span>
             ))}
             {[...subFilters].map(val => (
-              <span key={val} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-400/15 border border-amber-500/50 text-amber-500 dark:text-amber-400 font-medium">
+              <span key={val} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-red-500/15 border border-red-500/50 text-red-600 dark:text-red-400 font-medium">
                 {getSubFilterLabel(val)}
                 <button onClick={() => toggleSubFilter(val)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
@@ -1414,7 +1414,7 @@ export default function CalendarPage() {
               </span>
             ))}
             {showUnconfirmed && (
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-400/10 border border-amber-400/40 text-amber-500 dark:text-amber-400 font-medium">
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-red-500/10 border border-red-400/40 text-red-600 dark:text-red-400 font-medium">
                 <AlertTriangle size={10} className="shrink-0" />Unconfirmed ON<button onClick={() => setShowUnconfirmed(false)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             )}
@@ -1525,7 +1525,7 @@ export default function CalendarPage() {
                     <React.Fragment key={race.id}>
                       <tr className={`border-b border-border transition-colors ${rowBg}`}>
                         {/* ★ Star */}
-                        <td className="text-center py-4 px-3 align-top" style={{ width: COL_WIDTHS[0] }}>
+                        <td className="text-center py-4 px-3 align-middle" style={{ width: COL_WIDTHS[0] }}>
                           {!isScratched && (
                             <button
                               onClick={() => isFav ? removeFav.mutate(race.id) : addFav.mutate(race.id)}
@@ -1538,9 +1538,9 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Name + note (name is a link if URL exists) */}
-                        <td className="py-4 px-3 align-top" style={{ minWidth: COL_WIDTHS[1], maxWidth: 280 }}>
+                        <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 280 }}>
                           <div className="truncate font-bold text-sm leading-snug" title={race.name}>
-                            {isWatchlist && <AlertTriangle size={11} className="inline text-amber-400 mr-1 mb-0.5" />}
+                            {isWatchlist && <AlertTriangle size={11} className="inline text-red-500 dark:text-red-400 mr-1 mb-0.5" />}
                             {race.url ? (
                               <a href={race.url} target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
                                 {race.name}
@@ -1550,13 +1550,13 @@ export default function CalendarPage() {
                             )}
                           </div>
                           {race.note && (
-                            <div className="truncate text-[11px] text-muted-foreground/60 mt-0.5 leading-snug" title={race.note}>
+                            <div className="truncate text-[11px] text-yellow-600 dark:text-yellow-400 mt-0.5 leading-snug font-medium" title={race.note}>
                               {race.note}
                             </div>
                           )}
                         </td>
                         {/* Sport column: pill + condition inline */}
-                        <td className="py-4 px-3 align-top">
+                        <td className="py-4 px-3 align-middle">
                           <div className="flex items-center gap-1.5 flex-nowrap">
                             <SportPill cls={race.badgeClass} />
                             {(() => {
@@ -1568,11 +1568,11 @@ export default function CalendarPage() {
                           </div>
                         </td>
                         {/* Location (flag + country + city) */}
-                        <td className="py-4 px-3 align-top" style={{ maxWidth: 130 }}>
+                        <td className="py-4 px-3 align-middle" style={{ maxWidth: 130 }}>
                           <div className="truncate text-sm text-foreground whitespace-nowrap" title={`${race.country} · ${city}`}>{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
                         </td>
                         {/* Date — multi-year support */}
-                        <td className="py-4 px-3 align-top">
+                        <td className="py-4 px-3 align-middle">
                           {(() => {
                             let raceDates: {date: string, status: string}[] = [];
                             try { raceDates = JSON.parse((race as any).dates ?? "[]"); } catch {}
@@ -1581,7 +1581,7 @@ export default function CalendarPage() {
                               <div key={i} className={i > 0 ? "mt-1" : ""}>
                                 <div className="text-sm text-foreground whitespace-nowrap">{formatRaceDate(d.date)}</div>
                                 {d.status === "watchlist" && (
-                                  <div className="flex items-center gap-1 text-[11px] text-amber-400">
+                                  <div className="flex items-center gap-1 text-[11px] text-red-500 dark:text-red-400 font-medium">
                                     <AlertTriangle size={9} /><span>Unconfirmed</span>
                                   </div>
                                 )}
@@ -1590,7 +1590,7 @@ export default function CalendarPage() {
                           })()}
                         </td>
                         {/* Weather */}
-                        <td className="py-4 px-3 align-top" style={{ whiteSpace: "nowrap" }}>
+                        <td className="py-4 px-3 align-middle" style={{ whiteSpace: "nowrap" }}>
                           {weather ? (
                             <div>
                               <div className="text-xs text-muted-foreground whitespace-nowrap">
@@ -1605,7 +1605,7 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Distance */}
-                        <td className="py-4 px-3 align-top">
+                        <td className="py-4 px-3 align-middle">
                           {race.type === "hyrox" ? (
                             <div className="text-sm text-foreground whitespace-nowrap">8K · 8 Stations</div>
                           ) : distPills.length > 0 ? (
@@ -1613,7 +1613,7 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Format (team pills) */}
-                        <td className="py-4 px-3 align-top">
+                        <td className="py-4 px-3 align-middle">
                           {formatDisplay ? (
                             <div className="flex flex-nowrap items-center gap-1">
                               {formatDisplay.split(" · ").map((f: string, i: number) => (
