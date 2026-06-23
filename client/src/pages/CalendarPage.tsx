@@ -1552,9 +1552,13 @@ export default function CalendarPage() {
                         <td className="py-3.5 px-3 align-top" style={{ minWidth: COL_WIDTHS[5] }}>
                           {weather ? (
                             <div>
-                              <div className="text-xs text-muted-foreground">{weather.temp}°C · {weather.condition}</div>
-                              {showWaterTemp && (
-                                <div className="text-xs text-muted-foreground mt-0.5">🌊 {weather.waterTemp}°C</div>
+                              <div className="text-xs text-muted-foreground">
+                                <span className="text-muted-foreground/60">Air: </span>{weather.temp}°C · {weather.condition}
+                              </div>
+                              {showWaterTemp && weather.waterTemp != null && (
+                                <div className="text-xs text-muted-foreground mt-0.5">
+                                  <span className="text-muted-foreground/60">Water: </span>{weather.waterTemp}°C
+                                </div>
                               )}
                             </div>
                           ) : <span className="text-xs text-muted-foreground">—</span>}
