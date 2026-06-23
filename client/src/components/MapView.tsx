@@ -432,7 +432,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         <button
           onClick={handleToggleExplore}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showExplore ? "bg-white/90 dark:bg-zinc-800/90 border-orange-400 text-orange-500 dark:text-orange-400" : "bg-white/90 dark:bg-zinc-800/90 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+            showExplore ? "bg-white/95 dark:bg-zinc-900/95 border-orange-400 text-orange-500 dark:text-orange-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           {showExplore
@@ -447,23 +447,23 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         <button
           onClick={onToggleUnconfirmed}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showUnconfirmed ? "bg-white/90 dark:bg-zinc-800/90 border-red-400 text-red-500 dark:text-red-400" : "bg-white/90 dark:bg-zinc-800/90 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+            showUnconfirmed ? "bg-white/95 dark:bg-zinc-900/95 border-red-400 text-red-500 dark:text-red-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Unconfirmed
+          {showUnconfirmed ? "Unconfirmed: ON" : "Unconfirmed: OFF"}
         </button>
         <button
           onClick={onToggleHidePast}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            !hidePast ? "bg-white/90 dark:bg-zinc-800/90 border-amber-400 text-amber-500 dark:text-amber-400" : "bg-white/90 dark:bg-zinc-800/90 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+            !hidePast ? "bg-white/95 dark:bg-zinc-900/95 border-amber-400 text-amber-500 dark:text-amber-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           {!hidePast
             ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
           }
-          Past
+          {!hidePast ? "Past Events: ON" : "Past Events: OFF"}
         </button>
       </div>
     </div>
