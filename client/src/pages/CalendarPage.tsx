@@ -1698,7 +1698,7 @@ export default function CalendarPage() {
           <span className="ml-2 text-[10px] font-semibold" style={{ color: "#ca8a04" }}>★ Showing Favourites</span>
         )}
         {sortMode === "votes" && !showFavs && (
-          <span className="ml-2 text-[10px] font-semibold text-orange-500">↑ Most Voted</span>
+          <span className="ml-2 text-[10px] font-semibold text-orange-500 flex items-center gap-0.5"><TrendingUp size={10} /> Most Voted</span>
         )}
         {!showFavs && activeFilterCount > 0 && (
           <span className="ml-2 text-[10px] text-primary font-semibold flex items-center gap-0.5">
@@ -1815,7 +1815,7 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Voters chips — 3 visible, expand on click */}
-                        <td className="py-2 px-3 align-middle" style={{ minWidth: 80, maxWidth: 200 }}>
+                        <td className="py-2 px-3 align-middle" style={{ minWidth: 120, maxWidth: 220 }}>
                           {(() => {
                             const voters = votesByRace.get(race.id) ?? [];
                             if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
