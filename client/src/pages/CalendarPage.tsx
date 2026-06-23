@@ -413,7 +413,7 @@ export default function CalendarPage() {
     try { const v = localStorage.getItem(STORAGE_MONTH_FILTERS); return v ? JSON.parse(v) : []; } catch { return []; }
   });
   const [yearFilters, setYearFilters] = useState<string[]>(() => {
-    try { const v = localStorage.getItem(STORAGE_YEAR_FILTERS); return v ? JSON.parse(v) : ["2026", "2027"]; } catch { return ["2026", "2027"]; }
+    try { const v = localStorage.getItem(STORAGE_YEAR_FILTERS); return v ? JSON.parse(v) : []; } catch { return []; }
   });
   const [exploreCategoryFilters, setExploreCategoryFilters] = useState<string[]>(() => {
     try { const v = localStorage.getItem(STORAGE_EXPLORE_FILTERS); return v ? JSON.parse(v) : []; } catch { return []; }
@@ -936,7 +936,7 @@ export default function CalendarPage() {
               if (!showFavs) {
                 prevFilters.current = { sportFilters: new Set(sportFilters), subFilters: new Set(subFilters), teamFilters: new Set(teamFilters), countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters };
                 setSportFilters(new Set()); setSubFilters(new Set()); setTeamFilters(new Set());
-                setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters(["2026","2027"]); setHidePast(true);
+                setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters([]); setHidePast(true);
                 setPersonFilter(null); setMinVotesFilter(false); setExploreCategoryFilters([]);
                 setShowFavs(true);
               } else {
