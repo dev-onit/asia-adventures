@@ -1590,6 +1590,16 @@ export default function CalendarPage() {
                   const distPills = (race.distanceLabel ?? "").split("·").map((p: string) => p.trim()).filter(Boolean);
                   const formatDisplay = formatTeamDisplay(race.team ?? "");
                   const rowBg = isScratched ? "row-scratch" : isFav ? "row-fav" : isWatchlist ? "row-watchlist" : "hover:bg-muted/30";
+                  // Detect if earliest date is in the past
+                  const isPast = (() => {
+                    const today = new Date(); today.setHours(0,0,0,0);
+                    try {
+                      const ds: {date:string,status:string}[] = JSON.parse((race as any).dates ?? "[]");
+                      const allD = ds.length > 0 ? ds.map(d => d.date) : [race.date];
+                      const earliest = allD.map(d => new Date(d)).filter(d => !isNaN(d.getTime())).sort((a,b) => a.getTime()-b.getTime())[0];
+                      return earliest ? earliest < today : false;
+                    } catch { return false; }
+                  })();
                   return (
                     <>
                       {showGroupHeader && (
@@ -1600,7 +1610,7 @@ export default function CalendarPage() {
                         </tr>
                       )}
                       <React.Fragment key={race.id}>
-                      <tr className={`border-b border-border transition-colors ${rowBg}`}>
+                      <tr className={`border-b border-border transition-colors ${rowBg} ${isPast ? "opacity-40 grayscale-[60%]" : ""}`}>
                         {/* ★ Star */}
                         <td className="text-center py-4 px-3 align-middle" style={{ width: COL_WIDTHS[0] }}>
                           {!isScratched && (
@@ -1645,7 +1655,7 @@ export default function CalendarPage() {
                           </div>
                         </td>
                         {/* Location (flag + country + city) */}
-                        <td className="py-4 px-3 align-middle" style={{ maxWidth: 170 }}>
+                        <td className="py-4 px-3 align-middle" style={{ minWidth: 160, maxWidth: 220 }}>
                           <div className="truncate text-sm text-foreground whitespace-nowrap" title={`${race.country} · ${city}`}>{flag} {race.country} <span className="text-muted-foreground/50">·</span> <span className="text-muted-foreground">{city}</span></div>
                         </td>
                         {/* Date — multi-year support */}
