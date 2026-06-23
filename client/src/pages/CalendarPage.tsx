@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Star, Filter, X, Globe2, Users, Moon, Sun, Search, AlertTriangle, ExternalLink, ChevronDown, ChevronRight, Eye, EyeOff } from "lucide-react";
+import { Star, Filter, X, Globe2, Users, Moon, Sun, Search, AlertTriangle, ChevronDown, ChevronRight, Eye, EyeOff } from "lucide-react";
 import type { Race, Favourite, ExploreSite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
@@ -678,7 +678,7 @@ export default function CalendarPage() {
     );
   }
 
-  const COL_WIDTHS = [40, 240, 110, 130, 120, 110, 130, 110, 60];
+  const COL_WIDTHS = [40, 240, 110, 130, 120, 110, 130, 110];
 
   // ── Date formatter: "Jan 12, 2026" → "Sun · 12 Jan · 2026" ──
   function formatRaceDate(dateStr: string): string {
@@ -1498,7 +1498,6 @@ export default function CalendarPage() {
                   <th style={{ minWidth: COL_WIDTHS[5] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Weather</th>
                   <th style={{ minWidth: COL_WIDTHS[6] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Distance</th>
                   <th style={{ minWidth: COL_WIDTHS[7] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Format</th>
-                  <th style={{ minWidth: COL_WIDTHS[8] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">↗</th>
                 </tr>
               </thead>
               <tbody>
@@ -1532,11 +1531,17 @@ export default function CalendarPage() {
                             </button>
                           )}
                         </td>
-                        {/* Name + note */}
+                        {/* Name + note (name is a link if URL exists) */}
                         <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 280 }}>
-                          <div className="truncate font-bold text-sm text-foreground leading-snug" title={race.name}>
+                          <div className="truncate font-bold text-sm leading-snug" title={race.name}>
                             {isWatchlist && <AlertTriangle size={11} className="inline text-amber-400 mr-1 mb-0.5" />}
-                            {race.name}
+                            {race.url ? (
+                              <a href={race.url} target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
+                                {race.name}
+                              </a>
+                            ) : (
+                              <span className="text-foreground">{race.name}</span>
+                            )}
                           </div>
                           {race.note && (
                             <div className="truncate text-[11px] text-muted-foreground/60 mt-0.5 leading-snug" title={race.note}>
@@ -1604,14 +1609,7 @@ export default function CalendarPage() {
                             </div>
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
-                        {/* Link */}
-                        <td className="py-4 px-3 text-center align-middle" style={{ minWidth: COL_WIDTHS[8] }}>
-                          {race.url && (
-                            <a href={race.url} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:text-primary/70 transition-colors" title="Visit race page">
-                              ↗
-                            </a>
-                          )}
-                        </td>
+
                       </tr>
                       {/* Note moved into Name cell — sub-row removed */}
                     </React.Fragment>
