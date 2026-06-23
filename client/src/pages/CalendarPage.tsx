@@ -1677,7 +1677,8 @@ export default function CalendarPage() {
                     try {
                       const ds: {date:string,status:string}[] = JSON.parse((race as any).dates ?? "[]");
                       const allD = ds.length > 0 ? ds.map(d => d.date) : [race.date];
-                      const earliest = allD.map(d => new Date(d)).filter(d => !isNaN(d.getTime())).sort((a,b) => a.getTime()-b.getTime())[0];
+                      const dates = allD.map(d => parseFuzzyDate(d)).filter((d): d is Date => d !== null);
+                      const earliest = dates.sort((a,b) => a.getTime()-b.getTime())[0];
                       return earliest ? earliest < today : false;
                     } catch { return false; }
                   })();
