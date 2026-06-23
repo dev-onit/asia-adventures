@@ -11,7 +11,8 @@
     "url": "https://tatamumbaimarathon.procam.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 19, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 18, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 19, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 18, 2027\", \"status\": \"active\"}]",
+    "id": 1
   },
   {
     "name": "Bengaluru Midnight Marathon",
@@ -25,7 +26,8 @@
     "url": "https://www.midnightmarathon.in",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Feb 15, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Feb 14, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 15, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Feb 14, 2027\", \"status\": \"watchlist\"}]",
+    "id": 2
   },
   {
     "name": "Auroville Trail",
@@ -39,7 +41,8 @@
     "url": "https://www.aurovillemarathon.com",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Feb 22, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Feb 21, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 22, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Feb 21, 2027\", \"status\": \"watchlist\"}]",
+    "id": 3
   },
   {
     "name": "Hyrox India Mumbai",
@@ -53,7 +56,8 @@
     "url": "https://hyrox.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 18, 2026\", \"status\": \"active\"}]",
+    "id": 4
   },
   {
     "name": "Kolkata Marathon",
@@ -67,7 +71,8 @@
     "url": "https://jbgkolkatamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 9, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 8, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 9, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 8, 2027\", \"status\": \"active\"}]",
+    "id": 5
   },
   {
     "name": "Delhi Half Marathon",
@@ -81,7 +86,23 @@
     "url": "https://vedantadelhihalfmarathon.procam.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 18, 2026\", \"status\": \"active\"}]",
+    "id": 6
+  },
+  {
+    "name": "NMDC Hyderabad Marathon",
+    "location": "Hyderabad",
+    "country": "India",
+    "date": "Aug 30, 2026",
+    "distance": "Marathon (42.2km)",
+    "distanceLabel": "5K · 10K · 21.1K · 42.2K",
+    "type": "running",
+    "team": "Solo",
+    "url": "https://nmdchyderabadmarathon.com",
+    "note": "Last Sunday of August annually. Flagship event of Hyderabad Runners Society since 2011.",
+    "status": "active",
+    "dates": "[{\"date\": \"Aug 30, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 29, 2027\", \"status\": \"active\"}]",
+    "id": 7
   },
   {
     "name": "Ironman 70.3 Goa",
@@ -95,7 +116,8 @@
     "url": "https://regind1.ironman.com/event/2026-ironman-703-goa",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 8
   },
   {
     "name": "Ironman 70.3 Thailand",
@@ -109,7 +131,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}]",
+    "id": 9
   },
   {
     "name": "Bangkok Marathon",
@@ -123,7 +146,8 @@
     "url": "https://www.bkkmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 14, 2026\", \"status\": \"active\"}]",
+    "id": 10
   },
   {
     "name": "Chiang Mai Marathon",
@@ -137,7 +161,8 @@
     "url": "https://www.chiangmaimarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 21, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 20, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 21, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 20, 2027\", \"status\": \"active\"}]",
+    "id": 11
   },
   {
     "name": "Koh Samui Triathlon",
@@ -151,7 +176,8 @@
     "url": "https://www.xmultisport.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 17, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 16, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 17, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 16, 2027\", \"status\": \"active\"}]",
+    "id": 12
   },
   {
     "name": "Hyrox Bangkok",
@@ -165,7 +191,8 @@
     "url": "https://hyrox.com",
     "note": "Season 9 announced city. 2026 was Mar 20-22. Predicted Mar 2027.",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 20, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 20, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 20, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 20, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 2027\", \"status\": \"active\"}]",
+    "id": 13
   },
   {
     "name": "Tokyo Marathon",
@@ -179,7 +206,8 @@
     "url": "https://marathon.tokyo",
     "note": "Confirmed date from aims-worldrunning.org",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 2, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 7, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 2, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 7, 2027\", \"status\": \"active\"}]",
+    "id": 14
   },
   {
     "name": "Osaka Marathon",
@@ -193,7 +221,8 @@
     "url": "https://www.osaka-marathon.com/2026/en/",
     "note": "Confirmed date from rundida.com",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 23, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 28, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 23, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 28, 2027\", \"status\": \"active\"}]",
+    "id": 15
   },
   {
     "name": "Kyoto Marathon",
@@ -207,7 +236,8 @@
     "url": "https://kyoto-marathon.com/en/",
     "note": "Confirmed date from kyoto-marathon.com",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 16, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 21, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 16, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 21, 2027\", \"status\": \"active\"}]",
+    "id": 16
   },
   {
     "name": "Ironman 70.3 Japan",
@@ -221,7 +251,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 8, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 8, 2026\", \"status\": \"active\"}]",
+    "id": 17
   },
   {
     "name": "Hyrox Tokyo",
@@ -235,7 +266,8 @@
     "url": "https://hyrox.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 8, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 7, 2027\", \"status\": \"active\"}, {\"date\": \"Nov 21, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 8, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 7, 2027\", \"status\": \"active\"}, {\"date\": \"Nov 21, 2027\", \"status\": \"active\"}]",
+    "id": 18
   },
   {
     "name": "Noto Triathlon",
@@ -249,7 +281,8 @@
     "url": "https://www.notojima-triathlon.com/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 13, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 12, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 13, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 12, 2027\", \"status\": \"active\"}]",
+    "id": 19
   },
   {
     "name": "Ho Chi Minh City Marathon",
@@ -263,7 +296,8 @@
     "url": "https://www.hcmcmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 12, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 11, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 12, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 11, 2027\", \"status\": \"active\"}]",
+    "id": 20
   },
   {
     "name": "Hanoi Marathon",
@@ -277,7 +311,8 @@
     "url": "https://www.hanoi-marathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 8, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 8, 2026\", \"status\": \"active\"}]",
+    "id": 21
   },
   {
     "name": "Vietnam Mountain Marathon",
@@ -291,7 +326,8 @@
     "url": "https://vietnammountainmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 9, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 8, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 9, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 8, 2027\", \"status\": \"active\"}]",
+    "id": 22
   },
   {
     "name": "Da Nang International Marathon",
@@ -305,7 +341,8 @@
     "url": "https://www.rundanang.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 17, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 16, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 17, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 16, 2027\", \"status\": \"active\"}]",
+    "id": 23
   },
   {
     "name": "Ironman Philippines",
@@ -319,7 +356,8 @@
     "url": "https://www.ironman.com/races",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 7, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 7, 2026\", \"status\": \"active\"}]",
+    "id": 24
   },
   {
     "name": "Ironman 70.3 Philippines",
@@ -333,7 +371,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 10, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 9, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 10, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 9, 2027\", \"status\": \"active\"}]",
+    "id": 25
   },
   {
     "name": "Manila Marathon",
@@ -347,7 +386,8 @@
     "url": "https://manilamarathon.ph",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 14, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 13, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 14, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 13, 2027\", \"status\": \"active\"}]",
+    "id": 26
   },
   {
     "name": "Colombo Marathon",
@@ -361,7 +401,8 @@
     "url": "https://www.colombomarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 5, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 18, 2027\", \"status\": \"active\"}, {\"date\": \"Oct 4, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 5, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 18, 2027\", \"status\": \"active\"}, {\"date\": \"Oct 4, 2027\", \"status\": \"active\"}]",
+    "id": 27
   },
   {
     "name": "Ironman 70.3 Malaysia",
@@ -375,7 +416,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 26, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 26, 2026\", \"status\": \"active\"}]",
+    "id": 28
   },
   {
     "name": "KL City Marathon",
@@ -389,7 +431,8 @@
     "url": "https://www.kl-marathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 29, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 29, 2026\", \"status\": \"active\"}]",
+    "id": 29
   },
   {
     "name": "Penang Bridge International Marathon",
@@ -403,7 +446,8 @@
     "url": "https://penangmarathon.gov.my",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 2, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 1, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 2, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 1, 2027\", \"status\": \"active\"}]",
+    "id": 30
   },
   {
     "name": "Borneo International Marathon",
@@ -417,7 +461,8 @@
     "url": "https://www.borneomarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 18, 2026\", \"status\": \"active\"}, {\"date\": \"May 17, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 18, 2026\", \"status\": \"active\"}, {\"date\": \"May 17, 2027\", \"status\": \"active\"}]",
+    "id": 31
   },
   {
     "name": "Ironman 70.3 Singapore",
@@ -431,7 +476,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 9, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 8, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 9, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 8, 2027\", \"status\": \"active\"}]",
+    "id": 32
   },
   {
     "name": "Hyrox Singapore",
@@ -445,7 +491,8 @@
     "url": "https://hyrox.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 3, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 3, 2026\", \"status\": \"active\"}]",
+    "id": 33
   },
   {
     "name": "Seoul Marathon",
@@ -459,7 +506,8 @@
     "url": "https://en.seoul-marathon.com",
     "note": "Confirmed date from seoul-marathon.com",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 16, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 21, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 16, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 21, 2027\", \"status\": \"active\"}]",
+    "id": 34
   },
   {
     "name": "Jeju Triathlon",
@@ -473,7 +521,8 @@
     "url": "https://www.ironman.com/races/im-gurye",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 3, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 3, 2027\", \"status\": \"active\"}]",
+    "id": 35
   },
   {
     "name": "Hyrox Seoul",
@@ -487,7 +536,8 @@
     "url": "https://hyrox.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 14, 2026\", \"status\": \"active\"}]",
+    "id": 36
   },
   {
     "name": "Shanghai Marathon",
@@ -501,7 +551,8 @@
     "url": "https://www.shang-ma.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 30, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 29, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 30, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 29, 2027\", \"status\": \"active\"}]",
+    "id": 37
   },
   {
     "name": "Beijing Marathon",
@@ -515,7 +566,8 @@
     "url": "https://en.beijing-marathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 2, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 1, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 2, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 1, 2027\", \"status\": \"active\"}]",
+    "id": 38
   },
   {
     "name": "Hong Kong Marathon",
@@ -529,7 +581,8 @@
     "url": "https://www.hkmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 18, 2026\", \"status\": \"active\"}]",
+    "id": 39
   },
   {
     "name": "Ironman Taiwan",
@@ -543,7 +596,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 12, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 12, 2026\", \"status\": \"active\"}]",
+    "id": 40
   },
   {
     "name": "Taipei Marathon",
@@ -557,7 +611,8 @@
     "url": "https://www.taipeicitymarathon.com/en/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 21, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 20, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 21, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 20, 2027\", \"status\": \"active\"}]",
+    "id": 41
   },
   {
     "name": "Bali Marathon",
@@ -571,7 +626,8 @@
     "url": "https://balimarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 7, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 6, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 7, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 6, 2027\", \"status\": \"active\"}]",
+    "id": 42
   },
   {
     "name": "Ironman 70.3 Lombok",
@@ -585,7 +641,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 28, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 27, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 28, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 27, 2027\", \"status\": \"active\"}]",
+    "id": 43
   },
   {
     "name": "Bali Hope Swimrun",
@@ -599,7 +656,8 @@
     "url": "https://www.balihope.com/swimrun",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 12, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 21, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 11, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 12, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 21, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 11, 2027\", \"status\": \"active\"}]",
+    "id": 44
   },
   {
     "name": "Jakarta Marathon",
@@ -613,7 +671,8 @@
     "url": "https://jakartamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 19, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 18, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 19, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 18, 2027\", \"status\": \"active\"}]",
+    "id": 45
   },
   {
     "name": "Everest Marathon",
@@ -627,7 +686,8 @@
     "url": "https://everestmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 29, 2026\", \"status\": \"active\"}, {\"date\": \"May 29, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 29, 2026\", \"status\": \"active\"}, {\"date\": \"May 29, 2027\", \"status\": \"active\"}]",
+    "id": 46
   },
   {
     "name": "Maldives Ocean Swim",
@@ -641,7 +701,8 @@
     "url": "https://oceanmanswim.com/maafushi-maldives/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 25, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 24, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 25, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 24, 2027\", \"status\": \"active\"}]",
+    "id": 47
   },
   {
     "name": "Maldives Ocean Swim",
@@ -655,7 +716,8 @@
     "url": "https://maldivesswim.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 21, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 21, 2027\", \"status\": \"active\"}]",
+    "id": 48
   },
   {
     "name": "Gobi March",
@@ -669,7 +731,8 @@
     "url": "https://4deserts.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 15, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 14, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 15, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 14, 2027\", \"status\": \"active\"}]",
+    "id": 49
   },
   {
     "name": "Bhutan International Marathon",
@@ -683,7 +746,8 @@
     "url": "https://bhutaninternationalmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 9, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 8, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 9, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 8, 2027\", \"status\": \"active\"}]",
+    "id": 50
   },
   {
     "name": "Luang Prabang Half Marathon",
@@ -697,7 +761,8 @@
     "url": "https://luangprabangmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 14, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 13, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 14, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 13, 2027\", \"status\": \"active\"}]",
+    "id": 51
   },
   {
     "name": "Tata Consultancy Services World 10K",
@@ -711,7 +776,8 @@
     "url": "https://tcsworld10k.procam.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 18, 2026\", \"status\": \"active\"}]",
+    "id": 52
   },
   {
     "name": "Ladakh Marathon",
@@ -725,7 +791,8 @@
     "url": "https://ladakhmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 6, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 5, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 6, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 5, 2027\", \"status\": \"active\"}]",
+    "id": 53
   },
   {
     "name": "Spiti Valley Ultramarathon",
@@ -739,7 +806,8 @@
     "url": "https://www.suryaspitimarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 28, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 27, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 28, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 27, 2027\", \"status\": \"active\"}]",
+    "id": 54
   },
   {
     "name": "Kaveri Trail Marathon",
@@ -753,7 +821,8 @@
     "url": "https://kaveritrailmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 19, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 18, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 19, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 18, 2027\", \"status\": \"active\"}]",
+    "id": 55
   },
   {
     "name": "Coastal Trail Run Goa",
@@ -767,7 +836,8 @@
     "url": "https://thehellrace.com/",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Nov 29, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Nov 28, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 29, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Nov 28, 2027\", \"status\": \"watchlist\"}]",
+    "id": 56
   },
   {
     "name": "Pinkathon Mumbai",
@@ -781,7 +851,8 @@
     "url": "https://www.pinkathon.com",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 14, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Dec 13, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 14, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Dec 13, 2027\", \"status\": \"watchlist\"}]",
+    "id": 57
   },
   {
     "name": "Ultramarathon Manali",
@@ -795,7 +866,8 @@
     "url": "https://www.manalimarathon.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 6, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 5, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 6, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 5, 2027\", \"status\": \"active\"}]",
+    "id": 58
   },
   {
     "name": "Rann Utsav Run",
@@ -809,7 +881,8 @@
     "url": "https://www.rannutsav.com",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Feb 1, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Jan 31, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 1, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Jan 31, 2027\", \"status\": \"watchlist\"}]",
+    "id": 59
   },
   {
     "name": "Hyderabad Marathon",
@@ -823,7 +896,8 @@
     "url": "https://nmdchyderabadmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 24, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 25, 2027\", \"status\": \"watchlist\"}, {\"date\": \"Aug 23, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Aug 24, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 25, 2027\", \"status\": \"watchlist\"}, {\"date\": \"Aug 23, 2027\", \"status\": \"watchlist\"}]",
+    "id": 60
   },
   {
     "name": "Pune Marathon",
@@ -837,7 +911,8 @@
     "url": "https://www.marathonpune.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 14, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 13, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 14, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 13, 2027\", \"status\": \"active\"}]",
+    "id": 61
   },
   {
     "name": "Hyrox Bengaluru",
@@ -851,7 +926,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 11, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 1, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 11, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 1, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2, 2027\", \"status\": \"active\"}]",
+    "id": 62
   },
   {
     "name": "Hyrox Osaka",
@@ -865,7 +941,8 @@
     "url": "https://hyrox.com",
     "note": "Predicted Jan 2027 from 2026 (Jan 30). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 30, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 6, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 2027\", \"status\": \"watchlist\"}, {\"date\": \"Dec 5, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 30, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 6, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 2027\", \"status\": \"watchlist\"}, {\"date\": \"Dec 5, 2027\", \"status\": \"active\"}]",
+    "id": 63
   },
   {
     "name": "Nagano Marathon",
@@ -879,7 +956,8 @@
     "url": "https://www.naganomarathon.gr.jp/english",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 20, 2026\", \"status\": \"active\"}, {\"date\": \"Apr 19, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 20, 2026\", \"status\": \"active\"}, {\"date\": \"Apr 19, 2027\", \"status\": \"active\"}]",
+    "id": 64
   },
   {
     "name": "Mt Fuji Trail Run",
@@ -893,7 +971,8 @@
     "url": "https://mtfuji100.com/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 27, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 26, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 27, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 26, 2027\", \"status\": \"active\"}]",
+    "id": 65
   },
   {
     "name": "Phuket International Marathon",
@@ -907,7 +986,8 @@
     "url": "https://www.phuketmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 8, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 7, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 8, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 7, 2027\", \"status\": \"active\"}]",
+    "id": 66
   },
   {
     "name": "Chiang Rai Half Marathon",
@@ -921,7 +1001,8 @@
     "url": "https://www.facebook.com/chiangrai.marathon",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 9, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 8, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 9, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 8, 2027\", \"status\": \"active\"}]",
+    "id": 67
   },
   {
     "name": "Mekong Delta Marathon",
@@ -935,7 +1016,8 @@
     "url": "https://mekongdeltamarathon.com.vn",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 6, 2026\", \"status\": \"active\"}, {\"date\": \"Apr 5, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 6, 2026\", \"status\": \"active\"}, {\"date\": \"Apr 5, 2027\", \"status\": \"active\"}]",
+    "id": 68
   },
   {
     "name": "Ha Long Bay Heritage Marathon",
@@ -949,7 +1031,8 @@
     "url": "https://halongmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 23, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 22, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 23, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 22, 2027\", \"status\": \"active\"}]",
+    "id": 69
   },
   {
     "name": "Cebu City Marathon",
@@ -963,7 +1046,8 @@
     "url": "https://www.cebumarathon.com.ph",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 5, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 4, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 5, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 4, 2027\", \"status\": \"active\"}]",
+    "id": 70
   },
   {
     "name": "Sabah XTERRA Triathlon",
@@ -977,7 +1061,8 @@
     "url": "https://www.xmultisport.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 5, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 4, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 5, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 4, 2027\", \"status\": \"active\"}]",
+    "id": 71
   },
   {
     "name": "Singapore Swim For Hope",
@@ -991,7 +1076,8 @@
     "url": "https://www.safras4h.sg",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 28, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 27, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 28, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 27, 2027\", \"status\": \"active\"}]",
+    "id": 72
   },
   {
     "name": "Busan International Marathon",
@@ -1005,7 +1091,8 @@
     "url": "https://marathon.busan.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 6, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 6, 2026\", \"status\": \"active\"}, {\"date\": \"Apr 5, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 6, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 6, 2026\", \"status\": \"active\"}, {\"date\": \"Apr 5, 2027\", \"status\": \"active\"}]",
+    "id": 73
   },
   {
     "name": "Lombok Sumbawa Ultra",
@@ -1019,7 +1106,8 @@
     "url": "https://fonesport.id",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 3, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 3, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2, 2027\", \"status\": \"active\"}]",
+    "id": 74
   },
   {
     "name": "Sun Moon Lake Swim",
@@ -1033,7 +1121,8 @@
     "url": "https://www.sunmoonlake.gov.tw/en/Events/Articles?a=24&id=6",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 14, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 13, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 14, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 13, 2027\", \"status\": \"active\"}]",
+    "id": 75
   },
   {
     "name": "Guangzhou Marathon",
@@ -1047,7 +1136,8 @@
     "url": "https://www.guangzhou-marathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 7, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 6, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 7, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 6, 2027\", \"status\": \"active\"}]",
+    "id": 76
   },
   {
     "name": "Chengdu Marathon",
@@ -1061,7 +1151,8 @@
     "url": "https://chengdu-marathon.mararun.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 2, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 1, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 2, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 1, 2027\", \"status\": \"active\"}]",
+    "id": 77
   },
   {
     "name": "Annapurna Trail Race",
@@ -1075,7 +1166,8 @@
     "url": "https://annapurna100.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 18, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 17, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 18, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 17, 2027\", \"status\": \"active\"}]",
+    "id": 78
   },
   {
     "name": "Kochi Ironkid Triathlon",
@@ -1089,7 +1181,8 @@
     "url": "https://www.ironman.com/races/im703-goa/ironkids",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Nov 8, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Nov 7, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 8, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Nov 7, 2027\", \"status\": \"watchlist\"}]",
+    "id": 79
   },
   {
     "name": "Jaipur Marathon",
@@ -1103,7 +1196,8 @@
     "url": "https://www.marathonjaipur.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 26, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 25, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 26, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 25, 2027\", \"status\": \"active\"}]",
+    "id": 80
   },
   {
     "name": "Cherrapunji Rain Run",
@@ -1117,7 +1211,8 @@
     "url": "https://rotaryrainrun.com",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jul 20, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Jul 19, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jul 20, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Jul 19, 2027\", \"status\": \"watchlist\"}]",
+    "id": 81
   },
   {
     "name": "Desert Storm Bikaner",
@@ -1131,7 +1226,8 @@
     "url": "https://www.marathonindia.in",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Feb 15, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Feb 14, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 15, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Feb 14, 2027\", \"status\": \"watchlist\"}]",
+    "id": 82
   },
   {
     "name": "Sundarban Trail Run",
@@ -1145,7 +1241,8 @@
     "url": "https://www.indiarunning.in",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 21, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Dec 20, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 21, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Dec 20, 2027\", \"status\": \"watchlist\"}]",
+    "id": 83
   },
   {
     "name": "Mumbai Ocean Swim",
@@ -1159,7 +1256,8 @@
     "url": "https://maharashtraaquaticassociation.com",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 14, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Dec 13, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 14, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Dec 13, 2027\", \"status\": \"watchlist\"}]",
+    "id": 84
   },
   {
     "name": "Goa Open Water Swim",
@@ -1173,7 +1271,8 @@
     "url": "https://www.goaopenwaterswimmingclub.com",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jan 11, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Jan 10, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jan 11, 2026\", \"status\": \"watchlist\"}, {\"date\": \"Jan 10, 2027\", \"status\": \"watchlist\"}]",
+    "id": 85
   },
   {
     "name": "India Hyrox Championship",
@@ -1187,7 +1286,8 @@
     "url": "https://hyrox.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 22, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 21, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 22, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 21, 2027\", \"status\": \"active\"}]",
+    "id": 86
   },
   {
     "name": "Tata Steel Kolkata 25K",
@@ -1201,7 +1301,8 @@
     "url": "https://tatasteelworld25k.procam.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 26, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 25, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 26, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 25, 2027\", \"status\": \"active\"}]",
+    "id": 87
   },
   {
     "name": "Airtel Delhi Half Marathon",
@@ -1215,7 +1316,8 @@
     "url": "https://vedantadelhihalfmarathon.procam.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 19, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 18, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 19, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 18, 2027\", \"status\": \"active\"}]",
+    "id": 88
   },
   {
     "name": "Vedanta Delhi Half Marathon",
@@ -1229,7 +1331,8 @@
     "url": "https://vedantadelhihalfmarathon.procam.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 19, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 18, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 19, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 18, 2027\", \"status\": \"active\"}]",
+    "id": 89
   },
   {
     "name": "Spicejet Hyderabad Half Marathon",
@@ -1243,7 +1346,8 @@
     "url": "https://hyderabadhalfmarathon.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 16, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 15, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 16, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 15, 2027\", \"status\": \"active\"}]",
+    "id": 90
   },
   {
     "name": "Vasai-Virar Marathon",
@@ -1257,7 +1361,8 @@
     "url": "https://vvmm.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 5, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 4, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 5, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 4, 2027\", \"status\": \"active\"}]",
+    "id": 91
   },
   {
     "name": "Nagoya Women",
@@ -1271,7 +1376,8 @@
     "url": "https://womens-marathon.nagoya/en/",
     "note": "Confirmed date from hashirun.com",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 9, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 14, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 9, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 14, 2027\", \"status\": \"active\"}]",
+    "id": 92
   },
   {
     "name": "Hokkaido Marathon",
@@ -1285,7 +1391,8 @@
     "url": "https://www.hokkaido-marathon.com/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 31, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 30, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 31, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 30, 2027\", \"status\": \"active\"}]",
+    "id": 93
   },
   {
     "name": "Ironman Japan",
@@ -1299,7 +1406,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 13, 2026\", \"status\": \"active\"}]",
+    "id": 94
   },
   {
     "name": "Fuji Mountain Race",
@@ -1313,7 +1421,8 @@
     "url": "https://fujimountainrace.city.fujiyoshida.yamanashi.jp/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 27, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 26, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 27, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 26, 2027\", \"status\": \"active\"}]",
+    "id": 95
   },
   {
     "name": "Ultramarathon Aso",
@@ -1327,7 +1436,8 @@
     "url": "https://www.aso.ne.jp/~koiki/04_event/marathon_r05.html",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 18, 2026\", \"status\": \"active\"}, {\"date\": \"May 17, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 18, 2026\", \"status\": \"active\"}, {\"date\": \"May 17, 2027\", \"status\": \"active\"}]",
+    "id": 96
   },
   {
     "name": "Phuket Marathon",
@@ -1341,7 +1451,8 @@
     "url": "https://www.phuketmarathon.com",
     "note": "Predicted from 2026 (Jun 1). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 1, 2026\", \"status\": \"active\"}, {\"date\": \"May 31, 2027\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 1, 2026\", \"status\": \"active\"}, {\"date\": \"May 31, 2027\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]",
+    "id": 97
   },
   {
     "name": "Chiang Rai Trail",
@@ -1355,7 +1466,8 @@
     "url": "https://www.utmb.world",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 3, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 3, 2027\", \"status\": \"active\"}]",
+    "id": 98
   },
   {
     "name": "Ironman 70.3 Phuket",
@@ -1369,7 +1481,8 @@
     "url": "https://www.lagunaphukettri.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 21, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 21, 2027\", \"status\": \"active\"}]",
+    "id": 99
   },
   {
     "name": "Ironman 70.3 Vietnam Da Nang",
@@ -1383,7 +1496,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 11, 2026\", \"status\": \"active\"}, {\"date\": \"May 10, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 11, 2026\", \"status\": \"active\"}, {\"date\": \"May 10, 2027\", \"status\": \"active\"}]",
+    "id": 100
   },
   {
     "name": "Gyeongju International Marathon",
@@ -1397,7 +1511,8 @@
     "url": "https://en.gyeongjumarathon.com",
     "note": "Confirmed Oct 17, 2026 from aims-worldrunning.org",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 17, 2026\", \"status\": \"active\"}, {\"date\": \"Apr 5, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 17, 2026\", \"status\": \"active\"}, {\"date\": \"Apr 5, 2027\", \"status\": \"active\"}]",
+    "id": 101
   },
   {
     "name": "Hyrox Seoul Spring",
@@ -1411,7 +1526,8 @@
     "url": "https://hyrox.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 15, 2026\", \"status\": \"active\"}, {\"date\": \"May 14, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 15, 2026\", \"status\": \"active\"}, {\"date\": \"May 14, 2027\", \"status\": \"active\"}]",
+    "id": 102
   },
   {
     "name": "Ironman Korea",
@@ -1425,7 +1541,8 @@
     "url": "https://ironman.com",
     "note": "Confirmed Oct 4, 2026 in Gurye from gowod.app 2026 calendar",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 2027\", \"status\": \"watchlist\"}]",
+    "id": 103
   },
   {
     "name": "Ironman 70.3 Philippines",
@@ -1439,7 +1556,8 @@
     "url": "https://ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 3, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 3, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2, 2027\", \"status\": \"active\"}]",
+    "id": 104
   },
   {
     "name": "Hyrox Manila",
@@ -1453,7 +1571,8 @@
     "url": "https://hyrox.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 27, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 26, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 27, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 26, 2027\", \"status\": \"active\"}]",
+    "id": 105
   },
   {
     "name": "Standard Chartered KL Marathon",
@@ -1467,7 +1586,8 @@
     "url": "https://www.kl-marathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 22, 2026\", \"status\": \"active\"}]",
+    "id": 106
   },
   {
     "name": "Borneo Ultra Trail Marathon",
@@ -1481,7 +1601,8 @@
     "url": "https://www.borneoultra.com",
     "note": "UTMB World Series ultra trail race in Sabah, Malaysia.",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 6, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 5, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 6, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 5, 2027\", \"status\": \"active\"}]",
+    "id": 107
   },
   {
     "name": "Standard Chartered Singapore Marathon",
@@ -1495,7 +1616,8 @@
     "url": "https://www.singaporemarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 7, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 6, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 7, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 6, 2027\", \"status\": \"active\"}]",
+    "id": 108
   },
   {
     "name": "Bromo Tengger Semeru Ultra",
@@ -1509,7 +1631,8 @@
     "url": "https://fonesport.id/bts100",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 7, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 6, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 7, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 6, 2027\", \"status\": \"active\"}]",
+    "id": 109
   },
   {
     "name": "Rinjani 100",
@@ -1523,7 +1646,8 @@
     "url": "https://fonesport.id/rinjani100",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 2, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 1, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 2, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 1, 2027\", \"status\": \"active\"}]",
+    "id": 110
   },
   {
     "name": "Annapurna 100",
@@ -1537,7 +1661,8 @@
     "url": "https://annapurna100.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 18, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 17, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 18, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 17, 2027\", \"status\": \"active\"}]",
+    "id": 111
   },
   {
     "name": "Taroko Gorge Marathon",
@@ -1551,7 +1676,8 @@
     "url": "https://www.taroko-marathon.com.tw/en/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 22, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 21, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 22, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 21, 2027\", \"status\": \"active\"}]",
+    "id": 112
   },
   {
     "name": "TCS World 10K Bengaluru",
@@ -1565,7 +1691,8 @@
     "url": "https://tcsworld10k.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 17, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 17, 2027\", \"status\": \"active\"}]",
+    "id": 113
   },
   {
     "name": "Chiang Mai Trail",
@@ -1579,7 +1706,8 @@
     "url": "https://chiangmaitrail.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 18, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 18, 2027\", \"status\": \"active\"}]",
+    "id": 114
   },
   {
     "name": "Hanoi Trail Run",
@@ -1593,7 +1721,8 @@
     "url": "https://hanoitrail.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 1, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 1, 2027\", \"status\": \"active\"}]",
+    "id": 115
   },
   {
     "name": "Bintan Triathlon",
@@ -1607,7 +1736,8 @@
     "url": "https://bintantriathlon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 5, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 5, 2027\", \"status\": \"active\"}]",
+    "id": 116
   },
   {
     "name": "Ironman 70.3 Philippines",
@@ -1621,7 +1751,8 @@
     "url": "https://www.ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]",
+    "id": 117
   },
   {
     "name": "Hyrox Delhi",
@@ -1635,7 +1766,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "Predicted from 2026 HYROX Delhi (Jul 24-26). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 24, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jul 24, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 2027\", \"status\": \"watchlist\"}]",
+    "id": 118
   },
   {
     "name": "Hyrox Mumbai",
@@ -1649,7 +1781,8 @@
     "url": "https://hyrox.com",
     "note": "Predicted from 2026 HYROX Mumbai (Sep 18-20). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 18, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Sep 18, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 2027\", \"status\": \"watchlist\"}]",
+    "id": 119
   },
   {
     "name": "Hyrox Hangzhou",
@@ -1663,7 +1796,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "Predicted from 2026 HYROX Hangzhou (Jul 4-5). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 4, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jul 4, 2026\", \"status\": \"active\"}, {\"date\": \"Jul 2027\", \"status\": \"watchlist\"}]",
+    "id": 120
   },
   {
     "name": "Hyrox Chengdu",
@@ -1677,7 +1811,8 @@
     "url": "https://hyrox.com",
     "note": "Predicted from 2026 HYROX Chengdu (Aug 1-2). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 1, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Aug 1, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"watchlist\"}]",
+    "id": 121
   },
   {
     "name": "Hyrox Shenzhen",
@@ -1691,7 +1826,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "Predicted from 2026 HYROX Shenzhen (Aug 15-16). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 15, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Aug 15, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"watchlist\"}]",
+    "id": 122
   },
   {
     "name": "Hyrox Beijing",
@@ -1705,7 +1841,8 @@
     "url": "https://hyrox.com",
     "note": "Predicted from 2026 HYROX Beijing (Sep 12-13). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 21, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 12, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Mar 21, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 12, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 2027\", \"status\": \"watchlist\"}]",
+    "id": 123
   },
   {
     "name": "Hyrox Shanghai",
@@ -1719,7 +1856,8 @@
     "url": "https://hyrox.com",
     "note": "Predicted from 2026 HYROX Shanghai (Oct 31). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 31, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Oct 31, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 2027\", \"status\": \"watchlist\"}]",
+    "id": 124
   },
   {
     "name": "Hyrox Guangzhou",
@@ -1733,7 +1871,8 @@
     "url": "https://hyrox.com",
     "note": "Predicted from 2026 HYROX Guangzhou (Nov 21-22). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 125
   },
   {
     "name": "Ironman Vietnam",
@@ -1747,7 +1886,8 @@
     "url": "https://www.ironman.com/races/im-vietnam",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 10, 2026\", \"status\": \"active\"}, {\"date\": \"May 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"May 10, 2026\", \"status\": \"active\"}, {\"date\": \"May 2027\", \"status\": \"watchlist\"}]",
+    "id": 126
   },
   {
     "name": "Hyrox Chiba",
@@ -1761,7 +1901,8 @@
     "url": "https://hyrox.com",
     "note": "Confirmed Aug 7-9, 2026, Makuhari Messe, Chiba. New Japan city for HYROX.",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 7, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Aug 7, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"watchlist\"}]",
+    "id": 127
   },
   {
     "name": "Hyrox Jakarta",
@@ -1775,7 +1916,8 @@
     "url": "https://hyrox.com",
     "note": "Confirmed Jun 27-28, 2026, Jakarta. Confirmed via hyroxmap.xyz and redbull.com.",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 27, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 27, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]",
+    "id": 128
   },
   {
     "name": "Daegu Marathon",
@@ -1789,7 +1931,8 @@
     "url": "https://daegumarathon.daegu.go.kr",
     "note": "AIMS certified World Athletics label marathon. 40,000 runners.",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 22, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 28, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 22, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 28, 2027\", \"status\": \"watchlist\"}]",
+    "id": 129
   },
   {
     "name": "JTBC Seoul Marathon",
@@ -1803,7 +1946,8 @@
     "url": "https://marathon.jtbc.com",
     "note": "Major Seoul autumn marathon. Full + Half + 10K. Confirmed Nov 1, 2026.",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 130
   },
   {
     "name": "Scenic Half Marathon Krabi",
@@ -1817,7 +1961,8 @@
     "url": "https://www.scenicmarathon.com",
     "note": "AIMS certified. Limestone cliffs + Andaman Sea course. Sep 11-12, 2026.",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 12, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Sep 12, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 2027\", \"status\": \"watchlist\"}]",
+    "id": 131
   },
   {
     "name": "Ultra Trail Angkor",
@@ -1831,7 +1976,8 @@
     "url": "https://ultratrail-angkor.com",
     "note": "Confirmed Jan 23, 2027. Multiple distances 10-100km through Angkor temples.",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 23, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 23, 2027\", \"status\": \"active\"}]",
+    "id": 132
   },
   {
     "name": "Angkor Empire Marathon",
@@ -1845,7 +1991,8 @@
     "url": "https://kh.checkpointspot.asia/event/aem2026",
     "note": "Royal Angkor Resort venue. Full, Half, 10km + Fun Run. Confirmed Aug 1-2, 2026.",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 1, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Aug 1, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"watchlist\"}]",
+    "id": 133
   },
   {
     "name": "Oceanman Krabi",
@@ -1859,7 +2006,8 @@
     "url": "https://worldsmarathons.com/marathon/oceanman-krabi",
     "note": "Open water ocean swim. Multiple distances. Confirmed Mar 28-29, 2026.",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 28, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Mar 28, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 2027\", \"status\": \"watchlist\"}]",
+    "id": 134
   },
   {
     "name": "Ironman New Zealand",
@@ -1873,7 +2021,8 @@
     "url": "https://www.ironman.com/races/im-new-zealand",
     "note": "Confirmed Mar 6, 2027 at Lake Taupō. 3.8km swim + 180km bike + 42.2km run.",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 7, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Mar 7, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 2027\", \"status\": \"watchlist\"}]",
+    "id": 135
   },
   {
     "name": "Ironman 70.3 New Zealand",
@@ -1887,7 +2036,8 @@
     "url": "https://www.ironman.com/races/im703-new-zealand",
     "note": "Confirmed Mar 6, 2027 at Lake Taupō. Runs same weekend as full Ironman NZ.",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 7, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Mar 7, 2026\", \"status\": \"active\"}, {\"date\": \"Mar 2027\", \"status\": \"watchlist\"}]",
+    "id": 136
   },
   {
     "name": "Tarawera Ultra-Trail by UTMB",
@@ -1901,7 +2051,8 @@
     "url": "https://utmb.world",
     "note": "UTMB World Series. Feb 13-15, 2027. Rotorua lakefront. Multi-distance trail.",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 13, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 13, 2027\", \"status\": \"active\"}]",
+    "id": 137
   },
   {
     "name": "Runaway Auckland Marathon",
@@ -1915,7 +2066,8 @@
     "url": "https://www.aucklandmarathon.co.nz",
     "note": "Confirmed Nov 1, 2026. Devonport to Victoria Park. Major NZ marathon.",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 138
   },
   {
     "name": "Queenstown Marathon",
@@ -1929,7 +2081,8 @@
     "url": "https://www.queenstown-marathon.co.nz",
     "note": "Confirmed Nov 14, 2026. Iconic course through Central Otago wine country.",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 14, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 14, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 139
   },
   {
     "name": "Motatapu Trail Race",
@@ -1943,7 +2096,8 @@
     "url": "https://www.motatapu.com",
     "note": "Confirmed Mar 6, 2027. Point-to-point trail through high country station.",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 6, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 6, 2027\", \"status\": \"active\"}]",
+    "id": 140
   },
   {
     "name": "Challenge Wanaka Half Triathlon",
@@ -1957,7 +2111,8 @@
     "url": "https://www.challengewanaka.com",
     "note": "Confirmed Feb 20, 2027. Half-distance triathlon in scenic Wanaka.",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 20, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 20, 2027\", \"status\": \"active\"}]",
+    "id": 141
   },
   {
     "name": "Vietnam Highlands Trail by UTMB",
@@ -1971,7 +2126,8 @@
     "url": "https://vietnamhighlands.utmb.world",
     "note": "Confirmed Jan 8-10, 2027. New UTMB World Series debut. Da Lat highlands — 4 peaks.",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 8, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 8, 2027\", \"status\": \"active\"}]",
+    "id": 142
   },
   {
     "name": "Amazean Jungle Thailand by UTMB",
@@ -1985,7 +2141,8 @@
     "url": "https://utmb.world",
     "note": "UTMB World Series. Feb 2027 (exact date TBC). Jungle trail race in southernmost Thailand.",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 30, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 30, 2026\", \"status\": \"active\"}]",
+    "id": 143
   },
   {
     "name": "Xtrail Kenting by UTMB",
@@ -1999,7 +2156,8 @@
     "url": "https://xtrail.utmb.world",
     "note": "Confirmed Mar 6-7, 2027. Hengchun Peninsula. 100K, 50K, 25K, 10K distances.",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 6, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 6, 2026\", \"status\": \"active\"}]",
+    "id": 144
   },
   {
     "name": "Hoka Chiang Mai by UTMB",
@@ -2013,7 +2171,8 @@
     "url": "https://utmb.world",
     "note": "UTMB World Series Asia-Pacific Major. Nov 27–Dec 6, 2026. Confirmed.",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 27, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 27, 2026\", \"status\": \"active\"}]",
+    "id": 145
   },
   {
     "name": "Xiamen Marathon",
@@ -2027,7 +2186,8 @@
     "url": "https://marathontours.com/en-us/events/xiamen-marathon/",
     "note": "Major Chinese marathon. 2026 was Jan 11. Predicted Jan 2027. Exact date TBC.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jan 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jan 2027\", \"status\": \"watchlist\"}]",
+    "id": 146
   },
   {
     "name": "Chongqing Marathon",
@@ -2041,7 +2201,8 @@
     "url": "https://www.finishers.com",
     "note": "Predicted Jan 2027 from 2026 pattern. Exact date TBC.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jan 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jan 2027\", \"status\": \"watchlist\"}]",
+    "id": 147
   },
   {
     "name": "Wuhan Marathon",
@@ -2055,7 +2216,8 @@
     "url": "https://www.finishers.com",
     "note": "Confirmed Mar 2027 on finishers.com China calendar. Exact date TBC.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Mar 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Mar 2027\", \"status\": \"watchlist\"}]",
+    "id": 148
   },
   {
     "name": "Great Wall of China Marathon",
@@ -2069,7 +2231,8 @@
     "url": "https://worldsmarathons.com/marathon/great-wall-of-china-marathon",
     "note": "Confirmed May 1, 2027. Iconic race over 5,164 steps of the Great Wall.",
     "status": "active",
-    "dates": "[{\"date\": \"May 1, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 1, 2027\", \"status\": \"active\"}]",
+    "id": 149
   },
   {
     "name": "Qingdao Marathon",
@@ -2083,7 +2246,8 @@
     "url": "https://www.finishers.com",
     "note": "Predicted Apr 2027 from prior year pattern. Coastal city marathon. Exact date TBC.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Apr 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Apr 2027\", \"status\": \"watchlist\"}]",
+    "id": 150
   },
   {
     "name": "Hangzhou International Marathon",
@@ -2097,7 +2261,8 @@
     "url": "https://www.finishers.com",
     "note": "Historic Nov race, running since 1987. Predicted Nov 2027. Exact date TBC.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 151
   },
   {
     "name": "Jeju International Marathon",
@@ -2111,7 +2276,8 @@
     "url": "https://www.jejumarathon.com",
     "note": "Annual Jeju tourism marathon. 2026 was Jun 7. Predicted Jun 2027. Exact date TBC.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]",
+    "id": 152
   },
   {
     "name": "Techcombank Hanoi International Marathon",
@@ -2125,7 +2291,8 @@
     "url": "https://www.hanoiinternationalmarathon.com",
     "note": "Major Hanoi marathon. 2026 was Oct 3-4. Predicted Oct 2027. Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}, {\"date\": \"Oct 2027\", \"status\": \"watchlist\"}]",
+    "id": 153
   },
   {
     "name": "Vietnam Trail Marathon",
@@ -2139,7 +2306,8 @@
     "url": "https://www.asiatrailmaster.com",
     "note": "Asia Trail Master Series. Confirmed Jan 16, 2027.",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 31, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 16, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 31, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 16, 2027\", \"status\": \"active\"}]",
+    "id": 154
   },
   {
     "name": "Chiang Mai Sri Lanna Triathlon",
@@ -2153,7 +2321,8 @@
     "url": "https://www.triathlon-thailand.de",
     "note": "Confirmed Jan 13-17, 2027. Lake triathlon in Chiang Mai.",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 13, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 13, 2027\", \"status\": \"active\"}]",
+    "id": 155
   },
   {
     "name": "Dalian International Marathon",
@@ -2167,7 +2336,8 @@
     "url": "https://www.finishers.com",
     "note": "Major Chinese coastal marathon, running since 1987. Predicted Apr 2027. Exact date TBC.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Apr 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Apr 2027\", \"status\": \"watchlist\"}]",
+    "id": 156
   },
   {
     "name": "Ironman 70.3 Desaru Coast",
@@ -2181,7 +2351,8 @@
     "url": "https://www.ironman.com/races/im703-desaru-coast",
     "note": "Predicted May 2027 from 2026 (May 25). Ironman 70.3 at luxury resort in Johor.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"May 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"May 2027\", \"status\": \"watchlist\"}]",
+    "id": 157
   },
   {
     "name": "Malaysia Ultra-Trail by UTMB",
@@ -2195,7 +2366,8 @@
     "url": "https://utmb.world",
     "note": "UTMB World Series. Predicted Sep 2027 from 2026 (Sep 11-13). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 11, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Sep 11, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 2027\", \"status\": \"watchlist\"}]",
+    "id": 158
   },
   {
     "name": "Ironman Philippines Subic Bay",
@@ -2209,7 +2381,8 @@
     "url": "https://www.ironman.com/races/im-philippines",
     "note": "Predicted Jun 2027 from 2026 (Jun 7, Subic Bay). Exact date TBC.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]",
+    "id": 159
   },
   {
     "name": "Ironman 70.3 Subic Bay Philippines",
@@ -2223,7 +2396,8 @@
     "url": "https://www.ironman.com/races/im703-subic-bay-philippines",
     "note": "Predicted Jun 2027. Runs same weekend as full Ironman Subic Bay.",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]",
+    "id": 160
   },
   {
     "name": "Ironman Langkawi",
@@ -2237,7 +2411,8 @@
     "url": "https://www.ironman.com",
     "note": "Full Ironman Langkawi, Malaysia. Confirmed Nov 21, 2026.",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 161
   },
   {
     "name": "Ironman 70.3 Phu Quoc",
@@ -2251,7 +2426,8 @@
     "url": "https://www.ironman.com/races/im703-phu-quoc",
     "note": "Predicted Nov 2027. Ironman 70.3 on Phu Quoc island, Vietnam.",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 15, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 15, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 162
   },
   {
     "name": "Hyrox Auckland",
@@ -2265,7 +2441,8 @@
     "url": "https://hyrox.com",
     "note": "Confirmed Jan 29–Feb 1, 2027. BYD HYROX Auckland.",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 29, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 29, 2027\", \"status\": \"active\"}]",
+    "id": 163
   },
   {
     "name": "Hyrox Incheon",
@@ -2279,7 +2456,8 @@
     "url": "https://hyrox.com",
     "note": "Confirmed May 15-17, 2026 Incheon. AirAsia HYROX Incheon.",
     "status": "active",
-    "dates": "[{\"date\": \"May 15, 2026\", \"status\": \"active\"}, {\"date\": \"May 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"May 15, 2026\", \"status\": \"active\"}, {\"date\": \"May 2027\", \"status\": \"watchlist\"}]",
+    "id": 164
   },
   {
     "name": "Hyrox Wuhan",
@@ -2293,7 +2471,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "Confirmed Apr 11, 2026, Wuhan China. freeleticsgoals.com schedule.",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 11, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 11, 2026\", \"status\": \"active\"}]",
+    "id": 165
   },
   {
     "name": "Hyrox Hong Kong",
@@ -2307,7 +2486,8 @@
     "url": "https://hyrox.com",
     "note": "Predicted May 2027 from 2026 (May 8-10). Separate from World Champs Jun 10-13.",
     "status": "active",
-    "dates": "[{\"date\": \"May 8, 2026\", \"status\": \"active\"}, {\"date\": \"May 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"May 8, 2026\", \"status\": \"active\"}, {\"date\": \"May 2027\", \"status\": \"watchlist\"}]",
+    "id": 166
   },
   {
     "name": "Hyrox Taipei",
@@ -2321,7 +2501,8 @@
     "url": "https://hyrox.com",
     "note": "Predicted Feb 2027 from 2026 (Feb 28–Mar 1). Exact date TBC.",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 28, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 28, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 2027\", \"status\": \"watchlist\"}]",
+    "id": 167
   },
   {
     "name": "Ironman 70.3 Kenting Taiwan",
@@ -2335,7 +2516,8 @@
     "url": "https://www.ironman.com",
     "note": "Confirmed Oct 6, 2026. Tropical southern Taiwan triathlon.",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}]",
+    "id": 168
   },
   {
     "name": "EAA Tri Challenge",
@@ -2349,7 +2531,8 @@
     "url": "https://www.nextlap.in/triathlon-calendar",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 2027\", \"status\": \"active\"}]",
+    "id": 169
   },
   {
     "name": "Lantau 50",
@@ -2363,7 +2546,8 @@
     "url": "https://actionasiaevents.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 9, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 9, 2027\", \"status\": \"active\"}]",
+    "id": 170
   },
   {
     "name": "The Jumping Gorilla Mountain Trail",
@@ -2377,7 +2561,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 2027\", \"status\": \"active\"}]",
+    "id": 171
   },
   {
     "name": "Full Ironman Dharoi",
@@ -2391,7 +2576,8 @@
     "url": "https://www.ironman.com/races",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]",
+    "id": 172
   },
   {
     "name": "Ironman 70.3 Colombo",
@@ -2405,7 +2591,8 @@
     "url": "https://english.newsfirst.lk/2026/02/12/ironman-70-3-returns-to-colombo-after-six-years-over-1-000-athletes-set-to-compete",
     "note": "Returned Feb 2026 after 6-yr gap",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 22, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 22, 2026\", \"status\": \"active\"}, {\"date\": \"Feb 2027\", \"status\": \"watchlist\"}]",
+    "id": 173
   },
   {
     "name": "HK50 West",
@@ -2419,7 +2606,8 @@
     "url": "https://actionasiaevents.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 20, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 20, 2027\", \"status\": \"active\"}]",
+    "id": 174
   },
   {
     "name": "AU Jaipur Marathon",
@@ -2433,7 +2621,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]",
+    "id": 175
   },
   {
     "name": "Bodh Gaya Marathon",
@@ -2447,7 +2636,8 @@
     "url": "https://aims-worldrunning.org/countries/3.html",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 14, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 14, 2027\", \"status\": \"active\"}]",
+    "id": 176
   },
   {
     "name": "New Delhi Marathon",
@@ -2461,7 +2651,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]",
+    "id": 177
   },
   {
     "name": "Goa Marathon",
@@ -2475,7 +2666,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]",
+    "id": 178
   },
   {
     "name": "Indore Marathon",
@@ -2489,7 +2681,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]",
+    "id": 179
   },
   {
     "name": "Deccan Ultra",
@@ -2503,7 +2696,8 @@
     "url": "https://www.finishers.com/course/deccan-ultra",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 2027\", \"status\": \"active\"}]",
+    "id": 180
   },
   {
     "name": "Bhatti Lakes Ultra",
@@ -2517,7 +2711,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 2027\", \"status\": \"active\"}]",
+    "id": 181
   },
   {
     "name": "Goa Sea Pride / OWAAF Nationals",
@@ -2531,7 +2726,8 @@
     "url": "https://dailynewsofopenwaterswimming.com/owaaf-announces-2026-national-sea-swimming-championship-in-india/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 2027\", \"status\": \"active\"}]",
+    "id": 182
   },
   {
     "name": "Ngorn Nak Trail Krabi",
@@ -2545,7 +2741,8 @@
     "url": "https://www.amari.com/vogue/happenings",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 2027\", \"status\": \"active\"}]",
+    "id": 183
   },
   {
     "name": "Andaman Trail Krabi",
@@ -2559,7 +2756,8 @@
     "url": "https://www.runlah.com/en/calendar/location?province=Krabi",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 19, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 19, 2027\", \"status\": \"active\"}]",
+    "id": 184
   },
   {
     "name": "World 10K Bengaluru",
@@ -2573,7 +2771,8 @@
     "url": "https://tcsworld10k.procam.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 2027\", \"status\": \"active\"}]",
+    "id": 185
   },
   {
     "name": "The Ultra Beast Pokharan",
@@ -2587,7 +2786,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 2027\", \"status\": \"active\"}]",
+    "id": 186
   },
   {
     "name": "Bali Hope Ultra + SwimRun",
@@ -2601,7 +2801,8 @@
     "url": "https://www.balihope.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 19\\–25, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 19\\–25, 2027\", \"status\": \"active\"}]",
+    "id": 187
   },
   {
     "name": "Ironman 70.3 Da Nang",
@@ -2615,7 +2816,8 @@
     "url": "https://www.ironman.com/im703-asia",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 2027\", \"status\": \"active\"}]",
+    "id": 188
   },
   {
     "name": "Munnar Mountain Trail",
@@ -2629,7 +2831,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 2027\", \"status\": \"active\"}]",
+    "id": 189
   },
   {
     "name": "OSIM Sundown Marathon",
@@ -2643,7 +2846,8 @@
     "url": "https://www.gotorace.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"active\"}]",
+    "id": 190
   },
   {
     "name": "Surya Spiti Marathon",
@@ -2657,7 +2861,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"active\"}]",
+    "id": 191
   },
   {
     "name": "Ironman 70.3 Subic Bay",
@@ -2671,7 +2876,8 @@
     "url": "https://www.ironman.com/im703-asia",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 2027\", \"status\": \"active\"}]",
+    "id": 192
   },
   {
     "name": "Sinhagad Epic Trail",
@@ -2685,7 +2891,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 1, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 1, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"active\"}]",
+    "id": 193
   },
   {
     "name": "Foot Orienteering",
@@ -2699,7 +2906,8 @@
     "url": "https://www.nthadventure.com/events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 2027\", \"status\": \"active\"}]",
+    "id": 194
   },
   {
     "name": "Kayak Orienteering",
@@ -2713,7 +2921,8 @@
     "url": "https://www.nthadventure.com/events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 2027\", \"status\": \"active\"}]",
+    "id": 195
   },
   {
     "name": "Hyrox Chiba",
@@ -2727,7 +2936,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 7\\–9, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 7\\–9, 2027\", \"status\": \"active\"}]",
+    "id": 196
   },
   {
     "name": "Maybank Marathon Bali",
@@ -2741,7 +2951,8 @@
     "url": "https://bodyandsoulinternational.com/activities/3252-maybank-marathon-2027",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 23, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 23, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"active\"}]",
+    "id": 197
   },
   {
     "name": "Sanur Bali International HM",
@@ -2755,7 +2966,8 @@
     "url": "https://www.instagram.com/sanurhalfmarathon/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 2027\", \"status\": \"active\"}]",
+    "id": 198
   },
   {
     "name": "Maldives Half Marathon",
@@ -2769,7 +2981,8 @@
     "url": "https://www.maldivesmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 14, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 14, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 2027\", \"status\": \"active\"}]",
+    "id": 199
   },
   {
     "name": "Ironman 70.3 Lapu-Lapu",
@@ -2783,7 +2996,8 @@
     "url": "https://www.ironman.com/im703-asia",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 2027\", \"status\": \"active\"}]",
+    "id": 200
   },
   {
     "name": "Ladakh Marathon and Ultra",
@@ -2797,7 +3011,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 2027\", \"status\": \"active\"}]",
+    "id": 201
   },
   {
     "name": "Bali Mountain Marathon",
@@ -2811,7 +3026,8 @@
     "url": "https://itra.run/Races/RaceDetails/108167",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep/Oct 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep/Oct 2027\", \"status\": \"active\"}]",
+    "id": 202
   },
   {
     "name": "Oceanman Goa",
@@ -2825,7 +3041,8 @@
     "url": "https://oceanmanswim.com/goa/",
     "note": "⚠️ Oct 2025 stopped mid-race by authorities — verify 2027 permissions",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Oct 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Oct 2027\", \"status\": \"watchlist\"}]",
+    "id": 203
   },
   {
     "name": "Oceanman Malaysia",
@@ -2839,7 +3056,8 @@
     "url": "https://oceanmanswim.com/",
     "note": "Oceanman open water swim series event in Kota Kinabalu, Malaysia.",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 2027\", \"status\": \"active\"}]",
+    "id": 204
   },
   {
     "name": "Amazing Thailand Marathon BKK",
@@ -2853,7 +3071,8 @@
     "url": "https://www.gotorace.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 2027\", \"status\": \"active\"}]",
+    "id": 205
   },
   {
     "name": "Khao Yai Marathon",
@@ -2867,7 +3086,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/thailand",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 9\\–10, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 9\\–10, 2027\", \"status\": \"active\"}]",
+    "id": 206
   },
   {
     "name": "Buriram Marathon",
@@ -2881,7 +3101,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/thailand",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 24, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 23, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 24, 2026\", \"status\": \"active\"}, {\"date\": \"Jan 23, 2027\", \"status\": \"active\"}]",
+    "id": 207
   },
   {
     "name": "Trail des Orchidées",
@@ -2895,7 +3116,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/thailand",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]",
+    "id": 208
   },
   {
     "name": "Ironman 70.3 Bangsaen",
@@ -2909,7 +3131,8 @@
     "url": "https://www.ironman.com/races/im703-bangsaen",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]",
+    "id": 209
   },
   {
     "name": "Tak Trail Series",
@@ -2923,7 +3146,8 @@
     "url": "https://taktrailseriesthailand.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]",
+    "id": 210
   },
   {
     "name": "Ironman Malaysia",
@@ -2937,7 +3161,8 @@
     "url": "https://www.ironman.com/races",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 2027\", \"status\": \"active\"}]",
+    "id": 211
   },
   {
     "name": "Ironman 70.3 Langkawi",
@@ -2951,7 +3176,8 @@
     "url": "https://www.ironman.com/im703-asia",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 2027\", \"status\": \"watchlist\"}]",
+    "id": 212
   },
   {
     "name": "Nepal Action Asia 3-Day Ultra",
@@ -2965,7 +3191,8 @@
     "url": "https://actionasiaevents.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 2027\", \"status\": \"active\"}]",
+    "id": 213
   },
   {
     "name": "Sindhudurg Ocean Swimathon",
@@ -2979,7 +3206,8 @@
     "url": "https://sindhudurg-swimathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 2027\", \"status\": \"active\"}]",
+    "id": 214
   },
   {
     "name": "SKF Goa River Marathon",
@@ -2993,7 +3221,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 2027\", \"status\": \"active\"}]",
+    "id": 215
   },
   {
     "name": "Oceanman Phuket",
@@ -3007,7 +3236,8 @@
     "url": "https://oceanmanswim.com/",
     "note": "Oceanman open water swim series event in Phuket, Thailand.",
     "status": "active",
-    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]",
+    "id": 216
   },
   {
     "name": "Oceanman Kota Kinabalu",
@@ -3021,7 +3251,8 @@
     "url": "https://oceanmanswim.com/",
     "note": "Oceanman open water swim series event in Sabah, Malaysia.",
     "status": "active",
-    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]",
+    "id": 217
   },
   {
     "name": "Porbandar Swimathon",
@@ -3035,7 +3266,8 @@
     "url": "https://www.nextlap.in/event/oceanman-goa-goa-2025-2",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]",
+    "id": 218
   },
   {
     "name": "All India Sea Swimming",
@@ -3049,7 +3281,8 @@
     "url": "https://www.openwaterpedia.com/wiki/All_India_Sea_Swimming_Competition",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]",
+    "id": 219
   },
   {
     "name": "Running City Challenge",
@@ -3063,7 +3296,8 @@
     "url": "https://www.adventureasiahk.com/running-city",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]",
+    "id": 220
   },
   {
     "name": "Asian Relays Championships",
@@ -3077,7 +3311,8 @@
     "url": "https://www.olympics.com/en/news/asian-relays-2027-indoor-championships-2028-athletics-hosts-india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"TBC 2027\", \"status\": \"watchlist\"}]",
+    "id": 221
   },
   {
     "name": "Ironman 70.3 Vietnam",
@@ -3091,7 +3326,8 @@
     "url": "https://www.ironman.com/races/im-vietnam",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 2027 (TBC)\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"May 2027 (TBC)\", \"status\": \"watchlist\"}]",
+    "id": 222
   },
   {
     "name": "Ironman 70.3 Cebu",
@@ -3105,7 +3341,8 @@
     "url": "https://www.ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]",
+    "id": 223
   },
   {
     "name": "Ironman 70.3 Langkawi Asia Pac Champs",
@@ -3119,7 +3356,8 @@
     "url": "https://www.ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]",
+    "id": 224
   },
   {
     "name": "Ironman 70.3 Goseong",
@@ -3133,7 +3371,8 @@
     "url": "https://www.ironman.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]",
+    "id": 225
   },
   {
     "name": "Ironman 70.3 Hengqin",
@@ -3147,7 +3386,8 @@
     "url": "https://www.instagram.com/ironmanasia/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 15, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 15, 2026\", \"status\": \"active\"}]",
+    "id": 226
   },
   {
     "name": "Ironman India Full",
@@ -3161,7 +3401,8 @@
     "url": "https://timesofindia.indiatimes.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027 (TBC)\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 2027 (TBC)\", \"status\": \"watchlist\"}]",
+    "id": 227
   },
   {
     "name": "Halong Bay Heritage Marathon",
@@ -3175,7 +3416,8 @@
     "url": "https://www.runfuntravel.com/events.php?c=2&cn=Asia",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}]",
+    "id": 228
   },
   {
     "name": "Dieng Caldera Race",
@@ -3189,7 +3431,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 19\\–21, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 19\\–21, 2026\", \"status\": \"active\"}]",
+    "id": 229
   },
   {
     "name": "Gede Pangrango Ultra Marathon",
@@ -3203,7 +3446,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 20, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 20, 2026\", \"status\": \"active\"}]",
+    "id": 230
   },
   {
     "name": "Kebumen Geopark Trail Run",
@@ -3217,7 +3461,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 28, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 28, 2026\", \"status\": \"active\"}]",
+    "id": 231
   },
   {
     "name": "Sentul Gede Pangrango 100",
@@ -3231,7 +3476,8 @@
     "url": "https://schedules.run/event/sentul-ultra-triathlon-2026",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 4\\–5, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 4\\–5, 2026\", \"status\": \"active\"}]",
+    "id": 232
   },
   {
     "name": "Ala Ala Trail",
@@ -3245,7 +3491,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 18, 2026\", \"status\": \"active\"}]",
+    "id": 233
   },
   {
     "name": "Siksorogo Ring of Lawu",
@@ -3259,7 +3506,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 25\\–26, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 25\\–26, 2026\", \"status\": \"active\"}]",
+    "id": 234
   },
   {
     "name": "Merapi Merbabu de Trail",
@@ -3273,7 +3521,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 1\\–2, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 1\\–2, 2026\", \"status\": \"active\"}]",
+    "id": 235
   },
   {
     "name": "Bandung 100",
@@ -3287,7 +3536,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 28\\–30, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 28\\–30, 2026\", \"status\": \"active\"}]",
+    "id": 236
   },
   {
     "name": "Merbabu Sky Run",
@@ -3301,7 +3551,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 5\\–6, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 5\\–6, 2026\", \"status\": \"active\"}]",
+    "id": 237
   },
   {
     "name": "GTR Ultra",
@@ -3315,7 +3566,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 26, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 26, 2026\", \"status\": \"active\"}]",
+    "id": 238
   },
   {
     "name": "UGM Trail Run",
@@ -3329,7 +3581,8 @@
     "url": "https://indonesiamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 26\\–27, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 26\\–27, 2026\", \"status\": \"active\"}]",
+    "id": 239
   },
   {
     "name": "Phnom Penh International Half Marathon",
@@ -3343,7 +3596,8 @@
     "url": "https://www.cambodia-events.org/kh/blog/phnom-penh-international-half-marathon",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}]",
+    "id": 240
   },
   {
     "name": "2026 World Triathlon Championship Series Samarkand",
@@ -3357,7 +3611,8 @@
     "url": "https://events.triathlon.org/2026-wtcs-samarkand/start-lists",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 25, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 25, 2026\", \"status\": \"active\"}]",
+    "id": 241
   },
   {
     "name": "Bukhara Night Race",
@@ -3371,7 +3626,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/uzbekistan",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 18, 2026\", \"status\": \"active\"}]",
+    "id": 242
   },
   {
     "name": "Silk Roads Trail",
@@ -3385,7 +3641,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/uzbekistan",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 28-Jun 6, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 28-Jun 6, 2026\", \"status\": \"active\"}]",
+    "id": 243
   },
   {
     "name": "Sky Camp Bo",
@@ -3399,7 +3656,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/uzbekistan",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 22, 2026\", \"status\": \"active\"}]",
+    "id": 244
   },
   {
     "name": "Samarkand Marathon",
@@ -3413,7 +3671,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/uzbekistan",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 8, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 8, 2026\", \"status\": \"active\"}]",
+    "id": 245
   },
   {
     "name": "Okinawa Marathon",
@@ -3427,7 +3686,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/japan/okinawa",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027 (TBC)\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Feb 2027 (TBC)\", \"status\": \"watchlist\"}]",
+    "id": 246
   },
   {
     "name": "Wellington Marathon",
@@ -3441,7 +3701,8 @@
     "url": "https://www.finishers.com/en/destinations/oceania/new-zealand",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 28, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 28, 2026\", \"status\": \"active\"}]",
+    "id": 247
   },
   {
     "name": "ASB Auckland Marathon",
@@ -3455,7 +3716,8 @@
     "url": "https://www.finishers.com/en/destinations/oceania/new-zealand",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 1, 2026\", \"status\": \"active\"}]",
+    "id": 248
   },
   {
     "name": "Kepler Challenge",
@@ -3469,7 +3731,8 @@
     "url": "https://www.finishers.com/en/destinations/oceania/new-zealand",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 2026 (early)\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 2026 (early)\", \"status\": \"active\"}]",
+    "id": 249
   },
   {
     "name": "Tarawera Ultra-Trail New Zealand by UTMB",
@@ -3483,7 +3746,8 @@
     "url": "https://www.runningcalendar.co.nz/organiser/ironman/",
     "note": "UTMB World Series ultra trail race in Rotorua, New Zealand.",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 13-14, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 13-14, 2027\", \"status\": \"active\"}]",
+    "id": 250
   },
   {
     "name": "Old Ghost Ultra",
@@ -3497,7 +3761,8 @@
     "url": "https://www.finishers.com/en/destinations/oceania/new-zealand",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 2027\", \"status\": \"active\"}]",
+    "id": 251
   },
   {
     "name": "Rotorua Marathon",
@@ -3511,7 +3776,8 @@
     "url": "https://www.finishers.com/en/destinations/oceania/new-zealand",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 2027\", \"status\": \"active\"}]",
+    "id": 252
   },
   {
     "name": "ASICS Runaway Hawke",
@@ -3525,7 +3791,8 @@
     "url": "https://www.runningcalendar.co.nz/organiser/ironman/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 15, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 15, 2027\", \"status\": \"active\"}]",
+    "id": 253
   },
   {
     "name": "Stroke & Stride Series #4",
@@ -3539,7 +3806,8 @@
     "url": "http://swimrun.org/race-information",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 14, 2026\", \"status\": \"active\"}]",
+    "id": 254
   },
   {
     "name": "Stroke & Stride Series #5",
@@ -3553,7 +3821,8 @@
     "url": "http://swimrun.org/race-information",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 28, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 28, 2026\", \"status\": \"active\"}]",
+    "id": 255
   },
   {
     "name": "Stroke & Stride Series #6",
@@ -3567,7 +3836,8 @@
     "url": "http://swimrun.org/race-information",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 18, 2026\", \"status\": \"active\"}]",
+    "id": 256
   },
   {
     "name": "Stroke & Stride Series #7",
@@ -3581,7 +3851,8 @@
     "url": "http://swimrun.org/race-information",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 4, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 4, 2026\", \"status\": \"active\"}]",
+    "id": 257
   },
   {
     "name": "Stroke & Stride Series #8",
@@ -3595,7 +3866,8 @@
     "url": "http://swimrun.org/race-information",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 18, 2026\", \"status\": \"active\"}]",
+    "id": 258
   },
   {
     "name": "Auckland Coastline Challenge",
@@ -3609,7 +3881,8 @@
     "url": "https://amphibianswimrun.co.nz/pages/auckland-urban-amphibian",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 31, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 31, 2026\", \"status\": \"active\"}]",
+    "id": 259
   },
   {
     "name": "Bay of Islands Amphibian",
@@ -3623,7 +3896,8 @@
     "url": "https://amphibianswimrun.co.nz/pages/bay-of-islands-amphibian",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"2027 (TBC)\", \"status\": \"watchlist\"}]",
+    "id": 260
   },
   {
     "name": "Hieizan International Trail Run",
@@ -3637,7 +3911,8 @@
     "url": "https://jtbsports.jp/en/list.php",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 9, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 9, 2026\", \"status\": \"active\"}]",
+    "id": 261
   },
   {
     "name": "Lake Biwa Takashima Trail Run Race FAIRY TRAIL",
@@ -3651,7 +3926,8 @@
     "url": "https://jtbsports.jp/en/list.php",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 13, 2026\", \"status\": \"active\"}]",
+    "id": 262
   },
   {
     "name": "Tokyo Grand Trail 250K",
@@ -3665,7 +3941,8 @@
     "url": "https://statistik.d-u-v.org/calendar.php?type=future&dist=Trail&mode=list&Language=EN&language=ES",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 21-24, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 21-24, 2026\", \"status\": \"active\"}]",
+    "id": 263
   },
   {
     "name": "Tokyo Grand Trail 200K",
@@ -3679,7 +3956,8 @@
     "url": "https://statistik.d-u-v.org/calendar.php?type=future&dist=Trail&mode=list&Language=EN&language=ES",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 22-24, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 22-24, 2026\", \"status\": \"active\"}]",
+    "id": 264
   },
   {
     "name": "Deep Japan Ultra",
@@ -3693,7 +3971,8 @@
     "url": "http://www.asiatrailmaster.com/news/2025/11/17/deep-japan-ultra",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 26-28, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 26-28, 2026\", \"status\": \"active\"}]",
+    "id": 265
   },
   {
     "name": "Kaga Spa Trail Endurance 100 by UTMB",
@@ -3707,7 +3986,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "UTMB World Series ultra trail race in Yamanaka Onsen, Ishikawa, Japan.",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 20, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 20, 2026\", \"status\": \"active\"}]",
+    "id": 266
   },
   {
     "name": "Kaga Spa by UTMB 50K",
@@ -3721,7 +4001,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "UTMB World Series ultra trail race in Yamanaka Onsen, Ishikawa, Japan.",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 20, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 20, 2026\", \"status\": \"active\"}]",
+    "id": 267
   },
   {
     "name": "Kaga Spa by UTMB KAGASPA 20K",
@@ -3735,7 +4016,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "UTMB World Series ultra trail race in Kenmin no Mori, Japan, Japan.",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 20, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 20, 2026\", \"status\": \"active\"}]",
+    "id": 268
   },
   {
     "name": "Ehime Marathon",
@@ -3749,7 +4031,8 @@
     "url": "https://aims-worldrunning.org/countries/51.html",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 7, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 7, 2027\", \"status\": \"active\"}]",
+    "id": 269
   },
   {
     "name": "Ohme-Hochi 30km Road Race & 10km",
@@ -3763,7 +4046,8 @@
     "url": "https://aims-worldrunning.org/countries/51.html",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 21, 2027\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 21, 2027\", \"status\": \"active\"}]",
+    "id": 270
   },
   {
     "name": "Myoko Trail",
@@ -3777,7 +4061,8 @@
     "url": "https://goldentrailseries.com/race/myoko-trail/",
     "note": "Golden Trail Series. Suginohara Ski Resort. 1,783m elevation gain. 400 runners.",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 20, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 20, 2026\", \"status\": \"active\"}]",
+    "id": 271
   },
   {
     "name": "The 9 Dragons Ultra",
@@ -3791,7 +4076,8 @@
     "url": "https://www.the9dragons.asia/atmfinal",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 28, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 28, 2026\", \"status\": \"active\"}]",
+    "id": 272
   },
   {
     "name": "World Triathlon Cup Hong Kong",
@@ -3805,7 +4091,8 @@
     "url": "https://triathlon.org/news/the-new-world-triathlon-calendar-shaping-up-for-fireworks-in-2026",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 7-8, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 7-8, 2026\", \"status\": \"active\"}]",
+    "id": 273
   },
   {
     "name": "World Triathlon Cup Miyazaki",
@@ -3819,7 +4106,8 @@
     "url": "https://triathlon.org/news/the-new-world-triathlon-calendar-shaping-up-for-fireworks-in-2026",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 14-15, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 14-15, 2026\", \"status\": \"active\"}]",
+    "id": 274
   },
   {
     "name": "World Triathlon Cup Tauranga",
@@ -3833,7 +4121,8 @@
     "url": "https://events.triathlon.org/2026-world-triathlon-cup-tauranga",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}]",
+    "id": 275
   },
   {
     "name": "Izu Trail Journey",
@@ -3847,7 +4136,8 @@
     "url": "https://www.izutrailjourney.com/entop/course/",
     "note": "Course verified; 2026 date not yet confirmed on official page",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 14, 2025 pattern / 2026 TBC\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 14, 2025 pattern / 2026 TBC\", \"status\": \"watchlist\"}]",
+    "id": 276
   },
   {
     "name": "5150 Triathlon Chennai",
@@ -3861,7 +4151,8 @@
     "url": "https://www.ironman.com/races/5150-chennai",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 11, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 11, 2026\", \"status\": \"active\"}]",
+    "id": 277
   },
   {
     "name": "Standard Chartered Hong Kong Marathon",
@@ -3875,7 +4166,8 @@
     "url": "https://www.hkmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 18, 2026\", \"status\": \"active\"}]",
+    "id": 278
   },
   {
     "name": "Tata Mumbai Marathon",
@@ -3889,7 +4181,8 @@
     "url": "https://www.tatamumbaimarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 18, 2026\", \"status\": \"active\"}]",
+    "id": 279
   },
   {
     "name": "HCMC Marathon",
@@ -3903,7 +4196,8 @@
     "url": "https://hcmcmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jan 11, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jan 11, 2026\", \"status\": \"active\"}]",
+    "id": 280
   },
   {
     "name": "Dubai Marathon",
@@ -3917,7 +4211,8 @@
     "url": "https://www.dubaimarathon.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 1, 2026\", \"status\": \"active\"}]",
+    "id": 281
   },
   {
     "name": "Ras Al Khaimah Half Marathon",
@@ -3931,7 +4226,8 @@
     "url": "https://www.rakhalfmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 14, 2026\", \"status\": \"active\"}]",
+    "id": 282
   },
   {
     "name": "Ayala Philippine Marathon",
@@ -3945,7 +4241,8 @@
     "url": "https://www.raceroster.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 22, 2026\", \"status\": \"active\"}]",
+    "id": 283
   },
   {
     "name": "HOKA Xtrail Kenting by UTMB",
@@ -3959,7 +4256,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 6, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 6, 2026\", \"status\": \"active\"}]",
+    "id": 284
   },
   {
     "name": "War Horse Ultra-Trail Xiamen by UTMB",
@@ -3973,7 +4271,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 14, 2026\", \"status\": \"active\"}]",
+    "id": 285
   },
   {
     "name": "T100 Gold Coast (Women",
@@ -3987,7 +4286,8 @@
     "url": "https://t100triathlon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 20, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 20, 2026\", \"status\": \"active\"}]",
+    "id": 286
   },
   {
     "name": "Hyrox Bangkok",
@@ -4001,7 +4301,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 20, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 13, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 31, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Mar 20, 2026\", \"status\": \"active\"}, {\"date\": \"Aug 13, 2026\", \"status\": \"active\"}, {\"date\": \"Dec 31, 2026\", \"status\": \"watchlist\"}]",
+    "id": 287
   },
   {
     "name": "Hyrox Beijing",
@@ -4015,7 +4316,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 21, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 12, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 21, 2026\", \"status\": \"active\"}, {\"date\": \"Sep 12, 2026\", \"status\": \"active\"}]",
+    "id": 288
   },
   {
     "name": "Ironman 70.3 Geelong",
@@ -4029,7 +4331,8 @@
     "url": "https://www.ironman.com/races/im703-geelong",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 22, 2026\", \"status\": \"active\"}]",
+    "id": 289
   },
   {
     "name": "Spartan Race Pasig",
@@ -4043,7 +4346,8 @@
     "url": "https://ph.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 21, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 21, 2026\", \"status\": \"active\"}]",
+    "id": 290
   },
   {
     "name": "WTCS Abu Dhabi",
@@ -4057,7 +4361,8 @@
     "url": "https://www.triathlon.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 27, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 27, 2026\", \"status\": \"active\"}]",
+    "id": 291
   },
   {
     "name": "XTERRA Asia-Pacific Championship",
@@ -4071,7 +4376,8 @@
     "url": "https://www.xterraplanet.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 27, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 27, 2026\", \"status\": \"active\"}]",
+    "id": 292
   },
   {
     "name": "Spartan Race Beijing Trail Weekend",
@@ -4085,7 +4391,8 @@
     "url": "https://cn.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 23, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 23, 2026\", \"status\": \"active\"}]",
+    "id": 293
   },
   {
     "name": "OceanMan Maafushi Island Maldives",
@@ -4099,7 +4406,8 @@
     "url": "https://oceanmanswim.com/races/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 10, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 10, 2026\", \"status\": \"active\"}]",
+    "id": 294
   },
   {
     "name": "Ishigaki Island Triathlon",
@@ -4113,7 +4421,8 @@
     "url": "https://www.jtu.or.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 12, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 12, 2026\", \"status\": \"active\"}]",
+    "id": 295
   },
   {
     "name": "Miri Marathon",
@@ -4127,7 +4436,8 @@
     "url": "https://www.mirimarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 12, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 12, 2026\", \"status\": \"active\"}]",
+    "id": 296
   },
   {
     "name": "Spartan Race Kawasaki Kids",
@@ -4141,7 +4451,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 18, 2026\", \"status\": \"active\"}]",
+    "id": 297
   },
   {
     "name": "T100 Singapore (Men",
@@ -4155,7 +4466,8 @@
     "url": "https://t100triathlon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 25, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 25, 2026\", \"status\": \"active\"}]",
+    "id": 298
   },
   {
     "name": "Spartan Beijing National Series",
@@ -4169,7 +4481,8 @@
     "url": "https://cn.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 16, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 16, 2026\", \"status\": \"active\"}]",
+    "id": 299
   },
   {
     "name": "Spartan Beijing Kids Race",
@@ -4183,7 +4496,8 @@
     "url": "https://cn.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 1, 2026\", \"status\": \"active\"}]",
+    "id": 300
   },
   {
     "name": "Tough Mudder Pattaya",
@@ -4197,7 +4511,8 @@
     "url": "https://toughmudderthailand.com/en/events/pattaya-en/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 2, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 2, 2026\", \"status\": \"active\"}]",
+    "id": 301
   },
   {
     "name": "WTCS Yokohama",
@@ -4211,7 +4526,8 @@
     "url": "https://www.triathlon.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 16, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 16, 2026\", \"status\": \"active\"}]",
+    "id": 302
   },
   {
     "name": "Ironman 70.3 Shanghai Chongming",
@@ -4225,7 +4541,8 @@
     "url": "https://www.ironman.com/races/im703-shanghai-chongming",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 17, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 17, 2026\", \"status\": \"active\"}]",
+    "id": 303
   },
   {
     "name": "Tenzing Hillary Everest Marathon",
@@ -4239,7 +4556,8 @@
     "url": "https://www.everestmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 29, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 29, 2026\", \"status\": \"active\"}]",
+    "id": 304
   },
   {
     "name": "Spartan Race Chiba",
@@ -4253,7 +4571,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 30, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 30, 2026\", \"status\": \"active\"}]",
+    "id": 305
   },
   {
     "name": "Spartan Race Cavite",
@@ -4267,7 +4586,8 @@
     "url": "https://ph.spartan.com/en/races/cavite-event-weekend-2026",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 30, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 30, 2026\", \"status\": \"active\"}]",
+    "id": 306
   },
   {
     "name": "Philippines Airlines Manila Marathon",
@@ -4281,7 +4601,8 @@
     "url": "https://www.manilamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 31, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 31, 2026\", \"status\": \"active\"}]",
+    "id": 307
   },
   {
     "name": "OCR Community World Championships",
@@ -4295,7 +4616,8 @@
     "url": "https://www.ocrseries.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 21, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 21, 2026\", \"status\": \"active\"}]",
+    "id": 308
   },
   {
     "name": "Spartan Ivory Rock Trifecta Weekend",
@@ -4309,7 +4631,8 @@
     "url": "https://www.spartan.com/en/race/detail/10133/overview",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 23, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 23, 2026\", \"status\": \"active\"}]",
+    "id": 309
   },
   {
     "name": "Spartan Chiang Mai Weekend",
@@ -4323,7 +4646,8 @@
     "url": "https://th.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 6, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 6, 2026\", \"status\": \"active\"}]",
+    "id": 310
   },
   {
     "name": "Ironman Cairns",
@@ -4337,7 +4661,8 @@
     "url": "https://www.ironman.com/races/im-cairns",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}]",
+    "id": 311
   },
   {
     "name": "Ironman 70.3 Cairns",
@@ -4351,7 +4676,8 @@
     "url": "https://www.ironman.com/races/im703-cairns",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}]",
+    "id": 312
   },
   {
     "name": "Goto Nagasaki International Triathlon",
@@ -4365,7 +4691,8 @@
     "url": "https://www.jtu.or.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}]",
+    "id": 313
   },
   {
     "name": "Laguna Phuket Marathon",
@@ -4379,7 +4706,8 @@
     "url": "https://www.phuketmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 13, 2026\", \"status\": \"active\"}]",
+    "id": 314
   },
   {
     "name": "OceanMan Penghu",
@@ -4393,7 +4721,8 @@
     "url": "https://oceanmanswim.com/races/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 12, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 12, 2026\", \"status\": \"active\"}]",
+    "id": 315
   },
   {
     "name": "OceanMan Bali",
@@ -4407,7 +4736,8 @@
     "url": "https://oceanmanswim.com/races/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 19, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 19, 2026\", \"status\": \"active\"}]",
+    "id": 316
   },
   {
     "name": "Asian Open Water Swimming Championship",
@@ -4421,7 +4751,8 @@
     "url": "https://triworldhub.com/oceanman-calendar/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 13, 2026\", \"status\": \"active\"}]",
+    "id": 317
   },
   {
     "name": "BTN Jakarta International Marathon",
@@ -4435,7 +4766,8 @@
     "url": "https://jakim.id",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 14, 2026\", \"status\": \"active\"}, {\"date\": \"Jun 2027\", \"status\": \"watchlist\"}]",
+    "id": 318
   },
   {
     "name": "Ironman 70.3 Higashimikawa Japan",
@@ -4449,7 +4781,8 @@
     "url": "https://www.ironman.com/races",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jun 1, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 1, 2026\", \"status\": \"watchlist\"}]",
+    "id": 319
   },
   {
     "name": "Gold Coast Marathon",
@@ -4463,7 +4796,8 @@
     "url": "https://www.goldcoastmarathon.com.au",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 4, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 4, 2026\", \"status\": \"active\"}]",
+    "id": 320
   },
   {
     "name": "Hyrox Sydney",
@@ -4477,7 +4811,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 1, 2026\", \"status\": \"active\"}]",
+    "id": 321
   },
   {
     "name": "Spartan Singapore Sprint",
@@ -4491,7 +4826,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 1, 2026\", \"status\": \"active\"}]",
+    "id": 322
   },
   {
     "name": "Spartan Race Mt. Fuji Susono",
@@ -4505,7 +4841,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 25, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 25, 2026\", \"status\": \"active\"}]",
+    "id": 323
   },
   {
     "name": "Spartan Pattaya Trifecta Weekend",
@@ -4519,7 +4856,8 @@
     "url": "https://th.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 1, 2026\", \"status\": \"active\"}]",
+    "id": 324
   },
   {
     "name": "Spartan Chongli Trail Weekend",
@@ -4533,7 +4871,8 @@
     "url": "https://cn.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 7, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 7, 2026\", \"status\": \"active\"}]",
+    "id": 325
   },
   {
     "name": "Spartan Melbourne Trifecta Weekend",
@@ -4547,7 +4886,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 8, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 8, 2026\", \"status\": \"active\"}]",
+    "id": 326
   },
   {
     "name": "Spartan APAC Championship Chongli",
@@ -4561,7 +4901,8 @@
     "url": "https://www.spartan.com/en/race/detail/10133/overview",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 15, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 15, 2026\", \"status\": \"active\"}]",
+    "id": 327
   },
   {
     "name": "Hyrox Perth",
@@ -4575,7 +4916,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 21, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 21, 2026\", \"status\": \"active\"}]",
+    "id": 328
   },
   {
     "name": "TCS Sydney Marathon",
@@ -4589,7 +4931,8 @@
     "url": "https://www.sydneymarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 30, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 30, 2026\", \"status\": \"active\"}]",
+    "id": 329
   },
   {
     "name": "WTCS Weihai",
@@ -4603,7 +4946,8 @@
     "url": "https://www.triathlon.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 29, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 29, 2026\", \"status\": \"active\"}]",
+    "id": 330
   },
   {
     "name": "TMBT Ultra Trail Marathon",
@@ -4617,7 +4961,8 @@
     "url": "https://www.borneoultra.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 29, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 29, 2026\", \"status\": \"active\"}]",
+    "id": 331
   },
   {
     "name": "Spartan Race Niigata",
@@ -4631,7 +4976,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 19, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 19, 2026\", \"status\": \"active\"}]",
+    "id": 332
   },
   {
     "name": "Ironman Japan South Hokkaido",
@@ -4645,7 +4991,8 @@
     "url": "https://www.ironman.com/races/ironman-japan",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 13, 2026\", \"status\": \"active\"}]",
+    "id": 333
   },
   {
     "name": "Ironman 70.3 Dali",
@@ -4659,7 +5006,8 @@
     "url": "https://www.ironman.com/races/im703-dali",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 13, 2026\", \"status\": \"active\"}]",
+    "id": 334
   },
   {
     "name": "Chiang Mai Half Marathon",
@@ -4673,7 +5021,8 @@
     "url": "https://www.chiangmaimarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 26, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 26, 2026\", \"status\": \"active\"}]",
+    "id": 335
   },
   {
     "name": "Bengaluru Marathon",
@@ -4687,7 +5036,8 @@
     "url": "https://www.bengalurumarathon.in",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 27, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 27, 2026\", \"status\": \"active\"}]",
+    "id": 336
   },
   {
     "name": "Malaysia Ultra Trail by UTMB",
@@ -4701,7 +5051,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 12, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 12, 2026\", \"status\": \"active\"}]",
+    "id": 337
   },
   {
     "name": "LSR Colombo Marathon",
@@ -4715,7 +5066,8 @@
     "url": "https://www.colombomarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 4, 2026\", \"status\": \"active\"}]",
+    "id": 338
   },
   {
     "name": "Vietnam Jungle Marathon",
@@ -4729,7 +5081,8 @@
     "url": "https://vietnamtrailseries.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 17, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 17, 2026\", \"status\": \"active\"}]",
+    "id": 339
   },
   {
     "name": "Standard Chartered Kuala Lumpur Marathon",
@@ -4743,7 +5096,8 @@
     "url": "https://www.klmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 3, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 3, 2026\", \"status\": \"active\"}]",
+    "id": 340
   },
   {
     "name": "Kathmandu Marathon",
@@ -4757,7 +5111,8 @@
     "url": "https://www.kathmandumarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 10, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 10, 2026\", \"status\": \"active\"}]",
+    "id": 341
   },
   {
     "name": "Spartan Wollongong",
@@ -4771,7 +5126,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 10, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 10, 2026\", \"status\": \"active\"}]",
+    "id": 342
   },
   {
     "name": "Melbourne Marathon",
@@ -4785,7 +5141,8 @@
     "url": "https://www.melbournemarathon.com.au",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 11, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 11, 2026\", \"status\": \"active\"}]",
+    "id": 343
   },
   {
     "name": "Ironman Australia",
@@ -4799,7 +5156,8 @@
     "url": "https://www.ironman.com/races/im-australia",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 18, 2026\", \"status\": \"active\"}]",
+    "id": 344
   },
   {
     "name": "TransJeju by UTMB",
@@ -4813,7 +5171,8 @@
     "url": "https://transjeju.utmb.world",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 2, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 2, 2026\", \"status\": \"active\"}]",
+    "id": 345
   },
   {
     "name": "Ultra-Trail Mount Yun by UTMB",
@@ -4827,7 +5186,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 16, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 16, 2026\", \"status\": \"active\"}]",
+    "id": 346
   },
   {
     "name": "Spartan Bangkok DEKA FIT",
@@ -4841,7 +5201,8 @@
     "url": "https://th.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 31, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 31, 2026\", \"status\": \"active\"}]",
+    "id": 347
   },
   {
     "name": "Hyrox Shanghai",
@@ -4855,7 +5216,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 31, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 31, 2026\", \"status\": \"active\"}]",
+    "id": 348
   },
   {
     "name": "OceanMan Phang Nga",
@@ -4869,7 +5231,8 @@
     "url": "https://oceanmanswim.com/races/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}]",
+    "id": 349
   },
   {
     "name": "HOKA Chiang Mai Thailand by UTMB",
@@ -4883,7 +5246,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 28, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 28, 2026\", \"status\": \"active\"}]",
+    "id": 350
   },
   {
     "name": "TransLantau by UTMB",
@@ -4897,7 +5261,8 @@
     "url": "https://translantau.utmb.world",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 13, 2026\", \"status\": \"active\"}]",
+    "id": 351
   },
   {
     "name": "World Triathlon Multisport Championships",
@@ -4911,7 +5276,8 @@
     "url": "https://www.triathlon.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 13, 2026\", \"status\": \"active\"}]",
+    "id": 352
   },
   {
     "name": "AIA Hyrox Singapore",
@@ -4925,7 +5291,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 3, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 27, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 3, 2026\", \"status\": \"active\"}, {\"date\": \"Nov 27, 2026\", \"status\": \"active\"}]",
+    "id": 353
   },
   {
     "name": "Spartan Race Sto. Tomas Trailfecta",
@@ -4939,7 +5306,8 @@
     "url": "https://ph.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 5, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 5, 2026\", \"status\": \"active\"}]",
+    "id": 354
   },
   {
     "name": "Spartan Lakes Entrance",
@@ -4953,7 +5321,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 21, 2026\", \"status\": \"active\"}]",
+    "id": 355
   },
   {
     "name": "Amazing Thailand Marathon Bangkok",
@@ -4967,7 +5336,8 @@
     "url": "https://www.amazingthailandmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 28, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 28, 2026\", \"status\": \"active\"}]",
+    "id": 356
   },
   {
     "name": "Adani Ahmedabad Marathon",
@@ -4981,7 +5351,8 @@
     "url": "https://www.ahmedabadmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 29, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 29, 2026\", \"status\": \"active\"}]",
+    "id": 357
   },
   {
     "name": "BYD Singapore International Marathon",
@@ -4995,7 +5366,8 @@
     "url": "https://www.singaporemarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 6, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 6, 2026\", \"status\": \"active\"}]",
+    "id": 358
   },
   {
     "name": "Spartan Chiang Rai Super World Championship",
@@ -5009,7 +5381,8 @@
     "url": "https://th.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 12, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 12, 2026\", \"status\": \"active\"}]",
+    "id": 359
   },
   {
     "name": "ADNOC Abu Dhabi Marathon",
@@ -5023,7 +5396,8 @@
     "url": "https://www.abudhabimarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 12, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 12, 2026\", \"status\": \"active\"}]",
+    "id": 360
   },
   {
     "name": "Spartan Race Oita Japan",
@@ -5037,7 +5411,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 19, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 19, 2026\", \"status\": \"watchlist\"}]",
+    "id": 361
   },
   {
     "name": "Hyrox Abu Dhabi",
@@ -5051,7 +5426,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 31, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 31, 2026\", \"status\": \"watchlist\"}]",
+    "id": 362
   },
   {
     "name": "Hyrox Melbourne",
@@ -5065,7 +5441,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 31, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 31, 2026\", \"status\": \"watchlist\"}]",
+    "id": 363
   },
   {
     "name": "Hyrox Kuala Lumpur",
@@ -5079,7 +5456,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 31, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 31, 2026\", \"status\": \"watchlist\"}]",
+    "id": 364
   },
   {
     "name": "Hyrox Sanya",
@@ -5093,7 +5471,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 1, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 1, 2026\", \"status\": \"watchlist\"}]",
+    "id": 365
   },
   {
     "name": "ICA International Half-Marathon Colombo",
@@ -5107,7 +5486,8 @@
     "url": "https://icainternationalmarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]",
+    "id": 366
   },
   {
     "name": "Oman by UTMB",
@@ -5121,7 +5501,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 10, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 10, 2026\", \"status\": \"active\"}]",
+    "id": 367
   },
   {
     "name": "Ironman 70.3 Bahrain",
@@ -5135,7 +5516,8 @@
     "url": "https://www.ironman.com/races/im703-bahrain",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Dec 5, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Dec 5, 2026\", \"status\": \"watchlist\"}]",
+    "id": 368
   },
   {
     "name": "Ultra Trail Kosciuszko by UTMB",
@@ -5149,7 +5531,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 20, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 20, 2026\", \"status\": \"active\"}]",
+    "id": 369
   },
   {
     "name": "BYD Hyrox Brisbane + APAC Championship",
@@ -5163,7 +5546,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 9, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 9, 2026\", \"status\": \"active\"}]",
+    "id": 370
   },
   {
     "name": "Cigna Healthcare Hyrox Hong Kong",
@@ -5177,7 +5561,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 8, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 8, 2026\", \"status\": \"active\"}]",
+    "id": 371
   },
   {
     "name": "AirAsia Hyrox Incheon",
@@ -5191,7 +5576,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 15, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 15, 2026\", \"status\": \"active\"}]",
+    "id": 372
   },
   {
     "name": "24/7 Fitness Hyrox Shanghai",
@@ -5205,7 +5591,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 31, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 31, 2026\", \"status\": \"active\"}]",
+    "id": 373
   },
   {
     "name": "AirAsia Hyrox Jakarta",
@@ -5219,7 +5606,8 @@
     "url": "https://hyrox.com/find-my-race/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 27, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 27, 2026\", \"status\": \"active\"}]",
+    "id": 374
   },
   {
     "name": "Spartan Race Japan – TBA November",
@@ -5233,7 +5621,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Nov 14, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 14, 2026\", \"status\": \"watchlist\"}]",
+    "id": 375
   },
   {
     "name": "Jakarta Running Festival",
@@ -5247,7 +5636,8 @@
     "url": "https://jakartarunningfestival.id",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 24, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 24, 2026\", \"status\": \"active\"}]",
+    "id": 376
   },
   {
     "name": "Spartan DEKA Beijing",
@@ -5261,7 +5651,8 @@
     "url": "https://cn.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 6, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 6, 2026\", \"status\": \"active\"}]",
+    "id": 377
   },
   {
     "name": "Spartan Shanghai National Series",
@@ -5275,7 +5666,8 @@
     "url": "https://cn.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 25, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 25, 2026\", \"status\": \"active\"}]",
+    "id": 378
   },
   {
     "name": "Kujukuri Triathlon",
@@ -5289,7 +5681,8 @@
     "url": "https://www.jtu.or.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 3, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 3, 2026\", \"status\": \"active\"}]",
+    "id": 379
   },
   {
     "name": "Lake Toba by UTMB",
@@ -5303,7 +5696,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Oct 1, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Oct 1, 2026\", \"status\": \"watchlist\"}]",
+    "id": 380
   },
   {
     "name": "Dajingmen by UTMB",
@@ -5317,7 +5711,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Sep 1, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Sep 1, 2026\", \"status\": \"watchlist\"}]",
+    "id": 381
   },
   {
     "name": "Shu Dao Mountain by UTMB",
@@ -5331,7 +5726,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Nov 6, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Nov 6, 2026\", \"status\": \"watchlist\"}]",
+    "id": 382
   },
   {
     "name": "Ultra Trail Mogan by UTMB",
@@ -5345,7 +5741,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 10, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 10, 2026\", \"status\": \"active\"}]",
+    "id": 383
   },
   {
     "name": "Spiti Marathon",
@@ -5359,7 +5756,8 @@
     "url": "https://www.spitimarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 29, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 29, 2026\", \"status\": \"active\"}]",
+    "id": 384
   },
   {
     "name": "Vadodara International Marathon",
@@ -5373,7 +5771,8 @@
     "url": "https://www.vadodaramarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 1, 2026\", \"status\": \"active\"}]",
+    "id": 385
   },
   {
     "name": "Photak Marathon Nong Khai",
@@ -5387,7 +5786,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]",
+    "id": 386
   },
   {
     "name": "Scenic Marathon Nakhon Phanom",
@@ -5401,7 +5801,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]",
+    "id": 387
   },
   {
     "name": "Spartan Beijing Kids Race Universal CityWalk",
@@ -5415,7 +5816,8 @@
     "url": "https://cn.spartan.com/en/race/find-race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 23, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 23, 2026\", \"status\": \"active\"}]",
+    "id": 388
   },
   {
     "name": "Southeast Asian Trail Running Cup",
@@ -5429,7 +5831,8 @@
     "url": "https://seatrc.jakartaopentrailrun.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 24, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 24, 2026\", \"status\": \"active\"}]",
+    "id": 389
   },
   {
     "name": "Dadi Prakashmani Mount Abu International Marathon",
@@ -5443,7 +5846,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 15, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 15, 2026\", \"status\": \"active\"}]",
+    "id": 390
   },
   {
     "name": "Solang SkyUltra Manali",
@@ -5457,7 +5861,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/india",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 1, 2026\", \"status\": \"active\"}]",
+    "id": 391
   },
   {
     "name": "Spartan Race Ibaraki Japan",
@@ -5471,7 +5876,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 21, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 21, 2026\", \"status\": \"active\"}]",
+    "id": 392
   },
   {
     "name": "Spartan Race Saitama Japan",
@@ -5485,7 +5891,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 21, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 21, 2026\", \"status\": \"active\"}]",
+    "id": 393
   },
   {
     "name": "Ultra-Trail Australia by UTMB",
@@ -5499,7 +5906,8 @@
     "url": "https://utmb.world/utmb-world-series-events",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"May 1, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"May 1, 2026\", \"status\": \"watchlist\"}]",
+    "id": 394
   },
   {
     "name": "Spartan Race Shepparton Australia",
@@ -5513,7 +5921,8 @@
     "url": "https://www.spartan.com/en/race",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 8, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 8, 2026\", \"status\": \"active\"}]",
+    "id": 395
   },
   {
     "name": "Naha Marathon Okinawa",
@@ -5527,7 +5936,8 @@
     "url": "https://www.naha-marathon.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 6, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 6, 2026\", \"status\": \"active\"}]",
+    "id": 396
   },
   {
     "name": "Nara Marathon",
@@ -5541,7 +5951,8 @@
     "url": "https://www.nara-marathon.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]",
+    "id": 397
   },
   {
     "name": "Mt. Fuji International Marathon",
@@ -5555,7 +5966,8 @@
     "url": "https://www.fujisan-marathon.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Dec 13, 2026\", \"status\": \"active\"}]",
+    "id": 398
   },
   {
     "name": "Hokkaido Marathon Sapporo",
@@ -5569,7 +5981,8 @@
     "url": "https://www.hokkaido-marathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 30, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 30, 2026\", \"status\": \"active\"}]",
+    "id": 399
   },
   {
     "name": "Yokohama Marathon",
@@ -5583,7 +5996,8 @@
     "url": "https://www.yokohamamarathon.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Oct 24, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Oct 24, 2026\", \"status\": \"active\"}]",
+    "id": 400
   },
   {
     "name": "Shizuoka Marathon",
@@ -5597,7 +6011,8 @@
     "url": "https://www.shizuoka-marathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Mar 8, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Mar 8, 2026\", \"status\": \"active\"}]",
+    "id": 401
   },
   {
     "name": "Beppu-Oita Mainichi Marathon",
@@ -5611,7 +6026,8 @@
     "url": "https://www.betsudai.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 1, 2026\", \"status\": \"active\"}]",
+    "id": 402
   },
   {
     "name": "Daisetsuzan Trail Journey",
@@ -5625,7 +6041,8 @@
     "url": "https://runjapan.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 26, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 26, 2026\", \"status\": \"active\"}]",
+    "id": 403
   },
   {
     "name": "SHIGA KOGEN 100",
@@ -5639,7 +6056,8 @@
     "url": "https://runjapan.jp",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 29, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 29, 2026\", \"status\": \"active\"}]",
+    "id": 404
   },
   {
     "name": "Gyeongju Cherry Blossom Marathon",
@@ -5653,7 +6071,8 @@
     "url": "https://cherrymarathon.co.kr",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 4, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 4, 2026\", \"status\": \"active\"}]",
+    "id": 405
   },
   {
     "name": "Seoul Half Marathon",
@@ -5667,7 +6086,8 @@
     "url": "https://www.kormarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 15, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 15, 2026\", \"status\": \"active\"}]",
+    "id": 406
   },
   {
     "name": "Incheon Marathon",
@@ -5681,7 +6101,8 @@
     "url": "https://runwithmeseoul.com/races/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Nov 22, 2026\", \"status\": \"active\"}]",
+    "id": 407
   },
   {
     "name": "Seoul International Ultra Trail Race",
@@ -5695,7 +6116,8 @@
     "url": "https://www.finishers.com/en/destinations/asia/south-korea",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Oct 1, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Oct 1, 2026\", \"status\": \"watchlist\"}]",
+    "id": 408
   },
   {
     "name": "EVA Air Brisbane Marathon Festival",
@@ -5709,7 +6131,8 @@
     "url": "https://www.brisbanemarathon.com.au",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 7, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 7, 2026\", \"status\": \"active\"}]",
+    "id": 409
   },
   {
     "name": "XTERRA Wellington Festival",
@@ -5723,7 +6146,8 @@
     "url": "https://www.xterraplanet.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Feb 28, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Feb 28, 2026\", \"status\": \"active\"}]",
+    "id": 410
   },
   {
     "name": "XTERRA Rotorua Festival",
@@ -5737,7 +6161,8 @@
     "url": "https://www.xterraplanet.com/",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Apr 11, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Apr 11, 2026\", \"status\": \"active\"}]",
+    "id": 411
   },
   {
     "name": "Amazing Thailand Pattaya Marathon",
@@ -5751,7 +6176,8 @@
     "url": "https://www.pattayamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 19, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 19, 2026\", \"status\": \"active\"}]",
+    "id": 412
   },
   {
     "name": "Songkhla Marathon",
@@ -5765,7 +6191,8 @@
     "url": "https://songkhlamarathon.com",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 22, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 22, 2026\", \"status\": \"active\"}]",
+    "id": 413
   },
   {
     "name": "Perak Triathlon",
@@ -5779,7 +6206,8 @@
     "url": "https://www.racexasia.com/event/perak-multisport-festival-2026-perak-triathlon-pmtr26",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jun 5, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jun 5, 2026\", \"status\": \"active\"}]",
+    "id": 414
   },
   {
     "name": "Sarawak Energy Marathon",
@@ -5793,7 +6221,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 9, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 9, 2026\", \"status\": \"active\"}]",
+    "id": 415
   },
   {
     "name": "Taiping Half Marathon",
@@ -5807,7 +6236,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 9, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 9, 2026\", \"status\": \"active\"}]",
+    "id": 416
   },
   {
     "name": "Kota Bharu Half Marathon",
@@ -5821,7 +6251,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 5, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 5, 2026\", \"status\": \"active\"}]",
+    "id": 417
   },
   {
     "name": "TriFactor Run & RunSwim Singapore",
@@ -5835,7 +6266,8 @@
     "url": "https://www.trifactor.asia/TFRunRunSwin2026",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 10, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 10, 2026\", \"status\": \"active\"}]",
+    "id": 418
   },
   {
     "name": "TriFactor Triathlon & Duathlon Singapore",
@@ -5849,7 +6281,8 @@
     "url": "https://worldsmarathons.com/marathon/trifactor-triathlon-singapore",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 13, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 13, 2026\", \"status\": \"active\"}]",
+    "id": 419
   },
   {
     "name": "Thimphu Marathon – Run for Global Peace",
@@ -5863,7 +6296,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Sep 19, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Sep 19, 2026\", \"status\": \"active\"}]",
+    "id": 420
   },
   {
     "name": "Asia Triathlon Aquathlon Cup Tam Chuc",
@@ -5877,7 +6311,8 @@
     "url": "https://events.triathlon.org/2026-asia-triathlon-aquathlon-cup-tam-chuc",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"May 15, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"May 15, 2026\", \"status\": \"active\"}]",
+    "id": 421
   },
   {
     "name": "Brunei International Marathon",
@@ -5891,7 +6326,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Mar 14, 2026\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Mar 14, 2026\", \"status\": \"watchlist\"}]",
+    "id": 422
   },
   {
     "name": "Sarawak SCORE Marathon",
@@ -5905,7 +6341,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Jul 18, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Jul 18, 2026\", \"status\": \"active\"}]",
+    "id": 423
   },
   {
     "name": "Nong Khai Running Festival",
@@ -5919,7 +6356,8 @@
     "url": "https://aims-worldrunning.org",
     "note": "",
     "status": "active",
-    "dates": "[{\"date\": \"Aug 1, 2026\", \"status\": \"active\"}]"
+    "dates": "[{\"date\": \"Aug 1, 2026\", \"status\": \"active\"}]",
+    "id": 424
   },
   {
     "name": "Ironman 70.3 Goseong Korea",
@@ -5933,6 +6371,7 @@
     "url": "https://www.ironman.com/races/im703-goseong",
     "note": "",
     "status": "watchlist",
-    "dates": "[{\"date\": \"Jun 1, 2027\", \"status\": \"watchlist\"}]"
+    "dates": "[{\"date\": \"Jun 1, 2027\", \"status\": \"watchlist\"}]",
+    "id": 425
   }
 ]

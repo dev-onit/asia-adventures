@@ -911,15 +911,15 @@ export default function CalendarPage() {
       <header ref={headerRef} className="sticky top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border">
         {/* Row 1: Logo + title */}
         <div className="flex items-center gap-3 px-4 pt-4 pb-2">
-          <img src="/logo.jpg" alt="Adventure Crew" className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+          <img src="/logo.jpg" alt="Adventure Crew" className="w-20 h-20 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0">
             <h1 className="text-2xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
-            <p className="text-sm text-foreground/70 truncate italic font-medium">We Take Fun Seriously</p>
+            <p className="text-base text-foreground/70 truncate font-medium">We Take Fun Seriously</p>
           </div>
         </div>
 
         {/* Row 2: name chip + My Favourites + theme toggle */}
-        <div className="flex items-center gap-3 px-4 pb-4">
+        <div className="flex items-center gap-3 px-4 pt-1 pb-4">
           {voterName && (
             <div className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary">
               <Users size={12} />
@@ -1656,8 +1656,10 @@ export default function CalendarPage() {
                       const ds: {date:string,status:string}[] = JSON.parse((race as any).dates ?? "[]");
                       const allD = ds.length > 0 ? ds.map(d => d.date) : [race.date];
                       const dates = allD.map(d => parseFuzzyDate(d)).filter((d): d is Date => d !== null);
-                      const earliest = dates.sort((a,b) => a.getTime()-b.getTime())[0];
-                      return earliest ? earliest < today : false;
+                      if (dates.length === 0) return false;
+                      // Only gray out if ALL dates are in the past
+                      const latest = dates.sort((a,b) => b.getTime()-a.getTime())[0];
+                      return latest < today;
                     } catch { return false; }
                   })();
                   return (
