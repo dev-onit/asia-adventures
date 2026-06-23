@@ -1565,6 +1565,18 @@ export default function CalendarPage() {
               </thead>
               <tbody>
                 {(() => {
+                  // Sort filtered by earliest date before grouping
+                  const MONTH_ORDER: Record<string,number> = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
+                  const getEarliestDate = (r: any): number => {
+                    try {
+                      const ds: {date:string}[] = JSON.parse((r as any).dates ?? "[]");
+                      const allD = ds.length > 0 ? ds.map(d => d.date) : [r.date];
+                      const parsed = allD.map((d: string) => new Date(d)).filter((d: Date) => !isNaN(d.getTime()));
+                      if (parsed.length > 0) return Math.min(...parsed.map((d: Date) => d.getTime()));
+                    } catch {}
+                    return new Date(r.date).getTime() || 0;
+                  };
+                  const sorted = [...filtered].sort((a, b) => getEarliestDate(a) - getEarliestDate(b));
                   let lastMonthGroup = "";
                   const getMonthGroup = (r: any) => {
                     let primary = r.date as string;
@@ -1573,7 +1585,7 @@ export default function CalendarPage() {
                     if (parts.length >= 2) return `${parts[0]} ${parts[parts.length - 1]}`;
                     return primary;
                   };
-                  return filtered.map((race) => {
+                  return sorted.map((race) => {
                     const monthGroup = getMonthGroup(race);
                     const showGroupHeader = monthGroup !== lastMonthGroup;
                     lastMonthGroup = monthGroup;
