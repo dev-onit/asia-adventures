@@ -1413,7 +1413,6 @@ export default function CalendarPage() {
           <div className="relative">
           <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "3rem" }}>
             <div>
-            <div>
               <div className="filter-label">Month</div>
               <div className="flex flex-wrap gap-1.5">
                 {MONTHS.map(m => (
