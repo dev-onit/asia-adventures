@@ -16,7 +16,7 @@
   --header-h: 0px;
   --races-header-h: 0px;
   --result-bar-h: 36px;
-  --map-h: calc(100dvh - var(--header-h) - env(safe-area-inset-bottom, 0px) - 50px - var(--result-bar-h));
+  --map-h: 350px;
 }
 
 /* ── Light mode ── */
@@ -198,10 +198,4 @@ h1, h2, h3 {
   }
 }
 
-/* Mobile: let browser handle 1-finger vertical scroll natively.
-   Leaflet still gets 2-finger pan/pinch via its own gesture handlers. */
-@media (max-width: 639px) {
-  .leaflet-container {
-    touch-action: pan-y !important;
-  }
-}
+
