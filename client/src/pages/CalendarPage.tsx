@@ -1923,9 +1923,9 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Distance */}
-                        <td className="py-4 px-3 align-middle">
+                        <td className="py-2 px-3 align-middle" style={{ minWidth: 80 }}>
                           {distPills.length > 0 ? (
-                            <div className="flex flex-wrap gap-1">
+                            <div className="flex flex-wrap gap-1" style={{ maxHeight: '3.2em', overflow: 'hidden', alignContent: 'flex-start' }}>
                               {distPills.map((p: string, i: number) => (
                                 <span key={i} className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] font-semibold leading-none whitespace-nowrap ${getDistPillClass(p)}`}>{p}</span>
                               ))}
