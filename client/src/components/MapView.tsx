@@ -287,10 +287,31 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
 
-    // On desktop: close popup on background click (but not after a drag).
-    // On mobile: popup only closes via the X button — background tap does nothing.
-    //   This avoids all the complexity of distinguishing taps from 2-finger pans.
-    if (!isTouch) {
+    // On mobile: override map.closePopup so it only works when the user
+    // explicitly taps the X button. Leaflet's touch-zoom handler calls
+    // closePopup() internally on every 2-finger gesture — we block that.
+    if (isTouch) {
+      let allowClose = false;
+      // Intercept the native closePopup
+      const originalClosePopup = map.closePopup.bind(map);
+      (map as any).closePopup = (...args: any[]) => {
+        if (allowClose) { allowClose = false; originalClosePopup(...args); }
+      };
+      // Allow close only when X button is tapped
+      if (mapRef.current) {
+        mapRef.current.addEventListener("click", (e: MouseEvent) => {
+          const target = e.target as HTMLElement;
+          if (target?.closest(".leaflet-popup-close-button")) {
+            allowClose = true;
+            originalClosePopup();
+          }
+        }, { capture: true });
+      }
+      // Also allow close when tapping a new pin (activeMarkerRef handles switching)
+      // — we expose a helper the marker click handler can call
+      (map as any)._allowNextClose = () => { allowClose = true; };
+    } else {
+      // Desktop: close on background click, not after drag
       let wasDragging = false;
       map.on("dragstart", () => { wasDragging = true; });
       map.on("dragend",   () => { setTimeout(() => { wasDragging = false; }, 50); });
@@ -436,8 +457,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         const marker = L.marker([lat, lng], { icon }).addTo(map);
         marker.bindPopup(buildExplorePopup(site), { maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false });
         marker.on("click", () => {
-          // Close whichever marker is currently open (could be a different marker)
           if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
+            (mapInstanceRef.current as any)?._allowNextClose?.();
             activeMarkerRef.current.closePopup();
           }
           activeMarkerRef.current = marker;
@@ -498,8 +519,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const marker = L.marker(coords, { icon }).addTo(map);
     marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), { maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false });
     marker.on("click", () => {
-      // Close whichever marker is currently open (could be a different marker)
       if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
+        (map as any)._allowNextClose?.();
         activeMarkerRef.current.closePopup();
       }
       activeMarkerRef.current = marker;
@@ -510,7 +531,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         groupRaces.forEach(r => {
           const btn = document.querySelector(`[data-race-id="${r.id}"]`) as HTMLElement;
           const rIsFav = favSet.has(r.id);
-          if (btn) btn.onclick = () => { onToggleFav(r.id, rIsFav); map.closePopup(); };
+          if (btn) btn.onclick = () => { onToggleFav(r.id, rIsFav); (map as any)._allowNextClose?.(); map.closePopup(); };
         });
       }, 50);
       // Pan so the popup is fully visible.
