@@ -30,7 +30,7 @@ if (!document.getElementById(leafletJsId)) {
     if (!document.getElementById(ghId)) {
       const ghScript = document.createElement("script");
       ghScript.id = ghId;
-      ghScript.src = "https://unpkg.com/leaflet-gesture-handling@2.1.8/dist/leaflet-gesture-handling.min.js";
+      ghScript.src = "https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.js";
       document.head.appendChild(ghScript);
     }
   };
@@ -42,7 +42,7 @@ if (!document.getElementById(ghCssId)) {
   const link = document.createElement("link");
   link.id = ghCssId;
   link.rel = "stylesheet";
-  link.href = "https://unpkg.com/leaflet-gesture-handling@2.1.8/dist/leaflet-gesture-handling.min.css";
+  link.href = "https://unpkg.com/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.css";
   document.head.appendChild(link);
 }
 
