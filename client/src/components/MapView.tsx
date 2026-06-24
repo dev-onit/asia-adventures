@@ -244,14 +244,22 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       if (!L || !mapRef.current || mapInstanceRef.current) return;
       clearInterval(poll);
 
+    // On touch devices: disable 1-finger dragging so the page scrolls naturally.
+    // 2-finger pan still works via Leaflet's built-in two-touch handler.
+    // On desktop (mouse/trackpad): dragging stays on.
+    const isTouch = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
+
     const map = L.map(mapRef.current, {
       center: [20, 100], zoom: 4, zoomControl: false,
       scrollWheelZoom: false,
       touchZoom: true,
-      dragging: true,
+      dragging: !isTouch,
       tap: false,
       attributionControl: false,
     });
+
+    // Re-enable dragging on desktop if somehow missed
+    if (!isTouch) map.dragging.enable();
 
     // Ctrl/⌘+scroll to zoom (desktop)
     mapRef.current.addEventListener("wheel", (e: WheelEvent) => {
