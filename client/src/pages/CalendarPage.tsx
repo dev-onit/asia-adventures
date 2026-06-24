@@ -1744,10 +1744,10 @@ export default function CalendarPage() {
             }
             setTimeout(() => { mapRecenterRef.current?.(); }, 600);
           }}
-          className="fixed bottom-5 left-4 z-50 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border-2 shadow-lg backdrop-blur-sm transition-all hover:brightness-110 bg-white dark:bg-zinc-950 border-orange-400 dark:border-orange-400 text-orange-500 dark:text-orange-400"
+          className="fixed bottom-4 left-3 z-50 flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold border-2 shadow-lg transition-all hover:brightness-110 bg-background border-orange-400 text-orange-500 dark:text-orange-400"
           style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.35))" }}
         >
-          <MapPin size={11} />
+          <MapPin size={10} />
           Back to Map
         </button>
       )}
