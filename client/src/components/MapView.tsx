@@ -469,13 +469,25 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
           activeMarkerRef.current = marker;
         });
         marker.on("popupopen", () => {
-          const map = mapInstanceRef.current;
-          if (!map || !mapRef.current) return;
-          const px = map.latLngToContainerPoint([lat, lng]);
-          const mapH = mapRef.current.offsetHeight ?? 350;
-          const targetPx = (window as any).L.point(px.x, px.y - mapH / 2 + 140);
-          const targetLatLng = map.containerPointToLatLng(targetPx);
-          map.panTo(targetLatLng, { animate: true, duration: 0.35 });
+          requestAnimationFrame(() => {
+            const mapInstance = mapInstanceRef.current;
+            const mapContainer = mapRef.current;
+            if (!mapInstance || !mapContainer) return;
+            const mapH = mapContainer.offsetHeight;
+            const mapW = mapContainer.offsetWidth;
+            const popupEl = mapContainer.querySelector(".leaflet-popup") as HTMLElement | null;
+            const popupH = popupEl ? popupEl.offsetHeight : 200;
+            const pinH = totalH;
+            const desiredY = mapH - popupH - 24 - pinH / 2;
+            const px = mapInstance.latLngToContainerPoint([lat, lng]);
+            const deltaY = px.y - desiredY;
+            const deltaX = px.x - mapW / 2;
+            if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+              const targetPx = (window as any).L.point(px.x - deltaX, px.y - deltaY);
+              const targetLatLng = mapInstance.containerPointToLatLng(targetPx);
+              mapInstance.panTo(targetLatLng, { animate: true, duration: 0.35 });
+            }
+          });
         });
         marker.on("popupclose", () => {
           if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
@@ -527,13 +539,33 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
           if (btn) btn.onclick = () => { onToggleFav(r.id, rIsFav); map.closePopup(); };
         });
       }, 50);
-      // Pan so the pin sits in the lower-center of the map container,
-      // leaving room for the popup card above it.
-      const px = map.latLngToContainerPoint(coords);
-      const mapH = mapRef.current?.offsetHeight ?? 350;
-      const targetPx = (window as any).L.point(px.x, px.y - mapH / 2 + 140);
-      const targetLatLng = map.containerPointToLatLng(targetPx);
-      map.panTo(targetLatLng, { animate: true, duration: 0.35 });
+      // Pan so the popup is fully visible.
+      // We wait one rAF so the popup DOM is rendered and measurable.
+      requestAnimationFrame(() => {
+        const mapContainer = mapRef.current;
+        if (!mapContainer) return;
+        const mapH = mapContainer.offsetHeight;
+        const mapW = mapContainer.offsetWidth;
+        // Measure the rendered popup element
+        const popupEl = mapContainer.querySelector(".leaflet-popup") as HTMLElement | null;
+        const popupH = popupEl ? popupEl.offsetHeight : 200;
+        const popupW = popupEl ? popupEl.offsetWidth  : 270;
+        // We want the pin at: x = map center, y = mapH - popupH - 24px gap - pinH/2
+        const pinH = totalH;
+        const desiredY = mapH - popupH - 24 - pinH / 2;
+        // Current pin position in container coords
+        const px = map.latLngToContainerPoint(coords);
+        // How far we need to shift: move pin from px.y → desiredY, px.x → mapW/2
+        const deltaY = px.y - desiredY;
+        const deltaX = px.x - mapW / 2;
+        // Only pan if the shift is meaningful (>10px)
+        if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+          const targetPx = (window as any).L.point(px.x - deltaX, px.y - deltaY);
+          const targetLatLng = map.containerPointToLatLng(targetPx);
+          map.panTo(targetLatLng, { animate: true, duration: 0.35 });
+        }
+        void popupW; // referenced to avoid lint warning
+      });
     });
     marker.on("popupclose", () => {
       if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
