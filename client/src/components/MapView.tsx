@@ -267,11 +267,16 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     }
     mapInstanceRef.current = map;
 
-    map.dragging.disable(); // start disabled — only enable on 2-finger touch
-    mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
-      if (e.touches.length >= 2) map.dragging.enable(); else map.dragging.disable();
-    }, { passive: true });
-    mapRef.current.addEventListener("touchend", () => { map.dragging.disable(); }, { passive: true });
+    map.dragging.enable(); // always on for mouse/trackpad
+    // Touch: 1 finger = page scrolls, 2 fingers = map pan
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouchDevice) {
+      map.dragging.disable();
+      mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
+        if (e.touches.length >= 2) map.dragging.enable(); else map.dragging.disable();
+      }, { passive: true });
+      mapRef.current.addEventListener("touchend", () => { map.dragging.disable(); }, { passive: true });
+    }
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
     }; // end tryInit
