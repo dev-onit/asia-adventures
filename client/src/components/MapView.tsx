@@ -628,7 +628,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   }
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }} />
 
 

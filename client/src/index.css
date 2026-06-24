@@ -34,9 +34,10 @@
 
 * { box-sizing: border-box; }
 
-html {
+html, body {
   overflow-x: hidden;
   overscroll-behavior-x: none;
+  max-width: 100%;
 }
 
 body {

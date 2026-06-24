@@ -372,7 +372,7 @@ function VoterChips({ voters }: { voters: string[] }) {
         <span className="text-black">{voters.length === 1 ? 'Vote' : 'Votes'}</span>
       </button>
       {open && (
-        <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 z-[600] min-w-[100px] rounded-xl border border-border bg-background shadow-xl py-1.5 px-1.5">
+        <div className="absolute right-0 top-full mt-1 z-[600] min-w-[100px] rounded-xl border border-border bg-background shadow-xl py-1.5 px-1.5">
           {voters.map((v, i) => (
             <div key={i} className={`px-2 py-0.5 mb-0.5 last:mb-0 text-[10px] font-semibold rounded-full border ${VOTER_COLORS[i % VOTER_COLORS.length]}`}>{v}</div>
           ))}
