@@ -1840,13 +1840,7 @@ export default function CalendarPage() {
                             <button
                               onClick={() => isFav ? removeFav.mutate(race.id) : addFav.mutate(race.id)}
                               disabled={addFav.isPending || removeFav.isPending}
-                              className={`star-btn ${
-                                isFav
-                                  ? "starred"
-                                  : sortMode === "votes"
-                                    ? "opacity-20 pointer-events-none"
-                                    : "hover:text-yellow-400/70"
-                              } disabled:opacity-50`}
+                              className={`star-btn ${isFav ? "starred" : "hover:text-yellow-400/70"} disabled:opacity-50`}
                               title={isFav ? "Unstar" : "Star to vote"}
                             >
                               <Star size={15} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
