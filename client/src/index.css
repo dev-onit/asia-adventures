@@ -38,6 +38,13 @@ html, body {
   overflow-x: hidden;
   overscroll-behavior-x: none;
   max-width: 100%;
+  width: 100%;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
