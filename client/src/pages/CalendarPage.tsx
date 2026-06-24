@@ -333,6 +333,17 @@ function matchesSportFilters(race: Race, sportFilters: Set<string>, subFilters: 
   return false;
 }
 
+const VOTER_COLORS = [
+  "bg-rose-100 text-rose-700 border-rose-200",
+  "bg-blue-100 text-blue-700 border-blue-200",
+  "bg-emerald-100 text-emerald-700 border-emerald-200",
+  "bg-violet-100 text-violet-700 border-violet-200",
+  "bg-amber-100 text-amber-700 border-amber-200",
+  "bg-cyan-100 text-cyan-700 border-cyan-200",
+  "bg-pink-100 text-pink-700 border-pink-200",
+  "bg-indigo-100 text-indigo-700 border-indigo-200",
+];
+
 function VoterChips({ voters }: { voters: string[] }) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
@@ -348,20 +359,22 @@ function VoterChips({ voters }: { voters: string[] }) {
 
   if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
 
+  const label = `${voters.length} ${voters.length === 1 ? 'Vote' : 'Votes'}`;
+
   return (
     <div ref={ref} className="relative inline-flex">
       <button
         onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
-        className="inline-flex items-center gap-1.5 pl-1 pr-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-500 hover:bg-orange-400 text-white transition-colors whitespace-nowrap shadow-sm">
-        <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-white/25 text-white text-[10px] font-bold leading-none">
+        className="inline-flex items-center gap-1 pl-1 pr-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-500 hover:bg-orange-400 transition-colors whitespace-nowrap shadow-sm">
+        <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-black/20 text-black text-[9px] font-bold leading-none">
           {voters.length}
         </span>
-        Votes
+        <span className="text-black">{voters.length === 1 ? 'Vote' : 'Votes'}</span>
       </button>
       {open && (
-        <div className="absolute left-0 top-full mt-1.5 z-[600] min-w-[120px] rounded-xl border border-border bg-popover shadow-lg py-1.5 px-1">
+        <div className="absolute left-0 top-full mt-1.5 z-[600] min-w-[100px] rounded-xl border border-border bg-background shadow-xl py-1.5 px-1.5">
           {voters.map((v, i) => (
-            <div key={i} className="px-2.5 py-1 text-xs text-foreground font-medium rounded-lg hover:bg-muted transition-colors">{v}</div>
+            <div key={i} className={`px-2 py-0.5 mb-0.5 last:mb-0 text-[10px] font-semibold rounded-full border ${VOTER_COLORS[i % VOTER_COLORS.length]}`}>{v}</div>
           ))}
         </div>
       )}
@@ -1835,7 +1848,7 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Voters chips — 3 visible, expand on click */}
-                        <td className="py-2 px-3 align-middle" style={{ minWidth: 80, maxWidth: 100 }}>
+                        <td className="py-2 px-2 align-middle" style={{ minWidth: 60, maxWidth: 80 }}>
                           {(() => {
                             const voters = votesByRace.get(race.id) ?? [];
                             if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
