@@ -159,7 +159,8 @@ const POPUP_STYLE = `
   }
   .leaflet-bar a {
     width: 26px !important; height: 26px !important;
-    line-height: 26px !important; font-size: 15px !important;
+    line-height: normal !important; font-size: 15px !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
     border-radius: 7px !important; border: 1px solid !important;
     background: rgba(255,255,255,0.95) !important;
     border-color: rgb(212,212,216) !important;
