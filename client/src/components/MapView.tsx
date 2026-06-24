@@ -238,65 +238,22 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
 
-    // Poll until Leaflet AND the gesture-handling plugin are both loaded.
-    // The plugin calls L.Map.mergeOptions({ gestureHandlingOptions: {...} }) at load time.
-    // We wait up to 4s for the plugin; after that we init anyway (graceful fallback).
-    const startTime = Date.now();
+    // Poll until Leaflet is loaded (CDN async load).
     const tryInit = () => {
       const L = (window as any).L;
       if (!L || !mapRef.current || mapInstanceRef.current) return;
-      const gestureReady = L.Map?.prototype?.options?.gestureHandlingOptions !== undefined;
-      const timedOut = Date.now() - startTime > 4000;
-      if (!gestureReady && !timedOut) return; // keep polling
       clearInterval(poll);
-
-    // Detect input type to configure gesture handling appropriately:
-    // - Real touchscreen (mobile/tablet): gesture plugin ON, scroll wheel zoom OFF
-    // - Mac trackpad: gesture plugin OFF, scroll wheel zoom ON (pinch = ctrlKey wheel)
-    // - Mouse / other desktop: gesture plugin OFF, scroll wheel zoom OFF
-    //   (Ctrl+scroll still zooms via the manual wheel listener below)
-    const isMac = /Mac|MacIntel/.test(navigator.platform);
-    const isTouchscreen = !isMac && 'ontouchstart' in window && navigator.maxTouchPoints > 1;
 
     const map = L.map(mapRef.current, {
       center: [20, 100], zoom: 4, zoomControl: false,
-      scrollWheelZoom: isMac,   // Mac trackpad pinch arrives as ctrlKey wheel
+      scrollWheelZoom: false,
       touchZoom: true,
       dragging: true,
       tap: false,
       attributionControl: false,
-      gestureHandling: isTouchscreen,
-      gestureHandlingOptions: isTouchscreen ? {
-        text: {
-          touch: "Use two fingers to move the map",
-          scroll: "Use Ctrl + scroll to zoom the map",
-          scrollMac: "Use ⌘ + scroll to zoom the map",
-        },
-        duration: 1500,
-      } : {},
     });
 
-    // Suppress gesture overlay when tapping a marker or popup.
-    // The plugin adds leaflet-gesture-handling-touch-warning on every 1-finger touchstart.
-    // We detect marker/popup taps and remove the class immediately after the plugin adds it.
-    if (mapRef.current) {
-      const mapContainer = mapRef.current;
-      mapContainer.addEventListener("touchstart", (e: TouchEvent) => {
-        if (e.touches.length !== 1) return;
-        const target = e.target as HTMLElement;
-        const isMarkerOrPopup = !!(target?.closest(".leaflet-marker-icon") ||
-          target?.closest(".leaflet-interactive") ||
-          target?.closest(".leaflet-popup"));
-        if (isMarkerOrPopup) {
-          // Use setTimeout(0) so this fires after the plugin's synchronous handler
-          // has already added the warning class, then we strip it immediately.
-          setTimeout(() => {
-            mapContainer.classList.remove("leaflet-gesture-handling-touch-warning");
-          }, 0);
-        }
-      }, { passive: true, capture: true });
-    }
-
+    // Ctrl/⌘+scroll to zoom (desktop)
     mapRef.current.addEventListener("wheel", (e: WheelEvent) => {
       if (e.ctrlKey) { e.preventDefault(); e.stopPropagation(); if (e.deltaY < 0) map.zoomIn(); else map.zoomOut(); }
     }, { passive: false });
