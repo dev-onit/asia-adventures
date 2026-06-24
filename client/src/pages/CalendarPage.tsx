@@ -1744,7 +1744,7 @@ export default function CalendarPage() {
             }
             setTimeout(() => { mapRecenterRef.current?.(); }, 600);
           }}
-          className="fixed bottom-4 left-3 z-50 flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold border shadow-lg transition-all hover:brightness-110 bg-background border-orange-400 text-orange-500 dark:text-orange-400"
+          className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-semibold border shadow-lg transition-all hover:brightness-110 bg-background border-orange-400 text-orange-500 dark:text-orange-400"
           style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.35))" }}
         >
           <MapPin size={10} />
