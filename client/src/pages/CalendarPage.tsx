@@ -1721,8 +1721,11 @@ export default function CalendarPage() {
 
       {/* Result bar + Map */}
       <div ref={mapWrapperRef}>
-      <div ref={resultBarRef} className="px-4 py-2 text-xs text-muted-foreground border-b border-border">
-        {filtered.length} {filtered.length === 1 ? "race" : "races"}{filtered.length < races.length ? ` of ${races.length}` : ""}
+      <div ref={resultBarRef} className="px-4 py-2 text-xs text-muted-foreground border-b border-border flex items-center gap-2">
+        <span>{filtered.length} {filtered.length === 1 ? "race" : "races"}{filtered.length < races.length ? ` of ${races.length}` : ""}</span>
+        {sortMode === "votes" && (
+          <span className="text-orange-500 font-semibold">· Showing Most Voted</span>
+        )}
       </div>
       <MapView
         races={filtered}
