@@ -274,11 +274,10 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     // Touch: 1-finger scrolls page, 2-finger pans map
     if (isTouchDevice) {
-      // Force touch-action back after Leaflet overrides it with "none"
+      // Only override touch-action on the outer container — leave Leaflet's inner
+      // panes alone so 2-finger drag events still reach Leaflet's handlers
       requestAnimationFrame(() => {
         if (mapRef.current) mapRef.current.style.touchAction = "pan-y";
-        const pane = mapRef.current?.querySelector(".leaflet-map-pane") as HTMLElement;
-        if (pane) pane.style.touchAction = "pan-y";
       });
       mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
         if (e.touches.length >= 2) map.dragging.enable(); else map.dragging.disable();
