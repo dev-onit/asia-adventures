@@ -157,18 +157,27 @@ const POPUP_STYLE = `
     gap: 3px !important; border: none !important; border-radius: 0 !important;
     background: transparent !important; box-shadow: none !important;
   }
-  .leaflet-bar a {
-    width: 26px !important; height: 26px !important;
-    line-height: normal !important; font-size: 15px !important;
+  .leaflet-bar a,
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out {
+    width: 28px !important; height: 28px !important;
+    line-height: 28px !important; font-size: 18px !important; font-weight: 400 !important;
     display: flex !important; align-items: center !important; justify-content: center !important;
+    text-align: center !important; text-indent: 0 !important;
+    padding: 0 !important; margin: 0 !important;
     border-radius: 7px !important; border: 1px solid !important;
     background: rgba(255,255,255,0.95) !important;
     border-color: rgb(212,212,216) !important;
     color: rgb(82,82,91) !important;
     box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important;
+    float: none !important;
   }
-  .leaflet-bar a:hover { filter: brightness(0.95) !important; }
-  .dark .leaflet-bar a {
+  .leaflet-bar a:hover,
+  .leaflet-control-zoom-in:hover,
+  .leaflet-control-zoom-out:hover { filter: brightness(0.92) !important; }
+  .dark .leaflet-bar a,
+  .dark .leaflet-control-zoom-in,
+  .dark .leaflet-control-zoom-out {
     background: rgba(24,24,27,0.95) !important;
     border-color: rgb(63,63,70) !important;
     color: rgb(212,212,216) !important;
