@@ -312,8 +312,15 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
 
-    // Close popup only on background tap (not on marker/popup tap)
+    // Close popup only on a genuine background tap — not after a drag/pan.
+    // Leaflet synthesizes a click event at the end of every drag, which would
+    // otherwise fire our closePopup logic incorrectly.
+    let wasDragging = false;
+    map.on("dragstart", () => { wasDragging = true; });
+    map.on("dragend",   () => { setTimeout(() => { wasDragging = false; }, 50); });
+
     map.on("click", (e: any) => {
+      if (wasDragging) return;
       const target = e.originalEvent?.target as HTMLElement;
       const isUI = !!(target?.closest(".leaflet-marker-icon") ||
                       target?.closest(".leaflet-interactive") ||
@@ -452,6 +459,15 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         const icon = L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
         const marker = L.marker([lat, lng], { icon }).addTo(map);
         marker.bindPopup(buildExplorePopup(site), { maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false, autoClose: false });
+        marker.on("popupopen", () => {
+          const map = mapInstanceRef.current;
+          if (!map || !mapRef.current) return;
+          const px = map.latLngToContainerPoint([lat, lng]);
+          const mapH = mapRef.current.offsetHeight ?? 350;
+          const targetPx = (window as any).L.point(px.x, px.y - mapH / 2 + 140);
+          const targetLatLng = map.containerPointToLatLng(targetPx);
+          map.panTo(targetLatLng, { animate: true, duration: 0.35 });
+        });
         markersRef.current.push(marker);
       });
     }
@@ -484,6 +500,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const marker = L.marker(coords, { icon }).addTo(map);
     marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), { maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false, autoClose: false });
     marker.on("popupopen", () => {
+      // Wire star buttons
       setTimeout(() => {
         groupRaces.forEach(r => {
           const btn = document.querySelector(`[data-race-id="${r.id}"]`) as HTMLElement;
@@ -491,6 +508,13 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
           if (btn) btn.onclick = () => { onToggleFav(r.id, rIsFav); map.closePopup(); };
         });
       }, 50);
+      // Pan so the pin sits in the lower-center of the map container,
+      // leaving room for the popup card above it.
+      const px = map.latLngToContainerPoint(coords);
+      const mapH = mapRef.current?.offsetHeight ?? 350;
+      const targetPx = (window as any).L.point(px.x, px.y - mapH / 2 + 140);
+      const targetLatLng = map.containerPointToLatLng(targetPx);
+      map.panTo(targetLatLng, { animate: true, duration: 0.35 });
     });
     markersRef.current.push(marker);
   }
