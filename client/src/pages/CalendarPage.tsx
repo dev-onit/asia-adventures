@@ -1778,21 +1778,21 @@ export default function CalendarPage() {
         role="button"
         aria-label={showRaceList ? "Collapse race list" : "Expand race list"}
       >
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground leading-none">Races</span>
-        <span className="ml-2 text-xs text-muted-foreground/50 leading-none">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
+        <span style={{ lineHeight: 1 }} className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Races</span>
+        <span style={{ lineHeight: 1 }} className="ml-2 text-xs text-muted-foreground/50">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
         {showFavs && (
-          <span className="ml-2 text-[10px] font-semibold inline-flex items-center gap-0.5" style={{ color: "#ca8a04", lineHeight: 1 }}>
-            <Star size={9} fill="#ca8a04" style={{ display: 'block', flexShrink: 0 }} /> Showing Favourites
+          <span style={{ lineHeight: 1, color: "#ca8a04" }} className="ml-2 text-[10px] font-semibold inline-flex items-center gap-1">
+            <Star size={9} fill="#ca8a04" /> Showing Favourites
           </span>
         )}
         {sortMode === "votes" && !showFavs && (
-          <span className="ml-2 text-[10px] font-semibold text-orange-500 inline-flex items-center gap-0.5" style={{ lineHeight: 1 }}>
-            <TrendingUp size={9} style={{ display: 'block', flexShrink: 0 }} /> Showing Most Voted
+          <span style={{ lineHeight: 1 }} className="ml-2 text-[10px] font-semibold text-orange-500 inline-flex items-center gap-1">
+            <TrendingUp size={9} /> Showing Most Voted
           </span>
         )}
         {!showFavs && activeFilterCount > 0 && (
-          <span className="ml-2 text-[10px] text-primary font-semibold inline-flex items-center gap-0.5" style={{ lineHeight: 1 }}>
-            <Filter size={9} style={{ display: 'block', flexShrink: 0 }} /> Active Filters
+          <span style={{ lineHeight: 1 }} className="ml-2 text-[10px] text-primary font-semibold inline-flex items-center gap-1">
+            <Filter size={9} /> Active Filters
           </span>
         )}
         <span className="ml-auto p-1 text-muted-foreground">
