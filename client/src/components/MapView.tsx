@@ -152,6 +152,13 @@ const POPUP_STYLE = `
   .leaflet-popup-content { margin: 0 !important; }
   .leaflet-popup-tip-container { display: none !important; }
   .leaflet-popup-close-button { color: hsl(var(--muted-foreground)) !important; font-size: 20px !important; width: 28px !important; height: 28px !important; top: 6px !important; right: 6px !important; }
+  .leaflet-bar a {
+    width: 26px !important; height: 26px !important;
+    line-height: 26px !important; font-size: 15px !important;
+  }
+  .leaflet-bar { border-radius: 8px !important; }
+  .leaflet-bar a:first-child { border-radius: 8px 8px 0 0 !important; }
+  .leaflet-bar a:last-child  { border-radius: 0 0 8px 8px !important; }
 `;
 
 export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef }: Props) {
@@ -463,13 +470,13 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
   return (
     <div className="relative">
-      <div ref={mapRef} className="map-container w-full" style={{ height: "clamp(390px, 40vw, 450px)", zIndex: 1, touchAction: "pan-y" }} />
+      <div ref={mapRef} className="map-container w-full" style={{ height: "clamp(420px, 40vw, 450px)", zIndex: 1, touchAction: "pan-y" }} />
       {/* Explore + Races buttons — top-right */}
       <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
         <button
           onClick={handleToggleRaces}
           title={!showExplore ? "Enable Explore first" : undefined}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all backdrop-blur-sm ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border shadow-md transition-all backdrop-blur-sm ${
             !showExplore
               ? "bg-white/95 dark:bg-zinc-900/95 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50"
               : showRaces
@@ -482,7 +489,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </button>
         <button
           onClick={handleToggleExplore}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
             showExplore ? "bg-white/95 dark:bg-zinc-900/95 border-orange-400 text-orange-500 dark:text-orange-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
@@ -497,7 +504,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       <div className="absolute bottom-3 right-3 z-10 flex flex-wrap justify-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", maxWidth: "calc(100% - 60px)" }}>
         <button
           onClick={onToggleUnconfirmed}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
             showUnconfirmed ? "bg-white/95 dark:bg-zinc-900/95 border-red-400 text-red-500 dark:text-red-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
@@ -506,7 +513,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </button>
         <button
           onClick={onToggleHidePast}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
             !hidePast ? "bg-white/95 dark:bg-zinc-900/95 border-amber-400 text-amber-500 dark:text-amber-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
