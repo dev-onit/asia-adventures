@@ -493,7 +493,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
   return (
     <div className="relative">
-      <div ref={mapRef} className="map-container w-full" style={{ height: "clamp(420px, 40vw, 450px)", zIndex: 1, touchAction: "pan-y" }} />
+      <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1, touchAction: "pan-y" }} />
       {/* Explore + Races buttons — top-right */}
       <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
         <button
