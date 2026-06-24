@@ -73,7 +73,24 @@ router.post("/admin/races", requireAdmin, async (req, res) => {
 router.put("/admin/races/:id", requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { eq } = await import("drizzle-orm");
-  const result = db.update(races).set(req.body).where(eq(races.id, Number(id))).returning().get();
+  // Allowlist mutable fields — never allow id to be overwritten
+  const { name, location, country, date, distance, type, team, url, note, status, badgeClass, lat, lng, dates } = req.body;
+  const update: Record<string, any> = {};
+  if (name !== undefined) update.name = name;
+  if (location !== undefined) update.location = location;
+  if (country !== undefined) update.country = country;
+  if (date !== undefined) update.date = date;
+  if (dates !== undefined) update.dates = dates;
+  if (distance !== undefined) update.distance = distance;
+  if (type !== undefined) update.type = type;
+  if (team !== undefined) update.team = team;
+  if (url !== undefined) update.url = url;
+  if (note !== undefined) update.note = note;
+  if (status !== undefined) update.status = status;
+  if (badgeClass !== undefined) update.badgeClass = badgeClass;
+  if (lat !== undefined) update.lat = lat;
+  if (lng !== undefined) update.lng = lng;
+  const result = db.update(races).set(update).where(eq(races.id, Number(id))).returning().get();
   res.json(result);
 });
 
@@ -96,7 +113,20 @@ router.post("/admin/explore", requireAdmin, async (req, res) => {
 router.put("/admin/explore/:id", requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { eq } = await import("drizzle-orm");
-  const result = db.update(exploreSites).set(req.body).where(eq(exploreSites.id, Number(id))).returning().get();
+  // Allowlist mutable fields — never allow id to be overwritten
+  const { name, country, region, category, description, bestMonths, url, emoji, lat, lng } = req.body;
+  const update: Record<string, any> = {};
+  if (name !== undefined) update.name = name;
+  if (country !== undefined) update.country = country;
+  if (region !== undefined) update.region = region;
+  if (category !== undefined) update.category = category;
+  if (description !== undefined) update.description = description;
+  if (bestMonths !== undefined) update.bestMonths = bestMonths;
+  if (url !== undefined) update.url = url;
+  if (emoji !== undefined) update.emoji = emoji;
+  if (lat !== undefined) update.lat = lat;
+  if (lng !== undefined) update.lng = lng;
+  const result = db.update(exploreSites).set(update).where(eq(exploreSites.id, Number(id))).returning().get();
   res.json(result);
 });
 
