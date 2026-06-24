@@ -82,7 +82,7 @@ export async function getExploreSites() {
 }
 
 // Bump this whenever seedData changes — forces a full wipe+reseed on next deploy
-const SEED_VERSION = "v29-explore-cleanup-2026-06-24";
+const SEED_VERSION = "v30-explore-new-2026-06-24";
 
 export async function seedIfEmpty() {
   // ── Migrations FIRST — must run before any drizzle SELECT uses the schema ──
@@ -119,7 +119,7 @@ export async function seedIfEmpty() {
   // ── Now safe to query via drizzle ──────────────────────────────────────────
   const count = db.select().from(races).all().length;
 
-  if (storedVersion !== SEED_VERSION || count < 392) { // v29: explore cleanup — removes 6 out-of-scope countries, fixes coords+URLs
+  if (storedVersion !== SEED_VERSION || count < 392) { // v30: explore replaced — 40 → 255 sites across 22 countries
     console.log(`[seed] version=${storedVersion} → ${SEED_VERSION}, count=${count} — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
