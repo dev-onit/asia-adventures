@@ -367,7 +367,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
     const flag = COUNTRY_WEATHER[site.country]?.flag ?? "";
     const desc = site.description.length > 120 ? site.description.slice(0, 120) + "…" : site.description;
-    const monthsHtml = site.bestMonths ? `<div class="mp-months">Best Months: ${site.bestMonths}</div>` : "";
+    const monthsHtml = site.bestMonths ? `<div class="mp-months">Best: ${site.bestMonths}</div>` : "";
     const visitHtml = site.url ? `<a href="${site.url}" target="_blank" rel="noopener noreferrer" class="mp-visit-btn" style="margin-top:10px;display:block;text-align:center">↗ Visit</a>` : "";
     return `<div class="map-popup">
       <span class="mp-badge" style="background:${color}22;color:${color};border:1px solid ${color}55">${site.category}</span>

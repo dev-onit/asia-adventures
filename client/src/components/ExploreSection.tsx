@@ -90,7 +90,7 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                 {/* Best months */}
                 {site.bestMonths && (
                   <div className="text-[11px] font-semibold text-primary mb-2">
-                    Best Months: {site.bestMonths}
+                    Best: {site.bestMonths}
                   </div>
                 )}
 
