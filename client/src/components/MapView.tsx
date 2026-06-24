@@ -250,22 +250,30 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       if (!gestureReady && !timedOut) return; // keep polling
       clearInterval(poll);
 
+    // Detect input type to configure gesture handling appropriately:
+    // - Real touchscreen (mobile/tablet): gesture plugin ON, scroll wheel zoom OFF
+    // - Mac trackpad: gesture plugin OFF, scroll wheel zoom ON (pinch = ctrlKey wheel)
+    // - Mouse / other desktop: gesture plugin OFF, scroll wheel zoom OFF
+    //   (Ctrl+scroll still zooms via the manual wheel listener below)
+    const isMac = /Mac|MacIntel/.test(navigator.platform);
+    const isTouchscreen = !isMac && 'ontouchstart' in window && navigator.maxTouchPoints > 1;
+
     const map = L.map(mapRef.current, {
       center: [20, 100], zoom: 4, zoomControl: false,
-      scrollWheelZoom: false,
+      scrollWheelZoom: isMac,   // Mac trackpad pinch arrives as ctrlKey wheel
       touchZoom: true,
       dragging: true,
       tap: false,
       attributionControl: false,
-      gestureHandling: true,
-      gestureHandlingOptions: {
+      gestureHandling: isTouchscreen,
+      gestureHandlingOptions: isTouchscreen ? {
         text: {
           touch: "Use two fingers to move the map",
           scroll: "Use Ctrl + scroll to zoom the map",
           scrollMac: "Use ⌘ + scroll to zoom the map",
         },
         duration: 1500,
-      },
+      } : {},
     });
 
     // Suppress gesture overlay when tapping a marker or popup.
@@ -469,25 +477,25 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
           activeMarkerRef.current = marker;
         });
         marker.on("popupopen", () => {
-          requestAnimationFrame(() => {
+          setTimeout(() => {
             const mapInstance = mapInstanceRef.current;
             const mapContainer = mapRef.current;
             if (!mapInstance || !mapContainer) return;
             const mapH = mapContainer.offsetHeight;
             const mapW = mapContainer.offsetWidth;
             const popupEl = mapContainer.querySelector(".leaflet-popup") as HTMLElement | null;
-            const popupH = popupEl ? popupEl.offsetHeight : 200;
+            const popupH = popupEl ? popupEl.offsetHeight : 220;
             const pinH = totalH;
-            const desiredY = mapH - popupH - 24 - pinH / 2;
+            const desiredY = Math.max(popupH + 20, mapH - popupH - 20 - pinH / 2);
             const px = mapInstance.latLngToContainerPoint([lat, lng]);
             const deltaY = px.y - desiredY;
             const deltaX = px.x - mapW / 2;
-            if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+            if (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8) {
               const targetPx = (window as any).L.point(px.x - deltaX, px.y - deltaY);
               const targetLatLng = mapInstance.containerPointToLatLng(targetPx);
-              mapInstance.panTo(targetLatLng, { animate: true, duration: 0.35 });
+              mapInstance.panTo(targetLatLng, { animate: true, duration: 0.4 });
             }
-          });
+          }, 80);
         });
         marker.on("popupclose", () => {
           if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
@@ -540,32 +548,30 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         });
       }, 50);
       // Pan so the popup is fully visible.
-      // We wait one rAF so the popup DOM is rendered and measurable.
-      requestAnimationFrame(() => {
+      // setTimeout(80) gives Leaflet time to fully render + size the popup DOM.
+      setTimeout(() => {
         const mapContainer = mapRef.current;
         if (!mapContainer) return;
         const mapH = mapContainer.offsetHeight;
         const mapW = mapContainer.offsetWidth;
         // Measure the rendered popup element
         const popupEl = mapContainer.querySelector(".leaflet-popup") as HTMLElement | null;
-        const popupH = popupEl ? popupEl.offsetHeight : 200;
-        const popupW = popupEl ? popupEl.offsetWidth  : 270;
-        // We want the pin at: x = map center, y = mapH - popupH - 24px gap - pinH/2
+        const popupH = popupEl ? popupEl.offsetHeight : 220;
+        // Place pin so popup sits 20px from the top edge and pin is in lower portion.
+        // desiredPinY = bottom of map minus popup height minus 20px gap
+        // Clamp: pin must be at least (popupH + 20) from top so popup doesn't clip.
         const pinH = totalH;
-        const desiredY = mapH - popupH - 24 - pinH / 2;
-        // Current pin position in container coords
+        const desiredY = Math.max(popupH + 20, mapH - popupH - 20 - pinH / 2);
+        // Current pin position in container coords (re-read after any prior pan)
         const px = map.latLngToContainerPoint(coords);
-        // How far we need to shift: move pin from px.y → desiredY, px.x → mapW/2
         const deltaY = px.y - desiredY;
         const deltaX = px.x - mapW / 2;
-        // Only pan if the shift is meaningful (>10px)
-        if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+        if (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8) {
           const targetPx = (window as any).L.point(px.x - deltaX, px.y - deltaY);
           const targetLatLng = map.containerPointToLatLng(targetPx);
-          map.panTo(targetLatLng, { animate: true, duration: 0.35 });
+          map.panTo(targetLatLng, { animate: true, duration: 0.4 });
         }
-        void popupW; // referenced to avoid lint warning
-      });
+      }, 80);
     });
     marker.on("popupclose", () => {
       if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
