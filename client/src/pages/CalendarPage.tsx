@@ -1923,7 +1923,7 @@ export default function CalendarPage() {
                           ) : <span className="text-xs text-muted-foreground">—</span>}
                         </td>
                         {/* Distance */}
-                        <td className="py-2 px-3 align-middle" style={{ minWidth: 80 }}>
+                        <td className="py-2 px-3 align-middle" style={{ minWidth: 80, width: 'auto' }}>
                           {distPills.length > 0 ? (
                             <div className="flex flex-wrap gap-1" style={{ maxHeight: '3.2em', overflow: 'hidden', alignContent: 'flex-start' }}>
                               {distPills.map((p: string, i: number) => (
