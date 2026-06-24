@@ -1016,7 +1016,7 @@ export default function CalendarPage() {
       {/* ── Sticky header ── */}
       <header ref={headerRef} className="sticky top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border">
         {/* Row 1: Logo + title + name chip */}
-        <div className="flex items-center gap-3 px-4 pt-4 pb-2">
+        <div className="flex items-center gap-3 px-4 pt-4 pb-1">
           <img src="/logo.jpg" alt="Adventure Crew" className="w-20 h-20 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0">
             <h1 className="text-xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
@@ -1031,7 +1031,7 @@ export default function CalendarPage() {
         </div>
 
         {/* Row 2: My Favourites + Most Voted + theme toggle */}
-        <div className="flex items-center gap-2 px-4 pt-3 pb-4">
+        <div className="flex items-center gap-2 px-4 pt-1.5 pb-4">
           <button
             onClick={() => {
               if (!showFavs) {
