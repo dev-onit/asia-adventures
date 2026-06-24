@@ -985,7 +985,7 @@ export default function CalendarPage() {
           <img src="/logo.jpg" alt="Adventure Crew" className="w-20 h-20 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0">
             <h1 className="text-xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
-            <p className="text-sm text-foreground/60 truncate font-medium tracking-wide">We Take Fun Seriously</p>
+            <p className="text-[11px] text-foreground/60 truncate font-medium tracking-wide">We Take Fun Seriously</p>
           </div>
           {voterName && (
             <div className="ml-auto flex items-center gap-1.5 px-3 h-9 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
