@@ -287,29 +287,31 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
 
-    // On mobile: override map.closePopup so it only works when the user
-    // explicitly taps the X button. Leaflet's touch-zoom handler calls
-    // closePopup() internally on every 2-finger gesture — we block that.
+    // On mobile: re-open popup immediately if it closes due to anything other
+    // than an explicit allowClose (X button, pin switch, star button).
+    // Leaflet closes popups internally via popup._close() on 2-finger gestures —
+    // intercepting map.closePopup is not enough. Instead we catch popupclose
+    // and reverse it unless we explicitly permitted it.
     if (isTouch) {
       let allowClose = false;
-      // Intercept the native closePopup
-      const originalClosePopup = map.closePopup.bind(map);
-      (map as any).closePopup = (...args: any[]) => {
-        if (allowClose) { allowClose = false; originalClosePopup(...args); }
-      };
-      // Allow close only when X button is tapped
+      (map as any)._allowNextClose = () => { allowClose = true; };
+
+      map.on("popupclose", (e: any) => {
+        if (allowClose) { allowClose = false; return; }
+        // Not allowed — re-open immediately
+        const popup = e.popup;
+        if (popup) setTimeout(() => { popup.openOn(map); }, 0);
+      });
+
+      // Allow close when X button is tapped
       if (mapRef.current) {
         mapRef.current.addEventListener("click", (e: MouseEvent) => {
           const target = e.target as HTMLElement;
           if (target?.closest(".leaflet-popup-close-button")) {
             allowClose = true;
-            originalClosePopup();
           }
         }, { capture: true });
       }
-      // Also allow close when tapping a new pin (activeMarkerRef handles switching)
-      // — we expose a helper the marker click handler can call
-      (map as any)._allowNextClose = () => { allowClose = true; };
     } else {
       // Desktop: close on background click, not after drag
       let wasDragging = false;
