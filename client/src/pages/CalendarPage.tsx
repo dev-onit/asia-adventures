@@ -1763,7 +1763,7 @@ export default function CalendarPage() {
               </div>
             </div>
           ) : (
-            <table className="w-full min-w-[900px]" style={{ borderCollapse: "collapse" }}>
+            <table className="min-w-full" style={{ borderCollapse: "collapse", tableLayout: "auto", width: "max-content", minWidth: "100%" }}>
               <thead>
                 <tr className="border-b border-border bg-muted/40">
                   <th style={{ width: COL_WIDTHS[0] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">★</th>
