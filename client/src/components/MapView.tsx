@@ -272,8 +272,14 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     }
     mapInstanceRef.current = map;
 
-    // Touch: 2-finger pan only; 1-finger always scrolls page
+    // Touch: 1-finger scrolls page, 2-finger pans map
     if (isTouchDevice) {
+      // Force touch-action back after Leaflet overrides it with "none"
+      requestAnimationFrame(() => {
+        if (mapRef.current) mapRef.current.style.touchAction = "pan-y";
+        const pane = mapRef.current?.querySelector(".leaflet-map-pane") as HTMLElement;
+        if (pane) pane.style.touchAction = "pan-y";
+      });
       mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
         if (e.touches.length >= 2) map.dragging.enable(); else map.dragging.disable();
       }, { passive: true });
@@ -502,6 +508,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   return (
     <div className="relative">
       <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1, touchAction: "pan-y" }} />
+
       {/* Explore + Races buttons — top-right */}
       <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
         <button
