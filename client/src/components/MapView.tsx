@@ -236,10 +236,15 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
 
-    // Poll until Leaflet script finishes loading (dynamic <script> tag may not be ready yet)
+    // Poll until Leaflet AND the gesture-handling plugin are both loaded.
+    // The plugin calls L.Map.mergeOptions({ gestureHandlingOptions: {...} }) at load time,
+    // so we can detect it via L.Map.prototype.options.gestureHandlingOptions.
     const tryInit = () => {
       const L = (window as any).L;
-      if (!L || !mapRef.current || mapInstanceRef.current) return;
+      const gestureReady = L && L.Map &&
+        L.Map.prototype.options &&
+        L.Map.prototype.options.gestureHandlingOptions !== undefined;
+      if (!L || !gestureReady || !mapRef.current || mapInstanceRef.current) return;
       clearInterval(poll);
 
     const map = L.map(mapRef.current, {

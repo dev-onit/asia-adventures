@@ -101,29 +101,22 @@ h1, h2, h3 {
 .leaflet-control { z-index: 400 !important; }
 .leaflet-pane { z-index: 1 !important; }
 
-/* Gesture handling overlay — styled to match app design */
-.leaflet-gesture-handling-touch-warning,
-.leaflet-gesture-handling-scroll-warning {
-  /* the plugin adds the ::after pseudo-element with the hint text */
-}
+/* Gesture handling overlay — styled to match app design.
+   Plugin covers map with ::after pseudo-element and sets content
+   via data-gesture-handling-touch-content / data-gesture-handling-scroll-content attr. */
 .leaflet-container.leaflet-gesture-handling-touch-warning::after,
 .leaflet-container.leaflet-gesture-handling-scroll-warning::after {
-  background: rgba(0, 0, 0, 0.60) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
   font-family: 'Satoshi', system-ui, sans-serif !important;
-  font-size: 14px !important;
+  font-size: 15px !important;
   font-weight: 600 !important;
   letter-spacing: 0.01em !important;
-  border-radius: 12px !important;
-  padding: 12px 20px !important;
   color: white !important;
-  width: auto !important;
-  max-width: 260px !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
   text-align: center !important;
+  border-radius: 0 !important;
+  padding: 0 24px !important;
 }
 
 /* Light mode sticky header */
