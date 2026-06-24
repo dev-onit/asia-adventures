@@ -24,7 +24,26 @@ if (!document.getElementById(leafletJsId)) {
   const script = document.createElement("script");
   script.id = leafletJsId;
   script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+  // After Leaflet loads, inject the gesture-handling plugin
+  script.onload = () => {
+    const ghId = "leaflet-gesture-handling-js";
+    if (!document.getElementById(ghId)) {
+      const ghScript = document.createElement("script");
+      ghScript.id = ghId;
+      ghScript.src = "https://unpkg.com/leaflet-gesture-handling@2.1.8/dist/leaflet-gesture-handling.min.js";
+      document.head.appendChild(ghScript);
+    }
+  };
   document.head.appendChild(script);
+}
+// Also inject the gesture-handling CSS
+const ghCssId = "leaflet-gesture-handling-css";
+if (!document.getElementById(ghCssId)) {
+  const link = document.createElement("link");
+  link.id = ghCssId;
+  link.rel = "stylesheet";
+  link.href = "https://unpkg.com/leaflet-gesture-handling@2.1.8/dist/leaflet-gesture-handling.min.css";
+  document.head.appendChild(link);
 }
 
 const S = "v4:"; // bump this prefix to invalidate all users' localStorage

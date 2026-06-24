@@ -196,9 +196,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   const lastRenderKeyRef = useRef<string>("");
   const renderMarkersRef = useRef<(force?: boolean) => void>(() => {});
   const hasInitialFitRef = useRef(false);
-  const isTouchDevice = useRef(typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches);
-  const [showHint, setShowHint] = useState(false);
-  const hintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
 
@@ -251,6 +249,15 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       dragging: true,
       tap: false,
       attributionControl: false,
+      gestureHandling: true,
+      gestureHandlingOptions: {
+        text: {
+          touch: "Use two fingers to move the map",
+          scroll: "Use Ctrl + scroll to zoom the map",
+          scrollMac: "Use ⌘ + scroll to zoom the map",
+        },
+        duration: 1500,
+      },
     });
 
     mapRef.current.addEventListener("wheel", (e: WheelEvent) => {
@@ -275,23 +282,6 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     }
     mapInstanceRef.current = map;
 
-    // Observe touches on the map to show/hide hint — passive so Leaflet is unaffected
-    if (isTouchDevice.current && mapRef.current) {
-      const el = mapRef.current;
-      const onTouchStart = (e: TouchEvent) => {
-        if (e.touches.length === 1) {
-          if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
-          setShowHint(true);
-          hintTimerRef.current = setTimeout(() => setShowHint(false), 2000);
-        } else {
-          if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
-          setShowHint(false);
-        }
-      };
-      const onTouchEnd = () => { setShowHint(false); };
-      el.addEventListener("touchstart", onTouchStart, { passive: true });
-      el.addEventListener("touchend", onTouchEnd, { passive: true });
-    }
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
     }; // end tryInit
@@ -532,28 +522,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     <div className="relative">
       <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }} />
 
-      {/* Mobile gesture hint — pointer-events:none so Leaflet always gets touches.
-          We observe touches on the map div to decide when to show the hint. */}
-      {isTouchDevice.current && (
-        <div
-          className="absolute inset-0 sm:hidden"
-          style={{ zIndex: 4, pointerEvents: "none" }}
-        >
-          <div
-            className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-            style={{
-              background: "rgba(0,0,0,0.45)",
-              backdropFilter: "blur(6px)",
-              opacity: showHint ? 1 : 0,
-              transition: "opacity 0.3s",
-              pointerEvents: "none",
-            }}
-          >
-            <span style={{ fontSize: 14 }}>✌️</span>
-            <span className="text-white font-medium" style={{ fontSize: 11, whiteSpace: "nowrap" }}>Two Fingers to Pinch or Drag</span>
-          </div>
-        </div>
-      )}
+
 
       {/* Explore + Races buttons — top-right */}
       <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
