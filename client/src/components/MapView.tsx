@@ -275,7 +275,23 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     }
     mapInstanceRef.current = map;
 
-    // Touch handled purely via CSS — see index.css .leaflet-container rule
+    // Observe touches on the map to show/hide hint — passive so Leaflet is unaffected
+    if (isTouchDevice.current && mapRef.current) {
+      const el = mapRef.current;
+      const onTouchStart = (e: TouchEvent) => {
+        if (e.touches.length === 1) {
+          if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
+          setShowHint(true);
+          hintTimerRef.current = setTimeout(() => setShowHint(false), 2000);
+        } else {
+          if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
+          setShowHint(false);
+        }
+      };
+      const onTouchEnd = () => { setShowHint(false); };
+      el.addEventListener("touchstart", onTouchStart, { passive: true });
+      el.addEventListener("touchend", onTouchEnd, { passive: true });
+    }
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
     }; // end tryInit
@@ -516,35 +532,13 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     <div className="relative">
       <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }} />
 
-      {/* Mobile gesture overlay — 1 finger shows hint, 2 fingers pass through to map */}
+      {/* Mobile gesture hint — pointer-events:none so Leaflet always gets touches.
+          We observe touches on the map div to decide when to show the hint. */}
       {isTouchDevice.current && (
         <div
           className="absolute inset-0 sm:hidden"
-          style={{
-            zIndex: 4,
-            touchAction: "pan-y",
-            pointerEvents: "auto",
-            transition: "opacity 0.3s",
-          }}
-          onTouchStart={e => {
-            if (e.touches.length >= 2) {
-              // 2 fingers — hide hint, pass through to Leaflet
-              if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
-              setShowHint(false);
-              (e.currentTarget as HTMLDivElement).style.pointerEvents = "none";
-            } else {
-              // 1 finger — show hint, page scrolls
-              if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
-              setShowHint(true);
-              hintTimerRef.current = setTimeout(() => setShowHint(false), 2000);
-            }
-          }}
-          onTouchEnd={e => {
-            // Restore overlay after 2-finger lift
-            (e.currentTarget as HTMLDivElement).style.pointerEvents = "auto";
-          }}
+          style={{ zIndex: 4, pointerEvents: "none" }}
         >
-          {/* Hint pill — top-left, only visible on 1-finger */}
           <div
             className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full"
             style={{
