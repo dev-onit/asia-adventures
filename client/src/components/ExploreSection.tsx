@@ -35,7 +35,7 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
 
       {/* Tile grid */}
       {isExpanded && (
-        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="p-3 sm:p-4 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
           {filteredSites.map(site => {
             const flag = COUNTRY_WEATHER[site.country]?.flag ?? "";
             const catColor = {
@@ -43,7 +43,7 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
               Temples: "text-amber-400", Nature: "text-green-400", Beaches: "text-pink-400",
             }[site.category] ?? "text-muted-foreground";
             return (
-              <div key={site.id} className="rounded-xl border border-border bg-card p-4 flex flex-col gap-2">
+              <div key={site.id} className="rounded-xl border border-border bg-card p-3 sm:p-4 flex flex-col gap-1.5 sm:gap-2">
                 <div className="flex items-start justify-between gap-2">
                   <span className="text-2xl">{site.emoji}</span>
                   <span className={`text-[10px] font-semibold uppercase tracking-wide ${catColor}`}>{site.category}</span>
