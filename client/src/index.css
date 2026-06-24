@@ -103,7 +103,12 @@ h1, h2, h3 {
 
 /* Gesture handling overlay — styled to match app design.
    Plugin covers map with ::after pseudo-element and sets content
-   via data-gesture-handling-touch-content / data-gesture-handling-scroll-content attr. */
+   via data-gesture-handling-touch-content / data-gesture-handling-scroll-content attr.
+   The overlay fades in after a 1s delay so brief/accidental touches don't trigger it. */
+@keyframes gesture-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
 .leaflet-container.leaflet-gesture-handling-touch-warning::after,
 .leaflet-container.leaflet-gesture-handling-scroll-warning::after {
   background: rgba(0, 0, 0, 0.45) !important;
@@ -117,6 +122,7 @@ h1, h2, h3 {
   text-align: center !important;
   border-radius: 0 !important;
   padding: 0 24px !important;
+  animation: gesture-overlay-in 0.2s ease 1s both !important;
 }
 
 /* Light mode sticky header */
