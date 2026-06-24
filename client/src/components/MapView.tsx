@@ -266,6 +266,27 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       },
     });
 
+    // Suppress gesture overlay when tapping a marker or popup.
+    // The plugin adds leaflet-gesture-handling-touch-warning on every 1-finger touchstart.
+    // We detect marker/popup taps and remove the class immediately after the plugin adds it.
+    if (mapRef.current) {
+      const mapContainer = mapRef.current;
+      mapContainer.addEventListener("touchstart", (e: TouchEvent) => {
+        if (e.touches.length !== 1) return;
+        const target = e.target as HTMLElement;
+        const isMarkerOrPopup = !!(target?.closest(".leaflet-marker-icon") ||
+          target?.closest(".leaflet-interactive") ||
+          target?.closest(".leaflet-popup"));
+        if (isMarkerOrPopup) {
+          // Use setTimeout(0) so this fires after the plugin's synchronous handler
+          // has already added the warning class, then we strip it immediately.
+          setTimeout(() => {
+            mapContainer.classList.remove("leaflet-gesture-handling-touch-warning");
+          }, 0);
+        }
+      }, { passive: true, capture: true });
+    }
+
     mapRef.current.addEventListener("wheel", (e: WheelEvent) => {
       if (e.ctrlKey) { e.preventDefault(); e.stopPropagation(); if (e.deltaY < 0) map.zoomIn(); else map.zoomOut(); }
     }, { passive: false });
