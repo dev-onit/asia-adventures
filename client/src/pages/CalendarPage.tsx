@@ -372,7 +372,7 @@ function VoterChips({ voters }: { voters: string[] }) {
         <span className="text-black">{voters.length === 1 ? 'Vote' : 'Votes'}</span>
       </button>
       {open && (
-        <div className="absolute left-0 top-full mt-1.5 z-[600] min-w-[100px] rounded-xl border border-border bg-background shadow-xl py-1.5 px-1.5">
+        <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 z-[600] min-w-[100px] rounded-xl border border-border bg-background shadow-xl py-1.5 px-1.5">
           {voters.map((v, i) => (
             <div key={i} className={`px-2 py-0.5 mb-0.5 last:mb-0 text-[10px] font-semibold rounded-full border ${VOTER_COLORS[i % VOTER_COLORS.length]}`}>{v}</div>
           ))}
@@ -1835,7 +1835,7 @@ export default function CalendarPage() {
                       <>
                       <tr className={`border-b border-border transition-colors ${rowBg} ${isPast ? "opacity-40 grayscale-[60%]" : ""}`}>
                         {/* ★ Star */}
-                        <td className="text-center py-4 px-3 align-middle" style={{ width: COL_WIDTHS[0] }}>
+                        <td className="text-center py-4 px-3" style={{ width: COL_WIDTHS[0], verticalAlign: 'middle' }}>
                           {!isScratched && (
                             <button
                               onClick={() => isFav ? removeFav.mutate(race.id) : addFav.mutate(race.id)}
@@ -1847,8 +1847,8 @@ export default function CalendarPage() {
                             </button>
                           )}
                         </td>
-                        {/* Voters chips — 3 visible, expand on click */}
-                        <td className="py-2 px-2 align-middle" style={{ minWidth: 60, maxWidth: 80 }}>
+                        {/* Voters chips */}
+                        <td className="py-2 px-2" style={{ minWidth: 60, maxWidth: 80, verticalAlign: 'middle' }}>
                           {(() => {
                             const voters = votesByRace.get(race.id) ?? [];
                             if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
