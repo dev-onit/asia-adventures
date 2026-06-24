@@ -287,47 +287,22 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
 
-    // Close popup only on a genuine background tap — not after any pan/drag.
-    // On desktop: track via Leaflet dragstart/dragend.
-    // On mobile: dragging is disabled so those events never fire — track touch
-    //   movement directly. A 2-finger pan moves >10px; a tap moves <5px.
-    let wasDragging = false;
-
-    // Desktop drag tracking
-    map.on("dragstart", () => { wasDragging = true; });
-    map.on("dragend",   () => { setTimeout(() => { wasDragging = false; }, 50); });
-
-    // Mobile touch tracking — set wasDragging if fingers move before lifting
-    let touchStartX = 0, touchStartY = 0;
-    if (mapRef.current) {
-      mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
-        wasDragging = false;
-        if (e.touches.length > 0) {
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-        }
-      }, { passive: true });
-      mapRef.current.addEventListener("touchmove", (e: TouchEvent) => {
-        if (e.touches.length > 0) {
-          const dx = e.touches[0].clientX - touchStartX;
-          const dy = e.touches[0].clientY - touchStartY;
-          if (Math.abs(dx) > 8 || Math.abs(dy) > 8) wasDragging = true;
-        }
-      }, { passive: true });
-      mapRef.current.addEventListener("touchend", () => {
-        // Clear flag after a short delay so the synthetic click is still suppressed
-        setTimeout(() => { wasDragging = false; }, 300);
-      }, { passive: true });
+    // On desktop: close popup on background click (but not after a drag).
+    // On mobile: popup only closes via the X button — background tap does nothing.
+    //   This avoids all the complexity of distinguishing taps from 2-finger pans.
+    if (!isTouch) {
+      let wasDragging = false;
+      map.on("dragstart", () => { wasDragging = true; });
+      map.on("dragend",   () => { setTimeout(() => { wasDragging = false; }, 50); });
+      map.on("click", (e: any) => {
+        if (wasDragging) return;
+        const target = e.originalEvent?.target as HTMLElement;
+        const isUI = !!(target?.closest(".leaflet-marker-icon") ||
+                        target?.closest(".leaflet-interactive") ||
+                        target?.closest(".leaflet-popup"));
+        if (!isUI) map.closePopup();
+      });
     }
-
-    map.on("click", (e: any) => {
-      if (wasDragging) return;
-      const target = e.originalEvent?.target as HTMLElement;
-      const isUI = !!(target?.closest(".leaflet-marker-icon") ||
-                      target?.closest(".leaflet-interactive") ||
-                      target?.closest(".leaflet-popup"));
-      if (!isUI) map.closePopup();
-    });
     }; // end tryInit
 
     const poll = setInterval(tryInit, 100);
