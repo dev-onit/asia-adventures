@@ -1738,13 +1738,18 @@ export default function CalendarPage() {
       {showBackToMap && (
         <button
           onClick={() => {
-            mapWrapperRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+            const el = mapWrapperRef.current;
+            if (el) {
+              const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h") || "0");
+              const top = el.getBoundingClientRect().top + window.scrollY - headerH;
+              window.scrollTo({ top, behavior: "smooth" });
+            }
             setTimeout(() => { mapRecenterRef.current?.(); }, 600);
           }}
-          className="fixed bottom-5 left-4 z-50 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border shadow-lg backdrop-blur-sm transition-all hover:brightness-110 bg-white/95 dark:bg-zinc-900/95 border-orange-400 text-orange-500 dark:text-orange-400"
-          style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))" }}
+          className="fixed bottom-5 left-4 z-50 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border shadow-lg backdrop-blur-sm transition-all hover:brightness-110 bg-white/95 dark:bg-zinc-950/90 border-orange-400 text-orange-500 dark:text-orange-400"
+          style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.35))" }}
         >
-          <MapPin size={13} />
+          <MapPin size={11} />
           Back to Map
         </button>
       )}
