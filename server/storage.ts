@@ -82,7 +82,7 @@ export async function getExploreSites() {
 }
 
 // Bump this whenever seedData changes — forces a full wipe+reseed on next deploy
-const SEED_VERSION = "v30-explore-new-2026-06-24";
+const SEED_VERSION = "v31-explore-reseed-2026-06-24";
 
 export async function seedIfEmpty() {
   // ── Migrations FIRST — must run before any drizzle SELECT uses the schema ──
@@ -119,13 +119,15 @@ export async function seedIfEmpty() {
   // ── Now safe to query via drizzle ──────────────────────────────────────────
   const count = db.select().from(races).all().length;
 
-  if (storedVersion !== SEED_VERSION || count < 392) { // v30: explore replaced — 40 → 255 sites across 22 countries
+  if (storedVersion !== SEED_VERSION || count < 392) { // v31: force explore reseed — wipe explore_sites on version mismatch
     console.log(`[seed] version=${storedVersion} → ${SEED_VERSION}, count=${count} — wiping and reseeding all races`);
     sqlite.prepare("DELETE FROM races").run();
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
     // Also wipe votes/favourites so fresh start is truly clean
     try { sqlite.prepare("DELETE FROM favourites").run(); } catch {}
     try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='favourites'").run(); } catch {}
+    // Wipe explore sites so they reseed with the new list
+    try { sqlite.prepare("DELETE FROM explore_sites").run(); } catch {}
     const { syncAllRaces } = await import("./seed.js");
     await syncAllRaces();
     sqlite.prepare("INSERT OR REPLACE INTO seed_meta (key, value) VALUES ('seed_version', ?)").run(SEED_VERSION);
