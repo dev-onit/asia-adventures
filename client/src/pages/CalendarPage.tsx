@@ -334,29 +334,36 @@ function matchesSportFilters(race: Race, sportFilters: Set<string>, subFilters: 
 }
 
 function VoterChips({ voters }: { voters: string[] }) {
-  const [expanded, setExpanded] = React.useState(false);
-  const MAX = 3;
-  const needsExpand = voters.length > MAX;
-  const visible = expanded ? voters : voters.slice(0, MAX);
-  const overflow = voters.length - MAX;
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (!open) return;
+    function handler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
+
   return (
-    <div className="flex flex-wrap gap-1 items-center">
-      {visible.map((v, i) => (
-        <span key={i} title={v} className="inline-flex items-center justify-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-yellow-400/15 border border-yellow-400/40 text-yellow-700 dark:text-yellow-300 whitespace-nowrap cursor-default">
-          <TrendingUp size={9} className="shrink-0" /> {expanded ? v : v.charAt(0).toUpperCase()}
+    <div ref={ref} className="relative inline-flex">
+      <button
+        onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
+        className="inline-flex items-center gap-1.5 pl-1 pr-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-500 hover:bg-orange-400 text-white transition-colors whitespace-nowrap shadow-sm">
+        <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-white/25 text-white text-[10px] font-bold leading-none">
+          {voters.length}
         </span>
-      ))}
-      {!expanded && needsExpand && (
-        <button onClick={e => { e.stopPropagation(); setExpanded(true); }}
-          className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors whitespace-nowrap">
-          +{overflow}
-        </button>
-      )}
-      {expanded && (
-        <button onClick={e => { e.stopPropagation(); setExpanded(false); }}
-          className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-muted border border-border text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
-          ↑
-        </button>
+        Votes
+      </button>
+      {open && (
+        <div className="absolute left-0 top-full mt-1.5 z-[600] min-w-[120px] rounded-xl border border-border bg-popover shadow-lg py-1.5 px-1">
+          {voters.map((v, i) => (
+            <div key={i} className="px-2.5 py-1 text-xs text-foreground font-medium rounded-lg hover:bg-muted transition-colors">{v}</div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -1828,7 +1835,7 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Voters chips — 3 visible, expand on click */}
-                        <td className="py-2 px-3 align-middle" style={{ minWidth: 120, maxWidth: 220 }}>
+                        <td className="py-2 px-3 align-middle" style={{ minWidth: 80, maxWidth: 100 }}>
                           {(() => {
                             const voters = votesByRace.get(race.id) ?? [];
                             if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
