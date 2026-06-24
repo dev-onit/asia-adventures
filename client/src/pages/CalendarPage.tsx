@@ -1723,7 +1723,10 @@ export default function CalendarPage() {
       <div ref={mapWrapperRef}>
       <div ref={resultBarRef} className="px-4 py-2 text-xs text-muted-foreground border-b border-border flex items-center gap-2">
         <span>{filtered.length} {filtered.length === 1 ? "race" : "races"}{filtered.length < races.length ? ` of ${races.length}` : ""}</span>
-        {sortMode === "votes" && (
+        {showFavs && (
+          <span className="font-semibold" style={{ color: "#ca8a04" }}>· Showing Favourites</span>
+        )}
+        {sortMode === "votes" && !showFavs && (
           <span className="text-orange-500 font-semibold">· Showing Most Voted</span>
         )}
       </div>
@@ -1778,10 +1781,10 @@ export default function CalendarPage() {
         <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Races</span>
         <span className="ml-2 text-xs text-muted-foreground/50">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
         {showFavs && (
-          <span className="ml-2 text-[10px] font-semibold" style={{ color: "#ca8a04" }}>★ Showing Favourites</span>
+          <span className="ml-2 text-[10px] font-semibold" style={{ color: "#ca8a04" }}>· Showing Favourites</span>
         )}
         {sortMode === "votes" && !showFavs && (
-          <span className="ml-2 text-[10px] font-semibold text-orange-500 flex items-center gap-0.5"><TrendingUp size={10} /> Most Voted</span>
+          <span className="ml-2 text-[10px] font-semibold text-orange-500">· Showing Most Voted</span>
         )}
         {!showFavs && activeFilterCount > 0 && (
           <span className="ml-2 text-[10px] text-primary font-semibold flex items-center gap-0.5">
