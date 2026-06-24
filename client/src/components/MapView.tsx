@@ -195,6 +195,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   const showRacesRef = useRef(true);
   const lastRenderKeyRef = useRef<string>("");
   const renderMarkersRef = useRef<(force?: boolean) => void>(() => {});
+  const hasInitialFitRef = useRef(false);
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
 
@@ -240,12 +241,11 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       if (!L || !mapRef.current || mapInstanceRef.current) return;
       clearInterval(poll);
 
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
     const map = L.map(mapRef.current, {
       center: [20, 100], zoom: 4, zoomControl: false,
       scrollWheelZoom: false,
-      touchZoom: isTouchDevice ? "center" : true,
-      dragging: !isTouchDevice,
+      touchZoom: true,
+      dragging: true,
       tap: false,
       attributionControl: false,
     });
@@ -272,19 +272,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     }
     mapInstanceRef.current = map;
 
-    // Touch: 1-finger scrolls page, 2-finger pans map
-    if (isTouchDevice) {
-      // Only override touch-action on the outer container — leave Leaflet's inner
-      // panes alone so 2-finger drag events still reach Leaflet's handlers
-      requestAnimationFrame(() => {
-        if (mapRef.current) mapRef.current.style.touchAction = "pan-y";
-      });
-      mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
-        if (e.touches.length >= 2) map.dragging.enable(); else map.dragging.disable();
-      }, { passive: true });
-      mapRef.current.addEventListener("touchend", () => { map.dragging.disable(); }, { passive: true });
-      mapRef.current.addEventListener("touchcancel", () => { map.dragging.disable(); }, { passive: true });
-    }
+    // Touch handled purely via CSS — see index.css .leaflet-container rule
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
     }; // end tryInit
@@ -462,6 +450,23 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     markersRef.current.push(marker);
   }
 
+  // ── Initial fit: center on filtered races (or all) on first render ──
+  if (!hasInitialFitRef.current && mapInstanceRef.current) {
+    const L = (window as any).L;
+    const coords = displayRaces
+      .map(r => getCoords(r))
+      .filter(Boolean) as [number, number][];
+    if (coords.length > 0) {
+      hasInitialFitRef.current = true;
+      if (coords.length === 1) {
+        mapInstanceRef.current.setView(coords[0], 6, { animate: false });
+      } else {
+        const bounds = L.latLngBounds(coords.map(([lat, lng]: [number, number]) => [lat, lng]));
+        mapInstanceRef.current.fitBounds(bounds, { padding: [48, 48], maxZoom: 6, animate: false });
+      }
+    }
+  }
+
   useEffect(() => { renderMarkers(); }, [displayRaces, sites, favSet, votesByRace, showFavsOnly]);
 
   // ── Expose recenter function to parent ──
@@ -506,7 +511,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
   return (
     <div className="relative">
-      <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1, touchAction: "pan-y" }} />
+      <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }} />
 
       {/* Explore + Races buttons — top-right */}
       <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>

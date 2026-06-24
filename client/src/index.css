@@ -197,3 +197,11 @@ h1, h2, h3 {
     --map-h: clamp(420px, 40vw, 450px);
   }
 }
+
+/* Mobile: let browser handle 1-finger vertical scroll natively.
+   Leaflet still gets 2-finger pan/pinch via its own gesture handlers. */
+@media (max-width: 639px) {
+  .leaflet-container {
+    touch-action: pan-y !important;
+  }
+}
