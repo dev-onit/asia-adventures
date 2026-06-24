@@ -268,10 +268,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     mapInstanceRef.current = map;
 
     map.dragging.enable();
-    mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
-      if (e.touches.length >= 2) map.dragging.enable(); else map.dragging.disable();
-    }, { passive: true });
-    mapRef.current.addEventListener("touchend", () => { map.dragging.disable(); }, { passive: true });
+    // On mobile: one finger pans the map, no page-scroll interference
+    mapRef.current.addEventListener("touchstart", () => { map.dragging.enable(); }, { passive: true });
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
     }; // end tryInit
@@ -493,7 +491,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
   return (
     <div className="relative">
-      <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1, touchAction: "pan-y" }} />
+      <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1, touchAction: "none", overscrollBehavior: "none" }} />
       {/* Explore + Races buttons — top-right */}
       <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
         <button
