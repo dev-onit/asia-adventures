@@ -311,6 +311,15 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
+
+    // Close popup only on background tap (not on marker/popup tap)
+    map.on("click", (e: any) => {
+      const target = e.originalEvent?.target as HTMLElement;
+      const isUI = !!(target?.closest(".leaflet-marker-icon") ||
+                      target?.closest(".leaflet-interactive") ||
+                      target?.closest(".leaflet-popup"));
+      if (!isUI) map.closePopup();
+    });
     }; // end tryInit
 
     const poll = setInterval(tryInit, 100);
@@ -442,7 +451,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </div>`;
         const icon = L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
         const marker = L.marker([lat, lng], { icon }).addTo(map);
-        marker.bindPopup(buildExplorePopup(site), { maxWidth: 280, className: "map-popup-wrapper" });
+        marker.bindPopup(buildExplorePopup(site), { maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false, autoClose: false });
         markersRef.current.push(marker);
       });
     }
@@ -473,7 +482,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     });
 
     const marker = L.marker(coords, { icon }).addTo(map);
-    marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), { maxWidth: 300, className: "map-popup-wrapper" });
+    marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), { maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false, autoClose: false });
     marker.on("popupopen", () => {
       setTimeout(() => {
         groupRaces.forEach(r => {
