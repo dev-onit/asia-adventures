@@ -196,6 +196,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   const lastRenderKeyRef = useRef<string>("");
   const renderMarkersRef = useRef<(force?: boolean) => void>(() => {});
   const hasInitialFitRef = useRef(false);
+  // Tracks the currently open marker so we can close it before opening another
+  const activeMarkerRef = useRef<any>(null);
 
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
@@ -458,7 +460,14 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </div>`;
         const icon = L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
         const marker = L.marker([lat, lng], { icon }).addTo(map);
-        marker.bindPopup(buildExplorePopup(site), { maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false, autoClose: false });
+        marker.bindPopup(buildExplorePopup(site), { maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false });
+        marker.on("click", () => {
+          // Close whichever marker is currently open (could be a different marker)
+          if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
+            activeMarkerRef.current.closePopup();
+          }
+          activeMarkerRef.current = marker;
+        });
         marker.on("popupopen", () => {
           const map = mapInstanceRef.current;
           if (!map || !mapRef.current) return;
@@ -467,6 +476,9 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
           const targetPx = (window as any).L.point(px.x, px.y - mapH / 2 + 140);
           const targetLatLng = map.containerPointToLatLng(targetPx);
           map.panTo(targetLatLng, { animate: true, duration: 0.35 });
+        });
+        marker.on("popupclose", () => {
+          if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
         });
         markersRef.current.push(marker);
       });
@@ -498,7 +510,14 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     });
 
     const marker = L.marker(coords, { icon }).addTo(map);
-    marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), { maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false, autoClose: false });
+    marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), { maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false });
+    marker.on("click", () => {
+      // Close whichever marker is currently open (could be a different marker)
+      if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
+        activeMarkerRef.current.closePopup();
+      }
+      activeMarkerRef.current = marker;
+    });
     marker.on("popupopen", () => {
       // Wire star buttons
       setTimeout(() => {
@@ -515,6 +534,9 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       const targetPx = (window as any).L.point(px.x, px.y - mapH / 2 + 140);
       const targetLatLng = map.containerPointToLatLng(targetPx);
       map.panTo(targetLatLng, { animate: true, duration: 0.35 });
+    });
+    marker.on("popupclose", () => {
+      if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
     });
     markersRef.current.push(marker);
   }
