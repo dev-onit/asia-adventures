@@ -847,6 +847,7 @@ export default function CalendarPage() {
   // ── Header height measurement ──
   const headerRef = useRef<HTMLElement>(null);
   const racesHeaderRef = useRef<HTMLDivElement>(null);
+  const resultBarRef = useRef<HTMLDivElement>(null);
   const mapWrapperRef = useRef<HTMLDivElement>(null);
   const mapRecenterRef = useRef<(() => void) | null>(null);
   const [showBackToMap, setShowBackToMap] = useState(false);
@@ -865,6 +866,16 @@ export default function CalendarPage() {
     if (!el) return;
     const ro = new ResizeObserver(() => {
       document.documentElement.style.setProperty("--races-header-h", el.offsetHeight + "px");
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = resultBarRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      document.documentElement.style.setProperty("--result-bar-h", el.offsetHeight + "px");
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -1710,7 +1721,7 @@ export default function CalendarPage() {
 
       {/* Result bar + Map */}
       <div ref={mapWrapperRef}>
-      <div className="px-4 py-2 text-xs text-muted-foreground border-b border-border">
+      <div ref={resultBarRef} className="px-4 py-2 text-xs text-muted-foreground border-b border-border">
         {filtered.length} {filtered.length === 1 ? "race" : "races"}{filtered.length < races.length ? ` of ${races.length}` : ""}
       </div>
       <MapView

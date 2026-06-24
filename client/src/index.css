@@ -15,7 +15,8 @@
   --border: 220 15% 22%;
   --header-h: 0px;
   --races-header-h: 0px;
-  --map-h: calc(100dvh - var(--header-h) - env(safe-area-inset-bottom, 0px) - 56px);
+  --result-bar-h: 36px;
+  --map-h: calc(100dvh - var(--header-h) - env(safe-area-inset-bottom, 0px) - 50px - var(--result-bar-h));
 }
 
 /* ── Light mode ── */
