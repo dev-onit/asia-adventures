@@ -1848,12 +1848,14 @@ export default function CalendarPage() {
                           )}
                         </td>
                         {/* Voters chips */}
-                        <td className="py-2 px-2" style={{ minWidth: 60, maxWidth: 80, verticalAlign: 'middle' }}>
-                          {(() => {
-                            const voters = votesByRace.get(race.id) ?? [];
-                            if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
-                            return <VoterChips voters={voters} />;
-                          })()}
+                        <td className="py-2 px-2 text-center" style={{ minWidth: 60, maxWidth: 80, verticalAlign: 'middle' }}>
+                          <div className="flex items-center justify-center w-full">
+                            {(() => {
+                              const voters = votesByRace.get(race.id) ?? [];
+                              if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
+                              return <VoterChips voters={voters} />;
+                            })()}
+                          </div>
                         </td>
                         {/* Name + note (name is a link if URL exists) */}
                         <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 240 }}>
