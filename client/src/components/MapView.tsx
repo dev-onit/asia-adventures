@@ -160,6 +160,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   const markersRef = useRef<any[]>([]);
   const [showExplore, setShowExplore] = useState(false);
   const showExploreRef = useRef(false);
+  const [showRaces, setShowRaces] = useState(true);
+  const showRacesRef = useRef(true);
   const lastRenderKeyRef = useRef<string>("");
   const renderMarkersRef = useRef<(force?: boolean) => void>(() => {});
 
@@ -337,6 +339,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       favs: [...favSet].sort(),
       votes: [...votesByRace.keys()].sort(),
       explore: showExploreRef.current,
+      races: showRacesRef.current,
     });
     if (!force && renderKey === lastRenderKeyRef.current) return;
     lastRenderKeyRef.current = renderKey;
@@ -345,7 +348,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     markersRef.current = [];
 
     // ── Render every race as individual pin ──
-    displayRaces.forEach(race => {
+    if (showRacesRef.current) displayRaces.forEach(race => {
       const coords = getCoords(race);
       if (!coords) return;
       renderSingleGroup(L, map, { races: [race], coords }, coords);
@@ -421,14 +424,27 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const next = !showExploreRef.current;
     showExploreRef.current = next;
     setShowExplore(next);
+    // If turning Explore OFF while Races is OFF, snap Races back to ON
+    if (!next && !showRacesRef.current) {
+      showRacesRef.current = true;
+      setShowRaces(true);
+    }
+    renderMarkers(true);
+  }
+
+  function handleToggleRaces() {
+    if (!showExploreRef.current) return; // locked unless Explore is ON
+    const next = !showRacesRef.current;
+    showRacesRef.current = next;
+    setShowRaces(next);
     renderMarkers(true);
   }
 
   return (
     <div className="relative">
       <div ref={mapRef} className="map-container w-full" style={{ height: "450px", zIndex: 1, touchAction: "pan-y" }} />
-      {/* Explore button — top-right */}
-      <div className="absolute top-3 right-3 z-10" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
+      {/* Explore + Races buttons — top-right */}
+      <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
         <button
           onClick={handleToggleExplore}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
@@ -440,6 +456,20 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
             : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
           }
           {showExplore ? "Explore: ON" : "Explore: OFF"}
+        </button>
+        <button
+          onClick={handleToggleRaces}
+          title={!showExplore ? "Enable Explore first" : undefined}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border shadow-md transition-all backdrop-blur-sm ${
+            !showExplore
+              ? "bg-white/95 dark:bg-zinc-900/95 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50"
+              : showRaces
+                ? "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300 hover:brightness-110"
+                : "bg-white/95 dark:bg-zinc-900/95 border-blue-400 text-blue-500 dark:text-blue-400 hover:brightness-110"
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          {showRaces ? "Races: ON" : "Races: OFF"}
         </button>
       </div>
       {/* Show Predicted + Show Past — bottom-right */}
