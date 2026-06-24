@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Star, Filter, X, Globe2, Users, Moon, Sun, Search, AlertTriangle, ChevronDown, ChevronRight, Eye, EyeOff, TrendingUp, Calendar } from "lucide-react";
+import { Star, Filter, X, Globe2, Users, Moon, Sun, Search, AlertTriangle, ChevronDown, ChevronRight, Eye, EyeOff, TrendingUp, Calendar, MapPin } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import type { Race, Favourite, ExploreSite } from "../../../shared/schema";
@@ -847,6 +847,9 @@ export default function CalendarPage() {
   // ── Header height measurement ──
   const headerRef = useRef<HTMLElement>(null);
   const racesHeaderRef = useRef<HTMLDivElement>(null);
+  const mapWrapperRef = useRef<HTMLDivElement>(null);
+  const mapRecenterRef = useRef<(() => void) | null>(null);
+  const [showBackToMap, setShowBackToMap] = useState(false);
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
@@ -865,6 +868,18 @@ export default function CalendarPage() {
     });
     ro.observe(el);
     return () => ro.disconnect();
+  }, []);
+
+  // ── Back to Map floating button observer ──
+  useEffect(() => {
+    const el = mapWrapperRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setShowBackToMap(!entry.isIntersecting),
+      { threshold: 0, rootMargin: "0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
 
   // ── Name entry ──
@@ -1699,6 +1714,7 @@ export default function CalendarPage() {
       </div>
 
       {/* Map */}
+      <div ref={mapWrapperRef}>
       <MapView
         races={filtered}
         allRaces={races}
@@ -1714,7 +1730,24 @@ export default function CalendarPage() {
         onToggleHidePast={() => setHidePast(v => !v)}
         showUnconfirmed={showUnconfirmed}
         onToggleUnconfirmed={() => setShowUnconfirmed(v => !v)}
+        recenterRef={mapRecenterRef}
       />
+      </div>
+
+      {/* ── Back to Map floating button ── */}
+      {showBackToMap && (
+        <button
+          onClick={() => {
+            mapWrapperRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+            setTimeout(() => { mapRecenterRef.current?.(); }, 600);
+          }}
+          className="fixed bottom-5 left-4 z-50 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border shadow-lg backdrop-blur-sm transition-all hover:brightness-110 bg-white/95 dark:bg-zinc-900/95 border-orange-400 text-orange-500 dark:text-orange-400"
+          style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))" }}
+        >
+          <MapPin size={13} />
+          Back to Map
+        </button>
+      )}
 
       {/* ── Races section ── */}
       <div

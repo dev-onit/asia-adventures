@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { Race, ExploreSite } from "../../../shared/schema";
 import { getCoords, COUNTRY_WEATHER } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
@@ -18,6 +18,7 @@ interface Props {
   onToggleHidePast: () => void;
   showUnconfirmed: boolean;
   onToggleUnconfirmed: () => void;
+  recenterRef?: React.MutableRefObject<(() => void) | null>;
 }
 
 const TYPE_COLORS: Record<string, string> = {
@@ -153,7 +154,7 @@ const POPUP_STYLE = `
   .leaflet-popup-close-button { color: hsl(var(--muted-foreground)) !important; font-size: 20px !important; width: 28px !important; height: 28px !important; top: 6px !important; right: 6px !important; }
 `;
 
-export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const tileLayerRef = useRef<any>(null);
@@ -419,6 +420,26 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   }
 
   useEffect(() => { renderMarkers(); }, [displayRaces, sites, favSet, votesByRace, showFavsOnly]);
+
+  // ── Expose recenter function to parent ──
+  useEffect(() => {
+    if (!recenterRef) return;
+    recenterRef.current = () => {
+      const L = (window as any).L;
+      const map = mapInstanceRef.current;
+      if (!L || !map) return;
+      const coords = displayRaces
+        .map(r => getCoords(r))
+        .filter(Boolean) as [number, number][];
+      if (coords.length === 0) return;
+      if (coords.length === 1) {
+        map.setView(coords[0], 6, { animate: true });
+      } else {
+        const bounds = L.latLngBounds(coords.map(([lat, lng]) => [lat, lng]));
+        map.fitBounds(bounds, { padding: [40, 40], maxZoom: 6, animate: true });
+      }
+    };
+  }, [displayRaces, recenterRef]);
 
   function handleToggleExplore() {
     const next = !showExploreRef.current;
