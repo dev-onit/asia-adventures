@@ -1772,7 +1772,7 @@ export default function CalendarPage() {
       {/* ── Races section ── */}
       <div
         ref={racesHeaderRef}
-        className="bg-card/95 backdrop-blur-sm flex items-center px-4 py-3 sticky z-[40] cursor-pointer select-none"
+        className="bg-card/95 backdrop-blur-sm flex flex-row items-center px-4 py-3 sticky z-[40] cursor-pointer select-none gap-0"
         style={{ top: "calc(var(--header-h, 0px) - 1px)", boxShadow: "0 1px 0 0 hsl(var(--border))" }}
         onClick={() => setShowRaceList(v => !v)}
         role="button"
@@ -1781,18 +1781,18 @@ export default function CalendarPage() {
         <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground leading-none">Races</span>
         <span className="ml-2 text-xs text-muted-foreground/50 leading-none">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
         {showFavs && (
-          <span className="ml-2 text-[10px] font-semibold inline-flex items-center gap-0.5 leading-none" style={{ color: "#ca8a04" }}>
-            <Star size={9} fill="#ca8a04" /> Showing Favourites
+          <span className="ml-2 text-[10px] font-semibold inline-flex items-center gap-0.5" style={{ color: "#ca8a04", lineHeight: 1 }}>
+            <Star size={9} fill="#ca8a04" style={{ display: 'block', flexShrink: 0 }} /> Showing Favourites
           </span>
         )}
         {sortMode === "votes" && !showFavs && (
-          <span className="ml-2 text-[10px] font-semibold text-orange-500 inline-flex items-center gap-0.5 leading-none">
-            <TrendingUp size={9} /> Showing Most Voted
+          <span className="ml-2 text-[10px] font-semibold text-orange-500 inline-flex items-center gap-0.5" style={{ lineHeight: 1 }}>
+            <TrendingUp size={9} style={{ display: 'block', flexShrink: 0 }} /> Showing Most Voted
           </span>
         )}
         {!showFavs && activeFilterCount > 0 && (
-          <span className="ml-2 text-[10px] text-primary font-semibold inline-flex items-center gap-0.5 leading-none">
-            <Filter size={9} /> Active Filters
+          <span className="ml-2 text-[10px] text-primary font-semibold inline-flex items-center gap-0.5" style={{ lineHeight: 1 }}>
+            <Filter size={9} style={{ display: 'block', flexShrink: 0 }} /> Active Filters
           </span>
         )}
         <span className="ml-auto p-1 text-muted-foreground">
