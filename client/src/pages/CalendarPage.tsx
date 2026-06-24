@@ -1901,7 +1901,7 @@ export default function CalendarPage() {
                               <div key={i} className={`flex items-center gap-1 ${i > 0 ? "mt-1" : ""}`}>
                                 <div className="text-sm text-foreground whitespace-nowrap">{formatRaceDate(d.date)}</div>
                                 {d.status === "watchlist" && (
-                                  <AlertTriangle size={10} className="text-red-500 dark:text-red-400 flex-shrink-0" aria-label="Unconfirmed" />
+                                  <AlertTriangle size={10} className="text-red-500 dark:text-red-400 flex-shrink-0" aria-label="Predicted date" />
                                 )}
                               </div>
                             ));
