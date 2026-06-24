@@ -1724,10 +1724,22 @@ export default function CalendarPage() {
       <div ref={resultBarRef} className="px-4 py-2 text-xs text-muted-foreground border-b border-border flex items-center gap-2">
         <span>{filtered.length} {filtered.length === 1 ? "race" : "races"}{filtered.length < races.length ? ` of ${races.length}` : ""}</span>
         {showFavs && (
-          <span className="font-semibold" style={{ color: "#ca8a04" }}>· Showing Favourites</span>
+          <button
+            onClick={() => setShowFavs(false)}
+            className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border transition-opacity hover:opacity-70"
+            style={{ color: "#ca8a04", borderColor: "#ca8a04", lineHeight: 1 }}
+          >
+            <Star size={8} fill="#ca8a04" /> Showing Favourites <X size={8} />
+          </button>
         )}
         {sortMode === "votes" && !showFavs && (
-          <span className="text-orange-500 font-semibold">· Showing Most Voted</span>
+          <button
+            onClick={() => setSortMode("date")}
+            className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border border-orange-500 text-orange-500 transition-opacity hover:opacity-70"
+            style={{ lineHeight: 1 }}
+          >
+            <TrendingUp size={8} /> Showing Most Voted <X size={8} />
+          </button>
         )}
       </div>
       <MapView
@@ -1781,14 +1793,22 @@ export default function CalendarPage() {
         <span style={{ lineHeight: 1 }} className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Races</span>
         <span style={{ lineHeight: 1 }} className="ml-2 text-xs text-muted-foreground/50">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
         {showFavs && (
-          <span style={{ lineHeight: 1, color: "#ca8a04" }} className="ml-2 text-[10px] font-semibold inline-flex items-center gap-1">
-            <Star size={9} fill="#ca8a04" /> Showing Favourites
-          </span>
+          <button
+            onClick={e => { e.stopPropagation(); setShowFavs(false); }}
+            className="ml-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border transition-opacity hover:opacity-70"
+            style={{ color: "#ca8a04", borderColor: "#ca8a04", lineHeight: 1 }}
+          >
+            <Star size={8} fill="#ca8a04" /> Showing Favourites <X size={8} />
+          </button>
         )}
         {sortMode === "votes" && !showFavs && (
-          <span style={{ lineHeight: 1 }} className="ml-2 text-[10px] font-semibold text-orange-500 inline-flex items-center gap-1">
-            <TrendingUp size={9} /> Showing Most Voted
-          </span>
+          <button
+            onClick={e => { e.stopPropagation(); setSortMode("date"); }}
+            className="ml-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border border-orange-500 text-orange-500 transition-opacity hover:opacity-70"
+            style={{ lineHeight: 1 }}
+          >
+            <TrendingUp size={8} /> Showing Most Voted <X size={8} />
+          </button>
         )}
         {!showFavs && activeFilterCount > 0 && (
           <span style={{ lineHeight: 1 }} className="ml-2 text-[10px] text-primary font-semibold inline-flex items-center gap-1">
