@@ -152,13 +152,26 @@ const POPUP_STYLE = `
   .leaflet-popup-content { margin: 0 !important; }
   .leaflet-popup-tip-container { display: none !important; }
   .leaflet-popup-close-button { color: hsl(var(--muted-foreground)) !important; font-size: 20px !important; width: 28px !important; height: 28px !important; top: 6px !important; right: 6px !important; }
+  .leaflet-bar {
+    display: flex !important; flex-direction: column !important;
+    gap: 3px !important; border: none !important; border-radius: 0 !important;
+    background: transparent !important; box-shadow: none !important;
+  }
   .leaflet-bar a {
     width: 26px !important; height: 26px !important;
     line-height: 26px !important; font-size: 15px !important;
+    border-radius: 7px !important; border: 1px solid !important;
+    background: rgba(255,255,255,0.95) !important;
+    border-color: rgb(212,212,216) !important;
+    color: rgb(82,82,91) !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important;
   }
-  .leaflet-bar { border-radius: 8px !important; }
-  .leaflet-bar a:first-child { border-radius: 8px 8px 0 0 !important; }
-  .leaflet-bar a:last-child  { border-radius: 0 0 8px 8px !important; }
+  .leaflet-bar a:hover { filter: brightness(0.95) !important; }
+  .dark .leaflet-bar a {
+    background: rgba(24,24,27,0.95) !important;
+    border-color: rgb(63,63,70) !important;
+    color: rgb(212,212,216) !important;
+  }
 `;
 
 export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef }: Props) {
@@ -476,12 +489,12 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         <button
           onClick={handleToggleRaces}
           title={!showExplore ? "Enable Explore first" : undefined}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border shadow-md transition-all backdrop-blur-sm ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${
             !showExplore
-              ? "bg-white/95 dark:bg-zinc-900/95 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50"
+              ? "bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50"
               : showRaces
-                ? "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300 hover:brightness-110"
-                : "bg-white/95 dark:bg-zinc-900/95 border-blue-400 text-blue-500 dark:text-blue-400 hover:brightness-110"
+                ? "bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300 hover:brightness-110"
+                : "bg-white/95 dark:bg-zinc-900/95 border-[1.5px] border-blue-400 text-blue-500 dark:text-blue-400 hover:brightness-110"
           }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -489,8 +502,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </button>
         <button
           onClick={handleToggleExplore}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showExplore ? "bg-white/95 dark:bg-zinc-900/95 border-orange-400 text-orange-500 dark:text-orange-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            showExplore ? "bg-white/95 dark:bg-zinc-900/95 border-[1.5px] border-orange-400 text-orange-500 dark:text-orange-400" : "bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           {showExplore
@@ -504,8 +517,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       <div className="absolute bottom-3 right-3 z-10 flex flex-wrap justify-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", maxWidth: "calc(100% - 60px)" }}>
         <button
           onClick={onToggleUnconfirmed}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showUnconfirmed ? "bg-white/95 dark:bg-zinc-900/95 border-red-400 text-red-500 dark:text-red-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            showUnconfirmed ? "bg-white/95 dark:bg-zinc-900/95 border-[1.5px] border-red-400 text-red-500 dark:text-red-400" : "bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -513,8 +526,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </button>
         <button
           onClick={onToggleHidePast}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold border shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            !hidePast ? "bg-white/95 dark:bg-zinc-900/95 border-amber-400 text-amber-500 dark:text-amber-400" : "bg-white/95 dark:bg-zinc-900/95 border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            !hidePast ? "bg-white/95 dark:bg-zinc-900/95 border-[1.5px] border-amber-400 text-amber-500 dark:text-amber-400" : "bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
           }`}
         >
           {!hidePast
