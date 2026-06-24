@@ -1778,20 +1778,20 @@ export default function CalendarPage() {
         role="button"
         aria-label={showRaceList ? "Collapse race list" : "Expand race list"}
       >
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Races</span>
-        <span className="ml-2 text-xs text-muted-foreground/50">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
+        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground leading-none">Races</span>
+        <span className="ml-2 text-xs text-muted-foreground/50 leading-none">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
         {showFavs && (
-          <span className="ml-2 text-[10px] font-semibold flex items-center gap-0.5" style={{ color: "#ca8a04" }}>
+          <span className="ml-2 text-[10px] font-semibold inline-flex items-center gap-0.5 leading-none" style={{ color: "#ca8a04" }}>
             <Star size={9} fill="#ca8a04" /> Showing Favourites
           </span>
         )}
         {sortMode === "votes" && !showFavs && (
-          <span className="ml-2 text-[10px] font-semibold text-orange-500 flex items-center gap-0.5">
+          <span className="ml-2 text-[10px] font-semibold text-orange-500 inline-flex items-center gap-0.5 leading-none">
             <TrendingUp size={9} /> Showing Most Voted
           </span>
         )}
         {!showFavs && activeFilterCount > 0 && (
-          <span className="ml-2 text-[10px] text-primary font-semibold flex items-center gap-0.5">
+          <span className="ml-2 text-[10px] text-primary font-semibold inline-flex items-center gap-0.5 leading-none">
             <Filter size={9} /> Active Filters
           </span>
         )}
