@@ -66,7 +66,7 @@ router.post("/admin/races", requireAdmin, async (req, res) => {
   if (!name || !location || !country || !date || !distance || !type) {
     return res.status(400).json({ error: "Missing required race fields" });
   }
-  const result = db.insert(races).values({ name, location, country, date, distance, type, team: team ?? "", url: url ?? "", note: note ?? "", status: status ?? "active", badgeClass: badgeClass ?? "", lat: lat ?? null, lng: lng ?? null }).returning().get();
+  const result = (await db.insert(races).values({ name, location, country, date, distance, type, team: team ?? "", url: url ?? "", note: note ?? "", status: status ?? "active", badgeClass: badgeClass ?? "", lat: lat ?? null, lng: lng ?? null }).returning())[0];
   res.json(result);
 });
 
@@ -90,14 +90,14 @@ router.put("/admin/races/:id", requireAdmin, async (req, res) => {
   if (badgeClass !== undefined) update.badgeClass = badgeClass;
   if (lat !== undefined) update.lat = lat;
   if (lng !== undefined) update.lng = lng;
-  const result = db.update(races).set(update).where(eq(races.id, Number(id))).returning().get();
+  const result = (await db.update(races).set(update).where(eq(races.id, Number(id))).returning())[0];
   res.json(result);
 });
 
 router.delete("/admin/races/:id", requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { eq } = await import("drizzle-orm");
-  db.delete(races).where(eq(races.id, Number(id))).run();
+  await db.delete(races).where(eq(races.id, Number(id)));
   res.json({ ok: true });
 });
 
@@ -106,7 +106,7 @@ router.post("/admin/explore", requireAdmin, async (req, res) => {
   if (!name || !country || !category || !description) {
     return res.status(400).json({ error: "Missing required explore site fields" });
   }
-  const result = db.insert(exploreSites).values({ name, country, region: region ?? "", category, description, bestMonths: bestMonths ?? "", url: url ?? "", emoji: emoji ?? "", lat: lat ?? null, lng: lng ?? null }).returning().get();
+  const result = (await db.insert(exploreSites).values({ name, country, region: region ?? "", category, description, bestMonths: bestMonths ?? "", url: url ?? "", emoji: emoji ?? "", lat: lat ?? null, lng: lng ?? null }).returning())[0];
   res.json(result);
 });
 
@@ -126,14 +126,14 @@ router.put("/admin/explore/:id", requireAdmin, async (req, res) => {
   if (emoji !== undefined) update.emoji = emoji;
   if (lat !== undefined) update.lat = lat;
   if (lng !== undefined) update.lng = lng;
-  const result = db.update(exploreSites).set(update).where(eq(exploreSites.id, Number(id))).returning().get();
+  const result = (await db.update(exploreSites).set(update).where(eq(exploreSites.id, Number(id))).returning())[0];
   res.json(result);
 });
 
 router.delete("/admin/explore/:id", requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { eq } = await import("drizzle-orm");
-  db.delete(exploreSites).where(eq(exploreSites.id, Number(id))).run();
+  await db.delete(exploreSites).where(eq(exploreSites.id, Number(id)));
   res.json({ ok: true });
 });
 
@@ -150,11 +150,10 @@ router.post("/admin/bulk", requireAdmin, async (req, res) => {
   for (const race of newRaces) {
     if (!race.name || !race.date || !race.country) continue;
     // Skip if same name+date already exists
-    const existing = db.select().from(races)
-      .where(and(eq(races.name, race.name), eq(races.date, race.date)))
-      .get();
-    if (existing) continue;
-    db.insert(races).values({
+    const existing = await db.select().from(races)
+      .where(and(eq(races.name, race.name), eq(races.date, race.date)));
+    if (existing[0]) continue;
+    await db.insert(races).values({
       name: race.name,
       location: race.location ?? "",
       country: race.country,
@@ -168,7 +167,7 @@ router.post("/admin/bulk", requireAdmin, async (req, res) => {
       badgeClass: race.badgeClass ?? `badge-${(race.type ?? "run").slice(0, 3)}`,
       lat: race.lat ?? null,
       lng: race.lng ?? null,
-    }).run();
+    });
     racesAdded++;
   }
 
@@ -176,11 +175,10 @@ router.post("/admin/bulk", requireAdmin, async (req, res) => {
   for (const site of newSites) {
     if (!site.name || !site.country) continue;
     // Skip if same name+country already exists
-    const existing = db.select().from(exploreSites)
-      .where(and(eq(exploreSites.name, site.name), eq(exploreSites.country, site.country)))
-      .get();
-    if (existing) continue;
-    db.insert(exploreSites).values({
+    const existing = await db.select().from(exploreSites)
+      .where(and(eq(exploreSites.name, site.name), eq(exploreSites.country, site.country)));
+    if (existing[0]) continue;
+    await db.insert(exploreSites).values({
       name: site.name,
       country: site.country,
       region: site.region ?? "",
@@ -191,7 +189,7 @@ router.post("/admin/bulk", requireAdmin, async (req, res) => {
       emoji: site.emoji ?? "",
       lat: site.lat ?? null,
       lng: site.lng ?? null,
-    }).run();
+    });
     sitesAdded++;
   }
 

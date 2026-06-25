@@ -283,7 +283,7 @@ export async function seedExplore() {
   ];
 
   for (const site of data) {
-    db.insert(exploreSites).values(site).run();
+    await db.insert(exploreSites).values(site);
   }
   console.log(`Seeded ${data.length} explore sites`);
 }

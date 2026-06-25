@@ -1,36 +1,9 @@
-import express from "express";
-import helmet from "helmet";
-import rateLimit from "express-rate-limit";
 import path from "path";
-import router from "./routes.js";
-import { seedIfEmpty } from "./storage.js";
+import express from "express";
+import { app, ready } from "./app.js";
 
+// Works in both ESM (import.meta.url) and CJS (__dirname via esbuild injection)
 const __dirname = path.dirname(process.argv[1]);
-
-const app = express();
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://unpkg.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://unpkg.com"],
-      imgSrc: ["'self'", "data:", "https://*.tile.openstreetmap.org", "https://unpkg.com"],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      frameAncestors: ["'none'"],
-    },
-  },
-}));
-
-// Global rate limit
-app.use(rateLimit({ windowMs: 60_000, max: 200 }));
-// Tighter limit on write endpoints
-const writeLimiter = rateLimit({ windowMs: 60_000, max: 30, message: { error: "Too many requests" } });
-app.use("/api/favourites", writeLimiter);
-app.use(express.json());
-
-app.use("/api", router);
 
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
@@ -43,7 +16,7 @@ if (process.env.NODE_ENV === "production") {
 
 const PORT = Number(process.env.PORT) || 5000;
 
-seedIfEmpty().then(() => {
+ready.then(() => {
   app.listen(PORT, "127.0.0.1", () => {
     console.log(`Server running on http://127.0.0.1:${PORT}`);
   });

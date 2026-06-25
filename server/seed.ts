@@ -166,7 +166,7 @@ export async function seedRaces() {
   ];
 
   for (const race of data) {
-    db.insert(races).values(race).run();
+    await db.insert(races).values(race);
   }
   console.log(`Seeded ${data.length} races`);
 }
@@ -282,7 +282,7 @@ function cleanDistanceLabel(dl: string): string {
 export async function syncAllRaces() {
   const { ALL_SEED_RACES } = await import("./seedData.js");
   // Build set of existing race names for fast lookup
-  const existing = new Set(db.select().from(races).all().map((r: any) => r.name));
+  const existing = new Set((await db.select().from(races)).map((r: any) => r.name));
   let added = 0;
   for (const r of ALL_SEED_RACES) {
     if (existing.has(r.name)) continue; // skip already present
@@ -293,7 +293,7 @@ export async function syncAllRaces() {
         distanceLabel: cleanDistanceLabel((r as any).distanceLabel ?? ""),
         dates: (r as any).dates ?? JSON.stringify([{date: (r as any).date ?? "", status: (r as any).status ?? "active"}]),
       };
-      db.insert(races).values(entry as any).run();
+      await db.insert(races).values(entry as any);
       existing.add(r.name);
       added++;
     } catch {}

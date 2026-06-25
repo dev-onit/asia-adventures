@@ -1,103 +1,95 @@
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
+import { sql } from "@vercel/postgres";
+import { drizzle } from "drizzle-orm/vercel-postgres";
 import { races, favourites, exploreSites } from "../shared/schema.js";
 import { eq, and } from "drizzle-orm";
-import path from "path";
 
-// Works in both ESM (import.meta.url) and CJS (__dirname via esbuild injection)
-const dbPath = path.resolve(process.cwd(), "data.db");
+export const db = drizzle(sql);
 
-const sqlite = new Database(dbPath);
-sqlite.pragma("journal_mode = WAL");
-
-export const db = drizzle(sqlite);
-
-// Create tables if they don't exist
-sqlite.exec(`
-  CREATE TABLE IF NOT EXISTS races (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    location TEXT NOT NULL,
-    country TEXT NOT NULL,
-    date TEXT NOT NULL,
-    distance TEXT NOT NULL,
-    distance_label TEXT NOT NULL DEFAULT '',
-    type TEXT NOT NULL,
-    team TEXT NOT NULL DEFAULT '',
-    url TEXT NOT NULL DEFAULT '',
-    note TEXT NOT NULL DEFAULT '',
-    status TEXT NOT NULL DEFAULT 'active',
-    badge_class TEXT NOT NULL DEFAULT '',
-    lat TEXT,
-    lng TEXT
-  );
-  CREATE TABLE IF NOT EXISTS favourites (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    race_id INTEGER NOT NULL,
-    voter_name TEXT NOT NULL
-  );
-  CREATE TABLE IF NOT EXISTS explore_sites (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    country TEXT NOT NULL,
-    region TEXT NOT NULL DEFAULT '',
-    category TEXT NOT NULL,
-    description TEXT NOT NULL,
-    best_months TEXT NOT NULL DEFAULT '',
-    url TEXT NOT NULL DEFAULT '',
-    emoji TEXT NOT NULL DEFAULT '',
-    lat TEXT,
-    lng TEXT
-  );
-`);
+async function ensureSchema() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS races (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      location TEXT NOT NULL,
+      country TEXT NOT NULL,
+      date TEXT NOT NULL,
+      distance TEXT NOT NULL,
+      distance_label TEXT NOT NULL DEFAULT '',
+      type TEXT NOT NULL,
+      team TEXT NOT NULL DEFAULT '',
+      url TEXT NOT NULL DEFAULT '',
+      note TEXT NOT NULL DEFAULT '',
+      status TEXT NOT NULL DEFAULT 'active',
+      badge_class TEXT NOT NULL DEFAULT '',
+      dates TEXT NOT NULL DEFAULT '[]',
+      lat TEXT,
+      lng TEXT
+    )
+  `;
+  await sql`
+    CREATE TABLE IF NOT EXISTS favourites (
+      id SERIAL PRIMARY KEY,
+      race_id INTEGER NOT NULL,
+      voter_name TEXT NOT NULL
+    )
+  `;
+  await sql`
+    CREATE TABLE IF NOT EXISTS explore_sites (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      country TEXT NOT NULL,
+      region TEXT NOT NULL DEFAULT '',
+      category TEXT NOT NULL,
+      description TEXT NOT NULL,
+      best_months TEXT NOT NULL DEFAULT '',
+      url TEXT NOT NULL DEFAULT '',
+      emoji TEXT NOT NULL DEFAULT '',
+      lat TEXT,
+      lng TEXT
+    )
+  `;
+  await sql`CREATE TABLE IF NOT EXISTS seed_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)`;
+}
 
 export async function getRaces() {
-  return db.select().from(races).all();
+  return db.select().from(races);
 }
 
 export async function getFavourites() {
-  return db.select().from(favourites).all();
+  return db.select().from(favourites);
 }
 
 export async function addFavourite(raceId: number, voterName: string) {
-  const existing = db.select().from(favourites)
-    .where(and(eq(favourites.raceId, raceId), eq(favourites.voterName, voterName)))
-    .get();
-  if (existing) return existing;
-  return db.insert(favourites).values({ raceId, voterName }).returning().get();
+  const existing = await db.select().from(favourites)
+    .where(and(eq(favourites.raceId, raceId), eq(favourites.voterName, voterName)));
+  if (existing[0]) return existing[0];
+  const inserted = await db.insert(favourites).values({ raceId, voterName }).returning();
+  return inserted[0];
 }
 
 export async function removeFavourite(raceId: number, voterName: string) {
   return db.delete(favourites)
-    .where(and(eq(favourites.raceId, raceId), eq(favourites.voterName, voterName)))
-    .run();
+    .where(and(eq(favourites.raceId, raceId), eq(favourites.voterName, voterName)));
 }
 
 export async function resetVotes() {
-  return db.delete(favourites).run();
+  return db.delete(favourites);
 }
 
 export async function getExploreSites() {
-  return db.select().from(exploreSites).all();
+  return db.select().from(exploreSites);
 }
 
 // Bump this whenever seedData changes — forces a full wipe+reseed on next deploy
 const SEED_VERSION = "v32-halong-coords-2026-06-24";
 
 export async function seedIfEmpty() {
-  // ── Migrations FIRST — must run before any drizzle SELECT uses the schema ──
-  try {
-    sqlite.exec("ALTER TABLE races ADD COLUMN distance_label TEXT NOT NULL DEFAULT ''");
-    console.log('[migration] Added distance_label column');
-  } catch { /* column already exists */ }
-  try {
-    sqlite.exec("ALTER TABLE races ADD COLUMN dates TEXT NOT NULL DEFAULT '[]'");
-    console.log('[migration] Added dates column');
-  } catch { /* column already exists */ }
+  await ensureSchema();
+
   // ── Badge class migration: re-derive badge_class from type on every startup ─
   // Ensures badge colors are always correct regardless of seed history.
   try {
-    sqlite.exec(`
+    await sql`
       UPDATE races SET badge_class = CASE
         WHEN type = 'triathlon'  THEN 'badge-tri'
         WHEN type = 'trail'      THEN 'badge-run-trail'
@@ -110,41 +102,44 @@ export async function seedIfEmpty() {
         WHEN type = 'xenom'      THEN 'badge-xenom'
         ELSE badge_class
       END
-    `);
+    `;
     console.log('[migration] Badge classes re-derived from type');
   } catch (e) { console.warn('[migration] Badge class migration failed:', e); }
+
   // ── Seed version table ─────────────────────────────────────────────────────
-  sqlite.exec(`CREATE TABLE IF NOT EXISTS seed_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)`);
-  const storedVersion = (sqlite.prepare("SELECT value FROM seed_meta WHERE key='seed_version'").get() as any)?.value ?? null;
-  // ── Now safe to query via drizzle ──────────────────────────────────────────
-  const count = db.select().from(races).all().length;
+  const versionResult = await sql`SELECT value FROM seed_meta WHERE key = 'seed_version'`;
+  const storedVersion = versionResult.rows[0]?.value ?? null;
+  const countResult = await sql`SELECT COUNT(*)::int AS count FROM races`;
+  const count = countResult.rows[0]?.count ?? 0;
 
   if (storedVersion !== SEED_VERSION || count < 392) { // v32: fix Ha Long Bay coordinates (were in Africa + Borneo)
     console.log(`[seed] version=${storedVersion} → ${SEED_VERSION}, count=${count} — wiping and reseeding all races`);
-    sqlite.prepare("DELETE FROM races").run();
-    try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='races'").run(); } catch {}
+    await sql`DELETE FROM races`;
     // Also wipe votes/favourites so fresh start is truly clean
-    try { sqlite.prepare("DELETE FROM favourites").run(); } catch {}
-    try { sqlite.prepare("DELETE FROM sqlite_sequence WHERE name='favourites'").run(); } catch {}
+    await sql`DELETE FROM favourites`;
     // Wipe explore sites so they reseed with the new list
-    try { sqlite.prepare("DELETE FROM explore_sites").run(); } catch {}
+    await sql`DELETE FROM explore_sites`;
     const { syncAllRaces } = await import("./seed.js");
     await syncAllRaces();
-    sqlite.prepare("INSERT OR REPLACE INTO seed_meta (key, value) VALUES ('seed_version', ?)").run(SEED_VERSION);
+    await sql`
+      INSERT INTO seed_meta (key, value) VALUES ('seed_version', ${SEED_VERSION})
+      ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value
+    `;
   } else {
     // Healthy count — just deduplicate
-    sqlite.prepare(`
+    await sql`
       DELETE FROM races WHERE id NOT IN (
         SELECT MIN(id) FROM races GROUP BY name
       )
-    `).run();
+    `;
   }
 
-  const exploreCount = db.select().from(exploreSites).all().length;
+  const exploreCountResult = await sql`SELECT COUNT(*)::int AS count FROM explore_sites`;
+  const exploreCount = exploreCountResult.rows[0]?.count ?? 0;
   if (exploreCount < 255) {
     // Reseed if count is below full expected set (e.g. sandbox was seeded with an older version)
     console.log(`[seed] explore count=${exploreCount} < 255 — reseeding explore sites`);
-    sqlite.prepare("DELETE FROM explore_sites").run();
+    await sql`DELETE FROM explore_sites`;
     const { seedExplore } = await import("./seedExplore.js");
     await seedExplore();
   }

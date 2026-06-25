@@ -1,7 +1,7 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { pgTable, text, serial, integer } from "drizzle-orm/pg-core";
 
-export const races = sqliteTable("races", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const races = pgTable("races", {
+  id: serial("id").primaryKey(),
   name: text("name").notNull(),
   location: text("location").notNull(),
   country: text("country").notNull(),
@@ -19,14 +19,14 @@ export const races = sqliteTable("races", {
   lng: text("lng"),
 });
 
-export const favourites = sqliteTable("favourites", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const favourites = pgTable("favourites", {
+  id: serial("id").primaryKey(),
   raceId: integer("race_id").notNull(),
   voterName: text("voter_name").notNull(),
 });
 
-export const exploreSites = sqliteTable("explore_sites", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const exploreSites = pgTable("explore_sites", {
+  id: serial("id").primaryKey(),
   name: text("name").notNull(),
   country: text("country").notNull(),
   region: text("region").notNull().default(""),
