@@ -21,32 +21,34 @@ interface Props {
   recenterRef?: React.MutableRefObject<(() => void) | null>;
 }
 
+// Running (road) and Trail share the "RUN" pin label but get distinct colors
+// so they're still visually distinguishable on the map at a glance.
 const TYPE_COLORS: Record<string, string> = {
-  running:      "#6366f1",
+  running:      "#8b5cf6", // Road running — violet
+  trail:        "#f97316", // Trail running — orange
   triathlon:    "#0ea5e9",
-  trail:        "#f97316",
   hyrox:        "#facc15",
   "ocean-swim": "#06b6d4",
-  swimrun:      "#0891b2",
-  duathlon:     "#22c55e",
-  adventure:    "#a855f7",
+  swimrun:      "#14b8a6",
+  ocr:          "#ef4444",
+  xenom:        "#a855f7",
 };
 
 const TYPE_LETTERS: Record<string, string> = {
   running:      "RUN",
+  trail:        "RUN",
   triathlon:    "TRI",
-  trail:        "TRAIL",
   hyrox:        "HYR",
   "ocean-swim": "SWIM",
   swimrun:      "SWR",
-  duathlon:     "DUA",
-  adventure:    "ADV",
+  ocr:          "OCR",
+  xenom:        "XEN",
 };
 
 const TYPE_LABELS: Record<string, string> = {
   running: "Running", triathlon: "Triathlon", trail: "Trail",
-  hyrox: "Hyrox", "ocean-swim": "Swimming", duathlon: "Duathlon",
-  adventure: "Adventure", swimrun: "SwimRun", ocr: "OCR", xenom: "Xenom",
+  hyrox: "Hyrox", "ocean-swim": "Swimming", swimrun: "SwimRun",
+  ocr: "OCR", xenom: "Xenom",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
