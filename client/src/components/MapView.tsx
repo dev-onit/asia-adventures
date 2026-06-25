@@ -312,8 +312,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         });
       };
 
-      raceClusterRef.current = MC({ chunkedLoading: true, maxClusterRadius: 60, iconCreateFunction: makeIconFn("#6366f1"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
-      exploreClusterRef.current = MC({ chunkedLoading: true, maxClusterRadius: 50, iconCreateFunction: makeIconFn("#f97316"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
+      raceClusterRef.current = new MC({ chunkedLoading: true, maxClusterRadius: 60, iconCreateFunction: makeIconFn("#6366f1"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
+      exploreClusterRef.current = new MC({ chunkedLoading: true, maxClusterRadius: 50, iconCreateFunction: makeIconFn("#f97316"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
       raceClusterRef.current.addTo(map);
       // Explore cluster added to map only when Explore is ON (handled in renderMarkers)
       // Trigger first render now that clusters are ready
