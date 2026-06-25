@@ -101,12 +101,30 @@ h1, h2, h3 {
 .votes-dash { color: hsl(var(--muted-foreground) / 0.45); }
 .light .votes-dash { color: hsl(var(--muted-foreground) / 0.55); }
 
-/* Mobile table scroll */
+/* Mobile table scroll with right-edge fade hint */
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   max-width: 100%;
   width: 100%;
+  position: relative;
+}
+/* Fade-right overlay — only on small screens */
+@media (max-width: 639px) {
+  .table-wrap-outer {
+    position: relative;
+  }
+  .table-wrap-outer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, hsl(var(--background) / 0.85));
+    z-index: 2;
+  }
 }
 
 /* Leaflet map z-index fix */

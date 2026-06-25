@@ -26,6 +26,25 @@ if (!document.getElementById(leafletJsId)) {
   script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
   document.head.appendChild(script);
 }
+// ── Leaflet.markercluster CSS + JS (loaded after Leaflet) ──
+const mcCss1Id = "mc-css-1";
+if (!document.getElementById(mcCss1Id)) {
+  const l = document.createElement("link"); l.id = mcCss1Id; l.rel = "stylesheet";
+  l.href = "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css";
+  document.head.appendChild(l);
+}
+const mcCss2Id = "mc-css-2";
+if (!document.getElementById(mcCss2Id)) {
+  const l = document.createElement("link"); l.id = mcCss2Id; l.rel = "stylesheet";
+  l.href = "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css";
+  document.head.appendChild(l);
+}
+const mcJsId = "mc-js";
+if (!document.getElementById(mcJsId)) {
+  const s = document.createElement("script"); s.id = mcJsId;
+  s.src = "https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js";
+  document.head.appendChild(s);
+}
 
 const S = "v5:"; // bump this prefix to invalidate all users' localStorage
 const STORAGE_KEY = S+"asia-cal-voter";
@@ -1017,23 +1036,24 @@ export default function CalendarPage() {
     <div className="min-h-screen bg-background">
       {/* ── Sticky header ── */}
       <header ref={headerRef} className="sticky top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border">
-        {/* Row 1: Logo + title + name chip */}
-        <div className="flex items-center gap-3 px-4 pt-4 pb-1">
-          <img src="/logo.jpg" alt="Adventure Crew" className="w-20 h-20 rounded-full object-cover flex-shrink-0" />
-          <div className="min-w-0">
-            <h1 className="text-xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
-            <p className="text-[13px] text-foreground/60 truncate font-medium tracking-wide">We Take Fun Seriously</p>
-          </div>
-          {voterName && (
-            <div className="ml-auto flex items-center gap-1.5 px-3 h-9 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
-              <Users size={12} />
-              <span>{voterName}</span>
+        {/* Mobile: two-row layout (hidden on sm+) */}
+        <div className="sm:hidden">
+          {/* Row 1 mobile: Logo + title + name chip */}
+          <div className="flex items-center gap-3 px-4 pt-4 pb-1">
+            <img src="/logo.jpg" alt="Adventure Crew" className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+            <div className="min-w-0">
+              <h1 className="text-xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
+              <p className="text-[13px] text-foreground/80 truncate font-medium tracking-wide">We Take Fun Seriously</p>
             </div>
-          )}
-        </div>
-
-        {/* Row 2: My Favourites + Most Voted + theme toggle */}
-        <div className="flex items-center gap-2 px-4 pt-1.5 pb-4">
+            {voterName && (
+              <div className="ml-auto flex items-center gap-1.5 px-3 h-9 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
+                <Users size={12} />
+                <span>{voterName}</span>
+              </div>
+            )}
+          </div>
+          {/* Row 2 mobile: Favourites + Most Voted + theme toggle */}
+          <div className="flex items-center gap-2 px-4 pt-1.5 pb-3">
           <button
             onClick={() => {
               if (!showFavs) {
@@ -1103,7 +1123,93 @@ export default function CalendarPage() {
           <button onClick={() => setIsDark(d => !d)} className="ml-auto p-2 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
             {isDark ? <Sun size={14} /> : <Moon size={14} />}
           </button>
-        </div>
+          </div>
+        </div>{/* end mobile rows */}
+
+        {/* Desktop: single-row layout (hidden on mobile, visible sm+) */}
+        <div className="hidden sm:flex items-center gap-3 px-5 py-3">
+          {/* Logo + title */}
+          <img src="/logo.jpg" alt="Adventure Crew" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+          <div className="min-w-0 mr-2">
+            <h1 className="text-base font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
+            <p className="text-[11px] text-foreground/80 font-medium tracking-wide">We Take Fun Seriously</p>
+          </div>
+          {/* Favourites + Most Voted */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                if (!showFavs) {
+                  prevFilters.current = { sportFilters: new Set(sportFilters), subFilters: new Set(subFilters), teamFilters: new Set(teamFilters), countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters };
+                  setSportFilters(new Set()); setSubFilters(new Set()); setTeamFilters(new Set());
+                  setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters([]); setHidePast(true);
+                  setPersonFilter(null); setMinVotesFilter(false); setExploreCategoryFilters([]);
+                  setSortMode("date"); setShowFavs(true);
+                } else {
+                  setShowFavs(false);
+                  if (prevFilters.current) {
+                    const p = prevFilters.current;
+                    setSportFilters(p.sportFilters); setSubFilters(p.subFilters); setTeamFilters(p.teamFilters ?? new Set());
+                    setCountryFilters(p.countryFilters); setMonthFilters(p.monthFilters);
+                    setYearFilters(p.yearFilters); setPersonFilter(p.personFilter);
+                    setMinVotesFilter(p.minVotesFilter); setExploreCategoryFilters(p.exploreCategoryFilters);
+                    prevFilters.current = null;
+                  }
+                }
+              }}
+              className={`flex items-center gap-1.5 px-3 h-8 rounded-full border text-xs font-semibold transition-all leading-none ${
+                showFavs
+                  ? "bg-yellow-400 border-yellow-400 text-black"
+                  : "bg-transparent border-yellow-600 text-yellow-700 hover:bg-yellow-100 hover:border-yellow-600 dark:border-yellow-400 dark:text-yellow-400 dark:hover:bg-yellow-400/15"
+              }`}
+            >
+              {showFavs ? <Eye size={12} className="shrink-0" /> : <EyeOff size={12} className="shrink-0" />}
+              <span className="leading-none">Favourites</span>
+              {(() => {
+                const starFill = showFavs ? "#000000" : (isDark ? "#facc15" : "#ca8a04");
+                const numColor = showFavs ? "#facc15" : (isDark ? "#1a1a1a" : "#fffbeb");
+                const count = favSet.size;
+                return (
+                  <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+                    <polygon points="14,2 17.2,9.8 26,10.6 20,16.2 21.8,25 14,20.8 6.2,25 8,16.2 2,10.6 10.8,9.8" fill={starFill} stroke={starFill} strokeWidth="0.5" strokeLinejoin="round"/>
+                    <text x="14" y="18" textAnchor="middle" fontSize="8" fontFamily="system-ui,sans-serif" fontWeight="900" fill={numColor} letterSpacing="-0.3">{count}</text>
+                  </svg>
+                );
+              })()}
+            </button>
+            <button
+              onClick={() => { setSortMode(m => m === "votes" ? "date" : "votes"); setShowFavs(false); }}
+              className={`flex items-center gap-1.5 px-3 h-8 rounded-full border text-xs font-semibold transition-all leading-none ${
+                sortMode === "votes"
+                  ? "bg-orange-400 border-orange-400 text-black"
+                  : "bg-transparent border-orange-500/60 text-orange-600 hover:bg-orange-100 hover:border-orange-500 dark:border-orange-400/60 dark:text-orange-400 dark:hover:bg-orange-400/15"
+              }`}
+            >
+              <TrendingUp size={12} className="shrink-0" />
+              <span className="leading-none">Most Voted</span>
+              {(() => {
+                const raceIdSet = new Set(races.map((r: any) => r.id));
+                const racesWithVotes = [...votesByRace.keys()].filter(id => raceIdSet.has(id)).length;
+                return racesWithVotes > 0 ? (
+                  <span className={`ml-0.5 text-[9px] font-bold flex items-center justify-center rounded-full ${
+                    sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/15 text-orange-600 dark:text-orange-400"
+                  }`} style={{ minWidth: "18px", height: "18px", padding: "0 4px" }}>{racesWithVotes}</span>
+                ) : null;
+              })()}
+            </button>
+          </div>
+          {/* Right: Lukas chip + theme toggle */}
+          <div className="ml-auto flex items-center gap-2">
+            {voterName && (
+              <div className="flex items-center gap-1.5 px-3 h-8 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
+                <Users size={12} />
+                <span>{voterName}</span>
+              </div>
+            )}
+            <button onClick={() => setIsDark(d => !d)} className="p-2 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+              {isDark ? <Sun size={14} /> : <Moon size={14} />}
+            </button>
+          </div>
+        </div>{/* end desktop row */}
 
         {/* Row 3: Main filter bar */}
         <div className="flex items-center gap-2 px-4 pb-3">
@@ -1793,7 +1899,8 @@ export default function CalendarPage() {
       </div>
 
       {showRaceList && <>
-        <div className="overflow-x-auto" style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}>
+        <div className="table-wrap-outer">
+        <div className="overflow-x-auto table-wrap" style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}>
           {isLoading ? (
             <div className="flex items-center justify-center py-20 text-muted-foreground">
               <div className="text-center space-y-2">
@@ -1813,15 +1920,15 @@ export default function CalendarPage() {
             <table className="min-w-full" style={{ borderCollapse: "collapse", tableLayout: "auto", width: "max-content", minWidth: "100%" }}>
               <thead>
                 <tr className="border-b border-border bg-muted/40">
-                  <th style={{ width: COL_WIDTHS[0] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">★</th>
-                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Voters</th>
-                  <th style={{ minWidth: COL_WIDTHS[1] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Name</th>
-                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Sport</th>
-                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Location</th>
-                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Date</th>
-                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Weather</th>
-                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Distance</th>
-                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">Format</th>
+                  <th style={{ width: COL_WIDTHS[0] }} className="py-2 px-3 text-center text-[10px] font-bold uppercase tracking-tight text-muted-foreground">★</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-tight text-muted-foreground whitespace-nowrap">Voters</th>
+                  <th style={{ minWidth: COL_WIDTHS[1] }} className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-tight text-muted-foreground">Name</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-tight text-muted-foreground whitespace-nowrap">Sport</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-tight text-muted-foreground whitespace-nowrap">Location</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-tight text-muted-foreground whitespace-nowrap">Date</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-tight text-muted-foreground whitespace-nowrap">Weather</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-tight text-muted-foreground whitespace-nowrap">Distance</th>
+                  <th className="py-2 px-3 text-left text-[10px] font-bold uppercase tracking-tight text-muted-foreground whitespace-nowrap">Format</th>
                 </tr>
               </thead>
               <tbody>
@@ -1917,7 +2024,7 @@ export default function CalendarPage() {
                             )}
                           </div>
                           {race.note && (
-                            <div className="truncate text-[11px] text-yellow-600 dark:text-yellow-400 mt-0.5 leading-snug font-medium" title={race.note}>
+                            <div className="truncate text-[11px] text-amber-700 dark:text-yellow-400 mt-0.5 leading-snug font-medium" title={race.note}>
                               {race.note}
                             </div>
                           )}
@@ -2003,6 +2110,7 @@ export default function CalendarPage() {
             </table>
           )}
         </div>
+        </div>{/* end table-wrap-outer */}
       </>}
 
       {/* ── Explore ── */}

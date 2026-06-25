@@ -198,6 +198,9 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   const hasInitialFitRef = useRef(false);
   // Tracks the currently open marker so we can close it before opening another
   const activeMarkerRef = useRef<any>(null);
+  // Cluster groups for races and explore sites
+  const raceClusterRef = useRef<any>(null);
+  const exploreClusterRef = useRef<any>(null);
 
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
@@ -284,6 +287,37 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     }
     mapInstanceRef.current = map;
 
+    // Create cluster groups (wait until markercluster JS is available)
+    const initClusters = () => {
+      const MC = (window as any).L.MarkerClusterGroup;
+      if (!MC) { setTimeout(initClusters, 150); return; }
+
+      // Shared icon creator: simple circle with count
+      const makeIconFn = (baseColor: string) => (cluster: any) => {
+        const count = cluster.getChildCount();
+        const r = count <= 4 ? 20 : count <= 9 ? 24 : count <= 20 ? 28 : count <= 40 ? 32 : 36;
+        const size = r * 2;
+        const fs = r <= 20 ? 13 : r <= 24 ? 14 : 15;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+          <circle cx="${r}" cy="${r}" r="${r}" fill="#1b1f27"/>
+          <circle cx="${r}" cy="${r}" r="${r - 2.5}" fill="${baseColor}" fill-opacity="0.55" stroke="${baseColor}" stroke-width="2"/>
+          <text x="${r}" y="${r}" text-anchor="middle" dominant-baseline="central" font-size="${fs}" font-family="system-ui,sans-serif" font-weight="900" letter-spacing="-0.5" fill="white" paint-order="stroke" stroke="#1b1f27" stroke-width="2.5" stroke-linejoin="round">${count}</text>
+        </svg>`;
+        return (window as any).L.divIcon({
+          html: svg,
+          className: "",
+          iconSize: [size, size],
+          iconAnchor: [r, r],
+        });
+      };
+
+      raceClusterRef.current = MC({ chunkedLoading: true, maxClusterRadius: 60, iconCreateFunction: makeIconFn("#6366f1"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
+      exploreClusterRef.current = MC({ chunkedLoading: true, maxClusterRadius: 50, iconCreateFunction: makeIconFn("#f97316"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
+      raceClusterRef.current.addTo(map);
+      // Explore cluster added to map only when Explore is ON (handled in renderMarkers)
+    };
+    initClusters();
+
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
 
@@ -334,6 +368,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     return () => {
       clearInterval(poll);
       if (mapInstanceRef.current) { mapInstanceRef.current.remove(); mapInstanceRef.current = null; }
+      raceClusterRef.current = null;
+      exploreClusterRef.current = null;
     };
   }, []);
 
@@ -429,6 +465,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     markersRef.current.forEach(m => m.remove());
     markersRef.current = [];
+    if (raceClusterRef.current) raceClusterRef.current.clearLayers();
+    if (exploreClusterRef.current) exploreClusterRef.current.clearLayers();
 
     // ── Render every race as individual pin ──
     if (showRacesRef.current) displayRaces.forEach(race => {
@@ -439,6 +477,10 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     // ── Explore site markers ──
     if (showExploreRef.current) {
+      // Add explore cluster to map when Explore is ON
+      if (exploreClusterRef.current && !map.hasLayer(exploreClusterRef.current)) {
+        exploreClusterRef.current.addTo(map);
+      }
       sites.forEach(site => {
         if (!site.lat || !site.lng) return;
         const lat = parseFloat(site.lat), lng = parseFloat(site.lng);
@@ -456,7 +498,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
           <div style="position:absolute;top:${BADGE_PAD}px;left:${BADGE_PAD}px">${explorePillSvg(label, color)}</div>
         </div>`;
         const icon = L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
-        const marker = L.marker([lat, lng], { icon }).addTo(map);
+        const marker = L.marker([lat, lng], { icon });
         marker.bindPopup(buildExplorePopup(site), { maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false });
         marker.on("click", () => {
           if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
@@ -489,8 +531,14 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         marker.on("popupclose", () => {
           if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
         });
-        markersRef.current.push(marker);
+        if (exploreClusterRef.current) exploreClusterRef.current.addLayer(marker);
+        else markersRef.current.push(marker);
       });
+    } else {
+      // Explore is OFF — remove explore cluster from map
+      if (exploreClusterRef.current && map.hasLayer(exploreClusterRef.current)) {
+        map.removeLayer(exploreClusterRef.current);
+      }
     }
   }
 
@@ -518,7 +566,9 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       popupAnchor: [0, -(totalH / 2 + 8)],
     });
 
-    const marker = L.marker(coords, { icon }).addTo(map);
+    const marker = L.marker(coords, { icon });
+    if (raceClusterRef.current) raceClusterRef.current.addLayer(marker);
+    else marker.addTo(map);
     marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), { maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false });
     marker.on("click", () => {
       if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
@@ -634,7 +684,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
 
       {/* Explore + Races buttons — top-right */}
-      <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))" }}>
+      <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
         <button
           onClick={handleToggleRaces}
           title={!showExplore ? "Enable Explore first" : undefined}
