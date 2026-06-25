@@ -51,8 +51,12 @@ const TYPE_LABELS: Record<string, string> = {
   ocr: "OCR", xenom: "Xenom",
 };
 
+// Explore categories deliberately avoid any color used by TYPE_COLORS (Races) above —
+// e.g. Mountains used to share Trail's orange, Islands shared Ocean-Swim's cyan, and
+// Cities shared Road-running's violet, making the two map layers indistinguishable
+// when both are visible. Leaning green/earth-toned reinforces "Explore = the green layer".
 const CATEGORY_COLORS: Record<string, string> = {
-  Mountains: "#f97316", Islands: "#06b6d4", Cities: "#8b5cf6",
+  Mountains: "#16a34a", Islands: "#0d9488", Cities: "#84cc16",
   Temples: "#f59e0b", Nature: "#22c55e", Beaches: "#ec4899",
 };
 
@@ -298,9 +302,9 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       // Shared icon creator: simple circle with count
       const makeIconFn = (baseColor: string) => (cluster: any) => {
         const count = cluster.getChildCount();
-        const r = count <= 4 ? 20 : count <= 9 ? 24 : count <= 20 ? 28 : count <= 40 ? 32 : 36;
+        const r = count <= 4 ? 17 : count <= 9 ? 21 : count <= 20 ? 24 : count <= 40 ? 28 : 31;
         const size = r * 2;
-        const fs = r <= 20 ? 13 : r <= 24 ? 14 : 15;
+        const fs = r <= 17 ? 12 : r <= 21 ? 13 : r <= 24 ? 14 : 15;
         const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
           <circle cx="${r}" cy="${r}" r="${r}" fill="#1b1f27"/>
           <circle cx="${r}" cy="${r}" r="${r - 2.5}" fill="${baseColor}" fill-opacity="0.55" stroke="${baseColor}" stroke-width="2"/>
@@ -314,8 +318,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         });
       };
 
-      raceClusterRef.current = new MC({ chunkedLoading: true, maxClusterRadius: 60, iconCreateFunction: makeIconFn("#6366f1"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
-      exploreClusterRef.current = new MC({ chunkedLoading: true, maxClusterRadius: 50, iconCreateFunction: makeIconFn("#f97316"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
+      raceClusterRef.current = new MC({ chunkedLoading: true, maxClusterRadius: 60, iconCreateFunction: makeIconFn("#3b82f6"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
+      exploreClusterRef.current = new MC({ chunkedLoading: true, maxClusterRadius: 50, iconCreateFunction: makeIconFn("#22c55e"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
       raceClusterRef.current.addTo(map);
       // Explore cluster added to map only when Explore is ON (handled in renderMarkers)
       // Trigger first render now that clusters are ready
