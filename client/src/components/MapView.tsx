@@ -289,7 +289,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     // Create cluster groups (wait until markercluster JS is available)
     const initClusters = () => {
-      const MC = (window as any).L.MarkerClusterGroup;
+      const _L = (window as any).L;
+      const MC = _L && _L.MarkerClusterGroup;
       if (!MC) { setTimeout(initClusters, 150); return; }
 
       // Shared icon creator: simple circle with count
@@ -315,6 +316,9 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       exploreClusterRef.current = MC({ chunkedLoading: true, maxClusterRadius: 50, iconCreateFunction: makeIconFn("#f97316"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
       raceClusterRef.current.addTo(map);
       // Explore cluster added to map only when Explore is ON (handled in renderMarkers)
+      // Trigger first render now that clusters are ready
+      lastRenderKeyRef.current = "";
+      renderMarkersRef.current(true);
     };
     initClusters();
 
@@ -451,6 +455,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     renderMarkersRef.current = renderMarkers;
     const L = (window as any).L;
     if (!L || !mapInstanceRef.current) return;
+    // Wait until cluster groups are initialized (initClusters will re-trigger this)
+    if (!raceClusterRef.current || !exploreClusterRef.current) return;
     const map = mapInstanceRef.current;
 
     const renderKey = JSON.stringify({
