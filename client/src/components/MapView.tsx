@@ -373,31 +373,51 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
 
     map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
 
-    // On mobile: re-open popup immediately if it closes due to anything other
-    // than an explicit allowClose (X button, pin switch, star button).
-    // Leaflet closes popups internally via popup._close() on 2-finger gestures —
-    // intercepting map.closePopup is not enough. Instead we catch popupclose
-    // and reverse it unless we explicitly permitted it.
+    // On mobile: a single tap on empty map / another pin / the X button should
+    // close the open popup, but a 2-finger pan or pinch-zoom must never close it.
+    // The browser fires a synthetic "click" when fingers lift at the end of a
+    // multi-touch gesture, and if that lands on the map or a marker it would
+    // otherwise be misread as a deliberate tap. We track touch count to tell
+    // the two apart, and suppress the synthetic click entirely when it was
+    // caused by a 2+ finger gesture.
     if (isTouch) {
       let allowClose = false;
+      let multiTouchActive = false;
       (map as any)._allowNextClose = () => { allowClose = true; };
 
+      if (mapRef.current) {
+        mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
+          if (e.touches.length > 1) multiTouchActive = true;
+        }, { passive: true, capture: true });
+        const endMultiTouch = (e: TouchEvent) => {
+          if (e.touches.length === 0) setTimeout(() => { multiTouchActive = false; }, 50);
+        };
+        mapRef.current.addEventListener("touchend", endMultiTouch, { passive: true, capture: true });
+        mapRef.current.addEventListener("touchcancel", endMultiTouch, { passive: true, capture: true });
+      }
+
+      // Safety net: if a popup still closes unexpectedly for some other reason,
+      // reopen it immediately rather than leave the user staring at a vanished popup.
       map.on("popupclose", (e: any) => {
         if (allowClose) { allowClose = false; return; }
-        // Not allowed — re-open immediately
         const popup = e.popup;
         if (popup) setTimeout(() => { popup.openOn(map); }, 0);
       });
 
-      // Allow close when the X button is tapped, or when tapping empty map background
-      // (mirrors the desktop background-click-to-close behavior below).
       if (mapRef.current) {
         mapRef.current.addEventListener("click", (e: MouseEvent) => {
+          // Gesture-end synthetic click — ignore entirely so nothing it lands on
+          // (background or a marker) reacts, and the popup stays exactly as-is.
+          if (multiTouchActive) { e.stopPropagation(); e.preventDefault(); return; }
+
           const target = e.target as HTMLElement;
           if (target?.closest(".leaflet-popup-close-button")) {
             allowClose = true;
             return;
           }
+          // Tapping empty map background closes the open popup (marker taps —
+          // including switching to a different pin — are handled by each
+          // marker's own click handler).
           const onMarker = !!target?.closest(".leaflet-marker-icon");
           const onPopup = !!target?.closest(".leaflet-popup");
           if (!onMarker && !onPopup && activeMarkerRef.current) {
