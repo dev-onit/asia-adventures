@@ -160,6 +160,28 @@ function spreadOverlappingPoints(map: any, L: any, points: GeoPoint[]): Map<stri
   return result;
 }
 
+// ── Shared pin wiring (race + explore pins) ──
+// Centralizes the popup options and active-marker switching that both pin types need
+// identically, and stamps a stable __pinId so renderMarkers() can find this marker's
+// replacement after a rebuild and restore its open popup (see renderMarkers below).
+function wirePinPopup(marker: any, map: any, activeMarkerRef: React.MutableRefObject<any>, pinId: string, html: string, maxWidth: number) {
+  marker.__pinId = pinId;
+  marker.bindPopup(html, {
+    maxWidth, className: "map-popup-wrapper", closeOnClick: false,
+    autoClose: false, autoPanPadding: [28, 28],
+  });
+  marker.on("click", () => {
+    if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
+      map._allowNextClose?.();
+      activeMarkerRef.current.closePopup();
+    }
+    activeMarkerRef.current = marker;
+  });
+  marker.on("popupclose", () => {
+    if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
+  });
+}
+
 const POPUP_STYLE = `
   .map-popup {
     font-family: 'Satoshi', system-ui, sans-serif;
@@ -241,6 +263,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   const showExploreRef = useRef(false);
   const [showRaces, setShowRaces] = useState(true);
   const showRacesRef = useRef(true);
+  const [mapLoadFailed, setMapLoadFailed] = useState(false);
   const lastRenderKeyRef = useRef<string>("");
   const renderMarkersRef = useRef<(force?: boolean) => void>(() => {});
   const hasInitialFitRef = useRef(false);
@@ -445,8 +468,16 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const poll = setInterval(tryInit, 100);
     tryInit(); // try immediately in case Leaflet is already loaded
 
+    // Leaflet loads from a CDN <script> tag (see CalendarPage.tsx) — on a slow or
+    // blocked connection this would otherwise poll forever with a blank map and no
+    // feedback. Give up after 12s and show a retry affordance instead.
+    const failTimer = setTimeout(() => {
+      if (!mapInstanceRef.current) { clearInterval(poll); setMapLoadFailed(true); }
+    }, 12000);
+
     return () => {
       clearInterval(poll);
+      clearTimeout(failTimer);
       if (mapInstanceRef.current) { mapInstanceRef.current.remove(); mapInstanceRef.current = null; }
       raceClusterRef.current = null;
       exploreClusterRef.current = null;
@@ -547,10 +578,17 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     if (!force && renderKey === lastRenderKeyRef.current) return;
     lastRenderKeyRef.current = renderKey;
 
+    // This rebuild is about to destroy every marker, including whichever one has an
+    // open popup right now (zoom, favoriting, voting, and filter changes all land
+    // here) — remember it by stable id so it can be reopened on its replacement
+    // marker below, instead of silently vanishing on the next zoom/data change.
+    const reopenPinId: string | null = activeMarkerRef.current?.__pinId ?? null;
+
     markersRef.current.forEach(m => m.remove());
     markersRef.current = [];
     if (raceClusterRef.current) raceClusterRef.current.clearLayers();
     if (exploreClusterRef.current) exploreClusterRef.current.clearLayers();
+    activeMarkerRef.current = null;
 
     // ── Resolve overlapping pins (races and/or explore sites sharing a map location) ──
     const geoPoints: GeoPoint[] = [];
@@ -596,23 +634,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </div>`;
         const icon = L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
         const marker = L.marker([lat, lng], { icon });
-        // autoClose:false — opening this popup must never auto-close another marker's
-        // popup as a side effect; we manage closing the previous one ourselves below.
-        // Leaflet's own autoPan (with generous padding) keeps the popup fully on-screen.
-        marker.bindPopup(buildExplorePopup(site), {
-          maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false,
-          autoClose: false, autoPanPadding: [28, 28],
-        });
-        marker.on("click", () => {
-          if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
-            (mapInstanceRef.current as any)?._allowNextClose?.();
-            activeMarkerRef.current.closePopup();
-          }
-          activeMarkerRef.current = marker;
-        });
-        marker.on("popupclose", () => {
-          if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
-        });
+        wirePinPopup(marker, map, activeMarkerRef, `e:${site.id}`, buildExplorePopup(site), 280);
         if (exploreClusterRef.current) exploreClusterRef.current.addLayer(marker);
         else markersRef.current.push(marker);
       });
@@ -620,6 +642,29 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       // Explore is OFF — remove explore cluster from map
       if (exploreClusterRef.current && map.hasLayer(exploreClusterRef.current)) {
         map.removeLayer(exploreClusterRef.current);
+      }
+    }
+
+    // Restore the popup that was open before this rebuild, on its replacement marker.
+    if (reopenPinId) {
+      const candidates = [
+        ...(raceClusterRef.current?.getLayers() ?? []),
+        ...(exploreClusterRef.current?.getLayers() ?? []),
+        ...markersRef.current,
+      ];
+      const restored = candidates.find((m: any) => m.__pinId === reopenPinId);
+      if (restored) {
+        activeMarkerRef.current = restored;
+        // If this pin now falls inside a cluster bubble (e.g. the rebuild was
+        // triggered by zooming out), a plain openPopup() on it renders nothing —
+        // zoomToShowLayer is markercluster's own way to reveal a clustered marker
+        // before opening its popup. Falls back to a direct open when not clustered.
+        const owningCluster = reopenPinId.startsWith("r:") ? raceClusterRef.current : exploreClusterRef.current;
+        if (owningCluster && typeof owningCluster.zoomToShowLayer === "function") {
+          owningCluster.zoomToShowLayer(restored, () => restored.openPopup());
+        } else {
+          restored.openPopup();
+        }
       }
     }
   }
@@ -651,32 +696,19 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const marker = L.marker(coords, { icon });
     if (raceClusterRef.current) raceClusterRef.current.addLayer(marker);
     else marker.addTo(map);
-    // autoClose:false — opening this popup must never auto-close another marker's
-    // popup as a side effect; we manage closing the previous one ourselves below.
-    // Leaflet's own autoPan (with generous padding) keeps the popup fully on-screen.
-    marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), {
-      maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false,
-      autoClose: false, autoPanPadding: [28, 28],
-    });
-    marker.on("click", () => {
-      if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
-        (map as any)._allowNextClose?.();
-        activeMarkerRef.current.closePopup();
-      }
-      activeMarkerRef.current = marker;
-    });
+    wirePinPopup(marker, map, activeMarkerRef, `r:${rep.id}`, buildGroupPopup(groupRaces, isFav, allVoters), 300);
     marker.on("popupopen", () => {
-      // Wire star buttons
+      // Wire star buttons — scoped to this popup's own DOM, not the whole document,
+      // so a stray id collision elsewhere on the page can never wire the wrong button.
       setTimeout(() => {
+        const popupEl = marker.getPopup()?.getElement() as HTMLElement | undefined;
+        if (!popupEl) return;
         groupRaces.forEach(r => {
-          const btn = document.querySelector(`[data-race-id="${r.id}"]`) as HTMLElement;
+          const btn = popupEl.querySelector(`[data-race-id="${r.id}"]`) as HTMLElement | null;
           const rIsFav = favSet.has(r.id);
           if (btn) btn.onclick = () => { onToggleFav(r.id, rIsFav); (map as any)._allowNextClose?.(); map.closePopup(); };
         });
       }, 50);
-    });
-    marker.on("popupclose", () => {
-      if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
     });
     markersRef.current.push(marker);
   }
@@ -743,6 +775,18 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
   return (
     <div className="relative overflow-hidden">
       <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }} />
+
+      {mapLoadFailed && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-zinc-100 dark:bg-zinc-900 text-sm text-zinc-500 dark:text-zinc-400 text-center px-6">
+          <span>Map failed to load — check your connection.</span>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-xs font-semibold"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
 
 
