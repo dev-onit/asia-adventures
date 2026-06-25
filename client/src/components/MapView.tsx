@@ -389,12 +389,20 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         if (popup) setTimeout(() => { popup.openOn(map); }, 0);
       });
 
-      // Allow close when X button is tapped
+      // Allow close when the X button is tapped, or when tapping empty map background
+      // (mirrors the desktop background-click-to-close behavior below).
       if (mapRef.current) {
         mapRef.current.addEventListener("click", (e: MouseEvent) => {
           const target = e.target as HTMLElement;
           if (target?.closest(".leaflet-popup-close-button")) {
             allowClose = true;
+            return;
+          }
+          const onMarker = !!target?.closest(".leaflet-marker-icon");
+          const onPopup = !!target?.closest(".leaflet-popup");
+          if (!onMarker && !onPopup && activeMarkerRef.current) {
+            allowClose = true;
+            map.closePopup();
           }
         }, { capture: true });
       }
@@ -568,34 +576,19 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         </div>`;
         const icon = L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
         const marker = L.marker([lat, lng], { icon });
-        marker.bindPopup(buildExplorePopup(site), { maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false });
+        // autoClose:false — opening this popup must never auto-close another marker's
+        // popup as a side effect; we manage closing the previous one ourselves below.
+        // Leaflet's own autoPan (with generous padding) keeps the popup fully on-screen.
+        marker.bindPopup(buildExplorePopup(site), {
+          maxWidth: 280, className: "map-popup-wrapper", closeOnClick: false,
+          autoClose: false, autoPanPadding: [28, 28],
+        });
         marker.on("click", () => {
           if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
             (mapInstanceRef.current as any)?._allowNextClose?.();
             activeMarkerRef.current.closePopup();
           }
           activeMarkerRef.current = marker;
-        });
-        marker.on("popupopen", () => {
-          setTimeout(() => {
-            const mapInstance = mapInstanceRef.current;
-            const mapContainer = mapRef.current;
-            if (!mapInstance || !mapContainer) return;
-            const mapH = mapContainer.offsetHeight;
-            const mapW = mapContainer.offsetWidth;
-            const popupEl = mapContainer.querySelector(".leaflet-popup") as HTMLElement | null;
-            const popupH = popupEl ? popupEl.offsetHeight : 220;
-            const pinH = totalH;
-            const desiredY = Math.max(popupH + 20, mapH - popupH - 20 - pinH / 2);
-            const px = mapInstance.latLngToContainerPoint([lat, lng]);
-            const deltaY = px.y - desiredY;
-            const deltaX = px.x - mapW / 2;
-            if (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8) {
-              const targetPx = (window as any).L.point(px.x - deltaX, px.y - deltaY);
-              const targetLatLng = mapInstance.containerPointToLatLng(targetPx);
-              mapInstance.panTo(targetLatLng, { animate: true, duration: 0.4 });
-            }
-          }, 80);
         });
         marker.on("popupclose", () => {
           if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
@@ -638,7 +631,13 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const marker = L.marker(coords, { icon });
     if (raceClusterRef.current) raceClusterRef.current.addLayer(marker);
     else marker.addTo(map);
-    marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), { maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false });
+    // autoClose:false — opening this popup must never auto-close another marker's
+    // popup as a side effect; we manage closing the previous one ourselves below.
+    // Leaflet's own autoPan (with generous padding) keeps the popup fully on-screen.
+    marker.bindPopup(buildGroupPopup(groupRaces, isFav, allVoters), {
+      maxWidth: 300, className: "map-popup-wrapper", closeOnClick: false,
+      autoClose: false, autoPanPadding: [28, 28],
+    });
     marker.on("click", () => {
       if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
         (map as any)._allowNextClose?.();
@@ -655,31 +654,6 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
           if (btn) btn.onclick = () => { onToggleFav(r.id, rIsFav); (map as any)._allowNextClose?.(); map.closePopup(); };
         });
       }, 50);
-      // Pan so the popup is fully visible.
-      // setTimeout(80) gives Leaflet time to fully render + size the popup DOM.
-      setTimeout(() => {
-        const mapContainer = mapRef.current;
-        if (!mapContainer) return;
-        const mapH = mapContainer.offsetHeight;
-        const mapW = mapContainer.offsetWidth;
-        // Measure the rendered popup element
-        const popupEl = mapContainer.querySelector(".leaflet-popup") as HTMLElement | null;
-        const popupH = popupEl ? popupEl.offsetHeight : 220;
-        // Place pin so popup sits 20px from the top edge and pin is in lower portion.
-        // desiredPinY = bottom of map minus popup height minus 20px gap
-        // Clamp: pin must be at least (popupH + 20) from top so popup doesn't clip.
-        const pinH = totalH;
-        const desiredY = Math.max(popupH + 20, mapH - popupH - 20 - pinH / 2);
-        // Current pin position in container coords (re-read after any prior pan)
-        const px = map.latLngToContainerPoint(coords);
-        const deltaY = px.y - desiredY;
-        const deltaX = px.x - mapW / 2;
-        if (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8) {
-          const targetPx = (window as any).L.point(px.x - deltaX, px.y - deltaY);
-          const targetLatLng = map.containerPointToLatLng(targetPx);
-          map.panTo(targetLatLng, { animate: true, duration: 0.4 });
-        }
-      }, 80);
     });
     marker.on("popupclose", () => {
       if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
