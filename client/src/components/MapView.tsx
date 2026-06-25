@@ -46,9 +46,15 @@ const TYPE_LETTERS: Record<string, string> = {
 };
 
 const TYPE_LABELS: Record<string, string> = {
-  running: "Running", triathlon: "Triathlon", trail: "Trail",
+  running: "Running", triathlon: "Triathlon", trail: "Running",
   hyrox: "Hyrox", "ocean-swim": "Swimming", swimrun: "SwimRun",
   ocr: "OCR", xenom: "Xenom",
+};
+
+// Popup badge sub-label — shown dimmed next to the main pill, e.g. "Running · Trail",
+// to distinguish Road vs Trail without splitting them into separate sport labels.
+const TYPE_SUBLABELS: Record<string, string> = {
+  running: "Road", trail: "Trail",
 };
 
 // Explore categories deliberately avoid any color used by TYPE_COLORS (Races) above —
@@ -427,6 +433,8 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     const rep = groupRaces[0];
     const fill = TYPE_COLORS[rep.type] ?? "#6366f1";
     const label = TYPE_LABELS[rep.type] ?? rep.type;
+    const subLabel = TYPE_SUBLABELS[rep.type];
+    const badgeHtml = `<span class="mp-badge" style="background:${fill}22;color:${fill};border:1px solid ${fill}55">${label}${subLabel ? ` <span style="opacity:0.65;font-weight:500">· ${subLabel}</span>` : ""}</span>`;
     const flag = COUNTRY_WEATHER[rep.country]?.flag ?? "";
     const votersHtml = voters.length > 0 ? `<div class="mp-row">👥 ${voters.map(esc).join(", ")}</div>` : "";
     const weather = getRaceWeather(rep.location, rep.date);
@@ -441,7 +449,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
       const r = sorted[0]; const rIsFav = favSet.has(r.id);
       const visitBtn = r.url ? `<a href="${r.url}" target="_blank" rel="noopener noreferrer" class="mp-visit-btn">↗ Visit</a>` : "";
       return `<div class="map-popup">
-        <span class="mp-badge" style="background:${fill}22;color:${fill};border:1px solid ${fill}55">${label}</span>
+        ${badgeHtml}
         <div class="mp-name">${rep.name}</div>
         <div class="mp-row">📍 ${esc(rep.location)}, ${flag} ${esc(rep.country)}</div>
         <div class="mp-row">📅 ${esc(r.date)} · ${esc(r.distance)}</div>
@@ -468,7 +476,7 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     }).join("");
 
     return `<div class="map-popup">
-      <span class="mp-badge" style="background:${fill}22;color:${fill};border:1px solid ${fill}55">${label}</span>
+      ${badgeHtml}
       <div class="mp-name">${rep.name}</div>
       <div class="mp-row">📍 ${esc(rep.location)}, ${flag} ${esc(rep.country)}</div>
       ${votersHtml}
