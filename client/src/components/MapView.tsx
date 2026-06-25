@@ -118,6 +118,42 @@ function raceIconHtml(fill: string, label: string, isFav: boolean, voteCount: nu
   </div>`;
 }
 
+// ── Spread pins that share a map location ──
+// Races and explore sites can resolve to the exact same lat/lng (e.g. both fall back to
+// the same city/country centroid, or two races share a start line). Race and explore pins
+// live in separate MarkerClusterGroups, so Leaflet's own spiderfy can't coordinate across
+// the two layers — without this, one pin would render directly on top of the other.
+// Offsets are computed in screen pixels (not fixed degrees) and recalculated on every
+// zoom change, so separation looks consistent at any zoom instead of vanishing when
+// zoomed out or growing huge when zoomed in.
+type GeoPoint = { id: string; lat: number; lng: number };
+
+function spreadOverlappingPoints(map: any, L: any, points: GeoPoint[]): Map<string, [number, number]> {
+  const groups = new Map<string, GeoPoint[]>();
+  points.forEach(p => {
+    const key = `${p.lat.toFixed(5)},${p.lng.toFixed(5)}`;
+    const arr = groups.get(key);
+    if (arr) arr.push(p); else groups.set(key, [p]);
+  });
+
+  const SPREAD_RADIUS_PX = 26;
+  const result = new Map<string, [number, number]>();
+  groups.forEach(group => {
+    if (group.length === 1) {
+      result.set(group[0].id, [group[0].lat, group[0].lng]);
+      return;
+    }
+    const center = map.latLngToContainerPoint([group[0].lat, group[0].lng]);
+    group.forEach((p, i) => {
+      const angle = (2 * Math.PI * i) / group.length;
+      const pt = L.point(center.x + SPREAD_RADIUS_PX * Math.cos(angle), center.y + SPREAD_RADIUS_PX * Math.sin(angle));
+      const latlng = map.containerPointToLatLng(pt);
+      result.set(p.id, [latlng.lat, latlng.lng]);
+    });
+  });
+  return result;
+}
+
 const POPUP_STYLE = `
   .map-popup {
     font-family: 'Satoshi', system-ui, sans-serif;
@@ -480,9 +516,22 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     if (raceClusterRef.current) raceClusterRef.current.clearLayers();
     if (exploreClusterRef.current) exploreClusterRef.current.clearLayers();
 
-    // ── Render every race as individual pin ──
+    // ── Resolve overlapping pins (races and/or explore sites sharing a map location) ──
+    const geoPoints: GeoPoint[] = [];
     if (showRacesRef.current) displayRaces.forEach(race => {
       const coords = getCoords(race);
+      if (coords) geoPoints.push({ id: `r:${race.id}`, lat: coords[0], lng: coords[1] });
+    });
+    if (showExploreRef.current) sites.forEach(site => {
+      if (!site.lat || !site.lng) return;
+      const lat = parseFloat(site.lat), lng = parseFloat(site.lng);
+      if (!isNaN(lat) && !isNaN(lng)) geoPoints.push({ id: `e:${site.id}`, lat, lng });
+    });
+    const pinCoords = spreadOverlappingPoints(map, L, geoPoints);
+
+    // ── Render every race as individual pin ──
+    if (showRacesRef.current) displayRaces.forEach(race => {
+      const coords = pinCoords.get(`r:${race.id}`);
       if (!coords) return;
       renderSingleGroup(L, map, { races: [race], coords }, coords);
     });
@@ -494,9 +543,9 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
         exploreClusterRef.current.addTo(map);
       }
       sites.forEach(site => {
-        if (!site.lat || !site.lng) return;
-        const lat = parseFloat(site.lat), lng = parseFloat(site.lng);
-        if (isNaN(lat) || isNaN(lng)) return;
+        const coords = pinCoords.get(`e:${site.id}`);
+        if (!coords) return;
+        const [lat, lng] = coords;
 
         const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
         const label = site.category.toUpperCase();
