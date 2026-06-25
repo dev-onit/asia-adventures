@@ -141,7 +141,10 @@ export async function seedIfEmpty() {
   }
 
   const exploreCount = db.select().from(exploreSites).all().length;
-  if (exploreCount === 0) {
+  if (exploreCount < 255) {
+    // Reseed if count is below full expected set (e.g. sandbox was seeded with an older version)
+    console.log(`[seed] explore count=${exploreCount} < 255 — reseeding explore sites`);
+    sqlite.prepare("DELETE FROM explore_sites").run();
     const { seedExplore } = await import("./seedExplore.js");
     await seedExplore();
   }
