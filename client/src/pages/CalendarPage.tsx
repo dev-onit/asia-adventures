@@ -412,9 +412,7 @@ export default function CalendarPage() {
   const [showSearch, setShowSearch] = useState(false);
   const [showRaceList, setShowRaceList] = useState(true);
   const [showFavs, setShowFavs] = useState(false);
-  const [sortMode, setSortMode] = useState<"date" | "votes">(() => {
-    try { return (localStorage.getItem(STORAGE_SORT_MODE) as any) ?? "date"; } catch { return "date"; }
-  });
+  const [sortMode, setSortMode] = useState<"date" | "votes">("date"); // always default to date, don't persist
   // Date range filter: { from, to } — undefined means no range selected
   const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({ from: undefined, to: undefined });
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -501,7 +499,7 @@ export default function CalendarPage() {
   useEffect(() => { try { localStorage.setItem(STORAGE_EXPLORE_FILTERS, JSON.stringify(exploreCategoryFilters)); } catch {} }, [exploreCategoryFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_REGION_FILTERS, JSON.stringify(regionFilters)); } catch {} }, [regionFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_CITY_FILTERS, JSON.stringify(cityFilters)); } catch {} }, [cityFilters]);
-  useEffect(() => { try { localStorage.setItem(STORAGE_SORT_MODE, sortMode); } catch {} }, [sortMode]);
+  // sortMode is not persisted — always resets to "date" on load
 
   // ── Data ──
   const { data: races = [], isLoading } = useQuery<Race[]>({ queryKey: ["/api/races"] });
@@ -829,8 +827,8 @@ export default function CalendarPage() {
       if (showFavs) {
         if (favCountries.size === 0) return false;
         if (!favCountries.has(s.country)) return false;
-      } else if (sortMode === "votes") {
-        if (mostVotedCountries.size === 0) return false;
+      } else if (sortMode === "votes" && mostVotedCountries.size > 0) {
+        // Only filter to voted countries when there are actual votes
         if (!mostVotedCountries.has(s.country)) return false;
       } else if (anyRaceFilterActive) {
         if (!filteredRaceCountries.has(s.country)) return false;
