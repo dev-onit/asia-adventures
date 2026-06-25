@@ -412,7 +412,9 @@ export default function CalendarPage() {
   const qc = useQueryClient();
 
   // ── Voter name ──
-  const [voterName, setVoterName] = useState(() => localStorage.getItem(STORAGE_KEY) ?? "");
+  const [voterName, setVoterName] = useState(() => {
+    try { return localStorage.getItem(STORAGE_KEY) ?? ""; } catch { return ""; }
+  });
   const [nameInput, setNameInput] = useState("");
 
   // ── Theme ──
@@ -923,14 +925,14 @@ export default function CalendarPage() {
             placeholder="Your name"
             value={nameInput}
             onChange={e => setNameInput(e.target.value)}
-            onKeyDown={e => { if (e.key === "Enter" && nameInput.trim()) { const n = nameInput.trim().replace(/^\w/, c => c.toUpperCase()); localStorage.setItem(STORAGE_KEY, n); setVoterName(n); }}}
+            onKeyDown={e => { if (e.key === "Enter" && nameInput.trim()) { const n = nameInput.trim().replace(/^\w/, c => c.toUpperCase()); try { localStorage.setItem(STORAGE_KEY, n); } catch {} setVoterName(n); }}}
             className="w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground text-base outline-none focus:border-primary"
             autoFocus
             autoCapitalize="words"
             style={{ fontSize: "16px" }}
           />
           <button
-            onClick={() => { if (nameInput.trim()) { const n = nameInput.trim().replace(/^\w/, c => c.toUpperCase()); localStorage.setItem(STORAGE_KEY, n); setVoterName(n); }}}
+            onClick={() => { if (nameInput.trim()) { const n = nameInput.trim().replace(/^\w/, c => c.toUpperCase()); try { localStorage.setItem(STORAGE_KEY, n); } catch {} setVoterName(n); }}}
             className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90"
           >
             Continue
