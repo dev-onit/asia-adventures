@@ -412,7 +412,9 @@ export default function CalendarPage() {
   const [showSearch, setShowSearch] = useState(false);
   const [showRaceList, setShowRaceList] = useState(true);
   const [showFavs, setShowFavs] = useState(false);
-  const [sortMode, setSortMode] = useState<"date" | "votes">("date"); // always default to date, don't persist
+  const [sortMode, setSortMode] = useState<"date" | "votes">(() => {
+    try { return (localStorage.getItem(STORAGE_SORT_MODE) as any) ?? "date"; } catch { return "date"; }
+  });
   // Date range filter: { from, to } — undefined means no range selected
   const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({ from: undefined, to: undefined });
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -499,7 +501,7 @@ export default function CalendarPage() {
   useEffect(() => { try { localStorage.setItem(STORAGE_EXPLORE_FILTERS, JSON.stringify(exploreCategoryFilters)); } catch {} }, [exploreCategoryFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_REGION_FILTERS, JSON.stringify(regionFilters)); } catch {} }, [regionFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_CITY_FILTERS, JSON.stringify(cityFilters)); } catch {} }, [cityFilters]);
-  // sortMode is not persisted — always resets to "date" on load
+  useEffect(() => { try { localStorage.setItem(STORAGE_SORT_MODE, sortMode); } catch {} }, [sortMode]);
 
   // ── Data ──
   const { data: races = [], isLoading } = useQuery<Race[]>({ queryKey: ["/api/races"] });
@@ -825,14 +827,15 @@ export default function CalendarPage() {
 
     return exploreSites.filter(s => {
       if (showFavs) {
+        // Favourites ON: only countries with a favourited race
         if (favCountries.size === 0) return false;
         if (!favCountries.has(s.country)) return false;
       } else if (sortMode === "votes" && mostVotedCountries.size > 0) {
-        // Only filter to voted countries when there are actual votes
+        // Most Voted ON + votes exist: only countries with voted races
         if (!mostVotedCountries.has(s.country)) return false;
-      } else if (anyRaceFilterActive) {
-        if (!filteredRaceCountries.has(s.country)) return false;
       }
+      // All other states (Most Voted OFF, no votes yet, race filters active):
+      // show all 255 explore sites — race filters don't bleed into Explore
       if (exploreCategoryFilters.length > 0 && !exploreCategoryFilters.includes(s.category)) return false;
       if (search) {
         const q = search.toLowerCase();
@@ -840,7 +843,7 @@ export default function CalendarPage() {
       }
       return true;
     });
-  }, [exploreSites, showFavs, favCountries, sortMode, mostVotedCountries, countryFilters, exploreCategoryFilters, search, filteredRaceCountries, raceFiltersActive, monthFilters, yearFilters, personFilter, minVotesFilter, teamFilters]);
+  }, [exploreSites, showFavs, favCountries, sortMode, mostVotedCountries, exploreCategoryFilters, search]);
 
   // ── Header height measurement ──
   const headerRef = useRef<HTMLElement>(null);
