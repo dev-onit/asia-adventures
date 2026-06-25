@@ -32,7 +32,16 @@ app.use(express.json());
 
 app.use("/api", router);
 
-// Runs once per cold start; subsequent requests on the same warm instance await the cached promise.
-export const ready = seedIfEmpty().catch((err) => {
-  console.error("[seed] seedIfEmpty failed:", err);
-});
+// Memoized per warm instance, but a failure (e.g. a transient cold-start blip from
+// the database) clears the cache so the next request retries instead of staying broken.
+let seedPromise: Promise<void> | null = null;
+
+export function ensureReady() {
+  if (!seedPromise) {
+    seedPromise = seedIfEmpty().catch((err) => {
+      seedPromise = null;
+      throw err;
+    });
+  }
+  return seedPromise;
+}
