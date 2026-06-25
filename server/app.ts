@@ -5,6 +5,9 @@ import router from "./routes.js";
 import { seedIfEmpty } from "./storage.js";
 
 export const app = express();
+// Vercel's edge network sits in front of every request — trust its X-Forwarded-For
+// so express-rate-limit keys on the real client IP instead of erroring.
+app.set("trust proxy", 1);
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
