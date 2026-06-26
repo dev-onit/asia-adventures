@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import { Maximize2, Minimize2 } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -26,6 +27,8 @@ interface Props {
   showUnconfirmed: boolean;
   onToggleUnconfirmed: () => void;
   recenterRef?: MutableRefObject<(() => void) | null>;
+  isFullscreen: boolean;
+  onToggleFullscreen: () => void;
 }
 
 // Running (road) and Trail share the "RUN" pin label but get distinct colors
@@ -568,7 +571,7 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen }: Props) {
   const [showExplore, setShowExplore] = useState(false);
   const [showRaces, setShowRaces] = useState(true);
 
@@ -599,7 +602,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
   }
 
   return (
-    <div className="relative overflow-hidden">
+    <div className={`relative overflow-hidden ${isFullscreen ? "h-full" : ""}`}>
       <MapContainer
         center={[20, 100]}
         zoom={4}
@@ -609,7 +612,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         scrollWheelZoom={false}
         dragging={!isTouch}
         className="map-container w-full"
-        style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }}
+        style={{ height: isFullscreen ? "100%" : "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }}
       >
         <ZoomControl position="bottomleft" />
         <ThemeTileLayer isDark={isDark} />
@@ -624,6 +627,17 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           onToggleFav={onToggleFav}
         />
       </MapContainer>
+
+      {/* Fullscreen toggle — top-left */}
+      <div className="absolute top-3 left-3 z-10" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
+        <button
+          onClick={onToggleFullscreen}
+          title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
+          className="flex items-center justify-center w-8 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300 hover:brightness-110"
+        >
+          {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+        </button>
+      </div>
 
       {/* Explore + Races buttons — top-right */}
       <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>

@@ -384,6 +384,7 @@ export default function CalendarPage() {
   }, [isDark]);
 
   // ── UI state ──
+  const [isMapFullscreen, setIsMapFullscreen] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showTimeFilters, setShowTimeFilters] = useState(false);
   // activeSubPanel: which sub-panel is open — 'race' | 'locations' | 'dates' | 'explore' | null
@@ -857,6 +858,19 @@ export default function CalendarPage() {
     return () => ro.disconnect();
   }, []);
 
+  // Fullscreen map: lock page scroll and allow Escape to exit
+  useEffect(() => {
+    if (!isMapFullscreen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => { if (e.key === "Escape") setIsMapFullscreen(false); };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isMapFullscreen]);
+
   // ── Back to Map floating button observer ──
   useEffect(() => {
     const el = mapWrapperRef.current;
@@ -1001,7 +1015,7 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ── Sticky header ── */}
-      <header ref={headerRef} className="sticky top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border">
+      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border`}>
         {/* Mobile: two-row layout (hidden on sm+) */}
         <div className="sm:hidden">
           {/* Row 1 mobile: Logo + title + name chip */}
@@ -1783,7 +1797,11 @@ export default function CalendarPage() {
       </header>
 
       {/* Map */}
-      <div ref={mapWrapperRef}>
+      <div
+        ref={mapWrapperRef}
+        className={isMapFullscreen ? "fixed inset-x-0 bottom-0 z-40 bg-background" : undefined}
+        style={isMapFullscreen ? { top: "var(--header-h, 0px)" } : undefined}
+      >
       <MapView
         races={filtered}
         allRaces={races}
@@ -1800,6 +1818,8 @@ export default function CalendarPage() {
         showUnconfirmed={showUnconfirmed}
         onToggleUnconfirmed={() => setShowUnconfirmed(v => !v)}
         recenterRef={mapRecenterRef}
+        isFullscreen={isMapFullscreen}
+        onToggleFullscreen={() => setIsMapFullscreen(v => !v)}
       />
       </div>
 
