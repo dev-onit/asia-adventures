@@ -196,6 +196,20 @@ function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [n
   return result;
 }
 
+// ── Group points by on-screen proximity so we can tell which clusters are "small enough
+// to just show as pins". Greedy single-link grouping using the same radius the visual
+// cluster group uses, projected at the current zoom so it stays stable while panning.
+function groupByPixelDistance(map: L.Map, points: GeoPoint[], radius: number): GeoPoint[][] {
+  const zoom = map.getZoom();
+  const projected = points.map(p => ({ p, pt: map.project([p.lat, p.lng], zoom) }));
+  const groups: { p: GeoPoint; pt: L.Point }[][] = [];
+  projected.forEach(item => {
+    const group = groups.find(g => g.some(o => o.pt.distanceTo(item.pt) <= radius));
+    if (group) group.push(item); else groups.push([item]);
+  });
+  return groups.map(g => g.map(x => x.p));
+}
+
 const POPUP_STYLE = `
   .map-popup {
     font-family: 'Satoshi', system-ui, sans-serif;
@@ -373,17 +387,36 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, displayRaces, sites, showRaces, showExplore, zoom]);
 
+  // Groups of 4 or fewer are shown as individual pins right away instead of a cluster
+  // bubble the user has to click/zoom through. Uses the same radius the cluster group
+  // below would use, so the boundary lines up with where a "5" bubble would have formed.
+  const { soloRaceIds, soloSiteIds } = useMemo(() => {
+    const soloRaceIds = new Set<number>();
+    const soloSiteIds = new Set<number>();
+    if (showRaces) {
+      const racePoints = displayRaces
+        .map(race => { const c = pinCoords.get(`r:${race.id}`); return c ? { id: race.id, lat: c[0], lng: c[1] } : null; })
+        .filter((p): p is { id: number; lat: number; lng: number } => p !== null);
+      groupByPixelDistance(map, racePoints, 60).forEach(group => {
+        if (group.length <= 4) group.forEach(p => soloRaceIds.add(p.id));
+      });
+    }
+    if (showExplore) {
+      const sitePoints = sites
+        .map(site => { const c = pinCoords.get(`e:${site.id}`); return c ? { id: site.id, lat: c[0], lng: c[1] } : null; })
+        .filter((p): p is { id: number; lat: number; lng: number } => p !== null);
+      groupByPixelDistance(map, sitePoints, 50).forEach(group => {
+        if (group.length <= 4) group.forEach(p => soloSiteIds.add(p.id));
+      });
+    }
+    return { soloRaceIds, soloSiteIds };
+  }, [map, pinCoords, displayRaces, sites, showRaces, showExplore]);
+
   return (
     <>
       {showRaces && (
-        <MarkerClusterGroup
-          chunkedLoading
-          maxClusterRadius={60}
-          iconCreateFunction={raceClusterIcon}
-          showCoverageOnHover={false}
-          zoomToBoundsOnClick
-        >
-          {displayRaces.map(race => {
+        <>
+          {displayRaces.filter(race => soloRaceIds.has(race.id)).map(race => {
             const coords = pinCoords.get(`r:${race.id}`);
             if (!coords) return null;
             return (
@@ -397,22 +430,51 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
               />
             );
           })}
-        </MarkerClusterGroup>
+          <MarkerClusterGroup
+            chunkedLoading
+            maxClusterRadius={60}
+            iconCreateFunction={raceClusterIcon}
+            showCoverageOnHover={false}
+            zoomToBoundsOnClick
+          >
+            {displayRaces.filter(race => !soloRaceIds.has(race.id)).map(race => {
+              const coords = pinCoords.get(`r:${race.id}`);
+              if (!coords) return null;
+              return (
+                <RaceMarker
+                  key={race.id}
+                  race={race}
+                  coords={coords}
+                  isFav={favSet.has(race.id)}
+                  voters={votesByRace.get(race.id) ?? []}
+                  onToggleFav={onToggleFav}
+                />
+              );
+            })}
+          </MarkerClusterGroup>
+        </>
       )}
       {showExplore && (
-        <MarkerClusterGroup
-          chunkedLoading
-          maxClusterRadius={50}
-          iconCreateFunction={exploreClusterIcon}
-          showCoverageOnHover={false}
-          zoomToBoundsOnClick
-        >
-          {sites.map(site => {
+        <>
+          {sites.filter(site => soloSiteIds.has(site.id)).map(site => {
             const coords = pinCoords.get(`e:${site.id}`);
             if (!coords) return null;
             return <ExploreMarker key={site.id} site={site} coords={coords} />;
           })}
-        </MarkerClusterGroup>
+          <MarkerClusterGroup
+            chunkedLoading
+            maxClusterRadius={50}
+            iconCreateFunction={exploreClusterIcon}
+            showCoverageOnHover={false}
+            zoomToBoundsOnClick
+          >
+            {sites.filter(site => !soloSiteIds.has(site.id)).map(site => {
+              const coords = pinCoords.get(`e:${site.id}`);
+              if (!coords) return null;
+              return <ExploreMarker key={site.id} site={site} coords={coords} />;
+            })}
+          </MarkerClusterGroup>
+        </>
       )}
     </>
   );
@@ -522,6 +584,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         center={[20, 100]}
         zoom={4}
         zoomControl={false}
+        attributionControl={false}
         scrollWheelZoom={false}
         dragging={!isTouch}
         className="map-container w-full"
