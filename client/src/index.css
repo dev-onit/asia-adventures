@@ -17,7 +17,7 @@
   --races-header-h: 0px;
   --filter-panel-h: 0px;
   --result-bar-h: 0px;
-  --map-h: 320px;
+  --map-h: clamp(300px, 42vh, 460px);
 }
 
 /* ── Light mode ── */
@@ -219,10 +219,11 @@ h1, h2, h3 {
   }
 }
 
-/* Desktop: restore fixed map height */
+/* Desktop: scales with a larger vh share and a higher ceiling, since wide-screen
+   monitors have much more room to give the map than a phone does. */
 @media (min-width: 640px) {
   :root {
-    --map-h: 380px;
+    --map-h: clamp(380px, 45vh, 600px);
   }
 }
 
