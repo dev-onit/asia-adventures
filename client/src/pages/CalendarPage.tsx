@@ -1843,6 +1843,9 @@ export default function CalendarPage() {
         </button>
       )}
 
+      {/* Hidden while the map is fullscreen — otherwise this content, now that the map
+          above it is position:fixed and out of flow, would jump up and overlap it. */}
+      <div style={isMapFullscreen ? { display: "none" } : undefined}>
       {/* ── Races section ── */}
       <div
         ref={racesHeaderRef}
@@ -2112,6 +2115,7 @@ export default function CalendarPage() {
       {/* Footer */}
       <div className="footer-credit text-center text-xs py-6">
         💘 Created by Lukas
+      </div>
       </div>
     </div>
   );
