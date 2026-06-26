@@ -17,7 +17,7 @@
   --races-header-h: 0px;
   --filter-panel-h: 0px;
   --result-bar-h: 0px;
-  --map-h: clamp(300px, 42vh, 460px);
+  --map-h: clamp(340px, 50vh, 500px);
 }
 
 /* ── Light mode ── */
