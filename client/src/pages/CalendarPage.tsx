@@ -1842,6 +1842,7 @@ export default function CalendarPage() {
         onToggleFavs={handleToggleFavs}
         sortMode={sortMode}
         onToggleMostVoted={handleToggleMostVoted}
+        onToggleTheme={() => setIsDark(d => !d)}
       />
       </div>
 

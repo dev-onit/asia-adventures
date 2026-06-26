@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X, Star, TrendingUp } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -36,6 +36,7 @@ interface Props {
   onToggleFavs: () => void;
   sortMode: "date" | "votes";
   onToggleMostVoted: () => void;
+  onToggleTheme: () => void;
 }
 
 // Running (road) and Trail share the "RUN" pin label but get distinct colors
@@ -594,7 +595,7 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme }: Props) {
   const [showExplore, setShowExplore] = useState(false);
   const [showRaces, setShowRaces] = useState(true);
 
@@ -687,7 +688,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
-          className={`flex items-center justify-center w-8 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`}
+          className={`flex items-center justify-center w-7 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`}
         >
           {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
         </button>
@@ -695,7 +696,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           <>
             <button
               onClick={onToggleFilterBar}
-              className={`flex items-center gap-1 px-2.5 py-1 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
+              className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
                 showFilterBar || activeFilterCount > 0
                   ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
                   : `${pillBg} border ${pillBorder} ${pillText}`
@@ -713,14 +714,14 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
               <button
                 onClick={onClearAllFilters}
                 title="Clear all filters"
-                className={`flex items-center justify-center w-8 h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+                className={`flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
               >
                 <X size={14} />
               </button>
             )}
             <button
               onClick={onToggleFavs}
-              className={`flex items-center gap-1 px-2.5 py-1 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+              className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
                 showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
               }`}
             >
@@ -734,7 +735,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
             </button>
             <button
               onClick={onToggleMostVoted}
-              className={`flex items-center gap-1 px-2.5 py-1 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+              className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
                 sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
               }`}
             >
@@ -745,6 +746,13 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
                   {racesWithVotes}
                 </span>
               )}
+            </button>
+            <button
+              onClick={onToggleTheme}
+              title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              className={`flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+            >
+              {isDark ? <Sun size={14} /> : <Moon size={14} />}
             </button>
           </>
         )}
@@ -757,7 +765,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           <button
             onClick={handleToggleRaces}
             title={!showExplore ? "Enable Explore first" : undefined}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${
+            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${
               !showExplore
                 ? `${pillBg} border ${pillBorderDisabled} ${pillTextDisabled} cursor-not-allowed opacity-50`
                 : showRaces
@@ -770,7 +778,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           </button>
           <button
             onClick={handleToggleExplore}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
               showExplore ? `${pillBg} border-[1.5px] border-orange-400 ${orangeText}` : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
@@ -784,7 +792,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <div className="flex flex-wrap justify-end gap-1.5">
           <button
             onClick={onToggleUnconfirmed}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
               showUnconfirmed ? `${pillBg} border-[1.5px] border-red-400 ${redText}` : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
@@ -793,7 +801,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           </button>
           <button
             onClick={onToggleHidePast}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
               !hidePast ? `${pillBg} border-[1.5px] border-amber-400 ${amberText}` : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
