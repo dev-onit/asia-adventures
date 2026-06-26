@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -598,6 +598,7 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
 export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme }: Props) {
   const [showExplore, setShowExplore] = useState(false);
   const [showRaces, setShowRaces] = useState(true);
+  const [showLayersMenu, setShowLayersMenu] = useState(false);
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
 
@@ -634,13 +635,18 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
   const pillBg = isDark ? "bg-zinc-900/95" : "bg-white/95";
   const pillBorder = isDark ? "border-zinc-600" : "border-zinc-300";
   const pillText = isDark ? "text-zinc-300" : "text-zinc-600";
-  const pillBorderDisabled = isDark ? "border-zinc-700" : "border-zinc-200";
   const pillTextDisabled = isDark ? "text-zinc-600" : "text-zinc-400";
   const blueText = isDark ? "text-blue-400" : "text-blue-500";
-  const orangeText = isDark ? "text-orange-400" : "text-orange-500";
+  const greenText = isDark ? "text-green-400" : "text-green-500";
   const redText = isDark ? "text-red-400" : "text-red-500";
   const amberText = isDark ? "text-amber-400" : "text-amber-500";
   const tealText = isDark ? "text-teal-400" : "text-teal-500";
+
+  // Any pin/time-range setting that differs from the default browsing view
+  // (Races on, Explore off, Predicted on, Past Events off) — drives the small
+  // indicator dot on the Layers button so its state is still glanceable without
+  // opening the menu.
+  const layersCustomized = showExplore || !showRaces || !showUnconfirmed || !hidePast;
 
   // Races with at least one vote, among the currently filtered list — mirrors the
   // header's own "Most Voted" badge count.
@@ -681,11 +687,10 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         />
       </MapContainer>
 
-      {/* Fullscreen toggle + theme toggle — bottom-left, stacked directly above the
-          Leaflet zoom +/- control so every icon-only map utility lives in one column.
-          Fullscreen is always shown; theme only in fullscreen (otherwise the page
-          header's own theme toggle is reachable). */}
-      <div className="absolute left-3 z-10 flex flex-col gap-1.5" style={{ bottom: "78px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)" }}>
+      {/* Fullscreen toggle + theme toggle — top-right, the one corner with no other
+          controls competing for it. Fullscreen is always shown; theme only in
+          fullscreen (otherwise the page header's own theme toggle is reachable). */}
+      <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
         {isFullscreen && (
           <button
             onClick={onToggleTheme}
@@ -765,60 +770,77 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         </div>
       )}
 
-      {/* Explore/Races + Predicted/Past — bottom-right. Stacked (Explore/Races above
-          Predicted/Past) on mobile; side by side as one row once there's enough width. */}
-      <div className="absolute bottom-3 right-3 z-10 flex flex-col sm:flex-row items-end sm:items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", maxWidth: "calc(100% - 60px)" }}>
-        <div className="flex flex-wrap justify-end gap-1.5">
-          <button
-            onClick={handleToggleRaces}
-            title={!showExplore ? "Enable Explore first" : undefined}
-            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${
-              !showExplore
-                ? `${pillBg} border ${pillBorderDisabled} ${pillTextDisabled} cursor-not-allowed opacity-50`
-                : showRaces
-                  ? `${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`
-                  : `${pillBg} border-[1.5px] border-blue-400 ${blueText} hover:brightness-110`
-            }`}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            {showRaces ? "Races: ON" : "Races: OFF"}
-          </button>
-          <button
-            onClick={handleToggleExplore}
-            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-              showExplore ? `${pillBg} border-[1.5px] border-orange-400 ${orangeText}` : `${pillBg} border ${pillBorder} ${pillText}`
-            }`}
-          >
-            {showExplore
-              ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-              : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-            }
-            {showExplore ? "Explore: ON" : "Explore: OFF"}
-          </button>
-        </div>
-        <div className="flex flex-wrap justify-end gap-1.5">
-          <button
-            onClick={onToggleUnconfirmed}
-            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-              showUnconfirmed ? `${pillBg} border-[1.5px] border-red-400 ${redText}` : `${pillBg} border ${pillBorder} ${pillText}`
-            }`}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            {showUnconfirmed ? "Predicted: ON" : "Predicted: OFF"}
-          </button>
-          <button
-            onClick={onToggleHidePast}
-            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-              !hidePast ? `${pillBg} border-[1.5px] border-amber-400 ${amberText}` : `${pillBg} border ${pillBorder} ${pillText}`
-            }`}
-          >
-            {!hidePast
-              ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-              : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-            }
-            {!hidePast ? "Past Events: ON" : "Past Events: OFF"}
-          </button>
-        </div>
+      {/* Layers — bottom-right. Consolidates the 4 pin/time-range toggles (Races,
+          Explore, Predicted, Past Events) that used to sit here as always-visible
+          pills into one button + popover, so they stop competing for space on
+          narrow mobile screens. The small dot signals a non-default state without
+          needing to open the menu. */}
+      <div className="absolute bottom-3 right-3 z-10" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
+        {showLayersMenu && (
+          <>
+            <div className="fixed inset-0 z-10" onClick={() => setShowLayersMenu(false)} />
+            <div
+              onClick={e => e.stopPropagation()}
+              className={`absolute bottom-9 right-0 z-20 rounded-xl border ${pillBorder} ${pillBg} backdrop-blur-sm shadow-lg p-1.5 flex flex-col gap-0.5`}
+              style={{ minWidth: 190 }}
+            >
+              <div className={`text-[10px] font-bold uppercase tracking-wide px-2 pt-1 pb-1.5 ${pillTextDisabled}`}>Pins</div>
+              <button
+                onClick={handleToggleRaces}
+                disabled={!showExplore}
+                title={!showExplore ? "Enable Explore first" : undefined}
+                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] font-semibold transition-all ${
+                  !showExplore ? `${pillTextDisabled} cursor-not-allowed opacity-50` : showRaces ? `${blueText} bg-blue-400/10` : `${pillText} hover:bg-white/5`
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Races
+                <span className="ml-auto text-[10px] font-bold opacity-70">{showRaces ? "ON" : "OFF"}</span>
+              </button>
+              <button
+                onClick={handleToggleExplore}
+                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] font-semibold transition-all ${showExplore ? `${greenText} bg-green-400/10` : `${pillText} hover:bg-white/5`}`}
+              >
+                {showExplore
+                  ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                }
+                Explore
+                <span className="ml-auto text-[10px] font-bold opacity-70">{showExplore ? "ON" : "OFF"}</span>
+              </button>
+              <div className={`text-[10px] font-bold uppercase tracking-wide px-2 pt-2 pb-1.5 mt-0.5 border-t ${pillBorder} ${pillTextDisabled}`}>Time range</div>
+              <button
+                onClick={onToggleUnconfirmed}
+                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] font-semibold transition-all ${showUnconfirmed ? `${redText} bg-red-400/10` : `${pillText} hover:bg-white/5`}`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Predicted
+                <span className="ml-auto text-[10px] font-bold opacity-70">{showUnconfirmed ? "ON" : "OFF"}</span>
+              </button>
+              <button
+                onClick={onToggleHidePast}
+                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] font-semibold transition-all ${!hidePast ? `${amberText} bg-amber-400/10` : `${pillText} hover:bg-white/5`}`}
+              >
+                {!hidePast
+                  ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                }
+                Past Events
+                <span className="ml-auto text-[10px] font-bold opacity-70">{!hidePast ? "ON" : "OFF"}</span>
+              </button>
+            </div>
+          </>
+        )}
+        <button
+          onClick={() => setShowLayersMenu(v => !v)}
+          title="Map layers"
+          className={`relative flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+        >
+          <Layers size={14} />
+          {layersCustomized && (
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-teal-400 border border-black/20" />
+          )}
+        </button>
       </div>
     </div>
   );

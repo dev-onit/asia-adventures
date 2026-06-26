@@ -1723,7 +1723,7 @@ export default function CalendarPage() {
 
         {/* Active filter pills row — Done button always at far right when filters open */}
         {activeFilterCount > 0 && (
-          <div className={`flex gap-1.5 px-4 py-2.5 text-xs items-center border-t border-border ${isMapFullscreen ? "flex-nowrap overflow-x-auto bg-muted/10" : "flex-wrap bg-muted/30"}`} style={isMapFullscreen ? { WebkitOverflowScrolling: "touch", scrollbarWidth: "none" } : undefined}>
+          <div className={`flex gap-1.5 px-4 py-2.5 text-xs items-center border-t border-border ${isMapFullscreen ? "flex-nowrap overflow-x-auto bg-transparent" : "flex-wrap bg-muted/30"}`} style={isMapFullscreen ? { WebkitOverflowScrolling: "touch", scrollbarWidth: "none" } : undefined}>
             {/* Races — blue */}
             {[...sportFilters].map(key => (
               <span key={key} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium">
