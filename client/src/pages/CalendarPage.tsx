@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Star, Filter, X, Globe2, Users, Search, AlertTriangle, ChevronDown, ChevronRight, Eye, EyeOff, TrendingUp, Calendar, MapPin } from "lucide-react";
+import { Star, Filter, X, Globe2, Users, Search, AlertTriangle, ChevronDown, ChevronRight, TrendingUp, Calendar, MapPin, SlidersHorizontal } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import type { Race, Favourite, ExploreSite } from "../../../shared/schema";
@@ -400,6 +400,7 @@ export default function CalendarPage() {
     try { return localStorage.getItem(STORAGE_SHOW_FILTER_BAR) === 'true'; } catch { return false; }
   });
   const [showSearch, setShowSearch] = useState(false);
+  const [showViewMenu, setShowViewMenu] = useState(false);
   const [showRaceList, setShowRaceList] = useState(true);
   const [showFavs, setShowFavs] = useState(false);
   const [sortMode, setSortMode] = useState<"date" | "votes">(() => {
@@ -1085,8 +1086,9 @@ export default function CalendarPage() {
             the Filters/Clear All/Search row below remains, maximizing map space */}
         {!isMapFullscreen && (
         <div className="sm:hidden">
-          {/* Row 1 mobile: Logo + title + name chip */}
-          <div className="flex items-center gap-3 px-4 pt-4 pb-1">
+          {/* Mobile: Logo + title + name chip — Favourites/Most Voted moved into
+              the View menu (Row 3) to save vertical space */}
+          <div className="flex items-center gap-3 px-4 pt-4 pb-3">
             <img src="/logo.jpg" alt="Adventure Crew" className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
             <div className="min-w-0">
               <h1 className="text-xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
@@ -1099,56 +1101,6 @@ export default function CalendarPage() {
               </div>
             )}
           </div>
-          {/* Row 2 mobile: Favourites + Most Voted */}
-          <div className="flex items-center gap-2 px-4 pt-1.5 pb-3">
-          <button
-            onClick={handleToggleFavs}
-            className={`flex items-center gap-1.5 px-3 h-9 rounded-full border text-xs font-semibold transition-all leading-none ${
-              showFavs
-                ? "bg-yellow-400 border-yellow-400 text-black"
-                : "bg-transparent border-yellow-600 text-yellow-700 hover:bg-yellow-100 hover:border-yellow-600 dark:border-yellow-400 dark:text-yellow-400 dark:hover:bg-yellow-400/15 dark:hover:border-yellow-300"
-            }`}
-          >
-            {/* Eye state */}
-            {showFavs ? <Eye size={12} className="shrink-0" /> : <EyeOff size={12} className="shrink-0" />}
-            <span className="leading-none">Favourites</span>
-            {/* Star with count inside — right side */}
-            {(() => {
-              // Star: bright gold inactive, black when active (solid yellow bg)
-              const starFill = showFavs ? "#000000" : (isDark ? "#facc15" : "#ca8a04");
-              const numColor = showFavs ? "#facc15" : (isDark ? "#1a1a1a" : "#fffbeb");
-              const count = favSet.size;
-              return (
-                <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                  <polygon points="14,2 17.2,9.8 26,10.6 20,16.2 21.8,25 14,20.8 6.2,25 8,16.2 2,10.6 10.8,9.8" fill={starFill} stroke={starFill} strokeWidth="0.5" strokeLinejoin="round"/>
-                  <text x="14" y="18" textAnchor="middle" fontSize="8" fontFamily="system-ui,sans-serif" fontWeight="900" fill={numColor} letterSpacing="-0.3">{count}</text>
-                </svg>
-              );
-            })()}
-          </button>
-          {/* Most Voted sort button */}
-          <button
-            onClick={handleToggleMostVoted}
-            className={`flex items-center gap-1.5 px-3 h-9 rounded-full border text-xs font-semibold transition-all leading-none ${
-              sortMode === "votes"
-                ? "bg-orange-400 border-orange-400 text-black"
-                : "bg-transparent border-orange-500/60 text-orange-600 hover:bg-orange-100 hover:border-orange-500 dark:border-orange-400/60 dark:text-orange-400 dark:hover:bg-orange-400/15"
-            }`}
-          >
-            <TrendingUp size={12} className="shrink-0" />
-            <span className="leading-none">Most Voted</span>
-            {(() => {
-              // Number of distinct races that have at least one vote AND are in the current race list
-              const raceIdSet = new Set(races.map((r: any) => r.id));
-              const racesWithVotes = [...votesByRace.keys()].filter(id => raceIdSet.has(id)).length;
-              return racesWithVotes > 0 ? (
-                <span className={`ml-0.5 text-[9px] font-bold flex items-center justify-center rounded-full ${
-                  sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/15 text-orange-600 dark:text-orange-400"
-                }`} style={{ minWidth: "20px", height: "20px", padding: "0 5px" }}>{racesWithVotes}</span>
-              ) : null;
-            })()}
-          </button>
-          </div>
         </div>
         )}{/* end mobile rows */}
 
@@ -1160,51 +1112,6 @@ export default function CalendarPage() {
           <div className="min-w-0 mr-2">
             <h1 className="text-base font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
             <p className="text-[11px] text-foreground/80 font-medium tracking-wide">We Take Fun Seriously</p>
-          </div>
-          {/* Favourites + Most Voted */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleToggleFavs}
-              className={`flex items-center gap-1.5 px-3 h-8 rounded-full border text-xs font-semibold transition-all leading-none ${
-                showFavs
-                  ? "bg-yellow-400 border-yellow-400 text-black"
-                  : "bg-transparent border-yellow-600 text-yellow-700 hover:bg-yellow-100 hover:border-yellow-600 dark:border-yellow-400 dark:text-yellow-400 dark:hover:bg-yellow-400/15"
-              }`}
-            >
-              {showFavs ? <Eye size={12} className="shrink-0" /> : <EyeOff size={12} className="shrink-0" />}
-              <span className="leading-none">Favourites</span>
-              {(() => {
-                const starFill = showFavs ? "#000000" : (isDark ? "#facc15" : "#ca8a04");
-                const numColor = showFavs ? "#facc15" : (isDark ? "#1a1a1a" : "#fffbeb");
-                const count = favSet.size;
-                return (
-                  <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                    <polygon points="14,2 17.2,9.8 26,10.6 20,16.2 21.8,25 14,20.8 6.2,25 8,16.2 2,10.6 10.8,9.8" fill={starFill} stroke={starFill} strokeWidth="0.5" strokeLinejoin="round"/>
-                    <text x="14" y="18" textAnchor="middle" fontSize="8" fontFamily="system-ui,sans-serif" fontWeight="900" fill={numColor} letterSpacing="-0.3">{count}</text>
-                  </svg>
-                );
-              })()}
-            </button>
-            <button
-              onClick={handleToggleMostVoted}
-              className={`flex items-center gap-1.5 px-3 h-8 rounded-full border text-xs font-semibold transition-all leading-none ${
-                sortMode === "votes"
-                  ? "bg-orange-400 border-orange-400 text-black"
-                  : "bg-transparent border-orange-500/60 text-orange-600 hover:bg-orange-100 hover:border-orange-500 dark:border-orange-400/60 dark:text-orange-400 dark:hover:bg-orange-400/15"
-              }`}
-            >
-              <TrendingUp size={12} className="shrink-0" />
-              <span className="leading-none">Most Voted</span>
-              {(() => {
-                const raceIdSet = new Set(races.map((r: any) => r.id));
-                const racesWithVotes = [...votesByRace.keys()].filter(id => raceIdSet.has(id)).length;
-                return racesWithVotes > 0 ? (
-                  <span className={`ml-0.5 text-[9px] font-bold flex items-center justify-center rounded-full ${
-                    sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/15 text-orange-600 dark:text-orange-400"
-                  }`} style={{ minWidth: "18px", height: "18px", padding: "0 4px" }}>{racesWithVotes}</span>
-                ) : null;
-              })()}
-            </button>
           </div>
           {/* Right: Lukas chip */}
           <div className="ml-auto flex items-center gap-2">
@@ -1253,6 +1160,70 @@ export default function CalendarPage() {
               <X size={15} strokeWidth={2.5} className="shrink-0" /> <span className="leading-none">Clear All</span>
             </button>
           )}
+
+          {/* View — Favourites + Most Voted, consolidated into one button + popover
+              instead of two always-visible pills (mirrors the map's own Layers
+              menu treatment of its toggles). The dot signals a non-default state
+              without needing to open it. */}
+          <div className="relative">
+            {showViewMenu && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setShowViewMenu(false)} />
+                <div
+                  onClick={e => e.stopPropagation()}
+                  className="absolute top-full mt-2 left-0 z-20 rounded-xl border border-border bg-card shadow-lg p-2 flex flex-col gap-1"
+                  style={{ minWidth: 220 }}
+                >
+                  <button
+                    onClick={handleToggleFavs}
+                    className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                      showFavs ? "text-yellow-600 dark:text-yellow-400 bg-yellow-400/10" : "text-muted-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <Star size={16} className="shrink-0" fill={showFavs ? "currentColor" : "none"} />
+                    Favourites Only
+                    {favSet.size > 0 && (
+                      <span className={`ml-auto rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${
+                        showFavs ? "bg-yellow-500 text-black" : "bg-muted text-muted-foreground"
+                      }`}>{favSet.size}</span>
+                    )}
+                  </button>
+                  <button
+                    onClick={handleToggleMostVoted}
+                    className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                      sortMode === "votes" ? "text-orange-600 dark:text-orange-400 bg-orange-400/10" : "text-muted-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <TrendingUp size={16} className="shrink-0" />
+                    Sort by Most Voted
+                    {(() => {
+                      const raceIdSet = new Set(races.map((r: any) => r.id));
+                      const racesWithVotes = [...votesByRace.keys()].filter(id => raceIdSet.has(id)).length;
+                      return racesWithVotes > 0 ? (
+                        <span className={`ml-auto rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${
+                          sortMode === "votes" ? "bg-orange-500 text-black" : "bg-muted text-muted-foreground"
+                        }`}>{racesWithVotes}</span>
+                      ) : null;
+                    })()}
+                  </button>
+                </div>
+              </>
+            )}
+            <button
+              onClick={() => setShowViewMenu(v => !v)}
+              className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-semibold transition-all leading-none ${
+                showFavs || sortMode === "votes"
+                  ? "bg-muted border-primary/30 text-foreground"
+                  : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
+              }`}
+            >
+              <SlidersHorizontal size={13} className="shrink-0" />
+              <span className="leading-none">View</span>
+              {(showFavs || sortMode === "votes") && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-primary border border-background" />
+              )}
+            </button>
+          </div>
 
           {/* Search */}
           <button
@@ -1327,20 +1298,21 @@ export default function CalendarPage() {
                 )}
               </button>
 
-              {/* Explore tab */}
+              {/* Explore tab — green to match the Explore pins' own color on the map,
+                  not orange (reserved for votes elsewhere: Most Voted, vote badges) */}
               <button
                 onClick={() => setActiveSubPanel(p => p === 'explore' ? null : 'explore')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-all border rounded-lg hover:bg-orange-500/10 hover:text-orange-400 ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-all border rounded-lg hover:bg-green-500/10 hover:text-green-500 ${
                   activeSubPanel === 'explore'
-                    ? "bg-orange-500/15 text-orange-400 border-orange-400"
+                    ? "bg-green-500/15 text-green-500 border-green-500"
                     : exploreCategoryFilters.length > 0
-                    ? "text-orange-400 border-transparent"
-                    : "text-orange-400/70 border-transparent"
+                    ? "text-green-500 border-transparent"
+                    : "text-green-500/70 border-transparent"
                 }`}
               >
                 Explore
                 {exploreCategoryFilters.length > 0 && (
-                  <span className="bg-orange-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
+                  <span className="bg-green-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
                     {exploreCategoryFilters.length}
                   </span>
                 )}
@@ -1636,8 +1608,8 @@ export default function CalendarPage() {
                 {EXPLORE_CATEGORIES.map(c => (
                   <button key={c} onClick={() => toggleExploreCategory(c)} className={`flex items-center justify-center text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none ${
                     exploreCategoryFilters.includes(c)
-                      ? "bg-orange-500/15 border-orange-500/50 text-orange-400"
-                      : "border-border text-muted-foreground hover:border-orange-500/30 hover:text-orange-400"
+                      ? "bg-green-500/15 border-green-500/50 text-green-500"
+                      : "border-border text-muted-foreground hover:border-green-500/30 hover:text-green-500"
                   }`}>{c}</button>
                 ))}
               </div>
@@ -1790,7 +1762,7 @@ export default function CalendarPage() {
               </span>
             ))}
             {exploreCategoryFilters.map(c => (
-              <span key={c} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-orange-500/10 border border-orange-500/30 text-orange-400 font-medium">
+              <span key={c} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-green-500/10 border border-green-500/30 text-green-500 font-medium">
                 {c}
                 <button onClick={() => toggleExploreCategory(c)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
