@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, SlidersHorizontal, Search } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -37,6 +37,8 @@ interface Props {
   sortMode: "date" | "votes";
   onToggleMostVoted: () => void;
   onToggleTheme: () => void;
+  showSearch: boolean;
+  onToggleSearch: () => void;
 }
 
 // Running (road) and Trail share the "RUN" pin label but get distinct colors
@@ -573,6 +575,50 @@ function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging 
     return () => container.removeEventListener("wheel", onWheel);
   }, [map, isFullscreen]);
 
+  // Embedded map: drag-to-pan via mouse, implemented by hand instead of Leaflet's own
+  // `dragging` handler. Enabling that handler — even just for mouse panning — makes
+  // Leaflet add its .leaflet-touch-drag class (touch-action: none), which is what was
+  // blocking Safari's trackpad/wheel page-scroll over the map. Listening for raw mouse
+  // events ourselves and calling map.panBy() directly gets the same drag UX without
+  // ever touching that class. Only real "mousedown" events trigger this — touch taps
+  // don't fire it — so it naturally only affects mouse users, never touchscreens.
+  useEffect(() => {
+    if (isFullscreen) return;
+    const container = map.getContainer();
+    let dragging = false;
+    let last: { x: number; y: number } | null = null;
+    const onMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return;
+      const target = e.target as HTMLElement;
+      if (target.closest(".leaflet-marker-icon, .leaflet-popup, .leaflet-control, .marker-cluster")) return;
+      dragging = true;
+      last = { x: e.clientX, y: e.clientY };
+      container.style.cursor = "grabbing";
+    };
+    const onMouseMove = (e: MouseEvent) => {
+      if (!dragging || !last) return;
+      const dx = e.clientX - last.x;
+      const dy = e.clientY - last.y;
+      last = { x: e.clientX, y: e.clientY };
+      map.panBy([-dx, -dy], { animate: false });
+    };
+    const onMouseUp = () => {
+      dragging = false;
+      last = null;
+      container.style.cursor = "grab";
+    };
+    container.style.cursor = "grab";
+    container.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    return () => {
+      container.style.cursor = "";
+      container.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [map, isFullscreen]);
+
   useEffect(() => {
     if (hasInitialFitRef.current || displayRaces.length === 0) return;
     const coords = displayRaces.map(r => getCoords(r)).filter((c): c is [number, number] => c !== null);
@@ -623,12 +669,19 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch }: Props) {
   const [showExplore, setShowExplore] = useState(false);
   const [showRaces, setShowRaces] = useState(true);
   const [showLayersMenu, setShowLayersMenu] = useState(false);
+  const [showViewMenu, setShowViewMenu] = useState(false);
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
+
+  // Whether the floating filters/search panel (rendered by the page, anchored just
+  // below the logo row) is currently showing — in either mode now, since Filters/View/
+  // Search live on the map itself in both. Map buttons need to dodge under it the same
+  // way they already dodge the fullscreen header, rather than only checking isFullscreen.
+  const filterPanelOpen = showFilterBar || showSearch || activeFilterCount > 0;
 
   useEffect(() => {
     if (document.getElementById("map-popup-style")) return;
@@ -736,19 +789,28 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         </>
       )}
 
-      {/* Fullscreen toggle — top-right, the one corner with no other controls
-          competing for it. Only tracks --header-h (to dodge the floating filter
-          header) while actually fullscreen; outside fullscreen --header-h is the
-          full page header's height and would push this button toward the middle
-          of the embedded map instead of just sitting near its top edge. */}
+      {/* Fullscreen toggle + Search — top-right. Tracks --header-h (to dodge the
+          floating filters/search panel) only while that panel is actually open;
+          otherwise --header-h would be the full page header's height in non-fullscreen
+          and push these buttons toward the middle of the embedded map instead of
+          sitting near its top edge. */}
       <div
         className="absolute right-3 z-10 flex items-center gap-2"
         style={{
-          top: isFullscreen ? "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px",
+          top: filterPanelOpen ? "calc(var(--header-h, 0px) + var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px",
           filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))",
           marginRight: "env(safe-area-inset-right, 0px)",
         }}
       >
+        <button
+          onClick={onToggleSearch}
+          title="Search"
+          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${
+            showSearch ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}` : `${pillBg} border ${pillBorder} ${pillText}`
+          }`}
+        >
+          <Search size={16} />
+        </button>
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
@@ -758,66 +820,93 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         </button>
       </div>
 
-      {/* Filters/Clear All/Favourites/Most Voted — top-left, fullscreen only (the page
-          header providing this elsewhere is fully hidden while fullscreen). Wraps onto
-          a second line on narrow screens instead of overflowing off-screen. */}
-      {isFullscreen && (
-        <div className="absolute left-3 z-10 flex flex-wrap items-center gap-2" style={{ top: "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
-          <button
-            onClick={onToggleFilterBar}
-            className={`flex items-center gap-1.5 px-3.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
-              showFilterBar || activeFilterCount > 0
-                ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
-                : `${pillBg} border ${pillBorder} ${pillText}`
-            }`}
-          >
-            <Filter size={16} className="shrink-0" />
-            Filters
-            {activeFilterCount > 0 && (
-              <span className="bg-teal-500 text-white rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold">
-                {activeFilterCount}
-              </span>
-            )}
-          </button>
+      {/* Filters/Clear All/View — top-left, both modes now (Filters used to only live
+          here in fullscreen, with a separate copy of these controls inline in the page
+          header otherwise; consolidated into one set so toggling fullscreen doesn't
+          change where anything is). Wraps onto a second line on narrow screens instead
+          of overflowing off-screen. */}
+      <div className="absolute left-3 z-10 flex flex-wrap items-center gap-2" style={{ top: filterPanelOpen ? "calc(var(--header-h, 0px) + var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
+        <button
+          onClick={onToggleFilterBar}
+          className={`flex items-center gap-1.5 px-3.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
+            showFilterBar || activeFilterCount > 0
+              ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
+              : `${pillBg} border ${pillBorder} ${pillText}`
+          }`}
+        >
+          <Filter size={16} className="shrink-0" />
+          Filters
           {activeFilterCount > 0 && (
-            <button
-              onClick={onClearAllFilters}
-              title="Clear all filters"
-              className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
-            >
-              <X size={16} />
-            </button>
+            <span className="bg-teal-500 text-white rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold">
+              {activeFilterCount}
+            </span>
+          )}
+        </button>
+        {activeFilterCount > 0 && (
+          <button
+            onClick={onClearAllFilters}
+            title="Clear all filters"
+            className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+          >
+            <X size={16} />
+          </button>
+        )}
+        {/* View — Favourites + Most Voted, consolidated into one button + popover
+            instead of two separate pills, mirroring the Layers menu treatment below. */}
+        <div className="relative">
+          {showViewMenu && (
+            <>
+              <div className="fixed inset-0 z-10" onClick={() => setShowViewMenu(false)} />
+              <div
+                onClick={e => e.stopPropagation()}
+                className={`absolute top-full mt-2 left-0 z-20 rounded-xl border ${pillBorder} ${pillBg} backdrop-blur-sm shadow-lg p-2 flex flex-col gap-1`}
+                style={{ minWidth: 220 }}
+              >
+                <button
+                  onClick={onToggleFavs}
+                  className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                    showFavsOnly ? "text-yellow-500 bg-yellow-400/10" : `${pillText} hover:bg-white/5`
+                  }`}
+                >
+                  <Star size={16} className="shrink-0" fill={showFavsOnly ? "currentColor" : "none"} />
+                  Favourites Only
+                  {favSet.size > 0 && (
+                    <span className={`ml-auto rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${
+                      showFavsOnly ? "bg-yellow-500 text-black" : "bg-muted text-current"
+                    }`}>{favSet.size}</span>
+                  )}
+                </button>
+                <button
+                  onClick={onToggleMostVoted}
+                  className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                    sortMode === "votes" ? "text-orange-500 bg-orange-400/10" : `${pillText} hover:bg-white/5`
+                  }`}
+                >
+                  <TrendingUp size={16} className="shrink-0" />
+                  Sort by Most Voted
+                  {racesWithVotes > 0 && (
+                    <span className={`ml-auto rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${
+                      sortMode === "votes" ? "bg-orange-500 text-black" : "bg-muted text-current"
+                    }`}>{racesWithVotes}</span>
+                  )}
+                </button>
+              </div>
+            </>
           )}
           <button
-            onClick={onToggleFavs}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
-              showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
+            onClick={() => setShowViewMenu(v => !v)}
+            className={`relative flex items-center gap-1.5 px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
+              showFavsOnly || sortMode === "votes" ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}` : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
-            <Star size={16} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
-            <span className="hidden sm:inline">Favourites</span>
-            {favSet.size > 0 && (
-              <span className={`rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
-                {favSet.size}
-              </span>
-            )}
-          </button>
-          <button
-            onClick={onToggleMostVoted}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
-              sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
-            }`}
-          >
-            <TrendingUp size={16} className="shrink-0" />
-            <span className="hidden sm:inline">Most Voted</span>
-            {racesWithVotes > 0 && (
-              <span className={`rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
-                {racesWithVotes}
-              </span>
+            <SlidersHorizontal size={16} className="shrink-0" />
+            <span className="hidden sm:inline">View</span>
+            {(showFavsOnly || sortMode === "votes") && (
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-teal-400 border border-background" />
             )}
           </button>
         </div>
-      )}
+      </div>
 
       {/* Theme toggle + Layers — bottom-right, stacked. Grouped together since both
           control what the map looks like (tile style vs. which pins/time-range

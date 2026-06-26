@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Star, Filter, X, Globe2, Users, Search, AlertTriangle, ChevronDown, ChevronRight, TrendingUp, Calendar, MapPin, SlidersHorizontal } from "lucide-react";
+import { Star, Filter, X, Globe2, Users, AlertTriangle, ChevronRight, TrendingUp, Calendar, MapPin } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import type { Race, Favourite, ExploreSite } from "../../../shared/schema";
@@ -400,7 +400,6 @@ export default function CalendarPage() {
     try { return localStorage.getItem(STORAGE_SHOW_FILTER_BAR) === 'true'; } catch { return false; }
   });
   const [showSearch, setShowSearch] = useState(false);
-  const [showViewMenu, setShowViewMenu] = useState(false);
   const [showRaceList, setShowRaceList] = useState(true);
   const [showFavs, setShowFavs] = useState(false);
   const [sortMode, setSortMode] = useState<"date" | "votes">(() => {
@@ -881,6 +880,7 @@ export default function CalendarPage() {
   // ── Header height measurement ──
   const headerRef = useRef<HTMLElement>(null);
   const racesHeaderRef = useRef<HTMLDivElement>(null);
+  const filterPanelRef = useRef<HTMLDivElement>(null);
 
   const mapWrapperRef = useRef<HTMLDivElement>(null);
   const mapRecenterRef = useRef<(() => void) | null>(null);
@@ -895,6 +895,23 @@ export default function CalendarPage() {
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
+
+  // The floating filters/search panel is only mounted while open, so its own height
+  // needs to be (re)measured whenever it mounts/unmounts — map buttons use this (added
+  // to --header-h) to know how far down to sit, in both fullscreen and embedded mode.
+  useEffect(() => {
+    const el = filterPanelRef.current;
+    if (!el) {
+      document.documentElement.style.setProperty("--filter-panel-h", "0px");
+      return;
+    }
+    document.documentElement.style.setProperty("--filter-panel-h", el.offsetHeight + "px");
+    const ro = new ResizeObserver(() => {
+      document.documentElement.style.setProperty("--filter-panel-h", el.offsetHeight + "px");
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [showFilterBar, showSearch, activeFilterCount]);
 
   useEffect(() => {
     const el = racesHeaderRef.current;
@@ -1074,20 +1091,15 @@ export default function CalendarPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* ── Sticky header ── */}
-      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] ${
-        isMapFullscreen && showFilterBar
-          ? "bg-background/70 backdrop-blur-md"
-          : isMapFullscreen && activeFilterCount > 0
-            ? "bg-background/25 backdrop-blur-md"
-            : "bg-background/95 backdrop-blur-sm"
-      } ${!isMapFullscreen ? "border-b border-border" : ""}`}>
-        {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen so only
-            the Filters/Clear All/Search row below remains, maximizing map space */}
+      {/* ── Sticky header — just branding + name chip now. Filters/View/Search live
+          on the map itself in both modes (see MapView's floating button cluster), and
+          the filter tabs/sub-panels/chips float as their own overlay below this via
+          filterPanelRef, instead of living inline here. ── */}
+      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] bg-background/95 backdrop-blur-sm ${!isMapFullscreen ? "border-b border-border" : ""}`}>
+        {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen */}
         {!isMapFullscreen && (
         <div className="sm:hidden">
-          {/* Mobile: Logo + title + name chip — Favourites/Most Voted moved into
-              the View menu (Row 3) to save vertical space */}
+          {/* Mobile: Logo + title + name chip */}
           <div className="flex items-center gap-3 px-4 pt-4 pb-3">
             <img src="/logo.jpg" alt="Adventure Crew" className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
             <div className="min-w-0">
@@ -1125,119 +1137,21 @@ export default function CalendarPage() {
         </div>
         )}{/* end desktop row */}
 
-        {/* Row 3: Main filter bar — hidden while fullscreen; the map shows its own
-            floating Filters button there instead (header is fully hidden) */}
-        {!isMapFullscreen && (
-        <div className="flex items-center gap-2 px-4 pb-3">
+      </header>
 
-          {/* Main Filters button */}
-          <button
-            onClick={handleToggleFilterBar}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-semibold transition-all leading-none ${
-              activeFilterCount > 0
-                ? "bg-primary/10 border-primary/50 text-primary"
-                : showFilterBar
-                ? "bg-muted border-primary/30 text-foreground"
-                : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
-            }`}
-          >
-            <Filter size={13} className="shrink-0" />
-            <span className="leading-none">Filters</span>
-            {activeFilterCount > 0 && (
-              <span className="bg-primary text-primary-foreground rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
-                {activeFilterCount}
-              </span>
-            )}
-            <ChevronDown size={12} className={`transition-transform ${showFilterBar ? "rotate-180" : ""}`} />
-          </button>
-
-          {/* Clear All — only visible when filters are active */}
-          {activeFilterCount > 0 && (
-            <button
-              onClick={clearAll}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border text-xs font-semibold text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all leading-none"
-            >
-              <X size={15} strokeWidth={2.5} className="shrink-0" /> <span className="leading-none">Clear All</span>
-            </button>
-          )}
-
-          {/* View — Favourites + Most Voted, consolidated into one button + popover
-              instead of two always-visible pills (mirrors the map's own Layers
-              menu treatment of its toggles). The dot signals a non-default state
-              without needing to open it. */}
-          <div className="relative">
-            {showViewMenu && (
-              <>
-                <div className="fixed inset-0 z-10" onClick={() => setShowViewMenu(false)} />
-                <div
-                  onClick={e => e.stopPropagation()}
-                  className="absolute top-full mt-2 left-0 z-20 rounded-xl border border-border bg-card shadow-lg p-2 flex flex-col gap-1"
-                  style={{ minWidth: 220 }}
-                >
-                  <button
-                    onClick={handleToggleFavs}
-                    className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                      showFavs ? "text-yellow-600 dark:text-yellow-400 bg-yellow-400/10" : "text-muted-foreground hover:bg-muted"
-                    }`}
-                  >
-                    <Star size={16} className="shrink-0" fill={showFavs ? "currentColor" : "none"} />
-                    Favourites Only
-                    {favSet.size > 0 && (
-                      <span className={`ml-auto rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${
-                        showFavs ? "bg-yellow-500 text-black" : "bg-muted text-muted-foreground"
-                      }`}>{favSet.size}</span>
-                    )}
-                  </button>
-                  <button
-                    onClick={handleToggleMostVoted}
-                    className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                      sortMode === "votes" ? "text-orange-600 dark:text-orange-400 bg-orange-400/10" : "text-muted-foreground hover:bg-muted"
-                    }`}
-                  >
-                    <TrendingUp size={16} className="shrink-0" />
-                    Sort by Most Voted
-                    {(() => {
-                      const raceIdSet = new Set(races.map((r: any) => r.id));
-                      const racesWithVotes = [...votesByRace.keys()].filter(id => raceIdSet.has(id)).length;
-                      return racesWithVotes > 0 ? (
-                        <span className={`ml-auto rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${
-                          sortMode === "votes" ? "bg-orange-500 text-black" : "bg-muted text-muted-foreground"
-                        }`}>{racesWithVotes}</span>
-                      ) : null;
-                    })()}
-                  </button>
-                </div>
-              </>
-            )}
-            <button
-              onClick={() => setShowViewMenu(v => !v)}
-              className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-semibold transition-all leading-none ${
-                showFavs || sortMode === "votes"
-                  ? "bg-muted border-primary/30 text-foreground"
-                  : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
-              }`}
-            >
-              <SlidersHorizontal size={13} className="shrink-0" />
-              <span className="leading-none">View</span>
-              {(showFavs || sortMode === "votes") && (
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-primary border border-background" />
-              )}
-            </button>
-          </div>
-
-          {/* Search */}
-          <button
-            onClick={() => setShowSearch(v => !v)}
-            className={`ml-auto p-2 rounded-full border transition-all ${showSearch ? "bg-primary/10 border-primary/40 text-primary" : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"}`}
-          >
-            <Search size={14} />
-          </button>
-        </div>
-        )}
-
+      {/* Floating filters/search panel — anchored right below the branding row (or the
+          screen's top edge in fullscreen, since that row doesn't render there), so it
+          overlays the map + races list below instead of pushing them down. The trigger
+          buttons for all of this live on the map itself now (Filters/View/Search). */}
+      {(showFilterBar || showSearch || activeFilterCount > 0) && (
+        <div
+          ref={filterPanelRef}
+          className={`fixed inset-x-0 z-[500] ${showFilterBar || showSearch ? "bg-background/70 backdrop-blur-md" : "bg-background/25 backdrop-blur-md"}`}
+          style={{ top: "var(--header-h, 0px)" }}
+        >
         {/* Row 4: Sub-filter buttons (visible when Filters is open) */}
         {showFilterBar && (
-          <div className={`flex items-center gap-2 px-4 pb-3 flex-wrap ${isMapFullscreen ? "pt-3" : ""}`}>
+          <div className="flex items-center gap-2 px-4 pb-3 pt-3 flex-wrap">
 
             {/* Tabs: Dates | Locations | Races */}
             <div className="flex gap-1">
@@ -1710,7 +1624,7 @@ export default function CalendarPage() {
 
         {/* Active filter pills row — Done button always at far right when filters open */}
         {activeFilterCount > 0 && (
-          <div className={`flex gap-1.5 px-4 py-2.5 text-xs items-center border-t border-border ${isMapFullscreen ? "flex-nowrap overflow-x-auto bg-transparent" : "flex-wrap bg-muted/30"}`} style={isMapFullscreen ? { WebkitOverflowScrolling: "touch", scrollbarWidth: "none" } : undefined}>
+          <div className="flex gap-1.5 px-4 py-2.5 text-xs items-center border-t border-border flex-nowrap overflow-x-auto bg-transparent" style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}>
             {/* Races — blue */}
             {[...sportFilters].map(key => (
               <span key={key} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium">
@@ -1796,7 +1710,8 @@ export default function CalendarPage() {
 
           </div>
         )}
-      </header>
+        </div>
+      )}
 
       {/* Map */}
       <div
@@ -1830,6 +1745,8 @@ export default function CalendarPage() {
         sortMode={sortMode}
         onToggleMostVoted={handleToggleMostVoted}
         onToggleTheme={() => setIsDark(d => !d)}
+        showSearch={showSearch}
+        onToggleSearch={() => setShowSearch(v => !v)}
       />
       </div>
 
