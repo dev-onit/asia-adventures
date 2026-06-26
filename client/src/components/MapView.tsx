@@ -721,63 +721,9 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         )}
       </div>
 
-      {/* Explore + Races buttons — top-right, stacked with Races below Explore */}
-      <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
-        <button
-          onClick={handleToggleExplore}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showExplore ? `${pillBg} border-[1.5px] border-orange-400 ${orangeText}` : `${pillBg} border ${pillBorder} ${pillText}`
-          }`}
-        >
-          {showExplore
-            ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-          }
-          {showExplore ? "Explore: ON" : "Explore: OFF"}
-        </button>
-        <button
-          onClick={handleToggleRaces}
-          title={!showExplore ? "Enable Explore first" : undefined}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${
-            !showExplore
-              ? `${pillBg} border ${pillBorderDisabled} ${pillTextDisabled} cursor-not-allowed opacity-50`
-              : showRaces
-                ? `${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`
-                : `${pillBg} border-[1.5px] border-blue-400 ${blueText} hover:brightness-110`
-          }`}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          {showRaces ? "Races: ON" : "Races: OFF"}
-        </button>
-      </div>
-      {/* Show Predicted + Show Past — bottom-right */}
-      <div className="absolute bottom-3 right-3 z-10 flex flex-wrap justify-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", maxWidth: "calc(100% - 60px)" }}>
-        <button
-          onClick={onToggleUnconfirmed}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showUnconfirmed ? `${pillBg} border-[1.5px] border-red-400 ${redText}` : `${pillBg} border ${pillBorder} ${pillText}`
-          }`}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          {showUnconfirmed ? "Predicted: ON" : "Predicted: OFF"}
-        </button>
-        <button
-          onClick={onToggleHidePast}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            !hidePast ? `${pillBg} border-[1.5px] border-amber-400 ${amberText}` : `${pillBg} border ${pillBorder} ${pillText}`
-          }`}
-        >
-          {!hidePast
-            ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-          }
-          {!hidePast ? "Past Events: ON" : "Past Events: OFF"}
-        </button>
-      </div>
-
-      {/* Favourites + Most Voted — bottom-left, fullscreen only (otherwise reachable via the page header) */}
+      {/* Favourites + Most Voted — top-right, fullscreen only (otherwise reachable via the page header) */}
       {isFullscreen && (
-        <div className="absolute bottom-3 left-3 z-10 flex flex-wrap gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", maxWidth: "calc(100% - 60px)", marginLeft: "env(safe-area-inset-left, 0px)" }}>
+        <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
           <button
             onClick={onToggleFavs}
             className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
@@ -808,6 +754,62 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           </button>
         </div>
       )}
+
+      {/* Explore/Races + Predicted/Past — bottom-right. Stacked (Explore/Races above
+          Predicted/Past) on mobile; side by side as one row once there's enough width. */}
+      <div className="absolute bottom-3 right-3 z-10 flex flex-col sm:flex-row items-end sm:items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", maxWidth: "calc(100% - 60px)" }}>
+        <div className="flex flex-wrap justify-end gap-1.5">
+          <button
+            onClick={handleToggleExplore}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+              showExplore ? `${pillBg} border-[1.5px] border-orange-400 ${orangeText}` : `${pillBg} border ${pillBorder} ${pillText}`
+            }`}
+          >
+            {showExplore
+              ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+            }
+            {showExplore ? "Explore: ON" : "Explore: OFF"}
+          </button>
+          <button
+            onClick={handleToggleRaces}
+            title={!showExplore ? "Enable Explore first" : undefined}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${
+              !showExplore
+                ? `${pillBg} border ${pillBorderDisabled} ${pillTextDisabled} cursor-not-allowed opacity-50`
+                : showRaces
+                  ? `${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`
+                  : `${pillBg} border-[1.5px] border-blue-400 ${blueText} hover:brightness-110`
+            }`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {showRaces ? "Races: ON" : "Races: OFF"}
+          </button>
+        </div>
+        <div className="flex flex-wrap justify-end gap-1.5">
+          <button
+            onClick={onToggleUnconfirmed}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+              showUnconfirmed ? `${pillBg} border-[1.5px] border-red-400 ${redText}` : `${pillBg} border ${pillBorder} ${pillText}`
+            }`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            {showUnconfirmed ? "Predicted: ON" : "Predicted: OFF"}
+          </button>
+          <button
+            onClick={onToggleHidePast}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+              !hidePast ? `${pillBg} border-[1.5px] border-amber-400 ${amberText}` : `${pillBg} border ${pillBorder} ${pillText}`
+            }`}
+          >
+            {!hidePast
+              ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+            }
+            {!hidePast ? "Past Events: ON" : "Past Events: OFF"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
