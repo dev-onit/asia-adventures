@@ -1059,7 +1059,7 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ── Sticky header ── */}
-      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] bg-background/95 backdrop-blur-sm ${!isMapFullscreen || showFilterBar ? "border-b border-border" : ""}`}>
+      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] ${isMapFullscreen && activeFilterCount > 0 ? "bg-background/70" : "bg-background/95"} backdrop-blur-sm ${!isMapFullscreen || showFilterBar ? "border-b border-border" : ""}`}>
         {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen so only
             the Filters/Clear All/Search row below remains, maximizing map space */}
         {!isMapFullscreen && (
@@ -1251,7 +1251,7 @@ export default function CalendarPage() {
 
         {/* Row 4: Sub-filter buttons (visible when Filters is open) */}
         {showFilterBar && (
-          <div className="flex items-center gap-2 px-4 pb-3 flex-wrap">
+          <div className={`flex items-center gap-2 px-4 pb-3 flex-wrap ${isMapFullscreen ? "pt-3" : ""}`}>
 
             {/* Tabs: Dates | Locations | Races */}
             <div className="flex gap-1">
@@ -1723,16 +1723,16 @@ export default function CalendarPage() {
 
         {/* Active filter pills row — Done button always at far right when filters open */}
         {activeFilterCount > 0 && (
-          <div className="flex flex-wrap gap-1.5 px-4 py-2.5 text-xs items-center border-t border-border bg-muted/30">
+          <div className={`flex gap-1.5 px-4 py-2.5 text-xs items-center border-t border-border ${isMapFullscreen ? "flex-nowrap overflow-x-auto bg-muted/10" : "flex-wrap bg-muted/30"}`} style={isMapFullscreen ? { WebkitOverflowScrolling: "touch", scrollbarWidth: "none" } : undefined}>
             {/* Races — blue */}
             {[...sportFilters].map(key => (
-              <span key={key} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary font-medium">
+              <span key={key} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium">
                 {getSportLabel(key)}
                 <button onClick={() => toggleSportPill(key)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
             {[...subFilters].map(val => (
-              <span key={val} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-red-500/15 border border-red-500/50 text-red-600 dark:text-red-400 font-medium">
+              <span key={val} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-red-500/15 border border-red-500/50 text-red-600 dark:text-red-400 font-medium">
                 {getSubFilterLabel(val)}
                 <button onClick={() => toggleSubFilter(val)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
@@ -1740,7 +1740,7 @@ export default function CalendarPage() {
             {[...teamFilters].map(val => {
               const pill = TEAM_PILLS.find(p => p.value === val);
               return pill ? (
-                <span key={val} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary font-medium">
+                <span key={val} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium">
                   {pill.label}<button onClick={() => toggleTeamFilter(val)} className="hover:opacity-70 leading-none"><X size={10} /></button>
                 </span>
               ) : null;
@@ -1753,13 +1753,13 @@ export default function CalendarPage() {
               return (
                 <>
                   {fullySelectedRegions.map(r => (
-                    <span key={r.value} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
+                    <span key={r.value} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
                       {r.label}
                       <button onClick={() => toggleRegion(r.value)} className="hover:opacity-70 leading-none"><X size={10} /></button>
                     </span>
                   ))}
                   {remainingCountries.map(c => (
-                    <span key={c} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
+                    <span key={c} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
                       {COUNTRIES.find(x => x.value === c)?.label ?? c}
                       <button onClick={() => toggleCountry(c)} className="hover:opacity-70 leading-none"><X size={10} /></button>
                     </span>
@@ -1769,32 +1769,32 @@ export default function CalendarPage() {
             })()}
             {/* Cities — green (same as locations) */}
             {cityFilters.map(city => (
-              <span key={city} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
+              <span key={city} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
                 📍 {city}
                 <button onClick={() => setCityFilters(p => p.filter(c => c !== city))} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
             {exploreCategoryFilters.map(c => (
-              <span key={c} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 font-medium">
+              <span key={c} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-orange-500/10 border border-orange-500/30 text-orange-400 font-medium">
                 {c}
                 <button onClick={() => toggleExploreCategory(c)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
             {/* Dates — violet */}
             {monthFilters.map(m => (
-              <span key={m} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
+              <span key={m} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
                 {m}<button onClick={() => toggleMonth(m)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
             {yearFilters.map(y => (
-              <span key={y} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
+              <span key={y} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
                 {y}<button onClick={() => toggleYear(y)} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
 
             {/* Date range pill */}
             {(dateRange.from || dateRange.to) && (
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
                 <Calendar size={10} />
                 {dateRange.from ? dateRange.from.toLocaleDateString("en-GB",{day:"numeric",month:"short"}) : "?"} → {dateRange.to ? dateRange.to.toLocaleDateString("en-GB",{day:"numeric",month:"short"}) : "?"}
                 <button onClick={() => setDateRange({from:undefined,to:undefined})} className="hover:opacity-70 leading-none"><X size={10} /></button>
@@ -1802,7 +1802,7 @@ export default function CalendarPage() {
             )}
             {/* Search */}
             {search && (
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary font-medium">
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium">
                 "{search}"<button onClick={() => setSearch("")} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             )}
