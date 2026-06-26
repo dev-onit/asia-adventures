@@ -789,15 +789,13 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           for space on narrow mobile screens. The small dot signals a non-default
           state without needing to open the menu. */}
       <div className="absolute bottom-3 right-3 z-10 flex flex-col items-end gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
-        {isFullscreen && (
-          <button
-            onClick={onToggleTheme}
-            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
-          >
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-        )}
+        <button
+          onClick={onToggleTheme}
+          title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+        >
+          {isDark ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
       <div className="relative">
         {showLayersMenu && (
           <>
