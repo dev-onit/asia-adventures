@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2 } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -29,6 +29,10 @@ interface Props {
   recenterRef?: MutableRefObject<(() => void) | null>;
   isFullscreen: boolean;
   onToggleFullscreen: () => void;
+  showFilterBar: boolean;
+  onToggleFilterBar: () => void;
+  activeFilterCount: number;
+  onClearAllFilters: () => void;
 }
 
 // Running (road) and Trail share the "RUN" pin label but get distinct colors
@@ -587,7 +591,7 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters }: Props) {
   const [showExplore, setShowExplore] = useState(false);
   const [showRaces, setShowRaces] = useState(true);
 
@@ -602,8 +606,11 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
   }, []);
 
   // On touch devices: disable 1-finger dragging so the page scrolls naturally.
-  // 2-finger pan still works via Leaflet's built-in two-touch handler.
+  // 2-finger pan still works via Leaflet's built-in two-touch handler. In fullscreen
+  // there's nothing else to scroll (body scroll is locked there), so allow normal
+  // 1-finger panning too — pinch-to-zoom (touchZoom) is unaffected either way.
   const isTouch = useMemo(() => 'ontouchstart' in window && navigator.maxTouchPoints > 0, []);
+  const allowDragging = isFullscreen || !isTouch;
 
   function handleToggleExplore() {
     const next = !showExplore;
@@ -629,6 +636,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
   const orangeText = isDark ? "text-orange-400" : "text-orange-500";
   const redText = isDark ? "text-red-400" : "text-red-500";
   const amberText = isDark ? "text-amber-400" : "text-amber-500";
+  const tealText = isDark ? "text-teal-400" : "text-teal-500";
 
   return (
     <div
@@ -642,7 +650,8 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         zoomControl={false}
         attributionControl={false}
         scrollWheelZoom={false}
-        dragging={!isTouch}
+        dragging={allowDragging}
+        touchZoom={true}
         className="map-container w-full"
         style={{ height: "100%", zIndex: 1 }}
       >
@@ -661,8 +670,9 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         />
       </MapContainer>
 
-      {/* Fullscreen toggle — top-left */}
-      <div className="absolute top-3 left-3 z-10" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
+      {/* Fullscreen toggle — top-left. In fullscreen, also surface Filters + Clear All here,
+          since the page header is fully hidden while fullscreen. */}
+      <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
@@ -670,6 +680,35 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         >
           {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
         </button>
+        {isFullscreen && (
+          <>
+            <button
+              onClick={onToggleFilterBar}
+              className={`flex items-center gap-1 px-2.5 py-1 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${
+                showFilterBar || activeFilterCount > 0
+                  ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
+                  : `${pillBg} border ${pillBorder} ${pillText}`
+              }`}
+            >
+              <Filter size={13} className="shrink-0" />
+              Filters
+              {activeFilterCount > 0 && (
+                <span className="bg-teal-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+            {activeFilterCount > 0 && (
+              <button
+                onClick={onClearAllFilters}
+                title="Clear all filters"
+                className={`flex items-center justify-center w-8 h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+              >
+                <X size={14} />
+              </button>
+            )}
+          </>
+        )}
       </div>
 
       {/* Explore + Races buttons — top-right */}

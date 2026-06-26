@@ -625,6 +625,18 @@ export default function CalendarPage() {
     setActiveSubPanel('dates');
   }, []);
 
+  // Shared by the header's own Filters button and the floating map-overlay Filters
+  // button shown in fullscreen (the header itself is hidden there).
+  const handleToggleFilterBar = useCallback(() => {
+    setShowFilterBar(v => {
+      if (!v) {
+        if (!activeSubPanel) setActiveSubPanel("dates");
+        setExpandedSections(new Set());
+      }
+      return !v;
+    });
+  }, [activeSubPanel]);
+
   // ── Individual toggle helpers ──
   // ── Region helpers ──
   function getRegionState(region: typeof REGIONS[0]): 'all' | 'partial' | 'none' {
@@ -1017,7 +1029,7 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ── Sticky header ── */}
-      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border`}>
+      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] bg-background/95 backdrop-blur-sm ${!isMapFullscreen || showFilterBar ? "border-b border-border" : ""}`}>
         {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen so only
             the Filters/Clear All/Search row below remains, maximizing map space */}
         {!isMapFullscreen && (
@@ -1198,12 +1210,14 @@ export default function CalendarPage() {
         </div>
         )}{/* end desktop row */}
 
-        {/* Row 3: Main filter bar */}
+        {/* Row 3: Main filter bar — hidden while fullscreen; the map shows its own
+            floating Filters button there instead (header is fully hidden) */}
+        {!isMapFullscreen && (
         <div className="flex items-center gap-2 px-4 pb-3">
 
           {/* Main Filters button */}
           <button
-            onClick={() => setShowFilterBar(v => { if (!v) { if (!activeSubPanel) setActiveSubPanel("dates"); setExpandedSections(new Set()); } return !v; })}
+            onClick={handleToggleFilterBar}
             className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-semibold transition-all leading-none ${
               activeFilterCount > 0
                 ? "bg-primary/10 border-primary/50 text-primary"
@@ -1240,6 +1254,7 @@ export default function CalendarPage() {
             <Search size={14} />
           </button>
         </div>
+        )}
 
         {/* Row 4: Sub-filter buttons (visible when Filters is open) */}
         {showFilterBar && (
@@ -1827,6 +1842,10 @@ export default function CalendarPage() {
         recenterRef={mapRecenterRef}
         isFullscreen={isMapFullscreen}
         onToggleFullscreen={() => setIsMapFullscreen(v => !v)}
+        showFilterBar={showFilterBar}
+        onToggleFilterBar={handleToggleFilterBar}
+        activeFilterCount={activeFilterCount}
+        onClearAllFilters={clearAll}
       />
       </div>
 
