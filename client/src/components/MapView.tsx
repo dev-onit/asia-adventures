@@ -924,10 +924,15 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           (Races, Explore, Predicted, Past Events) that used to sit here as
           always-visible pills into one button + popover, so they stop competing
           for space on narrow mobile screens. The small dot signals a non-default
-          state without needing to open the menu. z-[510] — a tall open filter
-          sub-panel can extend past the embedded map's full height, so this can end
-          up under the fixed filter panel too once scrolled, same as the top clusters. */}
-      <div className="absolute bottom-3 right-3 z-[510] flex flex-col items-end gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
+          state without needing to open the menu. Stays at z-10 (below the filter
+          panel's z-500), unlike the top two clusters — those needed elevating
+          because page-scroll could hide genuinely-visible map content behind the
+          panel. This one is anchored to the map's bottom edge, which a tall open
+          filter sub-panel can sit well below (taller than the whole embedded map);
+          elevating it there would just punch these buttons through the panel's own
+          pills rather than reveal anything useful, since the map itself isn't
+          visible at that point either. */}
+      <div className="absolute bottom-3 right-3 z-10 flex flex-col items-end gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
         <button
           onClick={onToggleTheme}
           title={isDark ? "Switch to light mode" : "Switch to dark mode"}
