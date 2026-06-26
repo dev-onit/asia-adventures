@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Star, Filter, X, Globe2, Users, Moon, Sun, Search, AlertTriangle, ChevronDown, ChevronRight, Eye, EyeOff, TrendingUp, Calendar, MapPin } from "lucide-react";
+import { Star, Filter, X, Globe2, Users, Search, AlertTriangle, ChevronDown, ChevronRight, Eye, EyeOff, TrendingUp, Calendar, MapPin } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import type { Race, Favourite, ExploreSite } from "../../../shared/schema";
@@ -1088,7 +1088,7 @@ export default function CalendarPage() {
               </div>
             )}
           </div>
-          {/* Row 2 mobile: Favourites + Most Voted + theme toggle */}
+          {/* Row 2 mobile: Favourites + Most Voted */}
           <div className="flex items-center gap-2 px-4 pt-1.5 pb-3">
           <button
             onClick={handleToggleFavs}
@@ -1136,9 +1136,6 @@ export default function CalendarPage() {
                 }`} style={{ minWidth: "20px", height: "20px", padding: "0 5px" }}>{racesWithVotes}</span>
               ) : null;
             })()}
-          </button>
-          <button onClick={() => setIsDark(d => !d)} className="ml-auto p-2 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-            {isDark ? <Sun size={14} /> : <Moon size={14} />}
           </button>
           </div>
         </div>
@@ -1198,7 +1195,7 @@ export default function CalendarPage() {
               })()}
             </button>
           </div>
-          {/* Right: Lukas chip + theme toggle */}
+          {/* Right: Lukas chip */}
           <div className="ml-auto flex items-center gap-2">
             {voterName && (
               <div className="flex items-center gap-1.5 px-3 h-8 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
@@ -1206,9 +1203,6 @@ export default function CalendarPage() {
                 <span>{voterName}</span>
               </div>
             )}
-            <button onClick={() => setIsDark(d => !d)} className="p-2 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-              {isDark ? <Sun size={14} /> : <Moon size={14} />}
-            </button>
           </div>
         </div>
         )}{/* end desktop row */}
