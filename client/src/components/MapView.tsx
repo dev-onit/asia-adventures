@@ -503,6 +503,22 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
   );
 }
 
+// ── Tell Leaflet to recompute its internal size whenever its container's actual pixel
+// size changes (e.g. entering/exiting fullscreen) — Leaflet has no way to know its CSS
+// height changed unless invalidateSize() is called explicitly. A ResizeObserver on the
+// container catches this regardless of what caused the resize, not just our own toggle.
+function InvalidateSizeOnResize({ trigger }: { trigger: unknown }) {
+  const map = useMap();
+  useEffect(() => {
+    const container = map.getContainer();
+    const ro = new ResizeObserver(() => map.invalidateSize());
+    ro.observe(container);
+    return () => ro.disconnect();
+  }, [map]);
+  useEffect(() => { map.invalidateSize(); }, [map, trigger]);
+  return null;
+}
+
 // ── Imperative bits that still need direct map access: initial fit, recenter button,
 // and ctrl/⌘+scroll-to-zoom — none of these are hacks, just things Leaflet itself doesn't
 // expose as declarative props. ──
@@ -602,7 +618,10 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
   }
 
   return (
-    <div className={`relative overflow-hidden ${isFullscreen ? "h-full" : ""}`}>
+    <div
+      className="relative overflow-hidden"
+      style={{ height: isFullscreen ? "100%" : "var(--map-h, clamp(420px, 40vw, 450px))" }}
+    >
       <MapContainer
         center={[20, 100]}
         zoom={4}
@@ -612,11 +631,12 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         scrollWheelZoom={false}
         dragging={!isTouch}
         className="map-container w-full"
-        style={{ height: isFullscreen ? "100%" : "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }}
+        style={{ height: "100%", zIndex: 1 }}
       >
         <ZoomControl position="bottomleft" />
         <ThemeTileLayer isDark={isDark} />
         <MapController displayRaces={displayRaces} recenterRef={recenterRef} />
+        <InvalidateSizeOnResize trigger={isFullscreen} />
         <MapPins
           displayRaces={displayRaces}
           sites={sites}
