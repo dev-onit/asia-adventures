@@ -468,13 +468,11 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   const darkAttr = 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, DeLorme, NAVTEQ';
   return (
     <>
-      <TileLayer
-        key={isDark ? "dark" : "light"}
-        url={isDark ? darkUrl : lightUrl}
-        subdomains={isDark ? undefined : "abcd"}
-        maxZoom={16}
-        attribution={isDark ? darkAttr : lightAttr}
-      />
+      {isDark ? (
+        <TileLayer key="dark" url={darkUrl} maxZoom={16} attribution={darkAttr} />
+      ) : (
+        <TileLayer key="light" url={lightUrl} subdomains="abcd" maxZoom={16} attribution={lightAttr} />
+      )}
       {/* Ocean Base overlay at low opacity gives blue water on the dark canvas basemap */}
       {isDark && (
         <TileLayer
