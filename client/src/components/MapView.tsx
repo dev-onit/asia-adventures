@@ -299,6 +299,14 @@ const POPUP_STYLE = `
       line-height: 32px !important; font-size: 18px !important;
     }
   }
+  /* Leaflet adds .leaflet-touch-drag (touch-action: none) to the container whenever
+     dragging is enabled — including on desktop, where it's only there for mouse-drag
+     panning. Safari's trackpad-scroll gesture pipeline honors touch-action even for
+     non-touch trackpad input (Chrome/Firefox don't), so that none blocks the page from
+     scrolling under the cursor in Safari. Force it back to scrollable when embedded. */
+  .map-container.map-embedded.leaflet-touch-drag {
+    touch-action: pan-x pan-y !important;
+  }
 `;
 
 // ── Popup content (real React components — no HTML strings, no manual DOM wiring) ──
@@ -697,7 +705,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         scrollWheelZoom={false}
         dragging={allowDragging}
         touchZoom={true}
-        className="map-container w-full"
+        className={`map-container w-full ${!isFullscreen ? "map-embedded" : ""}`}
         style={{ height: "100%", zIndex: 1 }}
       >
         <ZoomControl position="bottomleft" />
