@@ -289,6 +289,16 @@ const POPUP_STYLE = `
     border-color: rgb(212,212,216) !important;
     color: rgb(82,82,91) !important;
   }
+  /* Smaller on desktop, where the bigger touch-target sizing isn't needed —
+     matches the floating React buttons' own sm: breakpoint downsizing. */
+  @media (min-width: 640px) {
+    .leaflet-bar a,
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+      width: 32px !important; height: 32px !important;
+      line-height: 32px !important; font-size: 18px !important;
+    }
+  }
 `;
 
 // ── Popup content (real React components — no HTML strings, no manual DOM wiring) ──
@@ -687,27 +697,25 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         />
       </MapContainer>
 
-      {/* Fullscreen toggle + theme toggle — top-right, the one corner with no other
-          controls competing for it. Fullscreen is always shown; theme only in
-          fullscreen (otherwise the page header's own theme toggle is reachable).
-          Every floating map button shares this 36px size, including the zoom
-          +/- control (see POPUP_STYLE) and the Layers button below. */}
-      <div className="absolute right-3 z-10 flex items-center gap-2" style={{ top: "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
-        {isFullscreen && (
-          <button
-            onClick={onToggleTheme}
-            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className={`flex items-center justify-center w-9 h-9 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
-          >
-            {isDark ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-        )}
+      {/* Fullscreen toggle — top-right, the one corner with no other controls
+          competing for it. Only tracks --header-h (to dodge the floating filter
+          header) while actually fullscreen; outside fullscreen --header-h is the
+          full page header's height and would push this button toward the middle
+          of the embedded map instead of just sitting near its top edge. */}
+      <div
+        className="absolute right-3 z-10 flex items-center gap-2"
+        style={{
+          top: isFullscreen ? "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px",
+          filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))",
+          marginRight: "env(safe-area-inset-right, 0px)",
+        }}
+      >
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
-          className={`flex items-center justify-center w-9 h-9 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`}
+          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`}
         >
-          {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+          {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
         </button>
       </div>
 
@@ -718,7 +726,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <div className="absolute left-3 z-10 flex flex-wrap items-center gap-2" style={{ top: "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
           <button
             onClick={onToggleFilterBar}
-            className={`flex items-center gap-1.5 px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
               showFilterBar || activeFilterCount > 0
                 ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
                 : `${pillBg} border ${pillBorder} ${pillText}`
@@ -727,7 +735,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
             <Filter size={16} className="shrink-0" />
             Filters
             {activeFilterCount > 0 && (
-              <span className="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold">
+              <span className="bg-teal-500 text-white rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold">
                 {activeFilterCount}
               </span>
             )}
@@ -736,35 +744,35 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
             <button
               onClick={onClearAllFilters}
               title="Clear all filters"
-              className={`flex items-center justify-center w-9 h-9 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+              className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           )}
           <button
             onClick={onToggleFavs}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
               showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
             <Star size={16} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
             <span className="hidden sm:inline">Favourites</span>
             {favSet.size > 0 && (
-              <span className={`rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
+              <span className={`rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
                 {favSet.size}
               </span>
             )}
           </button>
           <button
             onClick={onToggleMostVoted}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
               sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
             <TrendingUp size={16} className="shrink-0" />
             <span className="hidden sm:inline">Most Voted</span>
             {racesWithVotes > 0 && (
-              <span className={`rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
+              <span className={`rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
                 {racesWithVotes}
               </span>
             )}
@@ -772,12 +780,25 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         </div>
       )}
 
-      {/* Layers — bottom-right. Consolidates the 4 pin/time-range toggles (Races,
-          Explore, Predicted, Past Events) that used to sit here as always-visible
-          pills into one button + popover, so they stop competing for space on
-          narrow mobile screens. The small dot signals a non-default state without
-          needing to open the menu. */}
-      <div className="absolute bottom-3 right-3 z-10" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
+      {/* Theme toggle + Layers — bottom-right, stacked. Grouped together since both
+          control what the map looks like (tile style vs. which pins/time-range
+          show), unlike Fullscreen which is purely a viewport control and now lives
+          alone at top-right. Layers consolidates the 4 pin/time-range toggles
+          (Races, Explore, Predicted, Past Events) that used to sit here as
+          always-visible pills into one button + popover, so they stop competing
+          for space on narrow mobile screens. The small dot signals a non-default
+          state without needing to open the menu. */}
+      <div className="absolute bottom-3 right-3 z-10 flex flex-col items-end gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
+        {isFullscreen && (
+          <button
+            onClick={onToggleTheme}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+          >
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+        )}
+      <div className="relative">
         {showLayersMenu && (
           <>
             <div className="fixed inset-0 z-10" onClick={() => setShowLayersMenu(false)} />
@@ -836,13 +857,14 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={() => setShowLayersMenu(v => !v)}
           title="Map layers"
-          className={`relative flex items-center justify-center w-9 h-9 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+          className={`relative flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
         >
-          <Layers size={18} />
+          <Layers size={16} />
           {layersCustomized && (
             <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-teal-400 border border-black/20" />
           )}
         </button>
+      </div>
       </div>
     </div>
   );

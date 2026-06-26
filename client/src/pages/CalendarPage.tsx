@@ -381,6 +381,10 @@ export default function CalendarPage() {
   useEffect(() => {
     document.documentElement.classList.toggle("light", !isDark);
     try { localStorage.setItem(STORAGE_THEME, isDark ? "dark" : "light"); } catch {}
+    // Tint the browser's own UI (address bar / bottom bar on mobile) to match —
+    // otherwise it stays whatever color it was on load regardless of theme.
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", isDark ? "#111318" : "#f3f5f7");
   }, [isDark]);
 
   // ── UI state ──
@@ -1065,7 +1069,7 @@ export default function CalendarPage() {
           : isMapFullscreen && activeFilterCount > 0
             ? "bg-background/25 backdrop-blur-md"
             : "bg-background/95 backdrop-blur-sm"
-      } ${!isMapFullscreen || showFilterBar ? "border-b border-border" : ""}`}>
+      } ${!isMapFullscreen ? "border-b border-border" : ""}`}>
         {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen so only
             the Filters/Clear All/Search row below remains, maximizing map space */}
         {!isMapFullscreen && (
