@@ -680,8 +680,9 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         />
       </MapContainer>
 
-      {/* Fullscreen toggle — top-left. In fullscreen, also surface Filters + Clear All here,
-          since the page header is fully hidden while fullscreen. */}
+      {/* Fullscreen toggle — top-left. In fullscreen, also surface Filters, Clear All,
+          Favourites and Most Voted here, all in one line, since the page header is
+          fully hidden while fullscreen. */}
       <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
         <button
           onClick={onToggleFullscreen}
@@ -694,7 +695,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           <>
             <button
               onClick={onToggleFilterBar}
-              className={`flex items-center gap-1 px-2.5 py-1 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${
+              className={`flex items-center gap-1 px-2.5 py-1 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
                 showFilterBar || activeFilterCount > 0
                   ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
                   : `${pillBg} border ${pillBorder} ${pillText}`
@@ -717,43 +718,37 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
                 <X size={14} />
               </button>
             )}
+            <button
+              onClick={onToggleFavs}
+              className={`flex items-center gap-1 px-2.5 py-1 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+                showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
+              }`}
+            >
+              <Star size={13} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
+              Favourites
+              {favSet.size > 0 && (
+                <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
+                  {favSet.size}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={onToggleMostVoted}
+              className={`flex items-center gap-1 px-2.5 py-1 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+                sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
+              }`}
+            >
+              <TrendingUp size={13} className="shrink-0" />
+              Most Voted
+              {racesWithVotes > 0 && (
+                <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
+                  {racesWithVotes}
+                </span>
+              )}
+            </button>
           </>
         )}
       </div>
-
-      {/* Favourites + Most Voted — top-right, fullscreen only (otherwise reachable via the page header) */}
-      {isFullscreen && (
-        <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
-          <button
-            onClick={onToggleFavs}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-              showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
-            }`}
-          >
-            <Star size={13} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
-            Favourites
-            {favSet.size > 0 && (
-              <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
-                {favSet.size}
-              </span>
-            )}
-          </button>
-          <button
-            onClick={onToggleMostVoted}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-              sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
-            }`}
-          >
-            <TrendingUp size={13} className="shrink-0" />
-            Most Voted
-            {racesWithVotes > 0 && (
-              <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-white"}`}>
-                {racesWithVotes}
-              </span>
-            )}
-          </button>
-        </div>
-      )}
 
       {/* Explore/Races + Predicted/Past — bottom-right. Stacked (Explore/Races above
           Predicted/Past) on mobile; side by side as one row once there's enough width. */}
