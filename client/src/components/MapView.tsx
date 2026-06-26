@@ -708,7 +708,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           header providing this elsewhere is fully hidden while fullscreen). Wraps onto
           a second line on narrow screens instead of overflowing off-screen. */}
       {isFullscreen && (
-        <div className="absolute top-3 left-3 z-10 flex flex-wrap items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", marginTop: "env(safe-area-inset-top, 0px)", maxWidth: "calc(100% - 24px)" }}>
+        <div className="absolute left-3 z-10 flex flex-wrap items-center gap-1.5" style={{ top: "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
           <button
             onClick={onToggleFilterBar}
             className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
