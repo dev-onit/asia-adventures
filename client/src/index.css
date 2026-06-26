@@ -134,6 +134,15 @@ h1, h2, h3 {
 .leaflet-control { z-index: 400 !important; }
 .leaflet-pane { z-index: 1 !important; }
 
+/* Leaflet's own default container background is a hardcoded light gray (#ddd),
+   used as a placeholder behind/around tiles wherever they don't fully cover the
+   container — visible at the very edge in fullscreen, where the container's
+   height is a dynamic safe-area-dependent calc rather than a fixed value, and
+   doesn't track our light/dark theme at all since it's not one of our own CSS
+   vars. Overriding it to match --background means any such edge reads as our
+   own themed color instead of Leaflet's fixed gray. */
+.leaflet-container { background: hsl(var(--background)) !important; }
+
 /* Light mode sticky header */
 .light header.sticky {
   background: hsl(210 20% 96% / 0.96) !important;
