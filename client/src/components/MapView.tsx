@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { MutableRefObject } from "react";
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import type { Race, ExploreSite } from "../../../shared/schema";
 import { getCoords, COUNTRY_WEATHER } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
@@ -18,7 +25,7 @@ interface Props {
   onToggleHidePast: () => void;
   showUnconfirmed: boolean;
   onToggleUnconfirmed: () => void;
-  recenterRef?: React.MutableRefObject<(() => void) | null>;
+  recenterRef?: MutableRefObject<(() => void) | null>;
 }
 
 // Running (road) and Trail share the "RUN" pin label but get distinct colors
@@ -68,6 +75,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 const CARD_DARK = "#1b1f27";
 const BADGE_PAD = 14;
+
 // ── Sport pill SVG (individual pin) ──
 function sportPillSvg(fill: string, label: string, w: number, h: number): string {
   const rx = h / 2;
@@ -76,21 +84,6 @@ function sportPillSvg(fill: string, label: string, w: number, h: number): string
     <rect x="2" y="2" width="${w-4}" height="${h-4}" rx="${rx-2}" ry="${rx-2}" fill="${fill}" fill-opacity="0.22" stroke="${fill}" stroke-width="1"/>
     <text x="${w/2}" y="${h/2+3.6}" text-anchor="middle" font-size="10" font-family="system-ui,sans-serif" font-weight="800" letter-spacing="0.8"
       fill="${fill}" paint-order="stroke" stroke="${CARD_DARK}" stroke-width="2.5" stroke-linejoin="round">${label}</text>
-  </svg>`;
-}
-
-// ── Cluster circle SVG — bold, solid, Apple Maps-style cluster ──
-function clusterPillSvg(dominant: string, count: number, _label: string): string {
-  // Fixed sizes: tiny (≤4)→20, small (≤9)→24, medium (≤20)→28, large (≤40)→32, huge→36
-  const r = count <= 4 ? 20 : count <= 9 ? 24 : count <= 20 ? 28 : count <= 40 ? 32 : 36;
-  const size = r * 2;
-  const cx = r, cy = r;
-  const fontSize = r <= 20 ? 13 : r <= 24 ? 14 : r <= 28 ? 15 : 16;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block">
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="${CARD_DARK}"/>
-    <circle cx="${cx}" cy="${cy}" r="${r - 2.5}" fill="${dominant}" fill-opacity="0.55" stroke="${dominant}" stroke-width="2"/>
-    <text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-size="${fontSize}" font-family="system-ui,sans-serif" font-weight="900" letter-spacing="-0.5"
-      fill="white" paint-order="stroke" stroke="${CARD_DARK}" stroke-width="2.5" stroke-linejoin="round">${count}</text>
   </svg>`;
 }
 
@@ -124,17 +117,60 @@ function raceIconHtml(fill: string, label: string, isFav: boolean, voteCount: nu
   </div>`;
 }
 
+function buildRaceIcon(fill: string, label: string, isFav: boolean, voteCount: number): L.DivIcon {
+  const ph = 11, pv = 6, fontSize = 10, charW = fontSize * 0.62;
+  const pillW = Math.round(label.length * charW + ph * 2);
+  const pillH = fontSize + pv * 2;
+  const totalW = pillW + BADGE_PAD * 2;
+  const totalH = pillH + BADGE_PAD * 2;
+  return L.divIcon({
+    html: raceIconHtml(fill, label, isFav, voteCount, pillW, pillH),
+    className: "",
+    iconSize: [totalW, totalH],
+    iconAnchor: [totalW / 2, totalH / 2],
+    popupAnchor: [0, -(totalH / 2 + 8)],
+  });
+}
+
+function buildExploreIcon(label: string, color: string): L.DivIcon {
+  const ph = 10, pv = 5, fontSize = 9, charW = fontSize * 0.65;
+  const pillW = Math.round(label.length * charW + ph * 2);
+  const pillH = fontSize + pv * 2;
+  const totalW = pillW + BADGE_PAD * 2;
+  const totalH = pillH + BADGE_PAD * 2;
+  const html = `<div style="position:relative;width:${totalW}px;height:${totalH}px;overflow:visible">
+    <div style="position:absolute;top:${BADGE_PAD}px;left:${BADGE_PAD}px">${explorePillSvg(label, color)}</div>
+  </div>`;
+  return L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
+}
+
+// ── Cluster icon — bold, solid, Apple Maps-style circle with a count ──
+function makeClusterIconFn(baseColor: string) {
+  return (cluster: { getChildCount: () => number }): L.DivIcon => {
+    const count = cluster.getChildCount();
+    const r = count <= 4 ? 17 : count <= 9 ? 21 : count <= 20 ? 24 : count <= 40 ? 28 : 31;
+    const size = r * 2;
+    const fs = r <= 17 ? 12 : r <= 21 ? 13 : r <= 24 ? 14 : 15;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      <circle cx="${r}" cy="${r}" r="${r}" fill="#1b1f27"/>
+      <circle cx="${r}" cy="${r}" r="${r - 2.5}" fill="${baseColor}" fill-opacity="0.55" stroke="${baseColor}" stroke-width="2"/>
+      <text x="${r}" y="${r}" text-anchor="middle" dominant-baseline="central" font-size="${fs}" font-family="system-ui,sans-serif" font-weight="900" letter-spacing="-0.5" fill="white" paint-order="stroke" stroke="#1b1f27" stroke-width="2.5" stroke-linejoin="round">${count}</text>
+    </svg>`;
+    return L.divIcon({ html: svg, className: "", iconSize: [size, size], iconAnchor: [r, r] });
+  };
+}
+const raceClusterIcon = makeClusterIconFn("#3b82f6");
+const exploreClusterIcon = makeClusterIconFn("#22c55e");
+
 // ── Spread pins that share a map location ──
 // Races and explore sites can resolve to the exact same lat/lng (e.g. both fall back to
-// the same city/country centroid, or two races share a start line). Race and explore pins
-// live in separate MarkerClusterGroups, so Leaflet's own spiderfy can't coordinate across
-// the two layers — without this, one pin would render directly on top of the other.
-// Offsets are computed in screen pixels (not fixed degrees) and recalculated on every
-// zoom change, so separation looks consistent at any zoom instead of vanishing when
-// zoomed out or growing huge when zoomed in.
+// the same city/country centroid, or two races share a start line). Offsets are computed
+// in screen pixels (not fixed degrees) and recalculated on every zoom change, so separation
+// looks consistent at any zoom instead of vanishing when zoomed out or growing huge when
+// zoomed in.
 type GeoPoint = { id: string; lat: number; lng: number };
 
-function spreadOverlappingPoints(map: any, L: any, points: GeoPoint[]): Map<string, [number, number]> {
+function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
   const groups = new Map<string, GeoPoint[]>();
   points.forEach(p => {
     const key = `${p.lat.toFixed(5)},${p.lng.toFixed(5)}`;
@@ -158,28 +194,6 @@ function spreadOverlappingPoints(map: any, L: any, points: GeoPoint[]): Map<stri
     });
   });
   return result;
-}
-
-// ── Shared pin wiring (race + explore pins) ──
-// Centralizes the popup options and active-marker switching that both pin types need
-// identically, and stamps a stable __pinId so renderMarkers() can find this marker's
-// replacement after a rebuild and restore its open popup (see renderMarkers below).
-function wirePinPopup(marker: any, map: any, activeMarkerRef: React.MutableRefObject<any>, pinId: string, html: string, maxWidth: number) {
-  marker.__pinId = pinId;
-  marker.bindPopup(html, {
-    maxWidth, className: "map-popup-wrapper", closeOnClick: false,
-    autoClose: false, autoPanPadding: [28, 28],
-  });
-  marker.on("click", () => {
-    if (activeMarkerRef.current && activeMarkerRef.current !== marker) {
-      map._allowNextClose?.();
-      activeMarkerRef.current.closePopup();
-    }
-    activeMarkerRef.current = marker;
-  });
-  marker.on("popupclose", () => {
-    if (activeMarkerRef.current === marker) activeMarkerRef.current = null;
-  });
 }
 
 const POPUP_STYLE = `
@@ -213,11 +227,6 @@ const POPUP_STYLE = `
     cursor: pointer; text-align: center; text-decoration: none; display: block;
   }
   .map-popup .mp-visit-btn:hover { background: hsl(var(--primary) / 0.25); }
-  .map-popup .mp-editions { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
-  .map-popup .mp-edition { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .map-popup .mp-year-tag { font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 999px; white-space: nowrap; }
-  .map-popup .mp-edition-info { font-size: 11px; color: #94a3b8; flex: 1; }
-  .map-popup .mp-edition-actions { display: flex; gap: 4px; margin-left: auto; align-items: center; }
   .leaflet-popup-content-wrapper { background: transparent !important; box-shadow: none !important; border-radius: 14px !important; padding: 0 !important; }
   .leaflet-popup-content { margin: 0 !important; }
   .leaflet-popup-tip-container { display: none !important; }
@@ -254,25 +263,234 @@ const POPUP_STYLE = `
   }
 `;
 
-export default function MapView({ races, allRaces, sites, favSet, voterName, votesByRace, showFavsOnly, countryFilters, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef }: Props) {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
-  const tileLayerRef = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
-  const [showExplore, setShowExplore] = useState(false);
-  const showExploreRef = useRef(false);
-  const [showRaces, setShowRaces] = useState(true);
-  const showRacesRef = useRef(true);
-  const [mapLoadFailed, setMapLoadFailed] = useState(false);
-  const lastRenderKeyRef = useRef<string>("");
-  const renderMarkersRef = useRef<(force?: boolean) => void>(() => {});
-  const hasInitialFitRef = useRef(false);
-  // Tracks the currently open marker so we can close it before opening another
-  const activeMarkerRef = useRef<any>(null);
-  // Cluster groups for races and explore sites
-  const raceClusterRef = useRef<any>(null);
-  const exploreClusterRef = useRef<any>(null);
+// ── Popup content (real React components — no HTML strings, no manual DOM wiring) ──
+function RacePopupContent({ race, isFav, voters, onToggleFav }: {
+  race: Race; isFav: boolean; voters: string[]; onToggleFav: Props["onToggleFav"];
+}) {
+  const fill = TYPE_COLORS[race.type] ?? "#6366f1";
+  const label = TYPE_LABELS[race.type] ?? race.type;
+  const subLabel = TYPE_SUBLABELS[race.type];
+  const flag = COUNTRY_WEATHER[race.country]?.flag ?? "";
+  const weather = getRaceWeather(race.location, race.date);
+  const showWaterTemp = weather?.waterTemp != null && ["triathlon", "ocean-swim", "swimrun"].includes(race.type);
 
+  return (
+    <div className="map-popup">
+      <span className="mp-badge" style={{ background: `${fill}22`, color: fill, border: `1px solid ${fill}55` }}>
+        {label}{subLabel && <span style={{ opacity: 0.65, fontWeight: 500 }}> · {subLabel}</span>}
+      </span>
+      <div className="mp-name">{race.name}</div>
+      <div className="mp-row">📍 {race.location}, {flag} {race.country}</div>
+      <div className="mp-row">📅 {race.date} · {race.distance}</div>
+      {voters.length > 0 && <div className="mp-row">👥 {voters.join(", ")}</div>}
+      {weather && (
+        <div className="mp-row">
+          🌡️ {weather.temp}°C · {weather.condition}
+          {showWaterTemp && weather.waterTemp != null && <span style={{ marginLeft: 4 }}>🌊 {weather.waterTemp}°C</span>}
+        </div>
+      )}
+      <div className="mp-actions">
+        <button className={`mp-star-btn ${isFav ? "starred" : ""}`} onClick={() => onToggleFav(race.id, isFav)}>
+          {isFav ? "★ Starred" : "☆ Star"}
+        </button>
+        {race.url && <a href={race.url} target="_blank" rel="noopener noreferrer" className="mp-visit-btn">↗ Visit</a>}
+      </div>
+    </div>
+  );
+}
+
+function ExplorePopupContent({ site }: { site: ExploreSite }) {
+  const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
+  const flag = COUNTRY_WEATHER[site.country]?.flag ?? "";
+  const desc = site.description.length > 120 ? site.description.slice(0, 120) + "…" : site.description;
+  return (
+    <div className="map-popup">
+      <span className="mp-badge" style={{ background: `${color}22`, color, border: `1px solid ${color}55` }}>{site.category}</span>
+      <div className="mp-name">{site.name}</div>
+      <div className="mp-row">{flag} {site.country}{site.region ? <> · {site.region}</> : null}</div>
+      <div className="mp-row" style={{ marginTop: 4, lineHeight: 1.5 }}>{desc}</div>
+      {site.bestMonths && <div className="mp-months">Best: {site.bestMonths}</div>}
+      {site.url && (
+        <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-visit-btn" style={{ marginTop: 10, display: "block", textAlign: "center" }}>
+          ↗ Visit
+        </a>
+      )}
+    </div>
+  );
+}
+
+// ── Markers ──
+function RaceMarker({ race, coords, isFav, voters, onToggleFav }: {
+  race: Race; coords: [number, number]; isFav: boolean; voters: string[]; onToggleFav: Props["onToggleFav"];
+}) {
+  const fill = TYPE_COLORS[race.type] ?? "#6366f1";
+  const label = TYPE_LETTERS[race.type] ?? "?";
+  const icon = useMemo(() => buildRaceIcon(fill, label, isFav, voters.length), [fill, label, isFav, voters.length]);
+  return (
+    <Marker position={coords} icon={icon}>
+      <Popup maxWidth={300} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
+        <RacePopupContent race={race} isFav={isFav} voters={voters} onToggleFav={onToggleFav} />
+      </Popup>
+    </Marker>
+  );
+}
+
+function ExploreMarker({ site, coords }: { site: ExploreSite; coords: [number, number] }) {
+  const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
+  const label = site.category.toUpperCase();
+  const icon = useMemo(() => buildExploreIcon(label, color), [label, color]);
+  return (
+    <Marker position={coords} icon={icon}>
+      <Popup maxWidth={280} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
+        <ExplorePopupContent site={site} />
+      </Popup>
+    </Marker>
+  );
+}
+
+// ── Pins layer — lives inside <MapContainer> so it can read the live map instance ──
+function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByRace, onToggleFav }: {
+  displayRaces: Race[]; sites: ExploreSite[]; showRaces: boolean; showExplore: boolean;
+  favSet: Set<number>; votesByRace: Map<number, string[]>; onToggleFav: Props["onToggleFav"];
+}) {
+  const [zoom, setZoom] = useState(() => 4);
+  const map = useMapEvents({ zoomend: () => setZoom(map.getZoom()) });
+
+  const pinCoords = useMemo(() => {
+    const geoPoints: GeoPoint[] = [];
+    if (showRaces) displayRaces.forEach(race => {
+      const coords = getCoords(race);
+      if (coords) geoPoints.push({ id: `r:${race.id}`, lat: coords[0], lng: coords[1] });
+    });
+    if (showExplore) sites.forEach(site => {
+      if (!site.lat || !site.lng) return;
+      const lat = parseFloat(site.lat), lng = parseFloat(site.lng);
+      if (!isNaN(lat) && !isNaN(lng)) geoPoints.push({ id: `e:${site.id}`, lat, lng });
+    });
+    return spreadOverlappingPoints(map, geoPoints);
+    // zoom is read only to retrigger this memo when it changes — the spread itself is
+    // recomputed from the map's current pixel projection, not from the zoom value directly.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, displayRaces, sites, showRaces, showExplore, zoom]);
+
+  return (
+    <>
+      {showRaces && (
+        <MarkerClusterGroup
+          chunkedLoading
+          maxClusterRadius={60}
+          iconCreateFunction={raceClusterIcon}
+          showCoverageOnHover={false}
+          zoomToBoundsOnClick
+        >
+          {displayRaces.map(race => {
+            const coords = pinCoords.get(`r:${race.id}`);
+            if (!coords) return null;
+            return (
+              <RaceMarker
+                key={race.id}
+                race={race}
+                coords={coords}
+                isFav={favSet.has(race.id)}
+                voters={votesByRace.get(race.id) ?? []}
+                onToggleFav={onToggleFav}
+              />
+            );
+          })}
+        </MarkerClusterGroup>
+      )}
+      {showExplore && (
+        <MarkerClusterGroup
+          chunkedLoading
+          maxClusterRadius={50}
+          iconCreateFunction={exploreClusterIcon}
+          showCoverageOnHover={false}
+          zoomToBoundsOnClick
+        >
+          {sites.map(site => {
+            const coords = pinCoords.get(`e:${site.id}`);
+            if (!coords) return null;
+            return <ExploreMarker key={site.id} site={site} coords={coords} />;
+          })}
+        </MarkerClusterGroup>
+      )}
+    </>
+  );
+}
+
+// ── Imperative bits that still need direct map access: initial fit, recenter button,
+// and ctrl/⌘+scroll-to-zoom — none of these are hacks, just things Leaflet itself doesn't
+// expose as declarative props. ──
+function MapController({ displayRaces, recenterRef }: { displayRaces: Race[]; recenterRef?: Props["recenterRef"] }) {
+  const map = useMap();
+  const hasInitialFitRef = useRef(false);
+
+  useEffect(() => {
+    const container = map.getContainer();
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey) return;
+      e.preventDefault();
+      if (e.deltaY < 0) map.zoomIn(); else map.zoomOut();
+    };
+    container.addEventListener("wheel", onWheel, { passive: false });
+    return () => container.removeEventListener("wheel", onWheel);
+  }, [map]);
+
+  useEffect(() => {
+    if (hasInitialFitRef.current || displayRaces.length === 0) return;
+    const coords = displayRaces.map(r => getCoords(r)).filter((c): c is [number, number] => c !== null);
+    if (coords.length === 0) return;
+    hasInitialFitRef.current = true;
+    if (coords.length === 1) {
+      map.setView(coords[0], 6, { animate: false });
+    } else {
+      map.fitBounds(L.latLngBounds(coords), { padding: [48, 48], maxZoom: 6, animate: false });
+    }
+  }, [map, displayRaces]);
+
+  useEffect(() => {
+    if (!recenterRef) return;
+    recenterRef.current = () => {
+      const coords = displayRaces.map(r => getCoords(r)).filter((c): c is [number, number] => c !== null);
+      if (coords.length === 0) return;
+      if (coords.length === 1) map.setView(coords[0], 6, { animate: true });
+      else map.fitBounds(L.latLngBounds(coords), { padding: [40, 40], maxZoom: 6, animate: true });
+    };
+  }, [map, displayRaces, recenterRef]);
+
+  return null;
+}
+
+function ThemeTileLayer({ isDark }: { isDark: boolean }) {
+  const lightUrl = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+  const darkUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}";
+  const lightAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, &copy; <a href="https://carto.com/">CARTO</a>';
+  const darkAttr = 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, DeLorme, NAVTEQ';
+  return (
+    <>
+      <TileLayer
+        key={isDark ? "dark" : "light"}
+        url={isDark ? darkUrl : lightUrl}
+        subdomains={isDark ? undefined : "abcd"}
+        maxZoom={16}
+        attribution={isDark ? darkAttr : lightAttr}
+      />
+      {/* Ocean Base overlay at low opacity gives blue water on the dark canvas basemap */}
+      {isDark && (
+        <TileLayer
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
+          opacity={0.45}
+          maxZoom={16}
+          attribution=""
+        />
+      )}
+    </>
+  );
+}
+
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef }: Props) {
+  const [showExplore, setShowExplore] = useState(false);
+  const [showRaces, setShowRaces] = useState(true);
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
 
@@ -284,511 +502,46 @@ export default function MapView({ races, allRaces, sites, favSet, voterName, vot
     document.head.appendChild(el);
   }, []);
 
-  // Swap tile layer on theme change
-  useEffect(() => {
-    const L = (window as any).L;
-    if (!L || !mapInstanceRef.current) return;
-    if (tileLayerRef.current) mapInstanceRef.current.removeLayer(tileLayerRef.current);
-    const url = isDark
-      ? "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
-      : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-    const attr = isDark
-      ? 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, DeLorme, NAVTEQ'
-      : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, &copy; <a href="https://carto.com/">CARTO</a>';
-    tileLayerRef.current = L.tileLayer(url, { subdomains: "abcd", maxZoom: 16, attribution: attr }).addTo(mapInstanceRef.current);
-    // Add/remove water overlay on theme change
-    if ((tileLayerRef as any).waterLayer) {
-      mapInstanceRef.current.removeLayer((tileLayerRef as any).waterLayer);
-      delete (tileLayerRef as any).waterLayer;
-    }
-    if (isDark) {
-      (tileLayerRef as any).waterLayer = L.tileLayer(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}",
-        { opacity: 0.45, maxZoom: 16, attribution: "" }
-      ).addTo(mapInstanceRef.current);
-    }
-  }, [isDark]);
-
-  useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
-
-    // Poll until Leaflet is loaded (CDN async load).
-    const tryInit = () => {
-      const L = (window as any).L;
-      if (!L || !mapRef.current || mapInstanceRef.current) return;
-      clearInterval(poll);
-
-    // On touch devices: disable 1-finger dragging so the page scrolls naturally.
-    // 2-finger pan still works via Leaflet's built-in two-touch handler.
-    // On desktop (mouse/trackpad): dragging stays on.
-    const isTouch = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
-
-    const map = L.map(mapRef.current, {
-      center: [20, 100], zoom: 4, zoomControl: false,
-      scrollWheelZoom: false,
-      touchZoom: true,
-      dragging: !isTouch,
-      tap: false,
-      attributionControl: false,
-    });
-
-    // Re-enable dragging on desktop if somehow missed
-    if (!isTouch) map.dragging.enable();
-
-    // Ctrl/⌘+scroll to zoom (desktop)
-    mapRef.current.addEventListener("wheel", (e: WheelEvent) => {
-      if (e.ctrlKey) { e.preventDefault(); e.stopPropagation(); if (e.deltaY < 0) map.zoomIn(); else map.zoomOut(); }
-    }, { passive: false });
-
-    L.control.zoom({ position: "bottomleft" }).addTo(map);
-
-    const url = isDark
-      ? "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
-      : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-    const tileAttr = isDark
-      ? 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, DeLorme, NAVTEQ'
-      : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, &copy; <a href="https://carto.com/">CARTO</a>';
-    tileLayerRef.current = L.tileLayer(url, { subdomains: "abcd", maxZoom: 16, attribution: tileAttr }).addTo(map);
-    // Water overlay: Ocean Base at 45% opacity gives blue water on dark map
-    if (isDark) {
-      (tileLayerRef as any).waterLayer = L.tileLayer(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}",
-        { opacity: 0.45, maxZoom: 16, attribution: "" }
-      ).addTo(map);
-    }
-    mapInstanceRef.current = map;
-
-    // Create cluster groups (wait until markercluster JS is available)
-    const initClusters = () => {
-      const _L = (window as any).L;
-      const MC = _L && _L.MarkerClusterGroup;
-      if (!MC) { setTimeout(initClusters, 150); return; }
-
-      // Shared icon creator: simple circle with count
-      const makeIconFn = (baseColor: string) => (cluster: any) => {
-        const count = cluster.getChildCount();
-        const r = count <= 4 ? 17 : count <= 9 ? 21 : count <= 20 ? 24 : count <= 40 ? 28 : 31;
-        const size = r * 2;
-        const fs = r <= 17 ? 12 : r <= 21 ? 13 : r <= 24 ? 14 : 15;
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-          <circle cx="${r}" cy="${r}" r="${r}" fill="#1b1f27"/>
-          <circle cx="${r}" cy="${r}" r="${r - 2.5}" fill="${baseColor}" fill-opacity="0.55" stroke="${baseColor}" stroke-width="2"/>
-          <text x="${r}" y="${r}" text-anchor="middle" dominant-baseline="central" font-size="${fs}" font-family="system-ui,sans-serif" font-weight="900" letter-spacing="-0.5" fill="white" paint-order="stroke" stroke="#1b1f27" stroke-width="2.5" stroke-linejoin="round">${count}</text>
-        </svg>`;
-        return (window as any).L.divIcon({
-          html: svg,
-          className: "",
-          iconSize: [size, size],
-          iconAnchor: [r, r],
-        });
-      };
-
-      raceClusterRef.current = new MC({ chunkedLoading: true, maxClusterRadius: 60, iconCreateFunction: makeIconFn("#3b82f6"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
-      exploreClusterRef.current = new MC({ chunkedLoading: true, maxClusterRadius: 50, iconCreateFunction: makeIconFn("#22c55e"), showCoverageOnHover: false, zoomToBoundsOnClick: true, animate: true });
-      raceClusterRef.current.addTo(map);
-      // Explore cluster added to map only when Explore is ON (handled in renderMarkers)
-      // Trigger first render now that clusters are ready
-      lastRenderKeyRef.current = "";
-      renderMarkersRef.current(true);
-    };
-    initClusters();
-
-
-    map.on("zoomend", () => { lastRenderKeyRef.current = ""; renderMarkersRef.current(true); });
-
-    // On mobile: a single tap on empty map / another pin / the X button should
-    // close the open popup, but a 2-finger pan or pinch-zoom must never close it.
-    // The browser fires a synthetic "click" when fingers lift at the end of a
-    // multi-touch gesture, and if that lands on the map or a marker it would
-    // otherwise be misread as a deliberate tap. We track touch count to tell
-    // the two apart, and suppress the synthetic click entirely when it was
-    // caused by a 2+ finger gesture.
-    if (isTouch) {
-      let allowClose = false;
-      let multiTouchActive = false;
-      (map as any)._allowNextClose = () => { allowClose = true; };
-
-      if (mapRef.current) {
-        mapRef.current.addEventListener("touchstart", (e: TouchEvent) => {
-          if (e.touches.length > 1) multiTouchActive = true;
-        }, { passive: true, capture: true });
-        const endMultiTouch = (e: TouchEvent) => {
-          if (e.touches.length === 0) setTimeout(() => { multiTouchActive = false; }, 50);
-        };
-        mapRef.current.addEventListener("touchend", endMultiTouch, { passive: true, capture: true });
-        mapRef.current.addEventListener("touchcancel", endMultiTouch, { passive: true, capture: true });
-      }
-
-      // Safety net: if a popup still closes unexpectedly for some other reason,
-      // reopen it immediately rather than leave the user staring at a vanished popup.
-      map.on("popupclose", (e: any) => {
-        if (allowClose) { allowClose = false; return; }
-        const popup = e.popup;
-        if (popup) setTimeout(() => { popup.openOn(map); }, 0);
-      });
-
-      if (mapRef.current) {
-        mapRef.current.addEventListener("click", (e: MouseEvent) => {
-          // Gesture-end synthetic click — ignore entirely so nothing it lands on
-          // (background or a marker) reacts, and the popup stays exactly as-is.
-          if (multiTouchActive) { e.stopPropagation(); e.preventDefault(); return; }
-
-          const target = e.target as HTMLElement;
-          if (target?.closest(".leaflet-popup-close-button")) {
-            allowClose = true;
-            return;
-          }
-          // Tapping empty map background closes the open popup (marker taps —
-          // including switching to a different pin — are handled by each
-          // marker's own click handler).
-          const onMarker = !!target?.closest(".leaflet-marker-icon");
-          const onPopup = !!target?.closest(".leaflet-popup");
-          if (!onMarker && !onPopup && activeMarkerRef.current) {
-            allowClose = true;
-            map.closePopup();
-          }
-        }, { capture: true });
-      }
-    } else {
-      // Desktop: close on background click, not after drag
-      let wasDragging = false;
-      map.on("dragstart", () => { wasDragging = true; });
-      map.on("dragend",   () => { setTimeout(() => { wasDragging = false; }, 50); });
-      map.on("click", (e: any) => {
-        if (wasDragging) return;
-        const target = e.originalEvent?.target as HTMLElement;
-        const isUI = !!(target?.closest(".leaflet-marker-icon") ||
-                        target?.closest(".leaflet-interactive") ||
-                        target?.closest(".leaflet-popup"));
-        if (!isUI) map.closePopup();
-      });
-    }
-    }; // end tryInit
-
-    const poll = setInterval(tryInit, 100);
-    tryInit(); // try immediately in case Leaflet is already loaded
-
-    // Leaflet loads from a CDN <script> tag (see CalendarPage.tsx) — on a slow or
-    // blocked connection this would otherwise poll forever with a blank map and no
-    // feedback. Give up after 12s and show a retry affordance instead.
-    const failTimer = setTimeout(() => {
-      if (!mapInstanceRef.current) { clearInterval(poll); setMapLoadFailed(true); }
-    }, 12000);
-
-    return () => {
-      clearInterval(poll);
-      clearTimeout(failTimer);
-      if (mapInstanceRef.current) { mapInstanceRef.current.remove(); mapInstanceRef.current = null; }
-      raceClusterRef.current = null;
-      exploreClusterRef.current = null;
-    };
-  }, []);
-
-  // ── HTML escape helper (prevent XSS in popup strings) ──
-  const esc = (s: string) => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-
-  // ── Popup builders ──
-  function buildGroupPopup(groupRaces: Race[], isFav: boolean, voters: string[]): string {
-    const rep = groupRaces[0];
-    const fill = TYPE_COLORS[rep.type] ?? "#6366f1";
-    const label = TYPE_LABELS[rep.type] ?? rep.type;
-    const subLabel = TYPE_SUBLABELS[rep.type];
-    const badgeHtml = `<span class="mp-badge" style="background:${fill}22;color:${fill};border:1px solid ${fill}55">${label}${subLabel ? ` <span style="opacity:0.65;font-weight:500">· ${subLabel}</span>` : ""}</span>`;
-    const flag = COUNTRY_WEATHER[rep.country]?.flag ?? "";
-    const votersHtml = voters.length > 0 ? `<div class="mp-row">👥 ${voters.map(esc).join(", ")}</div>` : "";
-    const weather = getRaceWeather(rep.location, rep.date);
-    const showWaterTemp = weather?.waterTemp != null && ["triathlon", "ocean-swim", "swimrun"].includes(rep.type);
-    const weatherHtml = weather
-      ? `<div class="mp-row">🌡️ ${weather.temp}°C · ${esc(weather.condition)}${showWaterTemp ? ` <span style="margin-left:4px">🌊 ${weather.waterTemp}°C</span>` : ""}</div>`
-      : "";
-    const getYear = (d: string) => { const m = d.match(/(202\d)/); return m ? m[1] : d; };
-    const sorted = [...groupRaces].sort((a, b) => getYear(a.date).localeCompare(getYear(b.date)));
-
-    if (sorted.length === 1) {
-      const r = sorted[0]; const rIsFav = favSet.has(r.id);
-      const visitBtn = r.url ? `<a href="${r.url}" target="_blank" rel="noopener noreferrer" class="mp-visit-btn">↗ Visit</a>` : "";
-      return `<div class="map-popup">
-        ${badgeHtml}
-        <div class="mp-name">${rep.name}</div>
-        <div class="mp-row">📍 ${esc(rep.location)}, ${flag} ${esc(rep.country)}</div>
-        <div class="mp-row">📅 ${esc(r.date)} · ${esc(r.distance)}</div>
-        ${votersHtml}
-        ${weatherHtml}
-        <div class="mp-actions">
-          <button class="mp-star-btn ${rIsFav ? "starred" : ""}" data-race-id="${r.id}" data-is-fav="${rIsFav}">${rIsFav ? "★ Starred" : "☆ Star"}</button>
-          ${visitBtn}
-        </div>
-      </div>`;
-    }
-
-    const editionsHtml = sorted.map(r => {
-      const year = getYear(r.date); const rIsFav = favSet.has(r.id);
-      const visitBtn = r.url ? `<a href="${r.url}" target="_blank" rel="noopener noreferrer" class="mp-visit-btn" style="padding:5px 12px;font-size:11px;flex:none">↗ Visit</a>` : "";
-      return `<div class="mp-edition">
-        <span class="mp-year-tag" style="background:${fill}22;color:${fill};border:1px solid ${fill}55">${year}</span>
-        <span class="mp-edition-info">📅 ${r.date} · ${r.distance}</span>
-        <div class="mp-edition-actions">
-          <button class="mp-star-btn ${rIsFav ? "starred" : ""}" data-race-id="${r.id}" data-is-fav="${rIsFav}" style="padding:4px 10px;font-size:10px">${rIsFav ? "★" : "☆"}</button>
-          ${visitBtn}
-        </div>
-      </div>`;
-    }).join("");
-
-    return `<div class="map-popup">
-      ${badgeHtml}
-      <div class="mp-name">${rep.name}</div>
-      <div class="mp-row">📍 ${esc(rep.location)}, ${flag} ${esc(rep.country)}</div>
-      ${votersHtml}
-      ${weatherHtml}
-      <div class="mp-editions">${editionsHtml}</div>
-    </div>`;
-  }
-
-  function buildExplorePopup(site: ExploreSite): string {
-    const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
-    const flag = COUNTRY_WEATHER[site.country]?.flag ?? "";
-    const desc = site.description.length > 120 ? site.description.slice(0, 120) + "…" : site.description;
-    const monthsHtml = site.bestMonths ? `<div class="mp-months">Best: ${site.bestMonths}</div>` : "";
-    const visitHtml = site.url ? `<a href="${site.url}" target="_blank" rel="noopener noreferrer" class="mp-visit-btn" style="margin-top:10px;display:block;text-align:center">↗ Visit</a>` : "";
-    return `<div class="map-popup">
-      <span class="mp-badge" style="background:${color}22;color:${color};border:1px solid ${color}55">${site.category}</span>
-      <div class="mp-name">${site.name}</div>
-      <div class="mp-row">${flag} ${site.country}${site.region ? ` · ${site.region}` : ""}</div>
-      <div class="mp-row" style="margin-top:4px;line-height:1.5">${desc}</div>
-      ${monthsHtml}${visitHtml}
-    </div>`;
-  }
-
-  // ── Core render ──
-  function renderMarkers(force = false) {
-    renderMarkersRef.current = renderMarkers;
-    const L = (window as any).L;
-    if (!L || !mapInstanceRef.current) return;
-    // Wait until cluster groups are initialized (initClusters will re-trigger this)
-    if (!raceClusterRef.current || !exploreClusterRef.current) return;
-    const map = mapInstanceRef.current;
-
-    const renderKey = JSON.stringify({
-      rids: displayRaces.map(r => r.id),
-      favs: [...favSet].sort(),
-      votes: [...votesByRace.keys()].sort(),
-      explore: showExploreRef.current,
-      races: showRacesRef.current,
-    });
-    if (!force && renderKey === lastRenderKeyRef.current) return;
-    lastRenderKeyRef.current = renderKey;
-
-    // This rebuild is about to destroy every marker, including whichever one has an
-    // open popup right now (zoom, favoriting, voting, and filter changes all land
-    // here) — remember it by stable id so it can be reopened on its replacement
-    // marker below, instead of silently vanishing on the next zoom/data change.
-    const reopenPinId: string | null = activeMarkerRef.current?.__pinId ?? null;
-
-    markersRef.current.forEach(m => m.remove());
-    markersRef.current = [];
-    if (raceClusterRef.current) raceClusterRef.current.clearLayers();
-    if (exploreClusterRef.current) exploreClusterRef.current.clearLayers();
-    activeMarkerRef.current = null;
-
-    // ── Resolve overlapping pins (races and/or explore sites sharing a map location) ──
-    const geoPoints: GeoPoint[] = [];
-    if (showRacesRef.current) displayRaces.forEach(race => {
-      const coords = getCoords(race);
-      if (coords) geoPoints.push({ id: `r:${race.id}`, lat: coords[0], lng: coords[1] });
-    });
-    if (showExploreRef.current) sites.forEach(site => {
-      if (!site.lat || !site.lng) return;
-      const lat = parseFloat(site.lat), lng = parseFloat(site.lng);
-      if (!isNaN(lat) && !isNaN(lng)) geoPoints.push({ id: `e:${site.id}`, lat, lng });
-    });
-    const pinCoords = spreadOverlappingPoints(map, L, geoPoints);
-
-    // ── Render every race as individual pin ──
-    if (showRacesRef.current) displayRaces.forEach(race => {
-      const coords = pinCoords.get(`r:${race.id}`);
-      if (!coords) return;
-      renderSingleGroup(L, map, { races: [race], coords }, coords);
-    });
-
-    // ── Explore site markers ──
-    if (showExploreRef.current) {
-      // Add explore cluster to map when Explore is ON
-      if (exploreClusterRef.current && !map.hasLayer(exploreClusterRef.current)) {
-        exploreClusterRef.current.addTo(map);
-      }
-      sites.forEach(site => {
-        const coords = pinCoords.get(`e:${site.id}`);
-        if (!coords) return;
-        const [lat, lng] = coords;
-
-        const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
-        const label = site.category.toUpperCase();
-        const ph = 10, pv = 5, fontSize = 9, charW = fontSize * 0.65;
-        const pillW = Math.round(label.length * charW + ph * 2);
-        const pillH = fontSize + pv * 2;
-        const totalW = pillW + BADGE_PAD * 2;
-        const totalH = pillH + BADGE_PAD * 2;
-
-        const html = `<div style="position:relative;width:${totalW}px;height:${totalH}px;overflow:visible">
-          <div style="position:absolute;top:${BADGE_PAD}px;left:${BADGE_PAD}px">${explorePillSvg(label, color)}</div>
-        </div>`;
-        const icon = L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
-        const marker = L.marker([lat, lng], { icon });
-        wirePinPopup(marker, map, activeMarkerRef, `e:${site.id}`, buildExplorePopup(site), 280);
-        if (exploreClusterRef.current) exploreClusterRef.current.addLayer(marker);
-        else markersRef.current.push(marker);
-      });
-    } else {
-      // Explore is OFF — remove explore cluster from map
-      if (exploreClusterRef.current && map.hasLayer(exploreClusterRef.current)) {
-        map.removeLayer(exploreClusterRef.current);
-      }
-    }
-
-    // Restore the popup that was open before this rebuild, on its replacement marker.
-    if (reopenPinId) {
-      const candidates = [
-        ...(raceClusterRef.current?.getLayers() ?? []),
-        ...(exploreClusterRef.current?.getLayers() ?? []),
-        ...markersRef.current,
-      ];
-      const restored = candidates.find((m: any) => m.__pinId === reopenPinId);
-      if (restored) {
-        activeMarkerRef.current = restored;
-        // If this pin now falls inside a cluster bubble (e.g. the rebuild was
-        // triggered by zooming out), a plain openPopup() on it renders nothing —
-        // zoomToShowLayer is markercluster's own way to reveal a clustered marker
-        // before opening its popup. Falls back to a direct open when not clustered.
-        const owningCluster = reopenPinId.startsWith("r:") ? raceClusterRef.current : exploreClusterRef.current;
-        if (owningCluster && typeof owningCluster.zoomToShowLayer === "function") {
-          owningCluster.zoomToShowLayer(restored, () => restored.openPopup());
-        } else {
-          restored.openPopup();
-        }
-      }
-    }
-  }
-
-  // ── Render one event group as a pill pin ──
-  function renderSingleGroup(L: any, map: any, group: { races: Race[]; coords: [number, number] }, coords: [number, number]) {
-    const { races: groupRaces } = group;
-    const rep = groupRaces[0];
-    const fill = TYPE_COLORS[rep.type] ?? "#6366f1";
-    const label = TYPE_LETTERS[rep.type] ?? "?";
-    const isFav = groupRaces.some(r => favSet.has(r.id));
-    const allVoters = [...new Set(groupRaces.flatMap(r => votesByRace.get(r.id) ?? []))];
-    const voteCount = allVoters.length;
-
-    const ph = 11, pv = 6, fontSize = 10, charW = fontSize * 0.62;
-    const pillW = Math.round(label.length * charW + ph * 2);
-    const pillH = fontSize + pv * 2;
-    const totalW = pillW + BADGE_PAD * 2;
-    const totalH = pillH + BADGE_PAD * 2;
-
-    const icon = L.divIcon({
-      html: raceIconHtml(fill, label, isFav, voteCount, pillW, pillH),
-      className: "",
-      iconSize: [totalW, totalH],
-      iconAnchor: [totalW / 2, totalH / 2],
-      popupAnchor: [0, -(totalH / 2 + 8)],
-    });
-
-    const marker = L.marker(coords, { icon });
-    if (raceClusterRef.current) raceClusterRef.current.addLayer(marker);
-    else marker.addTo(map);
-    wirePinPopup(marker, map, activeMarkerRef, `r:${rep.id}`, buildGroupPopup(groupRaces, isFav, allVoters), 300);
-    marker.on("popupopen", () => {
-      // Wire star buttons — scoped to this popup's own DOM, not the whole document,
-      // so a stray id collision elsewhere on the page can never wire the wrong button.
-      setTimeout(() => {
-        const popupEl = marker.getPopup()?.getElement() as HTMLElement | undefined;
-        if (!popupEl) return;
-        groupRaces.forEach(r => {
-          const btn = popupEl.querySelector(`[data-race-id="${r.id}"]`) as HTMLElement | null;
-          const rIsFav = favSet.has(r.id);
-          if (btn) btn.onclick = () => { onToggleFav(r.id, rIsFav); (map as any)._allowNextClose?.(); map.closePopup(); };
-        });
-      }, 50);
-    });
-    markersRef.current.push(marker);
-  }
-
-  // ── Initial fit: center on filtered races (or all) on first render ──
-  if (!hasInitialFitRef.current && mapInstanceRef.current) {
-    const L = (window as any).L;
-    const coords = displayRaces
-      .map(r => getCoords(r))
-      .filter(Boolean) as [number, number][];
-    if (coords.length > 0) {
-      hasInitialFitRef.current = true;
-      if (coords.length === 1) {
-        mapInstanceRef.current.setView(coords[0], 6, { animate: false });
-      } else {
-        const bounds = L.latLngBounds(coords.map(([lat, lng]: [number, number]) => [lat, lng]));
-        mapInstanceRef.current.fitBounds(bounds, { padding: [48, 48], maxZoom: 6, animate: false });
-      }
-    }
-  }
-
-  useEffect(() => { renderMarkers(); }, [displayRaces, sites, favSet, votesByRace, showFavsOnly]);
-
-  // ── Expose recenter function to parent ──
-  useEffect(() => {
-    if (!recenterRef) return;
-    recenterRef.current = () => {
-      const L = (window as any).L;
-      const map = mapInstanceRef.current;
-      if (!L || !map) return;
-      const coords = displayRaces
-        .map(r => getCoords(r))
-        .filter(Boolean) as [number, number][];
-      if (coords.length === 0) return;
-      if (coords.length === 1) {
-        map.setView(coords[0], 6, { animate: true });
-      } else {
-        const bounds = L.latLngBounds(coords.map(([lat, lng]) => [lat, lng]));
-        map.fitBounds(bounds, { padding: [40, 40], maxZoom: 6, animate: true });
-      }
-    };
-  }, [displayRaces, recenterRef]);
+  // On touch devices: disable 1-finger dragging so the page scrolls naturally.
+  // 2-finger pan still works via Leaflet's built-in two-touch handler.
+  const isTouch = useMemo(() => 'ontouchstart' in window && navigator.maxTouchPoints > 0, []);
 
   function handleToggleExplore() {
-    const next = !showExploreRef.current;
-    showExploreRef.current = next;
+    const next = !showExplore;
     setShowExplore(next);
     // If turning Explore OFF while Races is OFF, snap Races back to ON
-    if (!next && !showRacesRef.current) {
-      showRacesRef.current = true;
-      setShowRaces(true);
-    }
-    renderMarkers(true);
+    if (!next && !showRaces) setShowRaces(true);
   }
 
   function handleToggleRaces() {
-    if (!showExploreRef.current) return; // locked unless Explore is ON
-    const next = !showRacesRef.current;
-    showRacesRef.current = next;
-    setShowRaces(next);
-    renderMarkers(true);
+    if (!showExplore) return; // locked unless Explore is ON
+    setShowRaces(prev => !prev);
   }
 
   return (
     <div className="relative overflow-hidden">
-      <div ref={mapRef} className="map-container w-full" style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }} />
-
-      {mapLoadFailed && (
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-zinc-100 dark:bg-zinc-900 text-sm text-zinc-500 dark:text-zinc-400 text-center px-6">
-          <span>Map failed to load — check your connection.</span>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-xs font-semibold"
-          >
-            Retry
-          </button>
-        </div>
-      )}
-
-
+      <MapContainer
+        center={[20, 100]}
+        zoom={4}
+        zoomControl={false}
+        scrollWheelZoom={false}
+        dragging={!isTouch}
+        className="map-container w-full"
+        style={{ height: "var(--map-h, clamp(420px, 40vw, 450px))", zIndex: 1 }}
+      >
+        <ZoomControl position="bottomleft" />
+        <ThemeTileLayer isDark={isDark} />
+        <MapController displayRaces={displayRaces} recenterRef={recenterRef} />
+        <MapPins
+          displayRaces={displayRaces}
+          sites={sites}
+          showRaces={showRaces}
+          showExplore={showExplore}
+          favSet={favSet}
+          votesByRace={votesByRace}
+          onToggleFav={onToggleFav}
+        />
+      </MapContainer>
 
       {/* Explore + Races buttons — top-right */}
       <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>

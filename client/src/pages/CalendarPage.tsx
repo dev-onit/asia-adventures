@@ -10,49 +10,6 @@ import { API_BASE } from "../App";
 import MapView from "../components/MapView";
 import ExploreSection from "../components/ExploreSection";
 
-// ── Leaflet CSS ──
-const leafletCssId = "leaflet-css";
-if (!document.getElementById(leafletCssId)) {
-  const link = document.createElement("link");
-  link.id = leafletCssId;
-  link.rel = "stylesheet";
-  link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-  document.head.appendChild(link);
-}
-// Helper: load markercluster CSS + JS (called after Leaflet is confirmed ready)
-function _loadMarkerCluster() {
-  const mcCss1Id = "mc-css-1";
-  if (!document.getElementById(mcCss1Id)) {
-    const l = document.createElement("link"); l.id = mcCss1Id; l.rel = "stylesheet";
-    l.href = "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css";
-    document.head.appendChild(l);
-  }
-  const mcCss2Id = "mc-css-2";
-  if (!document.getElementById(mcCss2Id)) {
-    const l = document.createElement("link"); l.id = mcCss2Id; l.rel = "stylesheet";
-    l.href = "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css";
-    document.head.appendChild(l);
-  }
-  const mcJsId = "mc-js";
-  if (!document.getElementById(mcJsId)) {
-    const s = document.createElement("script"); s.id = mcJsId;
-    s.src = "https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js";
-    document.head.appendChild(s);
-  }
-}
-const leafletJsId = "leaflet-js";
-if (!document.getElementById(leafletJsId)) {
-  const script = document.createElement("script");
-  script.id = leafletJsId;
-  script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-  // Load markercluster AFTER Leaflet finishes — prevents 'L is not defined' crash
-  script.onload = _loadMarkerCluster;
-  document.head.appendChild(script);
-} else if ((window as any).L) {
-  // Leaflet already loaded (e.g. HMR / re-render) — load markercluster now
-  _loadMarkerCluster();
-}
-
 const S = "v5:"; // bump this prefix to invalidate all users' localStorage
 const STORAGE_KEY = S+"asia-cal-voter";
 const STORAGE_RACE_FILTER_OPEN = S+"asia-cal-race-filter-open";
