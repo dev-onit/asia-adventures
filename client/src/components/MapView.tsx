@@ -692,7 +692,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           fullscreen (otherwise the page header's own theme toggle is reachable).
           Every floating map button shares this 36px size, including the zoom
           +/- control (see POPUP_STYLE) and the Layers button below. */}
-      <div className="absolute top-3 right-3 z-10 flex items-center gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
+      <div className="absolute right-3 z-10 flex items-center gap-2" style={{ top: "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
         {isFullscreen && (
           <button
             onClick={onToggleTheme}
@@ -743,12 +743,12 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           )}
           <button
             onClick={onToggleFavs}
-            className={`flex items-center gap-1.5 px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
               showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
             <Star size={16} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
-            Favourites
+            <span className="hidden sm:inline">Favourites</span>
             {favSet.size > 0 && (
               <span className={`rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
                 {favSet.size}
@@ -757,12 +757,12 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           </button>
           <button
             onClick={onToggleMostVoted}
-            className={`flex items-center gap-1.5 px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
               sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
             <TrendingUp size={16} className="shrink-0" />
-            Most Voted
+            <span className="hidden sm:inline">Most Voted</span>
             {racesWithVotes > 0 && (
               <span className={`rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
                 {racesWithVotes}

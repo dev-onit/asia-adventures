@@ -1059,7 +1059,13 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ── Sticky header ── */}
-      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] ${isMapFullscreen && (showFilterBar || activeFilterCount > 0) ? "bg-background/70 backdrop-blur-md" : "bg-background/95 backdrop-blur-sm"} ${!isMapFullscreen || showFilterBar ? "border-b border-border" : ""}`}>
+      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] ${
+        isMapFullscreen && showFilterBar
+          ? "bg-background/70 backdrop-blur-md"
+          : isMapFullscreen && activeFilterCount > 0
+            ? "bg-background/25 backdrop-blur-md"
+            : "bg-background/95 backdrop-blur-sm"
+      } ${!isMapFullscreen || showFilterBar ? "border-b border-border" : ""}`}>
         {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen so only
             the Filters/Clear All/Search row below remains, maximizing map space */}
         {!isMapFullscreen && (
