@@ -681,10 +681,20 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         />
       </MapContainer>
 
-      {/* Fullscreen toggle — top-left. In fullscreen, also surface Filters, Clear All,
-          Favourites and Most Voted here, all in one line, since the page header is
-          fully hidden while fullscreen. */}
-      <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
+      {/* Fullscreen toggle + theme toggle — bottom-left, stacked directly above the
+          Leaflet zoom +/- control so every icon-only map utility lives in one column.
+          Fullscreen is always shown; theme only in fullscreen (otherwise the page
+          header's own theme toggle is reachable). */}
+      <div className="absolute left-3 z-10 flex flex-col gap-1.5" style={{ bottom: "78px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)" }}>
+        {isFullscreen && (
+          <button
+            onClick={onToggleTheme}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            className={`flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+          >
+            {isDark ? <Sun size={14} /> : <Moon size={14} />}
+          </button>
+        )}
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
@@ -692,71 +702,68 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         >
           {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
         </button>
-        {isFullscreen && (
-          <>
-            <button
-              onClick={onToggleFilterBar}
-              className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
-                showFilterBar || activeFilterCount > 0
-                  ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
-                  : `${pillBg} border ${pillBorder} ${pillText}`
-              }`}
-            >
-              <Filter size={13} className="shrink-0" />
-              Filters
-              {activeFilterCount > 0 && (
-                <span className="bg-teal-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
-                  {activeFilterCount}
-                </span>
-              )}
-            </button>
+      </div>
+
+      {/* Filters/Clear All/Favourites/Most Voted — top-left, fullscreen only (the page
+          header providing this elsewhere is fully hidden while fullscreen). Wraps onto
+          a second line on narrow screens instead of overflowing off-screen. */}
+      {isFullscreen && (
+        <div className="absolute top-3 left-3 z-10 flex flex-wrap items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", marginTop: "env(safe-area-inset-top, 0px)", maxWidth: "calc(100% - 24px)" }}>
+          <button
+            onClick={onToggleFilterBar}
+            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
+              showFilterBar || activeFilterCount > 0
+                ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
+                : `${pillBg} border ${pillBorder} ${pillText}`
+            }`}
+          >
+            <Filter size={13} className="shrink-0" />
+            Filters
             {activeFilterCount > 0 && (
-              <button
-                onClick={onClearAllFilters}
-                title="Clear all filters"
-                className={`flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
-              >
-                <X size={14} />
-              </button>
+              <span className="bg-teal-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
+                {activeFilterCount}
+              </span>
             )}
+          </button>
+          {activeFilterCount > 0 && (
             <button
-              onClick={onToggleFavs}
-              className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
-                showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
-              }`}
-            >
-              <Star size={13} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
-              Favourites
-              {favSet.size > 0 && (
-                <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
-                  {favSet.size}
-                </span>
-              )}
-            </button>
-            <button
-              onClick={onToggleMostVoted}
-              className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
-                sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
-              }`}
-            >
-              <TrendingUp size={13} className="shrink-0" />
-              Most Voted
-              {racesWithVotes > 0 && (
-                <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
-                  {racesWithVotes}
-                </span>
-              )}
-            </button>
-            <button
-              onClick={onToggleTheme}
-              title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              onClick={onClearAllFilters}
+              title="Clear all filters"
               className={`flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
             >
-              {isDark ? <Sun size={14} /> : <Moon size={14} />}
+              <X size={14} />
             </button>
-          </>
-        )}
-      </div>
+          )}
+          <button
+            onClick={onToggleFavs}
+            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+              showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
+            }`}
+          >
+            <Star size={13} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
+            Favourites
+            {favSet.size > 0 && (
+              <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
+                {favSet.size}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={onToggleMostVoted}
+            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+              sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
+            }`}
+          >
+            <TrendingUp size={13} className="shrink-0" />
+            Most Voted
+            {racesWithVotes > 0 && (
+              <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
+                {racesWithVotes}
+              </span>
+            )}
+          </button>
+        </div>
+      )}
 
       {/* Explore/Races + Predicted/Past — bottom-right. Stacked (Explore/Races above
           Predicted/Past) on mobile; side by side as one row once there's enough width. */}

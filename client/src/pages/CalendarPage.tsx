@@ -1059,7 +1059,7 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ── Sticky header ── */}
-      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] ${isMapFullscreen && activeFilterCount > 0 ? "bg-background/70" : "bg-background/95"} backdrop-blur-sm ${!isMapFullscreen || showFilterBar ? "border-b border-border" : ""}`}>
+      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] ${isMapFullscreen && (showFilterBar || activeFilterCount > 0) ? "bg-background/70 backdrop-blur-md" : "bg-background/95 backdrop-blur-sm"} ${!isMapFullscreen || showFilterBar ? "border-b border-border" : ""}`}>
         {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen so only
             the Filters/Clear All/Search row below remains, maximizing map space */}
         {!isMapFullscreen && (
@@ -1815,7 +1815,7 @@ export default function CalendarPage() {
       <div
         ref={mapWrapperRef}
         className={isMapFullscreen ? "fixed inset-x-0 bottom-0 z-40 bg-background" : undefined}
-        style={isMapFullscreen ? { top: "var(--header-h, 0px)" } : undefined}
+        style={isMapFullscreen ? { top: 0 } : undefined}
       >
       <MapView
         races={filtered}
