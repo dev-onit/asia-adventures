@@ -245,21 +245,21 @@ const POPUP_STYLE = `
     text-align: center !important; text-indent: 0 !important;
     padding: 0 !important; margin: 0 !important;
     border-radius: 7px !important; border: 1px solid !important;
-    background: rgba(255,255,255,0.95) !important;
-    border-color: rgb(212,212,216) !important;
-    color: rgb(82,82,91) !important;
+    background: rgba(24,24,27,0.95) !important;
+    border-color: rgb(63,63,70) !important;
+    color: rgb(212,212,216) !important;
     box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important;
     float: none !important;
   }
   .leaflet-bar a:hover,
   .leaflet-control-zoom-in:hover,
   .leaflet-control-zoom-out:hover { filter: brightness(0.92) !important; }
-  .dark .leaflet-bar a,
-  .dark .leaflet-control-zoom-in,
-  .dark .leaflet-control-zoom-out {
-    background: rgba(24,24,27,0.95) !important;
-    border-color: rgb(63,63,70) !important;
-    color: rgb(212,212,216) !important;
+  .light .leaflet-bar a,
+  .light .leaflet-control-zoom-in,
+  .light .leaflet-control-zoom-out {
+    background: rgba(255,255,255,0.95) !important;
+    border-color: rgb(212,212,216) !important;
+    color: rgb(82,82,91) !important;
   }
 `;
 
