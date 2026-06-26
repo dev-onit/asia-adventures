@@ -1106,7 +1106,7 @@ export default function CalendarPage() {
 
         {/* Desktop: single-row layout (hidden on mobile, visible sm+) — hidden while fullscreen */}
         {!isMapFullscreen && (
-        <div className="hidden sm:flex items-center gap-3 px-5 py-3">
+        <div className="hidden sm:flex items-center gap-3 px-4 py-3">
           {/* Logo + title */}
           <img src="/logo.jpg" alt="Adventure Crew" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0 mr-2">
