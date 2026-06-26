@@ -711,8 +711,20 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         )}
       </div>
 
-      {/* Explore + Races buttons — top-right */}
-      <div className="absolute top-3 right-3 z-10 flex gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
+      {/* Explore + Races buttons — top-right, stacked with Races below Explore */}
+      <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
+        <button
+          onClick={handleToggleExplore}
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+            showExplore ? `${pillBg} border-[1.5px] border-orange-400 ${orangeText}` : `${pillBg} border ${pillBorder} ${pillText}`
+          }`}
+        >
+          {showExplore
+            ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+          }
+          {showExplore ? "Explore: ON" : "Explore: OFF"}
+        </button>
         <button
           onClick={handleToggleRaces}
           title={!showExplore ? "Enable Explore first" : undefined}
@@ -726,18 +738,6 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           {showRaces ? "Races: ON" : "Races: OFF"}
-        </button>
-        <button
-          onClick={handleToggleExplore}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showExplore ? `${pillBg} border-[1.5px] border-orange-400 ${orangeText}` : `${pillBg} border ${pillBorder} ${pillText}`
-          }`}
-        >
-          {showExplore
-            ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-          }
-          {showExplore ? "Explore: ON" : "Explore: OFF"}
         </button>
       </div>
       {/* Show Predicted + Show Past — bottom-right */}
