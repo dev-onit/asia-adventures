@@ -163,33 +163,33 @@ const raceClusterIcon = makeClusterIconFn("#3b82f6");
 const exploreClusterIcon = makeClusterIconFn("#22c55e");
 
 // ── Spread pins that share a map location ──
-// Races and explore sites can resolve to the exact same lat/lng (e.g. both fall back to
-// the same city/country centroid, or two races share a start line). Offsets are computed
-// in screen pixels (not fixed degrees) and recalculated on every zoom change, so separation
-// looks consistent at any zoom instead of vanishing when zoomed out or growing huge when
-// zoomed in.
+// Races and explore sites in the same city often resolve to the exact same lat/lng (e.g.
+// both fall back to the same city/country centroid, or two races share a start line) or to
+// coordinates close enough that the pill-shaped icons (~70x50px) still overlap. Group
+// anything within SPREAD_GROUP_PX of each other and fan them out around their centroid;
+// the spread radius grows with group size so added pins don't just bunch up tighter.
+// Offsets are computed in screen pixels (not fixed degrees) and recalculated on every zoom
+// change, so separation looks consistent at any zoom instead of vanishing when zoomed out.
 type GeoPoint = { id: string; lat: number; lng: number };
 
 function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
-  const groups = new Map<string, GeoPoint[]>();
-  points.forEach(p => {
-    const key = `${p.lat.toFixed(5)},${p.lng.toFixed(5)}`;
-    const arr = groups.get(key);
-    if (arr) arr.push(p); else groups.set(key, [p]);
-  });
+  const SPREAD_GROUP_PX = 40;
+  const groups = groupByPixelDistance(map, points, SPREAD_GROUP_PX);
 
-  const SPREAD_RADIUS_PX = 26;
+  const zoom = map.getZoom();
   const result = new Map<string, [number, number]>();
   groups.forEach(group => {
     if (group.length === 1) {
       result.set(group[0].id, [group[0].lat, group[0].lng]);
       return;
     }
-    const center = map.latLngToContainerPoint([group[0].lat, group[0].lng]);
+    const projected = group.map(p => map.project([p.lat, p.lng], zoom));
+    const center = projected.reduce((acc, pt) => acc.add(pt), L.point(0, 0)).divideBy(group.length);
+    const radius = Math.max(34, group.length * 16);
     group.forEach((p, i) => {
       const angle = (2 * Math.PI * i) / group.length;
-      const pt = L.point(center.x + SPREAD_RADIUS_PX * Math.cos(angle), center.y + SPREAD_RADIUS_PX * Math.sin(angle));
-      const latlng = map.containerPointToLatLng(pt);
+      const pt = L.point(center.x + radius * Math.cos(angle), center.y + radius * Math.sin(angle));
+      const latlng = map.unproject(pt, zoom);
       result.set(p.id, [latlng.lat, latlng.lng]);
     });
   });
