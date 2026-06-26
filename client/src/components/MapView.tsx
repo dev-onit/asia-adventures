@@ -165,16 +165,28 @@ const exploreClusterIcon = makeClusterIconFn("#22c55e");
 // ── Spread pins that share a map location ──
 // Races and explore sites in the same city often resolve to the exact same lat/lng (e.g.
 // both fall back to the same city/country centroid, or two races share a start line) or to
-// coordinates close enough that the pill-shaped icons (~70x50px) still overlap. Group
-// anything within SPREAD_GROUP_PX of each other and fan them out around their centroid;
-// the spread radius grows with group size so added pins don't just bunch up tighter.
-// Offsets are computed in screen pixels (not fixed degrees) and recalculated on every zoom
-// change, so separation looks consistent at any zoom instead of vanishing when zoomed out.
+// coordinates a few km apart (different venues in the same metro area) that still overlap
+// once rendered as ~70x50px pill icons. "Same city" is a property of the data, not of the
+// current zoom, so grouping uses a fixed real-world distance — NOT a screen-pixel radius —
+// otherwise a pixel threshold that's tight at high zoom becomes huge at low zoom and starts
+// pulling together pins that are actually countries apart. The spread offset itself is still
+// computed in screen pixels at the current zoom, so the visual separation looks consistent
+// at any zoom instead of vanishing when zoomed out.
 type GeoPoint = { id: string; lat: number; lng: number };
 
+const SAME_CITY_DEGREES = 0.05; // ~5km — same metro area, not just exact-duplicate coords
+
+function groupByLatLngDistance(points: GeoPoint[], thresholdDeg: number): GeoPoint[][] {
+  const groups: GeoPoint[][] = [];
+  points.forEach(p => {
+    const group = groups.find(g => g.some(o => Math.hypot(o.lat - p.lat, o.lng - p.lng) <= thresholdDeg));
+    if (group) group.push(p); else groups.push([p]);
+  });
+  return groups;
+}
+
 function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
-  const SPREAD_GROUP_PX = 40;
-  const groups = groupByPixelDistance(map, points, SPREAD_GROUP_PX);
+  const groups = groupByLatLngDistance(points, SAME_CITY_DEGREES);
 
   const zoom = map.getZoom();
   const result = new Map<string, [number, number]>();
@@ -504,7 +516,7 @@ function MapController({ displayRaces, recenterRef }: { displayRaces: Race[]; re
     if (coords.length === 0) return;
     hasInitialFitRef.current = true;
     if (coords.length === 1) {
-      map.setView(coords[0], 6, { animate: false });
+      map.setView(coords[0], 8, { animate: false });
     } else {
       map.fitBounds(L.latLngBounds(coords), { padding: [48, 48], maxZoom: 6, animate: false });
     }
@@ -515,7 +527,7 @@ function MapController({ displayRaces, recenterRef }: { displayRaces: Race[]; re
     recenterRef.current = () => {
       const coords = displayRaces.map(r => getCoords(r)).filter((c): c is [number, number] => c !== null);
       if (coords.length === 0) return;
-      if (coords.length === 1) map.setView(coords[0], 6, { animate: true });
+      if (coords.length === 1) map.setView(coords[0], 8, { animate: true });
       else map.fitBounds(L.latLngBounds(coords), { padding: [40, 40], maxZoom: 6, animate: true });
     };
   }, [map, displayRaces, recenterRef]);
@@ -583,6 +595,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
       <MapContainer
         center={[20, 100]}
         zoom={4}
+        minZoom={3}
         zoomControl={false}
         attributionControl={false}
         scrollWheelZoom={false}
