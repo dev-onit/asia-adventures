@@ -173,7 +173,10 @@ const exploreClusterIcon = makeClusterIconFn("#22c55e");
 type GeoPoint = { id: string; lat: number; lng: number };
 
 function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
-  const SPREAD_GROUP_PX = 40;
+  // Must be >= the largest cluster-bundling radius (60 for races) below — otherwise two
+  // points just outside this radius but still inside the bundling radius can both get
+  // marked "solo" without ever being grouped here, and render solo-but-still-overlapping.
+  const SPREAD_GROUP_PX = 60;
   const groups = groupByPixelDistance(map, points, SPREAD_GROUP_PX);
 
   const zoom = map.getZoom();
@@ -185,7 +188,7 @@ function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [n
     }
     const projected = group.map(p => map.project([p.lat, p.lng], zoom));
     const center = projected.reduce((acc, pt) => acc.add(pt), L.point(0, 0)).divideBy(group.length);
-    const radius = Math.max(34, group.length * 16);
+    const radius = Math.max(40, group.length * 18);
     group.forEach((p, i) => {
       const angle = (2 * Math.PI * i) / group.length;
       const pt = L.point(center.x + radius * Math.cos(angle), center.y + radius * Math.sin(angle));
