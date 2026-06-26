@@ -797,9 +797,13 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           panel's bottom edge is just --filter-panel-h down, not header height again.
           (header-h is harmless to omit in fullscreen too, since the header is hidden
           there and its height is 0.) Adding header-h here was pushing these buttons
-          toward the middle of the embedded map whenever filters were open. */}
+          toward the middle of the embedded map whenever filters were open.
+          z-[510] (above the filter panel's z-[500]) so these buttons stay on top of
+          it once scrolled — the panel is position:fixed and stays pinned to the
+          viewport while this button cluster scrolls with the map underneath it, so
+          without a higher z-index the panel would slide over and hide them. */}
       <div
-        className="absolute right-3 z-10 flex items-center gap-2"
+        className="absolute right-3 z-[510] flex items-center gap-2"
         style={{
           top: filterPanelOpen ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px",
           filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))",
@@ -828,8 +832,9 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           here in fullscreen, with a separate copy of these controls inline in the page
           header otherwise; consolidated into one set so toggling fullscreen doesn't
           change where anything is). Wraps onto a second line on narrow screens instead
-          of overflowing off-screen. */}
-      <div className="absolute left-3 z-10 flex flex-wrap items-center gap-2" style={{ top: filterPanelOpen ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
+          of overflowing off-screen. z-[510] for the same reason as the top-right
+          cluster — stays above the fixed filter panel once scrolled. */}
+      <div className="absolute left-3 z-[510] flex flex-wrap items-center gap-2" style={{ top: filterPanelOpen ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
         <button
           onClick={onToggleFilterBar}
           className={`flex items-center gap-1.5 px-3.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
@@ -919,8 +924,10 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           (Races, Explore, Predicted, Past Events) that used to sit here as
           always-visible pills into one button + popover, so they stop competing
           for space on narrow mobile screens. The small dot signals a non-default
-          state without needing to open the menu. */}
-      <div className="absolute bottom-3 right-3 z-10 flex flex-col items-end gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
+          state without needing to open the menu. z-[510] — a tall open filter
+          sub-panel can extend past the embedded map's full height, so this can end
+          up under the fixed filter panel too once scrolled, same as the top clusters. */}
+      <div className="absolute bottom-3 right-3 z-[510] flex flex-col items-end gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
         <button
           onClick={onToggleTheme}
           title={isDark ? "Switch to light mode" : "Switch to dark mode"}
