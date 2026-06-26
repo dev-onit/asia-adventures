@@ -1094,20 +1094,12 @@ export default function CalendarPage() {
               <h1 className="text-xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
               <p className="text-[13px] text-foreground/80 truncate font-medium tracking-wide">We Take Fun Seriously</p>
             </div>
-            <div className="ml-auto flex items-center gap-2 shrink-0">
-              {voterName && (
-                <div className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
-                  <Users size={12} />
-                  <span>{voterName}</span>
-                </div>
-              )}
-              <button
-                onClick={() => setShowSearch(v => !v)}
-                className={`p-2 rounded-full border transition-all shrink-0 ${showSearch ? "bg-primary/10 border-primary/40 text-primary" : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"}`}
-              >
-                <Search size={14} />
-              </button>
-            </div>
+            {voterName && (
+              <div className="ml-auto flex items-center gap-1.5 px-3 h-9 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
+                <Users size={12} />
+                <span>{voterName}</span>
+              </div>
+            )}
           </div>
         </div>
         )}{/* end mobile rows */}
@@ -1121,7 +1113,7 @@ export default function CalendarPage() {
             <h1 className="text-base font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
             <p className="text-[11px] text-foreground/80 font-medium tracking-wide">We Take Fun Seriously</p>
           </div>
-          {/* Right: name chip + search */}
+          {/* Right: Lukas chip */}
           <div className="ml-auto flex items-center gap-2">
             {voterName && (
               <div className="flex items-center gap-1.5 px-3 h-8 rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold text-primary shrink-0">
@@ -1129,12 +1121,6 @@ export default function CalendarPage() {
                 <span>{voterName}</span>
               </div>
             )}
-            <button
-              onClick={() => setShowSearch(v => !v)}
-              className={`p-2 rounded-full border transition-all shrink-0 ${showSearch ? "bg-primary/10 border-primary/40 text-primary" : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"}`}
-            >
-              <Search size={14} />
-            </button>
           </div>
         </div>
         )}{/* end desktop row */}
@@ -1238,6 +1224,14 @@ export default function CalendarPage() {
               )}
             </button>
           </div>
+
+          {/* Search */}
+          <button
+            onClick={() => setShowSearch(v => !v)}
+            className={`ml-auto p-2 rounded-full border transition-all ${showSearch ? "bg-primary/10 border-primary/40 text-primary" : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"}`}
+          >
+            <Search size={14} />
+          </button>
         </div>
         )}
 
