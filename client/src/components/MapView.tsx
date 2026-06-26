@@ -119,7 +119,7 @@ function raceIconHtml(fill: string, label: string, isFav: boolean, voteCount: nu
     ? `<div style="position:absolute;top:${BADGE_PAD-7}px;right:${BADGE_PAD-7}px;width:14px;height:14px;background:#facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;line-height:1;color:#000;font-weight:900;pointer-events:none;box-shadow:0 0 5px rgba(250,204,21,0.8),0 1px 2px rgba(0,0,0,0.4);z-index:20">★</div>`
     : "";
   const voteHtml = voteCount > 0
-    ? `<div style="position:absolute;bottom:${BADGE_PAD-7}px;right:${BADGE_PAD-7}px;min-width:14px;height:14px;background:#14b8a6;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#000;line-height:1;padding:0 3px;pointer-events:none;box-shadow:0 0 5px rgba(20,184,166,0.8),0 1px 2px rgba(0,0,0,0.4);z-index:20">${voteCount}</div>`
+    ? `<div style="position:absolute;bottom:${BADGE_PAD-7}px;right:${BADGE_PAD-7}px;min-width:14px;height:14px;background:#fb923c;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#000;line-height:1;padding:0 3px;pointer-events:none;box-shadow:0 0 5px rgba(251,146,60,0.8),0 1px 2px rgba(0,0,0,0.4);z-index:20">${voteCount}</div>`
     : "";
   return `<div style="position:relative;width:${totalW}px;height:${totalH}px;overflow:visible">
     <div style="position:absolute;top:${BADGE_PAD}px;left:${BADGE_PAD}px">${sportPillSvg(fill, label, pillW, pillH)}</div>
