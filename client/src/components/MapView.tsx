@@ -617,6 +617,19 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
     setShowRaces(prev => !prev);
   }
 
+  // Map overlay buttons switch theme via this isDark prop directly rather than Tailwind's
+  // dark: variant — this app's theme toggle only ever adds/removes a .light class on <html>
+  // (dark is the unmarked default), so dark: (which requires a .dark ancestor) never matches.
+  const pillBg = isDark ? "bg-zinc-900/95" : "bg-white/95";
+  const pillBorder = isDark ? "border-zinc-600" : "border-zinc-300";
+  const pillText = isDark ? "text-zinc-300" : "text-zinc-600";
+  const pillBorderDisabled = isDark ? "border-zinc-700" : "border-zinc-200";
+  const pillTextDisabled = isDark ? "text-zinc-600" : "text-zinc-400";
+  const blueText = isDark ? "text-blue-400" : "text-blue-500";
+  const orangeText = isDark ? "text-orange-400" : "text-orange-500";
+  const redText = isDark ? "text-red-400" : "text-red-500";
+  const amberText = isDark ? "text-amber-400" : "text-amber-500";
+
   return (
     <div
       className="relative overflow-hidden"
@@ -653,7 +666,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
-          className="flex items-center justify-center w-8 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600 hover:brightness-110"
+          className={`flex items-center justify-center w-8 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`}
         >
           {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
         </button>
@@ -666,10 +679,10 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           title={!showExplore ? "Enable Explore first" : undefined}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${
             !showExplore
-              ? "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-700 [.light_&]:border-zinc-200 text-zinc-600 [.light_&]:text-zinc-400 cursor-not-allowed opacity-50"
+              ? `${pillBg} border ${pillBorderDisabled} ${pillTextDisabled} cursor-not-allowed opacity-50`
               : showRaces
-                ? "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600 hover:brightness-110"
-                : "bg-zinc-900/95 [.light_&]:bg-white/95 border-[1.5px] border-blue-400 text-blue-400 [.light_&]:text-blue-500 hover:brightness-110"
+                ? `${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`
+                : `${pillBg} border-[1.5px] border-blue-400 ${blueText} hover:brightness-110`
           }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -678,7 +691,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={handleToggleExplore}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showExplore ? "bg-zinc-900/95 [.light_&]:bg-white/95 border-[1.5px] border-orange-400 text-orange-400 [.light_&]:text-orange-500" : "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600"
+            showExplore ? `${pillBg} border-[1.5px] border-orange-400 ${orangeText}` : `${pillBg} border ${pillBorder} ${pillText}`
           }`}
         >
           {showExplore
@@ -693,7 +706,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={onToggleUnconfirmed}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showUnconfirmed ? "bg-zinc-900/95 [.light_&]:bg-white/95 border-[1.5px] border-red-400 text-red-400 [.light_&]:text-red-500" : "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600"
+            showUnconfirmed ? `${pillBg} border-[1.5px] border-red-400 ${redText}` : `${pillBg} border ${pillBorder} ${pillText}`
           }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -702,7 +715,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={onToggleHidePast}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            !hidePast ? "bg-zinc-900/95 [.light_&]:bg-white/95 border-[1.5px] border-amber-400 text-amber-400 [.light_&]:text-amber-500" : "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600"
+            !hidePast ? `${pillBg} border-[1.5px] border-amber-400 ${amberText}` : `${pillBg} border ${pillBorder} ${pillText}`
           }`}
         >
           {!hidePast

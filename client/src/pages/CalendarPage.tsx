@@ -1018,7 +1018,9 @@ export default function CalendarPage() {
     <div className="min-h-screen bg-background">
       {/* ── Sticky header ── */}
       <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] bg-background/95 backdrop-blur-sm border-b border-border`}>
-        {/* Mobile: two-row layout (hidden on sm+) */}
+        {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen so only
+            the Filters/Clear All/Search row below remains, maximizing map space */}
+        {!isMapFullscreen && (
         <div className="sm:hidden">
           {/* Row 1 mobile: Logo + title + name chip */}
           <div className="flex items-center gap-3 px-4 pt-4 pb-1">
@@ -1106,9 +1108,11 @@ export default function CalendarPage() {
             {isDark ? <Sun size={14} /> : <Moon size={14} />}
           </button>
           </div>
-        </div>{/* end mobile rows */}
+        </div>
+        )}{/* end mobile rows */}
 
-        {/* Desktop: single-row layout (hidden on mobile, visible sm+) */}
+        {/* Desktop: single-row layout (hidden on mobile, visible sm+) — hidden while fullscreen */}
+        {!isMapFullscreen && (
         <div className="hidden sm:flex items-center gap-3 px-5 py-3">
           {/* Logo + title */}
           <img src="/logo.jpg" alt="Adventure Crew" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
@@ -1191,7 +1195,8 @@ export default function CalendarPage() {
               {isDark ? <Sun size={14} /> : <Moon size={14} />}
             </button>
           </div>
-        </div>{/* end desktop row */}
+        </div>
+        )}{/* end desktop row */}
 
         {/* Row 3: Main filter bar */}
         <div className="flex items-center gap-2 px-4 pb-3">
