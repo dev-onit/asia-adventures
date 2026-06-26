@@ -653,7 +653,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
-          className="flex items-center justify-center w-8 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300 hover:brightness-110"
+          className="flex items-center justify-center w-8 h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600 hover:brightness-110"
         >
           {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
         </button>
@@ -666,10 +666,10 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           title={!showExplore ? "Enable Explore first" : undefined}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${
             !showExplore
-              ? "bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50"
+              ? "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-700 [.light_&]:border-zinc-200 text-zinc-600 [.light_&]:text-zinc-400 cursor-not-allowed opacity-50"
               : showRaces
-                ? "bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300 hover:brightness-110"
-                : "bg-white/95 dark:bg-zinc-900/95 border-[1.5px] border-blue-400 text-blue-500 dark:text-blue-400 hover:brightness-110"
+                ? "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600 hover:brightness-110"
+                : "bg-zinc-900/95 [.light_&]:bg-white/95 border-[1.5px] border-blue-400 text-blue-400 [.light_&]:text-blue-500 hover:brightness-110"
           }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -678,7 +678,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={handleToggleExplore}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showExplore ? "bg-white/95 dark:bg-zinc-900/95 border-[1.5px] border-orange-400 text-orange-500 dark:text-orange-400" : "bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+            showExplore ? "bg-zinc-900/95 [.light_&]:bg-white/95 border-[1.5px] border-orange-400 text-orange-400 [.light_&]:text-orange-500" : "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600"
           }`}
         >
           {showExplore
@@ -693,7 +693,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={onToggleUnconfirmed}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            showUnconfirmed ? "bg-white/95 dark:bg-zinc-900/95 border-[1.5px] border-red-400 text-red-500 dark:text-red-400" : "bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+            showUnconfirmed ? "bg-zinc-900/95 [.light_&]:bg-white/95 border-[1.5px] border-red-400 text-red-400 [.light_&]:text-red-500" : "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600"
           }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -702,7 +702,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={onToggleHidePast}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
-            !hidePast ? "bg-white/95 dark:bg-zinc-900/95 border-[1.5px] border-amber-400 text-amber-500 dark:text-amber-400" : "bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-300"
+            !hidePast ? "bg-zinc-900/95 [.light_&]:bg-white/95 border-[1.5px] border-amber-400 text-amber-400 [.light_&]:text-amber-500" : "bg-zinc-900/95 [.light_&]:bg-white/95 border border-zinc-600 [.light_&]:border-zinc-300 text-zinc-300 [.light_&]:text-zinc-600"
           }`}
         >
           {!hidePast
