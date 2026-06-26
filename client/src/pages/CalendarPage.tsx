@@ -1103,13 +1103,19 @@ export default function CalendarPage() {
     return val;
   }
 
+  // Whether the floating filters/search panel is currently mounted — used both to
+  // decide whether to render it and to suppress the header's own bottom border while
+  // it's open, since that border otherwise shows through as a stray line right above
+  // the panel (the panel is fixed and anchored exactly at the header's bottom edge).
+  const filterPanelOpen = showFilterBar || showSearch || activeFilterCount > 0;
+
   return (
     <div className="min-h-screen bg-background">
       {/* ── Sticky header — just branding + name chip now. Filters/View/Search live
           on the map itself in both modes (see MapView's floating button cluster), and
           the filter tabs/sub-panels/chips float as their own overlay below this via
           filterPanelRef, instead of living inline here. ── */}
-      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] bg-background/95 backdrop-blur-sm ${!isMapFullscreen ? "border-b border-border" : ""}`}>
+      <header ref={headerRef} className={`${isMapFullscreen ? "fixed inset-x-0" : "sticky"} top-0 z-[500] bg-background/95 backdrop-blur-sm ${!isMapFullscreen && !filterPanelOpen ? "border-b border-border" : ""}`}>
         {/* Mobile: two-row layout (hidden on sm+) — hidden entirely while fullscreen */}
         {!isMapFullscreen && (
         <div className="sm:hidden">
@@ -1157,7 +1163,7 @@ export default function CalendarPage() {
           screen's top edge in fullscreen, since that row doesn't render there), so it
           overlays the map + races list below instead of pushing them down. The trigger
           buttons for all of this live on the map itself now (Filters/View/Search). */}
-      {(showFilterBar || showSearch || activeFilterCount > 0) && (
+      {filterPanelOpen && (
         <div
           ref={filterPanelRef}
           className={`fixed inset-x-0 z-[500] ${showFilterBar || showSearch ? "bg-background/70 backdrop-blur-md" : "bg-background/25 backdrop-blur-md"}`}
@@ -1251,7 +1257,7 @@ export default function CalendarPage() {
 
         {/* Search bar */}
         {showSearch && (
-          <div className="px-4 pb-3">
+          <div className="px-4 pb-3 pt-3">
             <input
               type="text"
               value={search}
