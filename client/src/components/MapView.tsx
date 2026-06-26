@@ -163,30 +163,18 @@ const raceClusterIcon = makeClusterIconFn("#3b82f6");
 const exploreClusterIcon = makeClusterIconFn("#22c55e");
 
 // ── Spread pins that share a map location ──
-// Races and explore sites in the same city often resolve to the exact same lat/lng (e.g.
-// both fall back to the same city/country centroid, or two races share a start line) or to
-// coordinates a few km apart (different venues in the same metro area) that still overlap
-// once rendered as ~70x50px pill icons. "Same city" is a property of the data, not of the
-// current zoom, so grouping uses a fixed real-world distance — NOT a screen-pixel radius —
-// otherwise a pixel threshold that's tight at high zoom becomes huge at low zoom and starts
-// pulling together pins that are actually countries apart. The spread offset itself is still
-// computed in screen pixels at the current zoom, so the visual separation looks consistent
-// at any zoom instead of vanishing when zoomed out.
+// Only ever called on the final "solo" set (markers small-enough-to-show-individually,
+// decided separately by groupByPixelDistance below) — never on the full dataset. That
+// matters: grouping by screen-pixel proximity is the right test here ("would these two
+// icons visually collide right now"), but feeding pixel-distorted positions back into the
+// cluster-bundling decision is what caused a regression earlier (it made far-apart races
+// look close enough at low zoom to break large clusters into scattered individual pins).
+// Keeping this pass downstream of that decision avoids the feedback loop entirely.
 type GeoPoint = { id: string; lat: number; lng: number };
 
-const SAME_CITY_DEGREES = 0.05; // ~5km — same metro area, not just exact-duplicate coords
-
-function groupByLatLngDistance(points: GeoPoint[], thresholdDeg: number): GeoPoint[][] {
-  const groups: GeoPoint[][] = [];
-  points.forEach(p => {
-    const group = groups.find(g => g.some(o => Math.hypot(o.lat - p.lat, o.lng - p.lng) <= thresholdDeg));
-    if (group) group.push(p); else groups.push([p]);
-  });
-  return groups;
-}
-
 function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
-  const groups = groupByLatLngDistance(points, SAME_CITY_DEGREES);
+  const SPREAD_GROUP_PX = 40;
+  const groups = groupByPixelDistance(map, points, SPREAD_GROUP_PX);
 
   const zoom = map.getZoom();
   const result = new Map<string, [number, number]>();
@@ -382,22 +370,21 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
   const [zoom, setZoom] = useState(() => 4);
   const map = useMapEvents({ zoomend: () => setZoom(map.getZoom()) });
 
-  const pinCoords = useMemo(() => {
-    const geoPoints: GeoPoint[] = [];
+  // Raw, un-spread coordinates — used to decide clustering so that decision is never
+  // distorted by a previous spread pass (see spreadOverlappingPoints's comment above).
+  const rawCoords = useMemo(() => {
+    const coords = new Map<string, [number, number]>();
     if (showRaces) displayRaces.forEach(race => {
-      const coords = getCoords(race);
-      if (coords) geoPoints.push({ id: `r:${race.id}`, lat: coords[0], lng: coords[1] });
+      const c = getCoords(race);
+      if (c) coords.set(`r:${race.id}`, c);
     });
     if (showExplore) sites.forEach(site => {
       if (!site.lat || !site.lng) return;
       const lat = parseFloat(site.lat), lng = parseFloat(site.lng);
-      if (!isNaN(lat) && !isNaN(lng)) geoPoints.push({ id: `e:${site.id}`, lat, lng });
+      if (!isNaN(lat) && !isNaN(lng)) coords.set(`e:${site.id}`, [lat, lng]);
     });
-    return spreadOverlappingPoints(map, geoPoints);
-    // zoom is read only to retrigger this memo when it changes — the spread itself is
-    // recomputed from the map's current pixel projection, not from the zoom value directly.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, displayRaces, sites, showRaces, showExplore, zoom]);
+    return coords;
+  }, [displayRaces, sites, showRaces, showExplore]);
 
   // Groups of 4 or fewer are shown as individual pins right away instead of a cluster
   // bubble the user has to click/zoom through. Uses the same radius the cluster group
@@ -407,7 +394,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
     const soloSiteIds = new Set<number>();
     if (showRaces) {
       const racePoints = displayRaces
-        .map(race => { const c = pinCoords.get(`r:${race.id}`); return c ? { id: race.id, lat: c[0], lng: c[1] } : null; })
+        .map(race => { const c = rawCoords.get(`r:${race.id}`); return c ? { id: race.id, lat: c[0], lng: c[1] } : null; })
         .filter((p): p is { id: number; lat: number; lng: number } => p !== null);
       groupByPixelDistance(map, racePoints, 60).forEach(group => {
         if (group.length <= 4) group.forEach(p => soloRaceIds.add(p.id));
@@ -415,14 +402,32 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
     }
     if (showExplore) {
       const sitePoints = sites
-        .map(site => { const c = pinCoords.get(`e:${site.id}`); return c ? { id: site.id, lat: c[0], lng: c[1] } : null; })
+        .map(site => { const c = rawCoords.get(`e:${site.id}`); return c ? { id: site.id, lat: c[0], lng: c[1] } : null; })
         .filter((p): p is { id: number; lat: number; lng: number } => p !== null);
       groupByPixelDistance(map, sitePoints, 50).forEach(group => {
         if (group.length <= 4) group.forEach(p => soloSiteIds.add(p.id));
       });
     }
     return { soloRaceIds, soloSiteIds };
-  }, [map, pinCoords, displayRaces, sites, showRaces, showExplore]);
+    // zoom is read only to retrigger this memo when it changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, rawCoords, displayRaces, sites, showRaces, showExplore, zoom]);
+
+  // Only the markers that will actually render individually (the solo set above) need
+  // separation — clustered markers stay at their raw position since they're hidden inside
+  // a bubble anyway, so it doesn't matter if several sit at literally the same spot.
+  const pinCoords = useMemo(() => {
+    const soloPoints: GeoPoint[] = [];
+    rawCoords.forEach((coords, id) => {
+      const isSolo = id.startsWith("r:") ? soloRaceIds.has(Number(id.slice(2))) : soloSiteIds.has(Number(id.slice(2)));
+      if (isSolo) soloPoints.push({ id, lat: coords[0], lng: coords[1] });
+    });
+    const result = new Map(rawCoords);
+    spreadOverlappingPoints(map, soloPoints).forEach((coords, id) => result.set(id, coords));
+    return result;
+    // zoom is read only to retrigger this memo when it changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, rawCoords, soloRaceIds, soloSiteIds, zoom]);
 
   return (
     <>
