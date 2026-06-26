@@ -906,15 +906,26 @@ export default function CalendarPage() {
     return () => ro.disconnect();
   }, []);
 
-  // Fullscreen map: lock page scroll and allow Escape to exit
+  // Fullscreen map: lock page scroll and allow Escape to exit. overflow:hidden
+  // alone doesn't stop iOS Safari's elastic rubber-band bounce on touchmove, which
+  // otherwise drags the whole page along with a 1-finger pan on the map — locking
+  // both html and body, and setting touch-action:none on body specifically (not the
+  // map container, which manages its own via Leaflet), stops that without affecting
+  // Leaflet's own JS-driven panning on the map element itself.
   useEffect(() => {
     if (!isMapFullscreen) return;
-    const prevOverflow = document.body.style.overflow;
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+    const prevBodyTouchAction = document.body.style.touchAction;
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
     const onKeyDown = (e: KeyboardEvent) => { if (e.key === "Escape") setIsMapFullscreen(false); };
     window.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = prevOverflow;
+      document.body.style.overflow = prevBodyOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+      document.body.style.touchAction = prevBodyTouchAction;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [isMapFullscreen]);

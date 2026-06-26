@@ -36,9 +36,10 @@
 
 html, body {
   overflow-x: hidden;
-  overscroll-behavior-x: none;
+  overscroll-behavior: none;
   max-width: 100%;
   width: 100%;
+  background: hsl(var(--background));
 }
 
 #root {
