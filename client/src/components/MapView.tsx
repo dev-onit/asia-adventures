@@ -301,6 +301,13 @@ const POPUP_STYLE = `
       line-height: 32px !important; font-size: 18px !important;
     }
   }
+  /* Fullscreen only: this container's own bottom edge is the literal physical
+     screen edge (under viewport-fit=cover), so the native zoom control needs the
+     same safe-area-inset-bottom clearance as the React button clusters get,
+     otherwise it sits right at the home-indicator strip. */
+  .map-fullscreen.leaflet-container .leaflet-bottom {
+    bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
 `;
 
 // ── Popup content (real React components — no HTML strings, no manual DOM wiring) ──
@@ -752,7 +759,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         scrollWheelZoom={false}
         dragging={allowDragging}
         touchZoom={true}
-        className="map-container w-full"
+        className={`map-container w-full ${isFullscreen ? "map-fullscreen" : ""}`}
         style={{ height: "100%", zIndex: 1 }}
       >
         <ZoomControl position="bottomleft" />
@@ -805,7 +812,9 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
       <div
         className="absolute right-3 z-[510] flex items-center gap-2"
         style={{
-          top: filterPanelOpen ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px",
+          top: filterPanelOpen
+            ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)"
+            : "calc(env(safe-area-inset-top, 0px) + 12px)",
           filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))",
           marginRight: "env(safe-area-inset-right, 0px)",
         }}
@@ -834,7 +843,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           change where anything is). Wraps onto a second line on narrow screens instead
           of overflowing off-screen. z-[510] for the same reason as the top-right
           cluster — stays above the fixed filter panel once scrolled. */}
-      <div className="absolute left-3 z-[510] flex flex-wrap items-center gap-2" style={{ top: filterPanelOpen ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
+      <div className="absolute left-3 z-[510] flex flex-wrap items-center gap-2" style={{ top: filterPanelOpen ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "calc(env(safe-area-inset-top, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
         <button
           onClick={onToggleFilterBar}
           className={`flex items-center gap-1.5 px-3.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
@@ -931,8 +940,11 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           filter sub-panel can sit well below (taller than the whole embedded map);
           elevating it there would just punch these buttons through the panel's own
           pills rather than reveal anything useful, since the map itself isn't
-          visible at that point either. */}
-      <div className="absolute bottom-3 right-3 z-10 flex flex-col items-end gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
+          visible at that point either. Bottom offset adds safe-area-inset-bottom —
+          in fullscreen this div's bottom edge is the literal physical screen edge
+          (under viewport-fit=cover), so without it these buttons would sit right at
+          the home-indicator strip instead of comfortably above it. */}
+      <div className="absolute right-3 z-10 flex flex-col items-end gap-2" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
         <button
           onClick={onToggleTheme}
           title={isDark ? "Switch to light mode" : "Switch to dark mode"}
