@@ -723,6 +723,25 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         />
       </MapContainer>
 
+      {/* Frosted edges under the notch / home-indicator safe areas — iOS Safari's own
+          toolbar translucency only kicks in while actively scrolling, which fullscreen
+          here disables, so its chrome renders opaque instead of blurring the map
+          through it. These strips fake that same blurred-glass look ourselves: each is
+          sized to exactly the safe-area inset and blurs/tints whatever map tile is
+          directly behind it, regardless of what Safari's own chrome does above/below. */}
+      {isFullscreen && (
+        <>
+          <div
+            className="absolute inset-x-0 top-0 z-20 pointer-events-none backdrop-blur-xl bg-background/55"
+            style={{ height: "env(safe-area-inset-top, 0px)" }}
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 z-20 pointer-events-none backdrop-blur-xl bg-background/55"
+            style={{ height: "env(safe-area-inset-bottom, 0px)" }}
+          />
+        </>
+      )}
+
       {/* Fullscreen toggle — top-right, the one corner with no other controls
           competing for it. Only tracks --header-h (to dodge the floating filter
           header) while actually fullscreen; outside fullscreen --header-h is the
