@@ -841,6 +841,7 @@ export default function CalendarPage() {
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
+    document.documentElement.style.setProperty("--header-h", el.offsetHeight + "px");
     const ro = new ResizeObserver(() => {
       document.documentElement.style.setProperty("--header-h", el.offsetHeight + "px");
     });
@@ -851,6 +852,7 @@ export default function CalendarPage() {
   useEffect(() => {
     const el = racesHeaderRef.current;
     if (!el) return;
+    document.documentElement.style.setProperty("--races-header-h", el.offsetHeight + "px");
     const ro = new ResizeObserver(() => {
       document.documentElement.style.setProperty("--races-header-h", el.offsetHeight + "px");
     });
