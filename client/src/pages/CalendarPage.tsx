@@ -1159,15 +1159,26 @@ export default function CalendarPage() {
 
       </header>
 
-      {/* Floating filters/search panel — anchored right below the branding row (or the
-          screen's top edge in fullscreen, since that row doesn't render there), so it
-          overlays the map + races list below instead of pushing them down. The trigger
-          buttons for all of this live on the map itself now (Filters/View/Search). */}
+      {/* Map wrapper — also hosts the floating filters/search panel below, as an
+          absolutely-positioned overlay anchored to ITS top edge instead of the
+          viewport. Previously the panel was position:fixed relative to the page,
+          so in non-fullscreen it stayed glued to the same screen spot no matter how
+          far you scrolled — obscuring the map and the races list behind it the whole
+          time instead of just while the map was actually in view. Nesting it here,
+          positioned absolute within this wrapper, makes it scroll in lockstep with
+          the map (which is itself a normal in-flow page element in non-fullscreen):
+          once the map scrolls out of view, the panel goes with it instead of
+          lingering. In fullscreen this wrapper is the one pinned to the viewport (as
+          before), so the panel still reads as a fixed overlay there — unaffected. */}
+      <div
+        ref={mapWrapperRef}
+        className={isMapFullscreen ? "fixed inset-x-0 bottom-0 z-40 bg-background" : "relative"}
+        style={isMapFullscreen ? { top: 0 } : undefined}
+      >
       {filterPanelOpen && (
         <div
           ref={filterPanelRef}
-          className={`fixed inset-x-0 z-[500] ${showFilterBar || showSearch ? "bg-background/70 backdrop-blur-md" : "bg-background/25 backdrop-blur-md"}`}
-          style={{ top: "var(--header-h, 0px)" }}
+          className={`absolute inset-x-0 top-0 z-[500] ${showFilterBar || showSearch ? "bg-background/70 backdrop-blur-md" : "bg-background/25 backdrop-blur-md"}`}
         >
         {/* Row 4: Sub-filter buttons (visible when Filters is open) */}
         {showFilterBar && (
@@ -1733,12 +1744,6 @@ export default function CalendarPage() {
         </div>
       )}
 
-      {/* Map */}
-      <div
-        ref={mapWrapperRef}
-        className={isMapFullscreen ? "fixed inset-x-0 bottom-0 z-40 bg-background" : undefined}
-        style={isMapFullscreen ? { top: 0 } : undefined}
-      >
       <MapView
         races={filtered}
         allRaces={races}
