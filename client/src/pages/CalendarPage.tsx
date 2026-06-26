@@ -885,6 +885,20 @@ export default function CalendarPage() {
   const mapWrapperRef = useRef<HTMLDivElement>(null);
   const mapRecenterRef = useRef<(() => void) | null>(null);
   const [showBackToMap, setShowBackToMap] = useState(false);
+
+  // Recenter the map whenever Favourites-only or Most-Voted is toggled, so the
+  // viewport reframes to fit whatever pins are now showing instead of staying on
+  // the previous (possibly unrelated) bounds. Skips the very first run — on mount,
+  // MapController already does its own initial fitBounds, so re-running here too
+  // would just animate a redundant identical fit. Relies on MapController's own
+  // effect (deps on displayRaces) having already refreshed recenterRef.current with
+  // the new filtered bounds before this effect runs — child effects flush before
+  // parent effects in the same commit, so that ordering is guaranteed.
+  const didInitialRecenterRef = useRef(false);
+  useEffect(() => {
+    if (!didInitialRecenterRef.current) { didInitialRecenterRef.current = true; return; }
+    mapRecenterRef.current?.();
+  }, [showFavs, sortMode]);
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
@@ -1253,7 +1267,7 @@ export default function CalendarPage() {
         {/* Race sub-panel */}
         {showFilterBar && activeSubPanel === 'race' && (
           <div className="relative">
-          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "60vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "3rem" }}>
+          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "60vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
 
             {/* ── Sports & Distances ── */}
             <div>
@@ -1428,7 +1442,7 @@ export default function CalendarPage() {
         {/* Locations sub-panel */}
         {showFilterBar && activeSubPanel === 'locations' && (
           <div className="relative">
-          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "3rem" }}>
+          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
             {/* Region */}
             <div>
               <div className="filter-label mb-2">Region</div>
@@ -1515,7 +1529,7 @@ export default function CalendarPage() {
         {/* Explore sub-panel */}
         {showFilterBar && activeSubPanel === 'explore' && (
           <div className="relative">
-          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "3rem" }}>
+          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
             <div>
               <div className="filter-label mb-2">Points of Interest</div>
               <div className="flex flex-wrap gap-1.5">
@@ -1544,7 +1558,7 @@ export default function CalendarPage() {
         {/* Dates sub-panel */}
         {showFilterBar && activeSubPanel === 'dates' && (
           <div className="relative">
-          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "65vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "3rem" }}>
+          <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "65vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
             {/* Quick presets */}
             <div>
               <div className="filter-label">Quick Select</div>

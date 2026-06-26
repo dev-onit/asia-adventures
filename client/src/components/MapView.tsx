@@ -789,15 +789,19 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         </>
       )}
 
-      {/* Fullscreen toggle + Search — top-right. Tracks --header-h (to dodge the
-          floating filters/search panel) only while that panel is actually open;
-          otherwise --header-h would be the full page header's height in non-fullscreen
-          and push these buttons toward the middle of the embedded map instead of
-          sitting near its top edge. */}
+      {/* Fullscreen toggle + Search — top-right. Dodges the floating filters/search
+          panel via --filter-panel-h only while that panel is actually open. Doesn't
+          add --header-h: in embedded mode this div's own top already starts right
+          below the page header (normal document flow), and the floating panel is
+          anchored at that same point — so from this div's own coordinate space the
+          panel's bottom edge is just --filter-panel-h down, not header height again.
+          (header-h is harmless to omit in fullscreen too, since the header is hidden
+          there and its height is 0.) Adding header-h here was pushing these buttons
+          toward the middle of the embedded map whenever filters were open. */}
       <div
         className="absolute right-3 z-10 flex items-center gap-2"
         style={{
-          top: filterPanelOpen ? "calc(var(--header-h, 0px) + var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px",
+          top: filterPanelOpen ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px",
           filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))",
           marginRight: "env(safe-area-inset-right, 0px)",
         }}
@@ -825,7 +829,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           header otherwise; consolidated into one set so toggling fullscreen doesn't
           change where anything is). Wraps onto a second line on narrow screens instead
           of overflowing off-screen. */}
-      <div className="absolute left-3 z-10 flex flex-wrap items-center gap-2" style={{ top: filterPanelOpen ? "calc(var(--header-h, 0px) + var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
+      <div className="absolute left-3 z-10 flex flex-wrap items-center gap-2" style={{ top: filterPanelOpen ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)" : "12px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
         <button
           onClick={onToggleFilterBar}
           className={`flex items-center gap-1.5 px-3.5 sm:px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
