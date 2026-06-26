@@ -261,18 +261,18 @@ const POPUP_STYLE = `
   .leaflet-popup-close-button { color: hsl(var(--muted-foreground)) !important; font-size: 20px !important; width: 28px !important; height: 28px !important; top: 6px !important; right: 6px !important; }
   .leaflet-bar {
     display: flex !important; flex-direction: column !important;
-    gap: 3px !important; border: none !important; border-radius: 0 !important;
+    gap: 4px !important; border: none !important; border-radius: 0 !important;
     background: transparent !important; box-shadow: none !important;
   }
   .leaflet-bar a,
   .leaflet-control-zoom-in,
   .leaflet-control-zoom-out {
-    width: 28px !important; height: 28px !important;
-    line-height: 28px !important; font-size: 18px !important; font-weight: 400 !important;
+    width: 36px !important; height: 36px !important;
+    line-height: 36px !important; font-size: 20px !important; font-weight: 400 !important;
     display: flex !important; align-items: center !important; justify-content: center !important;
     text-align: center !important; text-indent: 0 !important;
     padding: 0 !important; margin: 0 !important;
-    border-radius: 7px !important; border: 1px solid !important;
+    border-radius: 8px !important; border: 1px solid !important;
     background: rgba(24,24,27,0.95) !important;
     border-color: rgb(63,63,70) !important;
     color: rgb(212,212,216) !important;
@@ -689,23 +689,25 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
 
       {/* Fullscreen toggle + theme toggle — top-right, the one corner with no other
           controls competing for it. Fullscreen is always shown; theme only in
-          fullscreen (otherwise the page header's own theme toggle is reachable). */}
-      <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
+          fullscreen (otherwise the page header's own theme toggle is reachable).
+          Every floating map button shares this 36px size, including the zoom
+          +/- control (see POPUP_STYLE) and the Layers button below. */}
+      <div className="absolute top-3 right-3 z-10 flex items-center gap-2" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)", marginTop: "env(safe-area-inset-top, 0px)" }}>
         {isFullscreen && (
           <button
             onClick={onToggleTheme}
             title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className={`flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+            className={`flex items-center justify-center w-9 h-9 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
           >
-            {isDark ? <Sun size={14} /> : <Moon size={14} />}
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         )}
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
-          className={`flex items-center justify-center w-7 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`}
+          className={`flex items-center justify-center w-9 h-9 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`}
         >
-          {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+          {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
         </button>
       </div>
 
@@ -713,19 +715,19 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           header providing this elsewhere is fully hidden while fullscreen). Wraps onto
           a second line on narrow screens instead of overflowing off-screen. */}
       {isFullscreen && (
-        <div className="absolute left-3 z-10 flex flex-wrap items-center gap-1.5" style={{ top: "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
+        <div className="absolute left-3 z-10 flex flex-wrap items-center gap-2" style={{ top: "calc(var(--header-h, 0px) + env(safe-area-inset-top, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)", maxWidth: "calc(100% - 24px)" }}>
           <button
             onClick={onToggleFilterBar}
-            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
               showFilterBar || activeFilterCount > 0
                 ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}`
                 : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
-            <Filter size={13} className="shrink-0" />
+            <Filter size={16} className="shrink-0" />
             Filters
             {activeFilterCount > 0 && (
-              <span className="bg-teal-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
+              <span className="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold">
                 {activeFilterCount}
               </span>
             )}
@@ -734,35 +736,35 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
             <button
               onClick={onClearAllFilters}
               title="Clear all filters"
-              className={`flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+              className={`flex items-center justify-center w-9 h-9 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
             >
-              <X size={14} />
+              <X size={18} />
             </button>
           )}
           <button
             onClick={onToggleFavs}
-            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
               showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
-            <Star size={13} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
+            <Star size={16} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
             Favourites
             {favSet.size > 0 && (
-              <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
+              <span className={`rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
                 {favSet.size}
               </span>
             )}
           </button>
           <button
             onClick={onToggleMostVoted}
-            className={`flex items-center gap-1 px-2.5 py-1 h-7 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3.5 h-9 rounded-lg text-xs font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm whitespace-nowrap ${
               sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
             }`}
           >
-            <TrendingUp size={13} className="shrink-0" />
+            <TrendingUp size={16} className="shrink-0" />
             Most Voted
             {racesWithVotes > 0 && (
-              <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
+              <span className={`rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-black"}`}>
                 {racesWithVotes}
               </span>
             )}
@@ -781,52 +783,52 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
             <div className="fixed inset-0 z-10" onClick={() => setShowLayersMenu(false)} />
             <div
               onClick={e => e.stopPropagation()}
-              className={`absolute bottom-9 right-0 z-20 rounded-xl border ${pillBorder} ${pillBg} backdrop-blur-sm shadow-lg p-1.5 flex flex-col gap-0.5`}
-              style={{ minWidth: 190 }}
+              className={`absolute bottom-11 right-0 z-20 rounded-xl border ${pillBorder} ${pillBg} backdrop-blur-sm shadow-lg p-2 flex flex-col gap-1`}
+              style={{ minWidth: 210 }}
             >
-              <div className={`text-[10px] font-bold uppercase tracking-wide px-2 pt-1 pb-1.5 ${pillTextDisabled}`}>Pins</div>
+              <div className={`text-[11px] font-bold uppercase tracking-wide px-2 pt-1 pb-1.5 ${pillTextDisabled}`}>Pins</div>
               <button
                 onClick={handleToggleRaces}
                 disabled={!showExplore}
                 title={!showExplore ? "Enable Explore first" : undefined}
-                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] font-semibold transition-all ${
+                className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                   !showExplore ? `${pillTextDisabled} cursor-not-allowed opacity-50` : showRaces ? `${blueText} bg-blue-400/10` : `${pillText} hover:bg-white/5`
                 }`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 Races
-                <span className="ml-auto text-[10px] font-bold opacity-70">{showRaces ? "ON" : "OFF"}</span>
+                <span className="ml-auto text-[11px] font-bold opacity-70">{showRaces ? "ON" : "OFF"}</span>
               </button>
               <button
                 onClick={handleToggleExplore}
-                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] font-semibold transition-all ${showExplore ? `${greenText} bg-green-400/10` : `${pillText} hover:bg-white/5`}`}
+                className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${showExplore ? `${greenText} bg-green-400/10` : `${pillText} hover:bg-white/5`}`}
               >
                 {showExplore
-                  ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                  : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                  ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
                 }
                 Explore
-                <span className="ml-auto text-[10px] font-bold opacity-70">{showExplore ? "ON" : "OFF"}</span>
+                <span className="ml-auto text-[11px] font-bold opacity-70">{showExplore ? "ON" : "OFF"}</span>
               </button>
-              <div className={`text-[10px] font-bold uppercase tracking-wide px-2 pt-2 pb-1.5 mt-0.5 border-t ${pillBorder} ${pillTextDisabled}`}>Time range</div>
+              <div className={`text-[11px] font-bold uppercase tracking-wide px-2 pt-2 pb-1.5 mt-0.5 border-t ${pillBorder} ${pillTextDisabled}`}>Time range</div>
               <button
                 onClick={onToggleUnconfirmed}
-                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] font-semibold transition-all ${showUnconfirmed ? `${redText} bg-red-400/10` : `${pillText} hover:bg-white/5`}`}
+                className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${showUnconfirmed ? `${redText} bg-red-400/10` : `${pillText} hover:bg-white/5`}`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                 Predicted
-                <span className="ml-auto text-[10px] font-bold opacity-70">{showUnconfirmed ? "ON" : "OFF"}</span>
+                <span className="ml-auto text-[11px] font-bold opacity-70">{showUnconfirmed ? "ON" : "OFF"}</span>
               </button>
               <button
                 onClick={onToggleHidePast}
-                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] font-semibold transition-all ${!hidePast ? `${amberText} bg-amber-400/10` : `${pillText} hover:bg-white/5`}`}
+                className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${!hidePast ? `${amberText} bg-amber-400/10` : `${pillText} hover:bg-white/5`}`}
               >
                 {!hidePast
-                  ? <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                  : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                  ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
                 }
                 Past Events
-                <span className="ml-auto text-[10px] font-bold opacity-70">{!hidePast ? "ON" : "OFF"}</span>
+                <span className="ml-auto text-[11px] font-bold opacity-70">{!hidePast ? "ON" : "OFF"}</span>
               </button>
             </div>
           </>
@@ -834,11 +836,11 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         <button
           onClick={() => setShowLayersMenu(v => !v)}
           title="Map layers"
-          className={`relative flex items-center justify-center w-7 h-7 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+          className={`relative flex items-center justify-center w-9 h-9 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
         >
-          <Layers size={14} />
+          <Layers size={18} />
           {layersCustomized && (
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-teal-400 border border-black/20" />
+            <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-teal-400 border border-black/20" />
           )}
         </button>
       </div>
