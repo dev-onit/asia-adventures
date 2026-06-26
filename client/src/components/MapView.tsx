@@ -538,13 +538,31 @@ function InvalidateSizeOnResize({ trigger }: { trigger: unknown }) {
 }
 
 // ── Imperative bits that still need direct map access: initial fit, recenter button,
-// and ctrl/⌘+scroll-to-zoom — none of these are hacks, just things Leaflet itself doesn't
-// expose as declarative props. ──
-function MapController({ displayRaces, recenterRef }: { displayRaces: Race[]; recenterRef?: Props["recenterRef"] }) {
+// ctrl/⌘+scroll-to-zoom, and keeping the dragging/scrollWheelZoom handlers in sync with
+// isFullscreen — none of these are hacks, just things Leaflet itself doesn't expose as
+// declarative props, or (for dragging/scrollWheelZoom) that react-leaflet's MapContainer
+// only applies once at construction time and never reactively re-pushes on prop changes
+// (the same root cause as the earlier fullscreen-height bug — see InvalidateSizeOnResize). ──
+function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging }: { displayRaces: Race[]; recenterRef?: Props["recenterRef"]; isFullscreen: boolean; allowDragging: boolean }) {
   const map = useMap();
   const hasInitialFitRef = useRef(false);
 
+  // MapContainer's dragging prop is only applied once at construction time and never
+  // reactively re-pushed to the underlying Leaflet instance, so toggling fullscreen
+  // never actually re-enabled 1-finger dragging — sync it imperatively instead.
   useEffect(() => {
+    if (allowDragging) map.dragging.enable(); else map.dragging.disable();
+  }, [map, allowDragging]);
+
+  // Fullscreen: plain scroll-wheel zooms directly (nothing else to scroll, so no need
+  // to gate it behind ctrl). Embedded: keep requiring ctrl/⌘+scroll so a normal page
+  // scroll over the map doesn't accidentally zoom it.
+  useEffect(() => {
+    if (isFullscreen) map.scrollWheelZoom.enable(); else map.scrollWheelZoom.disable();
+  }, [map, isFullscreen]);
+
+  useEffect(() => {
+    if (isFullscreen) return; // native scrollWheelZoom above already handles all wheel input
     const container = map.getContainer();
     const onWheel = (e: WheelEvent) => {
       if (!e.ctrlKey) return;
@@ -553,7 +571,7 @@ function MapController({ displayRaces, recenterRef }: { displayRaces: Race[]; re
     };
     container.addEventListener("wheel", onWheel, { passive: false });
     return () => container.removeEventListener("wheel", onWheel);
-  }, [map]);
+  }, [map, isFullscreen]);
 
   useEffect(() => {
     if (hasInitialFitRef.current || displayRaces.length === 0) return;
@@ -684,7 +702,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
       >
         <ZoomControl position="bottomleft" />
         <ThemeTileLayer isDark={isDark} />
-        <MapController displayRaces={displayRaces} recenterRef={recenterRef} />
+        <MapController displayRaces={displayRaces} recenterRef={recenterRef} isFullscreen={isFullscreen} allowDragging={allowDragging} />
         <InvalidateSizeOnResize trigger={isFullscreen} />
         <MapPins
           displayRaces={displayRaces}
