@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -33,6 +33,9 @@ interface Props {
   onToggleFilterBar: () => void;
   activeFilterCount: number;
   onClearAllFilters: () => void;
+  onToggleFavs: () => void;
+  sortMode: "date" | "votes";
+  onToggleMostVoted: () => void;
 }
 
 // Running (road) and Trail share the "RUN" pin label but get distinct colors
@@ -591,7 +594,7 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted }: Props) {
   const [showExplore, setShowExplore] = useState(false);
   const [showRaces, setShowRaces] = useState(true);
 
@@ -637,6 +640,13 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
   const redText = isDark ? "text-red-400" : "text-red-500";
   const amberText = isDark ? "text-amber-400" : "text-amber-500";
   const tealText = isDark ? "text-teal-400" : "text-teal-500";
+
+  // Races with at least one vote, among the currently filtered list — mirrors the
+  // header's own "Most Voted" badge count.
+  const racesWithVotes = useMemo(() => {
+    const raceIdSet = new Set(races.map(r => r.id));
+    return [...votesByRace.keys()].filter(id => raceIdSet.has(id)).length;
+  }, [races, votesByRace]);
 
   return (
     <div
@@ -764,6 +774,40 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           {!hidePast ? "Past Events: ON" : "Past Events: OFF"}
         </button>
       </div>
+
+      {/* Favourites + Most Voted — bottom-left, fullscreen only (otherwise reachable via the page header) */}
+      {isFullscreen && (
+        <div className="absolute bottom-3 left-3 z-10 flex flex-wrap gap-1.5" style={{ filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", maxWidth: "calc(100% - 60px)", marginLeft: "env(safe-area-inset-left, 0px)" }}>
+          <button
+            onClick={onToggleFavs}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+              showFavsOnly ? "bg-yellow-400 border-[1.5px] border-yellow-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
+            }`}
+          >
+            <Star size={13} className="shrink-0" fill={showFavsOnly ? "black" : "none"} />
+            Favourites
+            {favSet.size > 0 && (
+              <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${showFavsOnly ? "bg-black/20 text-black" : "bg-yellow-500 text-black"}`}>
+                {favSet.size}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={onToggleMostVoted}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold shadow-md transition-all hover:brightness-110 backdrop-blur-sm ${
+              sortMode === "votes" ? "bg-orange-400 border-[1.5px] border-orange-400 text-black" : `${pillBg} border ${pillBorder} ${pillText}`
+            }`}
+          >
+            <TrendingUp size={13} className="shrink-0" />
+            Most Voted
+            {racesWithVotes > 0 && (
+              <span className={`rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold ${sortMode === "votes" ? "bg-black/20 text-black" : "bg-orange-500/80 text-white"}`}>
+                {racesWithVotes}
+              </span>
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

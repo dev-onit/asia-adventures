@@ -637,6 +637,36 @@ export default function CalendarPage() {
     });
   }, [activeSubPanel]);
 
+  // Shared by the header's Favourites button and the floating map-overlay one shown
+  // in fullscreen.
+  const handleToggleFavs = useCallback(() => {
+    if (!showFavs) {
+      prevFilters.current = { sportFilters: new Set(sportFilters), subFilters: new Set(subFilters), teamFilters: new Set(teamFilters), countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters };
+      setSportFilters(new Set()); setSubFilters(new Set()); setTeamFilters(new Set());
+      setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters([]); setHidePast(true);
+      setPersonFilter(null); setMinVotesFilter(false); setExploreCategoryFilters([]);
+      setSortMode("date"); // reset Most Voted when entering Favourites
+      setShowFavs(true);
+    } else {
+      setShowFavs(false);
+      if (prevFilters.current) {
+        const p = prevFilters.current;
+        setSportFilters(p.sportFilters); setSubFilters(p.subFilters); setTeamFilters(p.teamFilters ?? new Set());
+        setCountryFilters(p.countryFilters); setMonthFilters(p.monthFilters);
+        setYearFilters(p.yearFilters); setPersonFilter(p.personFilter);
+        setMinVotesFilter(p.minVotesFilter); setExploreCategoryFilters(p.exploreCategoryFilters);
+        prevFilters.current = null;
+      }
+    }
+  }, [showFavs, sportFilters, subFilters, teamFilters, countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters]);
+
+  // Shared by the header's Most Voted button and the floating map-overlay one shown
+  // in fullscreen.
+  const handleToggleMostVoted = useCallback(() => {
+    setSortMode(m => m === "votes" ? "date" : "votes");
+    setShowFavs(false);
+  }, []);
+
   // ── Individual toggle helpers ──
   // ── Region helpers ──
   function getRegionState(region: typeof REGIONS[0]): 'all' | 'partial' | 'none' {
@@ -1051,26 +1081,7 @@ export default function CalendarPage() {
           {/* Row 2 mobile: Favourites + Most Voted + theme toggle */}
           <div className="flex items-center gap-2 px-4 pt-1.5 pb-3">
           <button
-            onClick={() => {
-              if (!showFavs) {
-                prevFilters.current = { sportFilters: new Set(sportFilters), subFilters: new Set(subFilters), teamFilters: new Set(teamFilters), countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters };
-                setSportFilters(new Set()); setSubFilters(new Set()); setTeamFilters(new Set());
-                setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters([]); setHidePast(true);
-                setPersonFilter(null); setMinVotesFilter(false); setExploreCategoryFilters([]);
-                setSortMode("date"); // reset Most Voted when entering Favourites
-                setShowFavs(true);
-              } else {
-                setShowFavs(false);
-                if (prevFilters.current) {
-                  const p = prevFilters.current;
-                  setSportFilters(p.sportFilters); setSubFilters(p.subFilters); setTeamFilters(p.teamFilters ?? new Set());
-                  setCountryFilters(p.countryFilters); setMonthFilters(p.monthFilters);
-                  setYearFilters(p.yearFilters); setPersonFilter(p.personFilter);
-                  setMinVotesFilter(p.minVotesFilter); setExploreCategoryFilters(p.exploreCategoryFilters);
-                  prevFilters.current = null;
-                }
-              }
-            }}
+            onClick={handleToggleFavs}
             className={`flex items-center gap-1.5 px-3 h-9 rounded-full border text-xs font-semibold transition-all leading-none ${
               showFavs
                 ? "bg-yellow-400 border-yellow-400 text-black"
@@ -1096,7 +1107,7 @@ export default function CalendarPage() {
           </button>
           {/* Most Voted sort button */}
           <button
-            onClick={() => { setSortMode(m => m === "votes" ? "date" : "votes"); setShowFavs(false); }}
+            onClick={handleToggleMostVoted}
             className={`flex items-center gap-1.5 px-3 h-9 rounded-full border text-xs font-semibold transition-all leading-none ${
               sortMode === "votes"
                 ? "bg-orange-400 border-orange-400 text-black"
@@ -1135,25 +1146,7 @@ export default function CalendarPage() {
           {/* Favourites + Most Voted */}
           <div className="flex items-center gap-2">
             <button
-              onClick={() => {
-                if (!showFavs) {
-                  prevFilters.current = { sportFilters: new Set(sportFilters), subFilters: new Set(subFilters), teamFilters: new Set(teamFilters), countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters };
-                  setSportFilters(new Set()); setSubFilters(new Set()); setTeamFilters(new Set());
-                  setCountryFilters([]); setCityFilters([]); setMonthFilters([]); setYearFilters([]); setHidePast(true);
-                  setPersonFilter(null); setMinVotesFilter(false); setExploreCategoryFilters([]);
-                  setSortMode("date"); setShowFavs(true);
-                } else {
-                  setShowFavs(false);
-                  if (prevFilters.current) {
-                    const p = prevFilters.current;
-                    setSportFilters(p.sportFilters); setSubFilters(p.subFilters); setTeamFilters(p.teamFilters ?? new Set());
-                    setCountryFilters(p.countryFilters); setMonthFilters(p.monthFilters);
-                    setYearFilters(p.yearFilters); setPersonFilter(p.personFilter);
-                    setMinVotesFilter(p.minVotesFilter); setExploreCategoryFilters(p.exploreCategoryFilters);
-                    prevFilters.current = null;
-                  }
-                }
-              }}
+              onClick={handleToggleFavs}
               className={`flex items-center gap-1.5 px-3 h-8 rounded-full border text-xs font-semibold transition-all leading-none ${
                 showFavs
                   ? "bg-yellow-400 border-yellow-400 text-black"
@@ -1175,7 +1168,7 @@ export default function CalendarPage() {
               })()}
             </button>
             <button
-              onClick={() => { setSortMode(m => m === "votes" ? "date" : "votes"); setShowFavs(false); }}
+              onClick={handleToggleMostVoted}
               className={`flex items-center gap-1.5 px-3 h-8 rounded-full border text-xs font-semibold transition-all leading-none ${
                 sortMode === "votes"
                   ? "bg-orange-400 border-orange-400 text-black"
@@ -1846,6 +1839,9 @@ export default function CalendarPage() {
         onToggleFilterBar={handleToggleFilterBar}
         activeFilterCount={activeFilterCount}
         onClearAllFilters={clearAll}
+        onToggleFavs={handleToggleFavs}
+        sortMode={sortMode}
+        onToggleMostVoted={handleToggleMostVoted}
       />
       </div>
 
