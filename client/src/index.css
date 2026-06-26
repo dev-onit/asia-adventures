@@ -16,7 +16,7 @@
   --header-h: 0px;
   --races-header-h: 0px;
   --result-bar-h: 0px;
-  --map-h: 400px;
+  --map-h: 320px;
 }
 
 /* ── Light mode ── */
@@ -221,7 +221,7 @@ h1, h2, h3 {
 /* Desktop: restore fixed map height */
 @media (min-width: 640px) {
   :root {
-    --map-h: 480px;
+    --map-h: 380px;
   }
 }
 

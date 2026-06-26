@@ -299,14 +299,6 @@ const POPUP_STYLE = `
       line-height: 32px !important; font-size: 18px !important;
     }
   }
-  /* Leaflet adds .leaflet-touch-drag (touch-action: none) to the container whenever
-     dragging is enabled — including on desktop, where it's only there for mouse-drag
-     panning. Safari's trackpad-scroll gesture pipeline honors touch-action even for
-     non-touch trackpad input (Chrome/Firefox don't), so that none blocks the page from
-     scrolling under the cursor in Safari. Force it back to scrollable when embedded. */
-  .map-container.map-embedded.leaflet-touch-drag {
-    touch-action: pan-x pan-y !important;
-  }
 `;
 
 // ── Popup content (real React components — no HTML strings, no manual DOM wiring) ──
@@ -646,12 +638,14 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
     document.head.appendChild(el);
   }, []);
 
-  // On touch devices: disable 1-finger dragging so the page scrolls naturally.
-  // 2-finger pan still works via Leaflet's built-in two-touch handler. In fullscreen
-  // there's nothing else to scroll (body scroll is locked there), so allow normal
-  // 1-finger panning too — pinch-to-zoom (touchZoom) is unaffected either way.
-  const isTouch = useMemo(() => 'ontouchstart' in window && navigator.maxTouchPoints > 0, []);
-  const allowDragging = isFullscreen || !isTouch;
+  // Dragging (click/touch-and-pan) is only enabled in fullscreen. In the embedded map,
+  // enabling it — even just for desktop mouse-drag panning — makes Leaflet add its
+  // .leaflet-touch-drag class, which sets touch-action: none on the container; Safari's
+  // trackpad/wheel-scroll pipeline (unlike Chrome/Firefox) honors that for non-touch
+  // input too, silently blocking the page from scrolling under the cursor. Keeping
+  // dragging off entirely in embedded mode avoids that class ever being applied, so
+  // the page always scrolls normally there — pinch-to-zoom (touchZoom) is unaffected.
+  const allowDragging = isFullscreen;
 
   function handleToggleExplore() {
     const next = !showExplore;
@@ -705,7 +699,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         scrollWheelZoom={false}
         dragging={allowDragging}
         touchZoom={true}
-        className={`map-container w-full ${!isFullscreen ? "map-embedded" : ""}`}
+        className="map-container w-full"
         style={{ height: "100%", zIndex: 1 }}
       >
         <ZoomControl position="bottomleft" />

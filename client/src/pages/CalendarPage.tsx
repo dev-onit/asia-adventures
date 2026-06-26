@@ -1108,10 +1108,10 @@ export default function CalendarPage() {
         {!isMapFullscreen && (
         <div className="hidden sm:flex items-center gap-3 px-4 py-3">
           {/* Logo + title */}
-          <img src="/logo.jpg" alt="Adventure Crew" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+          <img src="/logo.jpg" alt="Adventure Crew" className="w-14 h-14 rounded-full object-cover flex-shrink-0" />
           <div className="min-w-0 mr-2">
-            <h1 className="text-base font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
-            <p className="text-[11px] text-foreground/80 font-medium tracking-wide">We Take Fun Seriously</p>
+            <h1 className="text-xl font-bold text-foreground leading-tight" style={{ fontFamily: "Cabinet Grotesk, sans-serif" }}>Asia Adventures</h1>
+            <p className="text-sm text-foreground/80 font-medium tracking-wide">We Take Fun Seriously</p>
           </div>
           {/* Right: Lukas chip */}
           <div className="ml-auto flex items-center gap-2">
@@ -1500,10 +1500,10 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-3 right-4 sm:right-auto sm:left-4 z-10">
+          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10">
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
-              className="flex items-center justify-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
+              className="flex items-center justify-center px-4 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
             >
               Done ✓
             </button>
@@ -1587,10 +1587,10 @@ export default function CalendarPage() {
             })()}
           </div>
 
-          <div className="absolute bottom-3 right-4 sm:right-auto sm:left-4 z-10">
+          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10">
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
-              className="flex items-center justify-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
+              className="flex items-center justify-center px-4 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
             >
               Done ✓
             </button>
@@ -1616,10 +1616,10 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-3 right-4 sm:right-auto sm:left-4 z-10">
+          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10">
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
-              className="flex items-center justify-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
+              className="flex items-center justify-center px-4 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
             >
               Done ✓
             </button>
@@ -1697,10 +1697,10 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-3 right-4 sm:right-auto sm:left-4 z-10">
+          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10">
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
-              className="flex items-center justify-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
+              className="flex items-center justify-center px-4 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
             >
               Done ✓
             </button>
