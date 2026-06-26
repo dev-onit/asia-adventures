@@ -1500,7 +1500,7 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-3 right-4 z-10">
+          <div className="absolute bottom-3 right-4 sm:right-auto sm:left-4 z-10">
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
               className="flex items-center justify-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
@@ -1587,7 +1587,7 @@ export default function CalendarPage() {
             })()}
           </div>
 
-          <div className="absolute bottom-3 right-4 z-10">
+          <div className="absolute bottom-3 right-4 sm:right-auto sm:left-4 z-10">
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
               className="flex items-center justify-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
@@ -1616,7 +1616,7 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-3 right-4 z-10">
+          <div className="absolute bottom-3 right-4 sm:right-auto sm:left-4 z-10">
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
               className="flex items-center justify-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
@@ -1697,7 +1697,7 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-3 right-4 z-10">
+          <div className="absolute bottom-3 right-4 sm:right-auto sm:left-4 z-10">
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
               className="flex items-center justify-center px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
