@@ -570,6 +570,20 @@ function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging 
     if (isFullscreen) map.scrollWheelZoom.enable(); else map.scrollWheelZoom.disable();
   }, [map, isFullscreen]);
 
+  // Leaflet detects "touch capable" via `window.TouchEvent` existing as a constructor —
+  // true in every desktop Chrome build regardless of actual touch hardware (Chrome
+  // exposes the constructor for web-compat even on trackpad/mouse-only Macs), not via
+  // navigator.maxTouchPoints. So Leaflet's TouchZoom handler (pinch-zoom-via-touch) ends
+  // up enabled by default even on a plain desktop trackpad, adding a non-passive
+  // touchstart/touchmove listener and the .leaflet-touch-zoom class purely for a gesture
+  // this device can't actually produce — that's what was eating two-finger trackpad
+  // swipes over the embedded map in Chrome/macOS instead of letting them scroll the page.
+  // Disabling it in embedded mode removes that listener entirely; fullscreen keeps it on
+  // for real touchscreens (iPad/phone), where pinch-zoom-to-touch is actually useful.
+  useEffect(() => {
+    if (isFullscreen) map.touchZoom.enable(); else map.touchZoom.disable();
+  }, [map, isFullscreen]);
+
   useEffect(() => {
     if (isFullscreen) return; // native scrollWheelZoom above already handles all wheel input
     const container = map.getContainer();
