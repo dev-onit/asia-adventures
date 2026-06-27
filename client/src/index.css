@@ -143,6 +143,22 @@ h1, h2, h3 {
    own themed color instead of Leaflet's fixed gray. */
 .leaflet-container { background: hsl(var(--background)) !important; }
 
+/* Leaflet's base stylesheet sets touch-action: none on .leaflet-container
+   unconditionally — not just via the leaflet-touch-drag class dragging adds —
+   so that the browser never intercepts gestures Leaflet wants to handle itself.
+   Disabling dragging in embedded mode (see MapView's allowDragging) stops that
+   class from ever being added, but doesn't touch this base rule, so two-finger
+   trackpad swipes over the embedded map were still being treated as a gesture
+   for Leaflet rather than a page scroll in Chrome/macOS specifically (Chrome
+   appears to route trackpad swipes through the same touch-action gate as actual
+   touchscreens, unlike a plain mouse wheel). Embedded mode doesn't need
+   Leaflet to own touch-action at all now that dragging is off — panning there
+   is handled by our own custom mouse-drag effect, not Leaflet's touch/drag
+   handlers — so it's safe to restore normal page-scroll gestures there.
+   Fullscreen keeps Leaflet's own touch-action: none (map-fullscreen excluded),
+   since it still owns 1-finger touch panning there. */
+.map-container.leaflet-container:not(.map-fullscreen) { touch-action: pan-x pan-y !important; }
+
 /* Light mode sticky header */
 .light header.sticky {
   background: hsl(210 20% 96% / 0.96) !important;
