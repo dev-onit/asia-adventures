@@ -547,8 +547,8 @@ function InvalidateSizeOnResize({ trigger }: { trigger: unknown }) {
 }
 
 // ── Imperative bits that still need direct map access: initial fit, recenter button,
-// ctrl/⌘+scroll-to-zoom, and keeping the dragging/scrollWheelZoom handlers in sync with
-// isFullscreen — none of these are hacks, just things Leaflet itself doesn't expose as
+// and keeping the dragging/scrollWheelZoom/touchZoom handlers in sync with isFullscreen
+// — none of these are hacks, just things Leaflet itself doesn't expose as
 // declarative props, or (for dragging/scrollWheelZoom) that react-leaflet's MapContainer
 // only applies once at construction time and never reactively re-pushes on prop changes
 // (the same root cause as the earlier fullscreen-height bug — see InvalidateSizeOnResize). ──
@@ -563,9 +563,10 @@ function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging 
     if (allowDragging) map.dragging.enable(); else map.dragging.disable();
   }, [map, allowDragging]);
 
-  // Fullscreen: plain scroll-wheel zooms directly (nothing else to scroll, so no need
-  // to gate it behind ctrl). Embedded: keep requiring ctrl/⌘+scroll so a normal page
-  // scroll over the map doesn't accidentally zoom it.
+  // Embedded map behaves like a standard static map embed: wheel/trackpad input always
+  // scrolls the page, never zooms the map (use the visible +/- control or Fullscreen for
+  // that instead). Only fullscreen enables scroll-wheel zoom, where there's nothing else
+  // to scroll so it can't conflict with anything.
   useEffect(() => {
     if (isFullscreen) map.scrollWheelZoom.enable(); else map.scrollWheelZoom.disable();
   }, [map, isFullscreen]);
@@ -582,18 +583,6 @@ function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging 
   // for real touchscreens (iPad/phone), where pinch-zoom-to-touch is actually useful.
   useEffect(() => {
     if (isFullscreen) map.touchZoom.enable(); else map.touchZoom.disable();
-  }, [map, isFullscreen]);
-
-  useEffect(() => {
-    if (isFullscreen) return; // native scrollWheelZoom above already handles all wheel input
-    const container = map.getContainer();
-    const onWheel = (e: WheelEvent) => {
-      if (!e.ctrlKey) return;
-      e.preventDefault();
-      if (e.deltaY < 0) map.zoomIn(); else map.zoomOut();
-    };
-    container.addEventListener("wheel", onWheel, { passive: false });
-    return () => container.removeEventListener("wheel", onWheel);
   }, [map, isFullscreen]);
 
   // Embedded map: drag-to-pan via mouse, implemented by hand instead of Leaflet's own
