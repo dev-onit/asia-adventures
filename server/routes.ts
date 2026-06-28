@@ -136,11 +136,11 @@ router.delete("/admin/races/:id", requireAdmin, async (req, res) => {
 });
 
 router.post("/admin/explore", requireAdmin, async (req, res) => {
-  const { name, country, region, category, description, bestMonths, url, emoji, lat, lng } = req.body;
+  const { name, country, region, category, description, bestMonths, url, emoji, effort, isPaid, lat, lng } = req.body;
   if (!name || !country || !category || !description) {
     return res.status(400).json({ error: "Missing required explore site fields" });
   }
-  const result = (await db.insert(exploreSites).values({ name, country, region: region ?? "", category, description, bestMonths: bestMonths ?? "", url: url ?? "", emoji: emoji ?? "", lat: lat ?? null, lng: lng ?? null }).returning())[0];
+  const result = (await db.insert(exploreSites).values({ name, country, region: region ?? "", category, description, bestMonths: bestMonths ?? "", url: url ?? "", emoji: emoji ?? "", effort: effort ?? null, isPaid: isPaid ?? null, lat: lat ?? null, lng: lng ?? null }).returning())[0];
   res.json(result);
 });
 
@@ -148,7 +148,7 @@ router.put("/admin/explore/:id", requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { eq } = await import("drizzle-orm");
   // Allowlist mutable fields — never allow id to be overwritten
-  const { name, country, region, category, description, bestMonths, url, emoji, lat, lng } = req.body;
+  const { name, country, region, category, description, bestMonths, url, emoji, effort, isPaid, lat, lng } = req.body;
   const update: Record<string, any> = {};
   if (name !== undefined) update.name = name;
   if (country !== undefined) update.country = country;
@@ -158,6 +158,8 @@ router.put("/admin/explore/:id", requireAdmin, async (req, res) => {
   if (bestMonths !== undefined) update.bestMonths = bestMonths;
   if (url !== undefined) update.url = url;
   if (emoji !== undefined) update.emoji = emoji;
+  if (effort !== undefined) update.effort = effort;
+  if (isPaid !== undefined) update.isPaid = isPaid;
   if (lat !== undefined) update.lat = lat;
   if (lng !== undefined) update.lng = lng;
   const result = (await db.update(exploreSites).set(update).where(eq(exploreSites.id, Number(id))).returning())[0];
@@ -245,6 +247,8 @@ router.post("/admin/bulk", requireAdmin, async (req, res) => {
       bestMonths: site.bestMonths ?? "",
       url: site.url ?? "",
       emoji: site.emoji ?? "",
+      effort: site.effort ?? null,
+      isPaid: site.isPaid ?? null,
       lat: site.lat ?? null,
       lng: site.lng ?? null,
     });

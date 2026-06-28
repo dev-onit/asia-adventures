@@ -55,6 +55,8 @@ async function ensureSchema() {
       lng TEXT
     )
   `;
+  await sql`ALTER TABLE explore_sites ADD COLUMN IF NOT EXISTS effort TEXT`;
+  await sql`ALTER TABLE explore_sites ADD COLUMN IF NOT EXISTS is_paid BOOLEAN`;
   await sql`CREATE TABLE IF NOT EXISTS seed_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)`;
   // One row per date instance for a race — replaces the dates JSON blob going forward.
   await sql`
@@ -187,7 +189,11 @@ export async function seedIfEmpty() {
     await sql`ALTER TABLE race_dates ADD CONSTRAINT race_dates_precision_check CHECK (precision IN ('exact','month'))`;
     await sql`ALTER TABLE race_dates DROP CONSTRAINT IF EXISTS race_dates_confidence_check`;
     await sql`ALTER TABLE race_dates ADD CONSTRAINT race_dates_confidence_check CHECK (confidence IN ('confirmed','predicted'))`;
-    console.log('[migration] type/venue/precision/confidence constraints applied');
+    // NULL passes a CHECK automatically — existing explore_sites rows are unresearched
+    // (null) until a future backfill pass, not assumed "easy"/"free".
+    await sql`ALTER TABLE explore_sites DROP CONSTRAINT IF EXISTS explore_sites_effort_check`;
+    await sql`ALTER TABLE explore_sites ADD CONSTRAINT explore_sites_effort_check CHECK (effort IS NULL OR effort IN ('easy','moderate','strenuous'))`;
+    console.log('[migration] type/venue/precision/confidence/effort constraints applied');
   } catch (e) { console.warn('[migration] constraint setup failed — data may not conform yet:', e); }
 
   const exploreCountResult = await sql`SELECT COUNT(*)::int AS count FROM explore_sites`;

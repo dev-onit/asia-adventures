@@ -77,6 +77,11 @@ export const exploreSites = pgTable("explore_sites", {
   bestMonths: text("best_months").notNull().default(""),
   url: text("url").notNull().default(""),
   emoji: text("emoji").notNull().default(""),
+  // easy | moderate | strenuous — physical effort to visit (mainly relevant for
+  // Mountains/Nature). Nullable: existing sites need a research pass to fill this in.
+  effort: text("effort"),
+  // Whether entry costs money. Nullable — unset means not yet researched, not "free".
+  isPaid: boolean("is_paid"),
   lat: text("lat"),
   lng: text("lng"),
 });
