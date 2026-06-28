@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Star } from "lucide-react";
+import { Star, ExternalLink } from "lucide-react";
 import type { ExploreSite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
 
@@ -14,6 +14,13 @@ interface Props {
   onToggleExploreFav: (id: number) => void;
   exploreFavPending: boolean;
 }
+
+// Colored dot doubles as a quick-scan effort gauge, no extra icon import needed.
+const EFFORT_LABEL: Record<string, string> = {
+  easy: "🟢 Easy",
+  moderate: "🟡 Moderate",
+  strenuous: "🔴 Strenuous",
+};
 
 // Must match MapView.tsx's CATEGORY_COLORS — these used to diverge (this file still had
 // the pre-collision palette where Mountains/Islands/Cities shared colors with race types
@@ -113,25 +120,28 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                   </div>
                 )}
 
-                {/* Visit button — exact popup style */}
-                {site.url && (
-                  <a
-                    href={site.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-center text-xs font-bold rounded-lg transition-colors"
-                    style={{
-                      padding: "6px 12px",
-                      border: `1px solid hsl(var(--primary) / 0.6)`,
-                      background: `hsl(var(--primary) / 0.15)`,
-                      color: `hsl(var(--primary))`,
-                      textDecoration: "none",
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "hsl(var(--primary) / 0.25)")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "hsl(var(--primary) / 0.15)")}
-                  >
-                    ↗ Visit
-                  </a>
+                {/* Effort / cost (left) + Visit link (bottom-right corner, icon-only) */}
+                {(site.effort || site.isPaid != null || site.url) && (
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="text-[11px] text-muted-foreground flex items-center gap-1.5 min-w-0">
+                      {site.effort && <span className="whitespace-nowrap">{EFFORT_LABEL[site.effort] ?? site.effort}</span>}
+                      {site.effort && site.isPaid != null && <span className="opacity-40">·</span>}
+                      {site.isPaid === true && <span className="whitespace-nowrap">💰 Paid</span>}
+                      {site.isPaid === false && <span className="whitespace-nowrap">Free</span>}
+                    </div>
+                    {site.url && (
+                      <a
+                        href={site.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Visit official site"
+                        aria-label="Visit official site"
+                        className="shrink-0 p-1 -m-1 rounded text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        <ExternalLink size={15} />
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
             );
