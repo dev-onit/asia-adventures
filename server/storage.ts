@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { drizzle } from "drizzle-orm/vercel-postgres";
-import { races, favourites, exploreSites } from "../shared/schema.js";
+import { races, raceDates, favourites, exploreSites } from "../shared/schema.js";
 import { eq, and } from "drizzle-orm";
 
 export const db = drizzle(sql);
@@ -26,6 +26,13 @@ async function ensureSchema() {
       lng TEXT
     )
   `;
+  // Additive columns for the venue/brand/source redesign — safe to run on every boot,
+  // a no-op once already applied.
+  await sql`ALTER TABLE races ADD COLUMN IF NOT EXISTS venue TEXT`;
+  await sql`ALTER TABLE races ADD COLUMN IF NOT EXISTS brand TEXT`;
+  await sql`ALTER TABLE races ADD COLUMN IF NOT EXISTS source TEXT`;
+  await sql`ALTER TABLE races ADD COLUMN IF NOT EXISTS created_at TIMESTAMP NOT NULL DEFAULT now()`;
+  await sql`ALTER TABLE races ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP NOT NULL DEFAULT now()`;
   await sql`
     CREATE TABLE IF NOT EXISTS favourites (
       id SERIAL PRIMARY KEY,
@@ -49,6 +56,27 @@ async function ensureSchema() {
     )
   `;
   await sql`CREATE TABLE IF NOT EXISTS seed_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)`;
+  // One row per date instance for a race — replaces the dates JSON blob going forward.
+  await sql`
+    CREATE TABLE IF NOT EXISTS race_dates (
+      id SERIAL PRIMARY KEY,
+      race_id INTEGER NOT NULL REFERENCES races(id) ON DELETE CASCADE,
+      event_date DATE NOT NULL,
+      precision TEXT NOT NULL,
+      confidence TEXT NOT NULL DEFAULT 'confirmed',
+      is_primary BOOLEAN NOT NULL DEFAULT true
+    )
+  `;
+  // Favourites referencing a deleted race should clean up automatically rather than
+  // leaving orphaned rows. Guarded since ADD CONSTRAINT has no IF NOT EXISTS form.
+  try {
+    await sql`
+      ALTER TABLE favourites ADD CONSTRAINT favourites_race_id_fkey
+      FOREIGN KEY (race_id) REFERENCES races(id) ON DELETE CASCADE
+    `;
+  } catch (e: any) {
+    if (e?.code !== '42710') console.warn('[migration] favourites FK constraint:', e); // 42710 = already exists
+  }
 }
 
 export async function getRaces() {
@@ -81,20 +109,21 @@ export async function getExploreSites() {
 }
 
 // Bump this whenever seedData changes — forces a full wipe+reseed on next deploy
-const SEED_VERSION = "v32-halong-coords-2026-06-24";
+const SEED_VERSION = "v33-venue-brand-race-dates-2026-06-28";
 
 export async function seedIfEmpty() {
   await ensureSchema();
 
-  // ── Badge class migration: re-derive badge_class from type on every startup ─
-  // Ensures badge colors are always correct regardless of seed history.
+  // ── Badge class migration: re-derive badge_class from type+venue on every startup ─
+  // Ensures badge colors are always correct regardless of seed history. "trail"/
+  // "ocean-swim" are no longer separate type values — venue carries that distinction.
   try {
     await sql`
       UPDATE races SET badge_class = CASE
-        WHEN type = 'triathlon'  THEN 'badge-tri'
-        WHEN type = 'trail'      THEN 'badge-run-trail'
+        WHEN type = 'triathlon' THEN 'badge-tri'
+        WHEN type = 'running' AND venue = 'trail' THEN 'badge-run-trail'
         WHEN type = 'running'    THEN 'badge-run'
-        WHEN type = 'ocean-swim' THEN 'badge-swim'
+        WHEN type = 'swimming'   THEN 'badge-swim'
         WHEN type = 'swimrun'    THEN 'badge-swimrun'
         WHEN type = 'hyrox'      THEN 'badge-hyrox'
         WHEN type = 'ocr' AND (LOWER(name) LIKE '%spartan%' OR LOWER(name) LIKE '%deka%') THEN 'badge-spartan'
@@ -112,7 +141,7 @@ export async function seedIfEmpty() {
   const countResult = await sql`SELECT COUNT(*)::int AS count FROM races`;
   const count = countResult.rows[0]?.count ?? 0;
 
-  if (storedVersion !== SEED_VERSION || count < 392) { // v32: fix Ha Long Bay coordinates (were in Africa + Borneo)
+  if (storedVersion !== SEED_VERSION || count < 392) { // v33: venue/brand/race_dates redesign
     console.log(`[seed] version=${storedVersion} → ${SEED_VERSION}, count=${count} — wiping and reseeding all races`);
     await sql`DELETE FROM races`;
     // Also wipe votes/favourites so fresh start is truly clean
@@ -133,6 +162,33 @@ export async function seedIfEmpty() {
       )
     `;
   }
+
+  // ── Constraints for the venue/brand taxonomy — added after the reseed above so
+  // existing rows already conform by the time these run. Drop+re-add each time so
+  // edits to the allowed value lists take effect without a separate migration step.
+  try {
+    await sql`ALTER TABLE races DROP CONSTRAINT IF EXISTS races_type_check`;
+    await sql`
+      ALTER TABLE races ADD CONSTRAINT races_type_check
+      CHECK (type IN ('running','triathlon','ocr','hyrox','xenom','swimming','swimrun'))
+    `;
+    await sql`ALTER TABLE races DROP CONSTRAINT IF EXISTS races_venue_check`;
+    await sql`
+      ALTER TABLE races ADD CONSTRAINT races_venue_check
+      CHECK (
+        (type IN ('running','triathlon') AND venue IN ('road','trail')) OR
+        (type = 'swimming' AND venue IN ('ocean','lake','river')) OR
+        (type IN ('hyrox','xenom') AND venue = 'stadium') OR
+        (type = 'ocr' AND venue IN ('urban','nature')) OR
+        (type = 'swimrun' AND venue IS NULL)
+      )
+    `;
+    await sql`ALTER TABLE race_dates DROP CONSTRAINT IF EXISTS race_dates_precision_check`;
+    await sql`ALTER TABLE race_dates ADD CONSTRAINT race_dates_precision_check CHECK (precision IN ('exact','month'))`;
+    await sql`ALTER TABLE race_dates DROP CONSTRAINT IF EXISTS race_dates_confidence_check`;
+    await sql`ALTER TABLE race_dates ADD CONSTRAINT race_dates_confidence_check CHECK (confidence IN ('confirmed','predicted'))`;
+    console.log('[migration] type/venue/precision/confidence constraints applied');
+  } catch (e) { console.warn('[migration] constraint setup failed — data may not conform yet:', e); }
 
   const exploreCountResult = await sql`SELECT COUNT(*)::int AS count FROM explore_sites`;
   const exploreCount = exploreCountResult.rows[0]?.count ?? 0;

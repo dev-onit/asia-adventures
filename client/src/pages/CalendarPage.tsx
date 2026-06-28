@@ -106,6 +106,7 @@ const TYPE_LABELS: Record<string, string> = {
   "running":    "Running",
   "trail":      "Running",
   "ocean-swim": "Swimming",
+  "swimming":   "Swimming",
   "swimrun":    "SwimRun",
   "hyrox":      "Hyrox",
   "ocr":        "OCR",
@@ -139,6 +140,7 @@ const PILL_COLORS: Record<string, string> = {
   "trail":       "bg-orange-100 border-orange-500 text-orange-700 dark:bg-orange-500/15 dark:border-orange-500/60 dark:text-orange-400",
   "hyrox":       "bg-yellow-100 border-yellow-500 text-yellow-700 dark:bg-yellow-400/15 dark:border-yellow-400/60 dark:text-yellow-400",
   "ocean-swim":  "bg-cyan-100 border-cyan-500 text-cyan-700 dark:bg-cyan-500/15 dark:border-cyan-500/60 dark:text-cyan-400",
+  "swimming":    "bg-cyan-100 border-cyan-500 text-cyan-700 dark:bg-cyan-500/15 dark:border-cyan-500/60 dark:text-cyan-400",
   "swimrun":     "bg-teal-100 border-teal-500 text-teal-700 dark:bg-teal-500/15 dark:border-teal-500/60 dark:text-teal-400",
   "ocr":         "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/60 dark:text-red-400",
   "spartan":     "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/60 dark:text-red-400",
@@ -161,7 +163,9 @@ const SPORT_SECTIONS = [
   {
     key: "running",
     label: "Running",
-    types: ["running", "trail"],
+    // Road and trail running are both type "running" now, distinguished by venue —
+    // see matchesSubFilter's run-road/run-trail handling below.
+    types: ["running"],
     subFilters: [
       { value: "run-road", label: "Road" },
       { value: "run-trail", label: "Trail" },
@@ -174,9 +178,9 @@ const SPORT_SECTIONS = [
     ],
   },
   {
-    key: "ocean-swim",
+    key: "swimming",
     label: "Swimming",
-    types: ["ocean-swim"],
+    types: ["swimming"],
     subFilters: [
       { value: "swim-2k", label: "2K" },
       { value: "swim-5k", label: "5K" },
@@ -253,6 +257,7 @@ function matchesSubFilter(race: Race, subKey: string): boolean {
   const d = (race.distance ?? "").toLowerCase();
   const t = (race.team ?? "").toLowerCase();
   const type = (race.type ?? "").toLowerCase();
+  const venue = ((race as any).venue ?? "").toLowerCase();
 
   // Triathlon — match against distanceLabel field
   const dl = ((race as any).distanceLabel ?? "").toLowerCase();
@@ -261,8 +266,8 @@ function matchesSubFilter(race: Race, subKey: string): boolean {
   if (subKey === "tri-olympic") return dl.includes("olympic");
   if (subKey === "tri-sprint") return dl.includes("sprint");
 
-  if (subKey === "run-road") return type === "running";
-  if (subKey === "run-trail") return type === "trail";
+  if (subKey === "run-road") return type === "running" && venue !== "trail";
+  if (subKey === "run-trail") return type === "running" && venue === "trail";
   if (subKey === "run-5k") return /\b5k\b/i.test(d) || d.includes("5km");
   if (subKey === "run-10k") return /\b10k\b/i.test(d) || d.includes("10km");
   if (subKey === "run-half") return d.includes("21.1") || d.includes("21k") || d.includes("half marathon");
@@ -1026,32 +1031,33 @@ export default function CalendarPage() {
   // ── Sport column: pill + condition tag ──
   // Condition = surface / venue / brand modifier shown below the SportPill.
   // Priority order within each type: brand > surface > default.
-  function getSportCondition(type: string, raceName: string): string | null {
+  // `venue` is the real database column now (running/triathlon: road|trail, swimming:
+  // ocean|lake|river, ocr: urban|nature) — prefer it, falling back to the old name-based
+  // heuristics only when it's missing (shouldn't normally happen post-migration).
+  function getSportCondition(type: string, venue: string | null | undefined, raceName: string): string | null {
     const n = (raceName ?? "").toLowerCase();
+    const v = (venue ?? "").toLowerCase();
     switch (type) {
       case "running": {
+        if (v === "trail") {
+          if (n.includes("skyrace") || n.includes("skyrun") || n.includes("sky run") || n.includes("skyultra") || n.includes("sky camp")) return "Skyrun";
+          if (n.includes("xterra")) return "Xterra";
+          if (n.includes("utmb") || n.includes("ultra-trail") || n.includes("ultra trail")) return "UTMB";
+          if (n.includes("spartan")) return "Spartan";
+          return "Trail";
+        }
         // Sky races
         if (n.includes("skyrace") || n.includes("skyrun") || n.includes("sky run") || n.includes("skyultra")) return "Skyrun";
         // All road marathons / half marathons / 10K etc
         return "Road";
       }
-      case "trail": {
-        // Sky-branded first
-        if (n.includes("skyrace") || n.includes("skyrun") || n.includes("sky run") || n.includes("skyultra") || n.includes("sky camp")) return "Skyrun";
-        // Branded series
-        if (n.includes("xterra")) return "Xterra";
-        if (n.includes("utmb") || n.includes("ultra-trail") || n.includes("ultra trail")) return "UTMB";
-        if (n.includes("spartan")) return "Spartan";
-        // Default
-        return "Trail";
-      }
       case "triathlon": {
         if (n.includes("xterra")) return "Xterra";
-        return "Road"; // all standard triathlons are road
+        return v === "trail" ? "Trail" : "Road";
       }
-      case "ocean-swim": {
-        if (n.includes("lake") || n.includes("sun moon")) return "Lake";
-        if (n.includes("river")) return "River";
+      case "swimming": {
+        if (v === "lake" || n.includes("lake") || n.includes("sun moon")) return "Lake";
+        if (v === "river" || n.includes("river")) return "River";
         return "Ocean";
       }
       case "swimrun": {
@@ -1063,7 +1069,9 @@ export default function CalendarPage() {
       case "hyrox":
         return "Stadium";
       case "ocr": {
-        // Nature signals
+        if (v === "urban") return "Urban";
+        if (v === "nature") return "Nature";
+        // Fallback heuristic if venue is somehow unset
         if (
           n.includes("trail") || n.includes("mountain") || n.includes("fuji") ||
           n.includes("park") || n.includes("ranch") || n.includes("forest") ||
@@ -1074,12 +1082,10 @@ export default function CalendarPage() {
           n.includes("susono") || n.includes("pasig") || n.includes("pattaya") ||
           n.includes("werribee") || n.includes("myoko") || n.includes("singha")
         ) return "Nature";
-        // Urban/stadium signals
         if (
           n.includes("stadion") || n.includes("citywalk") || n.includes("deka") ||
           n.includes("kids") || n.includes("singapore") || n.includes("wollongong")
         ) return "Urban";
-        // Default: Nature
         return "Nature";
       }
       case "xenom":
@@ -1897,7 +1903,7 @@ export default function CalendarPage() {
                   const isWatchlist = race.status === "watchlist";
                   const weather = getRaceWeather(race.location, race.date);
                   const showWaterTemp = weather?.waterTemp != null && (
-                    ["triathlon", "ocean-swim", "swimrun"].includes(race.type) ||
+                    ["triathlon", "swimming", "swimrun"].includes(race.type) ||
                     (race.type === "ocr" && /swim|river|lake|aqua|water/i.test(race.name))
                   );
                   const flag = COUNTRY_WEATHER[race.country]?.flag ?? "";
@@ -1975,7 +1981,7 @@ export default function CalendarPage() {
                           <div className="flex items-center gap-1.5 flex-nowrap">
                             <SportPill cls={race.badgeClass} />
                             {(() => {
-                              const cond = getSportCondition(race.type, race.name);
+                              const cond = getSportCondition(race.type, (race as any).venue, race.name);
                               return cond
                                 ? <span className="text-xs text-muted-foreground whitespace-nowrap">{cond}</span>
                                 : null;

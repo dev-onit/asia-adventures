@@ -1,7 +1,31 @@
 import { Router } from "express";
 import { getRaces, getFavourites, addFavourite, removeFavourite, resetVotes, getExploreSites } from "./storage.js";
 import { db } from "./storage.js";
-import { races, exploreSites } from "../shared/schema.js";
+import { races, raceDates, exploreSites } from "../shared/schema.js";
+import { typeToBadge } from "./seed.js";
+
+// Reconstructs the legacy display date string + JSON dates blob from a new-shape
+// dates array, so the existing frontend (which still reads race.date/dates/status)
+// keeps working for races inserted via the new import path.
+const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function formatLegacyDate(eventDate: string, precision: string): string {
+  const [year, month, day] = eventDate.split("-").map(Number);
+  const mon = MONTH_NAMES[month - 1] ?? "Jan";
+  return precision === "exact" ? `${mon} ${day}, ${year}` : `${mon} ${year}`;
+}
+type DateEntryInput = { event_date: string; precision: string; confidence: string; is_primary?: boolean };
+function buildLegacyDateFields(dateEntries: DateEntryInput[] | undefined, fallbackDate?: string, fallbackStatus?: string) {
+  if (!dateEntries?.length) {
+    return { date: fallbackDate ?? "", legacyDates: JSON.stringify([{ date: fallbackDate ?? "", status: fallbackStatus ?? "active" }]) };
+  }
+  const primary = dateEntries.find(d => d.is_primary) ?? dateEntries[0];
+  const date = formatLegacyDate(primary.event_date, primary.precision);
+  const legacyDates = JSON.stringify(dateEntries.map(d => ({
+    date: formatLegacyDate(d.event_date, d.precision),
+    status: d.confidence === "predicted" ? "watchlist" : "active",
+  })));
+  return { date, legacyDates };
+}
 
 const router = Router();
 const ADMIN_KEY = process.env.ADMIN_KEY || "";
@@ -62,11 +86,17 @@ router.delete("/admin/votes", requireAdmin, async (req, res) => {
 });
 
 router.post("/admin/races", requireAdmin, async (req, res) => {
-  const { name, location, country, date, distance, type, team, url, note, status, badgeClass, lat, lng } = req.body;
+  const { name, location, country, date, distance, type, venue, brand, source, team, url, note, status, badgeClass, lat, lng } = req.body;
   if (!name || !location || !country || !date || !distance || !type) {
     return res.status(400).json({ error: "Missing required race fields" });
   }
-  const result = (await db.insert(races).values({ name, location, country, date, distance, type, team: team ?? "", url: url ?? "", note: note ?? "", status: status ?? "active", badgeClass: badgeClass ?? "", lat: lat ?? null, lng: lng ?? null }).returning())[0];
+  const result = (await db.insert(races).values({
+    name, location, country, date, distance, type,
+    venue: venue ?? null, brand: brand ?? null, source: source ?? null,
+    team: team ?? "", url: url ?? "", note: note ?? "", status: status ?? "active",
+    badgeClass: badgeClass ?? typeToBadge(type, venue, name),
+    lat: lat ?? null, lng: lng ?? null,
+  }).returning())[0];
   res.json(result);
 });
 
@@ -74,7 +104,7 @@ router.put("/admin/races/:id", requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { eq } = await import("drizzle-orm");
   // Allowlist mutable fields — never allow id to be overwritten
-  const { name, location, country, date, distance, type, team, url, note, status, badgeClass, lat, lng, dates } = req.body;
+  const { name, location, country, date, distance, type, venue, brand, source, team, url, note, status, badgeClass, lat, lng, dates } = req.body;
   const update: Record<string, any> = {};
   if (name !== undefined) update.name = name;
   if (location !== undefined) update.location = location;
@@ -83,6 +113,9 @@ router.put("/admin/races/:id", requireAdmin, async (req, res) => {
   if (dates !== undefined) update.dates = dates;
   if (distance !== undefined) update.distance = distance;
   if (type !== undefined) update.type = type;
+  if (venue !== undefined) update.venue = venue;
+  if (brand !== undefined) update.brand = brand;
+  if (source !== undefined) update.source = source;
   if (team !== undefined) update.team = team;
   if (url !== undefined) update.url = url;
   if (note !== undefined) update.note = note;
@@ -90,6 +123,7 @@ router.put("/admin/races/:id", requireAdmin, async (req, res) => {
   if (badgeClass !== undefined) update.badgeClass = badgeClass;
   if (lat !== undefined) update.lat = lat;
   if (lng !== undefined) update.lng = lng;
+  update.updatedAt = new Date();
   const result = (await db.update(races).set(update).where(eq(races.id, Number(id))).returning())[0];
   res.json(result);
 });
@@ -137,9 +171,13 @@ router.delete("/admin/explore/:id", requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
-// ── Bulk insert endpoint — used by Perplexity to add races/sites directly ──
+// ── Bulk insert endpoint — used by research prompts (e.g. Perplexity) to add races/
+// sites directly ──
 // POST /api/admin/bulk
 // Body: { races?: RaceInsert[], explore?: ExploreInsert[] }
+//   RaceInsert: { name, location, country, type, venue?, brand?, source?, distance,
+//     distanceLabel?, team?, url?, note?, status?, lat?, lng?,
+//     dates: [{ event_date, precision, confidence, is_primary }] }
 // Returns: { racesAdded, sitesAdded }
 // Never deletes existing data. Safe to call multiple times — duplicates skipped by name+date.
 router.post("/admin/bulk", requireAdmin, async (req, res) => {
@@ -148,26 +186,46 @@ router.post("/admin/bulk", requireAdmin, async (req, res) => {
 
   let racesAdded = 0;
   for (const race of newRaces) {
-    if (!race.name || !race.date || !race.country) continue;
+    if (!race.name || !race.country || !race.type) continue;
+    const dateEntries: DateEntryInput[] | undefined = race.dates;
+    const { date: legacyDate, legacyDates } = buildLegacyDateFields(dateEntries, race.date, race.status);
+    if (!legacyDate) continue;
     // Skip if same name+date already exists
     const existing = await db.select().from(races)
-      .where(and(eq(races.name, race.name), eq(races.date, race.date)));
+      .where(and(eq(races.name, race.name), eq(races.date, legacyDate)));
     if (existing[0]) continue;
-    await db.insert(races).values({
+    const hasPredictedPrimary = dateEntries?.find(d => d.is_primary)?.confidence === "predicted";
+    const [inserted] = await db.insert(races).values({
       name: race.name,
       location: race.location ?? "",
       country: race.country,
-      date: race.date,
+      date: legacyDate,
+      dates: legacyDates,
       distance: race.distance ?? "",
-      type: race.type ?? "running",
+      distanceLabel: race.distanceLabel ?? "",
+      type: race.type,
+      venue: race.venue ?? null,
+      brand: race.brand ?? null,
+      source: race.source ?? null,
       team: race.team ?? "",
       url: race.url ?? "",
       note: race.note ?? "",
-      status: race.status ?? "active",
-      badgeClass: race.badgeClass ?? `badge-${(race.type ?? "run").slice(0, 3)}`,
+      // Legacy status field stays "watchlist" when the primary date is predicted, so
+      // the existing hide-unconfirmed toggle keeps working without changes.
+      status: race.status ?? (hasPredictedPrimary ? "watchlist" : "active"),
+      badgeClass: typeToBadge(race.type, race.venue, race.name),
       lat: race.lat ?? null,
       lng: race.lng ?? null,
-    });
+    }).returning();
+    if (inserted && dateEntries?.length) {
+      await db.insert(raceDates).values(dateEntries.map(d => ({
+        raceId: inserted.id,
+        eventDate: d.event_date,
+        precision: d.precision,
+        confidence: d.confidence,
+        isPrimary: d.is_primary ?? false,
+      })));
+    }
     racesAdded++;
   }
 

@@ -1,5 +1,12 @@
 import { db } from "./storage.js";
-import { races } from "../shared/schema.js";
+import { races, raceDates } from "../shared/schema.js";
+
+export type RaceDateEntry = {
+  eventDate: string;   // YYYY-MM-DD, day=1 placeholder when precision is "month"
+  precision: string;   // exact | month
+  confidence: string;  // confirmed | predicted
+  isPrimary: boolean;
+};
 
 export type RaceSeed = {
   name: string;
@@ -9,13 +16,16 @@ export type RaceSeed = {
   distance: string;
   distanceLabel: string;
   type: string;
+  venue?: string | null;
+  brand?: string | null;
   team: string;
   url: string;
   note: string;
   status: string;
-  dates?: string;  // JSON: [{date, status}]
+  dates?: string;  // JSON: [{date, status}] — legacy, kept for backward compat
   lat?: string;
   lng?: string;
+  dateEntries?: RaceDateEntry[];
 };
 
 export async function seedRaces() {
@@ -252,20 +262,21 @@ export async function seedAdditionalRaces() {
   console.log(`[seed] inserted up to ${count} additional races`);
 }
 
-// Derive badgeClass from type
-function typeToBadge(type: string, name = ""): string {
+// Derive badgeClass from type + venue. Running/swimming no longer have separate "trail"/
+// "ocean-swim" type values — venue carries that distinction now — so badge selection
+// needs both.
+export function typeToBadge(type: string, venue: string | null | undefined, name = ""): string {
   const n = name.toLowerCase();
   // OCR: Spartan and DEKA are branded — get their own badge
   if (type === "ocr" && (n.includes("spartan") || n.includes("deka"))) return "badge-spartan";
+  if (type === "running") return venue === "trail" ? "badge-run-trail" : "badge-run";
   const map: Record<string, string> = {
-    triathlon:    "badge-tri",
-    running:      "badge-run",
-    trail:        "badge-run-trail",  // amber — distinct from road running
-    "ocean-swim": "badge-swim",
-    swimrun:      "badge-swimrun",
-    hyrox:        "badge-hyrox",
-    ocr:          "badge-ocr",
-    xenom:        "badge-xenom",
+    triathlon: "badge-tri",
+    swimming:  "badge-swim",
+    swimrun:   "badge-swimrun",
+    hyrox:     "badge-hyrox",
+    ocr:       "badge-ocr",
+    xenom:     "badge-xenom",
   };
   return map[type] ?? "badge-run";
 }
@@ -287,15 +298,27 @@ export async function syncAllRaces() {
   for (const r of ALL_SEED_RACES) {
     if (existing.has(r.name)) continue; // skip already present
     try {
+      const { dateEntries, ...raceFields } = r as RaceSeed;
       const entry = {
-        ...r,
-        badgeClass: typeToBadge((r as any).type ?? "", (r as any).name ?? ""),
-        distanceLabel: cleanDistanceLabel((r as any).distanceLabel ?? ""),
-        dates: (r as any).dates ?? JSON.stringify([{date: (r as any).date ?? "", status: (r as any).status ?? "active"}]),
+        ...raceFields,
+        badgeClass: typeToBadge(r.type ?? "", r.venue, r.name ?? ""),
+        distanceLabel: cleanDistanceLabel(r.distanceLabel ?? ""),
+        dates: r.dates ?? JSON.stringify([{date: r.date ?? "", status: r.status ?? "active"}]),
       };
-      await db.insert(races).values(entry as any);
+      const [inserted] = await db.insert(races).values(entry as any).returning();
       existing.add(r.name);
       added++;
+      if (inserted && dateEntries?.length) {
+        await db.insert(raceDates).values(
+          dateEntries.map(d => ({
+            raceId: inserted.id,
+            eventDate: d.eventDate,
+            precision: d.precision,
+            confidence: d.confidence,
+            isPrimary: d.isPrimary,
+          }))
+        );
+      }
     } catch {}
   }
   console.log(`[seed] syncAllRaces: ${added} races added (${ALL_SEED_RACES.length} total in seed)`);

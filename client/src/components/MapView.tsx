@@ -77,6 +77,16 @@ const TYPE_SUBLABELS: Record<string, string> = {
   running: "Road", trail: "Trail",
 };
 
+// The maps above key on the pre-venue taxonomy (separate "trail"/"ocean-swim" type
+// values). The database now stores "running"+venue:"trail" and "swimming"+venue:"ocean"
+// instead — this derives the old key so colors/labels/letters stay identical without
+// duplicating every map above.
+function legacyTypeKey(race: { type: string; venue?: string | null }): string {
+  if (race.type === "running" && race.venue === "trail") return "trail";
+  if (race.type === "swimming") return "ocean-swim";
+  return race.type;
+}
+
 // Explore categories deliberately avoid any color used by TYPE_COLORS (Races) above —
 // e.g. Mountains used to share Trail's orange, Islands shared Ocean-Swim's cyan, and
 // Cities shared Road-running's violet, making the two map layers indistinguishable
@@ -314,12 +324,13 @@ const POPUP_STYLE = `
 function RacePopupContent({ race, isFav, voters, onToggleFav }: {
   race: Race; isFav: boolean; voters: string[]; onToggleFav: Props["onToggleFav"];
 }) {
-  const fill = TYPE_COLORS[race.type] ?? "#6366f1";
-  const label = TYPE_LABELS[race.type] ?? race.type;
-  const subLabel = TYPE_SUBLABELS[race.type];
+  const legacyType = legacyTypeKey(race);
+  const fill = TYPE_COLORS[legacyType] ?? "#6366f1";
+  const label = TYPE_LABELS[legacyType] ?? race.type;
+  const subLabel = TYPE_SUBLABELS[legacyType];
   const flag = COUNTRY_WEATHER[race.country]?.flag ?? "";
   const weather = getRaceWeather(race.location, race.date);
-  const showWaterTemp = weather?.waterTemp != null && ["triathlon", "ocean-swim", "swimrun"].includes(race.type);
+  const showWaterTemp = weather?.waterTemp != null && ["triathlon", "swimming", "swimrun"].includes(race.type);
 
   return (
     <div className="map-popup">
@@ -370,8 +381,9 @@ function ExplorePopupContent({ site }: { site: ExploreSite }) {
 function RaceMarker({ race, coords, isFav, voters, onToggleFav }: {
   race: Race; coords: [number, number]; isFav: boolean; voters: string[]; onToggleFav: Props["onToggleFav"];
 }) {
-  const fill = TYPE_COLORS[race.type] ?? "#6366f1";
-  const label = TYPE_LETTERS[race.type] ?? "?";
+  const legacyType = legacyTypeKey(race);
+  const fill = TYPE_COLORS[legacyType] ?? "#6366f1";
+  const label = TYPE_LETTERS[legacyType] ?? "?";
   const icon = useMemo(() => buildRaceIcon(fill, label, isFav, voters.length), [fill, label, isFav, voters.length]);
   return (
     <Marker position={coords} icon={icon}>
