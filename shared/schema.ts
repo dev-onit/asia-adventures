@@ -86,7 +86,17 @@ export const exploreSites = pgTable("explore_sites", {
   lng: text("lng"),
 });
 
+// Mirrors `favourites` rather than sharing one polymorphic table — a single column
+// can't cleanly FK to two different tables with real referential integrity, and we'd
+// lose the ON DELETE CASCADE safety net. Two small tables beats one fragile one.
+export const exploreFavourites = pgTable("explore_favourites", {
+  id: serial("id").primaryKey(),
+  exploreSiteId: integer("explore_site_id").notNull().references(() => exploreSites.id, { onDelete: "cascade" }),
+  voterName: text("voter_name").notNull(),
+});
+
 export type Race = typeof races.$inferSelect;
 export type RaceDate = typeof raceDates.$inferSelect;
 export type Favourite = typeof favourites.$inferSelect;
 export type ExploreSite = typeof exploreSites.$inferSelect;
+export type ExploreFavourite = typeof exploreFavourites.$inferSelect;

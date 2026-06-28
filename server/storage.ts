@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { drizzle } from "drizzle-orm/vercel-postgres";
-import { races, raceDates, favourites, exploreSites } from "../shared/schema.js";
+import { races, raceDates, favourites, exploreSites, exploreFavourites } from "../shared/schema.js";
 import { eq, and } from "drizzle-orm";
 
 export const db = drizzle(sql);
@@ -79,6 +79,13 @@ async function ensureSchema() {
   } catch (e: any) {
     if (e?.code !== '42710') console.warn('[migration] favourites FK constraint:', e); // 42710 = already exists
   }
+  await sql`
+    CREATE TABLE IF NOT EXISTS explore_favourites (
+      id SERIAL PRIMARY KEY,
+      explore_site_id INTEGER NOT NULL REFERENCES explore_sites(id) ON DELETE CASCADE,
+      voter_name TEXT NOT NULL
+    )
+  `;
 }
 
 export async function getRaces() {
@@ -108,6 +115,23 @@ export async function resetVotes() {
 
 export async function getExploreSites() {
   return db.select().from(exploreSites);
+}
+
+export async function getExploreFavourites() {
+  return db.select().from(exploreFavourites);
+}
+
+export async function addExploreFavourite(exploreSiteId: number, voterName: string) {
+  const existing = await db.select().from(exploreFavourites)
+    .where(and(eq(exploreFavourites.exploreSiteId, exploreSiteId), eq(exploreFavourites.voterName, voterName)));
+  if (existing[0]) return existing[0];
+  const inserted = await db.insert(exploreFavourites).values({ exploreSiteId, voterName }).returning();
+  return inserted[0];
+}
+
+export async function removeExploreFavourite(exploreSiteId: number, voterName: string) {
+  return db.delete(exploreFavourites)
+    .where(and(eq(exploreFavourites.exploreSiteId, exploreSiteId), eq(exploreFavourites.voterName, voterName)));
 }
 
 // Bump this whenever seedData changes — forces a full wipe+reseed on next deploy

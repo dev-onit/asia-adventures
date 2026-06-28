@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getRaces, getFavourites, addFavourite, removeFavourite, resetVotes, getExploreSites } from "./storage.js";
+import { getRaces, getFavourites, addFavourite, removeFavourite, resetVotes, getExploreSites, getExploreFavourites, addExploreFavourite, removeExploreFavourite } from "./storage.js";
 import { db } from "./storage.js";
 import { races, raceDates, exploreSites } from "../shared/schema.js";
 import { typeToBadge } from "./seed.js";
@@ -76,6 +76,29 @@ router.delete("/favourites/:raceId", async (req, res) => {
 
 router.get("/explore", async (req, res) => {
   res.json(await getExploreSites());
+});
+
+router.get("/explore-favourites", async (req, res) => {
+  res.json(await getExploreFavourites());
+});
+
+router.post("/explore-favourites", async (req, res) => {
+  const { exploreSiteId, voterName } = req.body;
+  if (!exploreSiteId || !voterName) return res.status(400).json({ error: "Missing exploreSiteId or voterName" });
+  const nameStr = String(voterName).trim();
+  if (nameStr.length === 0 || nameStr.length > 50) return res.status(400).json({ error: "voterName must be 1–50 characters" });
+  if (/<|>/.test(nameStr)) return res.status(400).json({ error: "voterName contains invalid characters" });
+  res.json(await addExploreFavourite(Number(exploreSiteId), nameStr));
+});
+
+router.delete("/explore-favourites/:exploreSiteId", async (req, res) => {
+  const { exploreSiteId } = req.params;
+  const { voterName } = req.body;
+  if (!voterName) return res.status(400).json({ error: "Missing voterName" });
+  const nameStr = String(voterName).trim();
+  if (nameStr.length === 0 || nameStr.length > 50) return res.status(400).json({ error: "voterName must be 1–50 characters" });
+  await removeExploreFavourite(Number(exploreSiteId), nameStr);
+  res.json({ ok: true });
 });
 
 // ── Admin routes ──

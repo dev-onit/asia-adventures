@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Star, Filter, X, Globe2, Users, AlertTriangle, ChevronRight, TrendingUp, Calendar, MapPin } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-import type { Race, Favourite, ExploreSite } from "../../../shared/schema";
+import type { Race, Favourite, ExploreSite, ExploreFavourite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
 import { API_BASE } from "../App";
@@ -502,6 +502,7 @@ export default function CalendarPage() {
   const { data: races = [], isLoading } = useQuery<Race[]>({ queryKey: ["/api/races"] });
   const { data: favourites = [] } = useQuery<Favourite[]>({ queryKey: ["/api/favourites"] });
   const { data: exploreSites = [] } = useQuery<ExploreSite[]>({ queryKey: ["/api/explore"] });
+  const { data: exploreFavourites = [] } = useQuery<ExploreFavourite[]>({ queryKey: ["/api/explore-favourites"] });
 
   const addFav = useMutation({
     mutationFn: async (raceId: number) => {
@@ -552,6 +553,38 @@ export default function CalendarPage() {
     }
     return s;
   }, [favSet, races]);
+
+  const addExploreFav = useMutation({
+    mutationFn: async (exploreSiteId: number) => {
+      await fetch(`${API_BASE}/api/explore-favourites`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ exploreSiteId, voterName }) });
+    },
+    onMutate: async (exploreSiteId) => {
+      await qc.cancelQueries({ queryKey: ["/api/explore-favourites"] });
+      const prev = qc.getQueryData<ExploreFavourite[]>(["/api/explore-favourites"]) ?? [];
+      qc.setQueryData(["/api/explore-favourites"], [...prev, { id: Date.now(), exploreSiteId, voterName }]);
+      return { prev };
+    },
+    onError: (_e, _v, ctx: any) => qc.setQueryData(["/api/explore-favourites"], ctx.prev),
+    onSettled: () => qc.invalidateQueries({ queryKey: ["/api/explore-favourites"] }),
+  });
+
+  const removeExploreFav = useMutation({
+    mutationFn: async (exploreSiteId: number) => {
+      await fetch(`${API_BASE}/api/explore-favourites/${exploreSiteId}`, { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ voterName }) });
+    },
+    onMutate: async (exploreSiteId) => {
+      await qc.cancelQueries({ queryKey: ["/api/explore-favourites"] });
+      const prev = qc.getQueryData<ExploreFavourite[]>(["/api/explore-favourites"]) ?? [];
+      qc.setQueryData(["/api/explore-favourites"], prev.filter(f => !(f.exploreSiteId === exploreSiteId && f.voterName === voterName)));
+      return { prev };
+    },
+    onError: (_e, _v, ctx: any) => qc.setQueryData(["/api/explore-favourites"], ctx.prev),
+    onSettled: () => qc.invalidateQueries({ queryKey: ["/api/explore-favourites"] }),
+  });
+
+  const exploreFavSet = useMemo(() => new Set(
+    exploreFavourites.filter(f => f.voterName === voterName).map(f => f.exploreSiteId)
+  ), [exploreFavourites, voterName]);
 
   const mostVotedCountries = useMemo(() => {
     const s = new Set<string>();
@@ -864,9 +897,12 @@ export default function CalendarPage() {
 
     return exploreSites.filter(s => {
       if (showFavs) {
-        // Favourites ON: only countries with a favourited race
-        if (favCountries.size === 0) return false;
-        if (!favCountries.has(s.country)) return false;
+        // Favourites ON: directly-favourited places, OR places in a country with a
+        // favourited race (the old country-level proxy, kept as a secondary signal —
+        // useful before someone's starred any explore places themselves).
+        const directlyFavourited = exploreFavSet.has(s.id);
+        const inFavouritedCountry = favCountries.size > 0 && favCountries.has(s.country);
+        if (!directlyFavourited && !inFavouritedCountry) return false;
       } else if (sortMode === "votes" && mostVotedCountries.size > 0) {
         // Most Voted ON + votes exist: only countries with voted races
         if (!mostVotedCountries.has(s.country)) return false;
@@ -880,7 +916,7 @@ export default function CalendarPage() {
       }
       return true;
     });
-  }, [exploreSites, showFavs, favCountries, sortMode, mostVotedCountries, exploreCategoryFilters, search]);
+  }, [exploreSites, showFavs, favCountries, exploreFavSet, sortMode, mostVotedCountries, exploreCategoryFilters, search]);
 
   // ── Header height measurement ──
   const headerRef = useRef<HTMLElement>(null);
@@ -1961,7 +1997,7 @@ export default function CalendarPage() {
                         {/* Name + note (name is a link if URL exists) */}
                         <td className="py-4 px-3 align-middle" style={{ minWidth: COL_WIDTHS[1], maxWidth: 240 }}>
                           <div className="truncate font-bold text-sm leading-snug" title={race.name}>
-                            {isWatchlist && <AlertTriangle size={11} className="inline text-red-500 dark:text-red-400 mr-1 mb-0.5" />}
+                            {isWatchlist && <AlertTriangle size={11} className="inline text-red-500 dark:text-red-400 mr-1 mb-0.5" aria-label="Unconfirmed date" />}
                             {race.url ? (
                               <a href={race.url} target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
                                 {race.name}
@@ -1998,14 +2034,24 @@ export default function CalendarPage() {
                             let raceDates: {date: string, status: string}[] = [];
                             try { raceDates = JSON.parse((race as any).dates ?? "[]"); } catch {}
                             if (raceDates.length === 0) raceDates = [{date: race.date, status: race.status}];
-                            return raceDates.map((d, i) => (
-                              <div key={i} className={`flex items-center gap-1 ${i > 0 ? "mt-1" : ""}`}>
-                                <div className="text-sm text-foreground whitespace-nowrap">{formatRaceDate(d.date)}</div>
-                                {d.status === "watchlist" && (
-                                  <AlertTriangle size={10} className="text-red-500 dark:text-red-400 flex-shrink-0" aria-label="Predicted date" />
-                                )}
-                              </div>
-                            ));
+                            return raceDates.map((d, i) => {
+                              const isUnconfirmed = d.status === "watchlist";
+                              return (
+                                <div key={i} className={`flex items-center gap-1.5 ${i > 0 ? "mt-1" : ""}`}>
+                                  <div className={`text-sm whitespace-nowrap font-medium ${isUnconfirmed ? "text-red-600 dark:text-red-400" : "text-emerald-600 dark:text-emerald-400"}`}>
+                                    {formatRaceDate(d.date)}
+                                  </div>
+                                  {isUnconfirmed && (
+                                    <span
+                                      className="text-[9px] font-bold uppercase tracking-wide text-red-500 dark:text-red-400 flex-shrink-0"
+                                      title="Not yet officially confirmed — based on last year's pattern or organizer hasn't locked a date"
+                                    >
+                                      Unconfirmed
+                                    </span>
+                                  )}
+                                </div>
+                              );
+                            });
                           })()}
                         </td>
                         {/* Weather */}
@@ -2068,6 +2114,9 @@ export default function CalendarPage() {
         favCountries={favCountries}
         hasActiveFilters={activeFilterCount > 0}
         stickyTop="var(--header-h, 0px)"
+        exploreFavSet={exploreFavSet}
+        onToggleExploreFav={(id: number) => exploreFavSet.has(id) ? removeExploreFav.mutate(id) : addExploreFav.mutate(id)}
+        exploreFavPending={addExploreFav.isPending || removeExploreFav.isPending}
       />
 
       {/* Footer */}

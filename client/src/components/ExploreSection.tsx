@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Star } from "lucide-react";
 import type { ExploreSite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
 
@@ -9,18 +10,25 @@ interface Props {
   favCountries: Set<string>;
   hasActiveFilters: boolean;
   stickyTop?: string;
+  exploreFavSet: Set<number>;
+  onToggleExploreFav: (id: number) => void;
+  exploreFavPending: boolean;
 }
 
+// Must match MapView.tsx's CATEGORY_COLORS — these used to diverge (this file still had
+// the pre-collision palette where Mountains/Islands/Cities shared colors with race types
+// on the map), so the same category showed two different colors depending on which view
+// you were looking at.
 const CATEGORY_COLORS: Record<string, string> = {
-  Mountains: "#f97316",
-  Islands:   "#06b6d4",
-  Cities:    "#8b5cf6",
+  Mountains: "#16a34a",
+  Islands:   "#0d9488",
+  Cities:    "#84cc16",
   Temples:   "#f59e0b",
   Nature:    "#22c55e",
   Beaches:   "#ec4899",
 };
 
-export default function ExploreSection({ sites, filteredSites, showFavsOnly, hasActiveFilters, stickyTop }: Props) {
+export default function ExploreSection({ sites, filteredSites, showFavsOnly, hasActiveFilters, stickyTop, exploreFavSet, onToggleExploreFav, exploreFavPending }: Props) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -52,24 +60,35 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
               ? site.description.slice(0, 90) + "…"
               : site.description;
 
+            const isFav = exploreFavSet.has(site.id);
             return (
               <div
                 key={site.id}
                 className="rounded-[14px] border border-border bg-card flex flex-col transition-all duration-150 hover:border-primary/30 hover:shadow-md"
                 style={{ padding: "12px" }}
               >
-                {/* Category badge — exact popup style */}
-                <span
-                  className="self-start text-[10px] font-bold uppercase tracking-[0.06em] rounded-full mb-2"
-                  style={{
-                    padding: "2px 8px",
-                    background: color + "22",
-                    color: color,
-                    border: `1px solid ${color}55`,
-                  }}
-                >
-                  {site.category}
-                </span>
+                {/* Category badge + favourite star */}
+                <div className="flex items-start justify-between mb-2">
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-[0.06em] rounded-full"
+                    style={{
+                      padding: "2px 8px",
+                      background: color + "22",
+                      color: color,
+                      border: `1px solid ${color}55`,
+                    }}
+                  >
+                    {site.category}
+                  </span>
+                  <button
+                    onClick={() => onToggleExploreFav(site.id)}
+                    disabled={exploreFavPending}
+                    className={`star-btn -mt-1 -mr-1 ${isFav ? "starred" : "hover:text-yellow-400/70"} disabled:opacity-50`}
+                    title={isFav ? "Unstar" : "Star as favourite"}
+                  >
+                    <Star size={14} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
+                  </button>
+                </div>
 
                 {/* Emoji + Name */}
                 <div className="flex items-start gap-1.5 mb-1">
