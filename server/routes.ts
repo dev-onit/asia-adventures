@@ -127,7 +127,7 @@ router.put("/admin/races/:id", requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { eq } = await import("drizzle-orm");
   // Allowlist mutable fields — never allow id to be overwritten
-  const { name, location, country, date, distance, type, venue, brand, source, team, url, note, status, badgeClass, lat, lng, dates } = req.body;
+  const { name, location, country, date, distance, distanceLabel, type, venue, brand, source, team, url, note, status, badgeClass, lat, lng, dates } = req.body;
   const update: Record<string, any> = {};
   if (name !== undefined) update.name = name;
   if (location !== undefined) update.location = location;
@@ -135,6 +135,7 @@ router.put("/admin/races/:id", requireAdmin, async (req, res) => {
   if (date !== undefined) update.date = date;
   if (dates !== undefined) update.dates = dates;
   if (distance !== undefined) update.distance = distance;
+  if (distanceLabel !== undefined) update.distanceLabel = distanceLabel;
   if (type !== undefined) update.type = type;
   if (venue !== undefined) update.venue = venue;
   if (brand !== undefined) update.brand = brand;
