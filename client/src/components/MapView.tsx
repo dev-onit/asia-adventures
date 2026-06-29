@@ -773,7 +773,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         attributionControl={false}
         scrollWheelZoom={false}
         dragging={allowDragging}
-        touchZoom={true}
+        touchZoom={isFullscreen}
         className={`map-container w-full ${isFullscreen ? "map-fullscreen" : ""}`}
         style={{ height: "100%", zIndex: 1 }}
       >
