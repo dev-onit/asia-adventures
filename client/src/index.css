@@ -159,15 +159,6 @@ h1, h2, h3 {
    since it still owns 1-finger touch panning there. */
 .map-container.leaflet-container:not(.map-fullscreen) { touch-action: pan-x pan-y !important; }
 
-/* Belt-and-suspenders guarantee, independent of Leaflet's internal handler state or any
-   browser-version quirk: the embedded map's interactive surface is removed from pointer/
-   wheel hit-testing entirely, so wheel/touch input there always falls through to the page
-   underneath instead of ever reaching Leaflet. The zoom +/- control is carved back out
-   (pointer-events is inherited) so it stays clickable as the deliberate way to zoom
-   without enabling full pan/scroll-zoom interaction. */
-.map-container.leaflet-container:not(.map-fullscreen) { pointer-events: none; }
-.map-container.leaflet-container:not(.map-fullscreen) .leaflet-control-zoom { pointer-events: auto; }
-
 /* Light mode sticky header */
 .light header.sticky {
   background: hsl(210 20% 96% / 0.96) !important;
