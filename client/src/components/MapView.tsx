@@ -703,7 +703,7 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
 }
 
 export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch }: Props) {
-  const [showExplore, setShowExplore] = useState(false);
+  const [showExplore, setShowExplore] = useState(true);
   const [showRaces, setShowRaces] = useState(true);
   const [showLayersMenu, setShowLayersMenu] = useState(false);
   const [showViewMenu, setShowViewMenu] = useState(false);

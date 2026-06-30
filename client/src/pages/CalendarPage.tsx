@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Star, Filter, X, Globe2, Users, AlertTriangle, ChevronRight, TrendingUp, Calendar, MapPin } from "lucide-react";
 import { DayPicker } from "react-day-picker";
@@ -334,24 +335,48 @@ const VOTER_COLORS = [
 
 function VoterChips({ voters }: { voters: string[] }) {
   const [open, setOpen] = React.useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
+  const btnRef = React.useRef<HTMLButtonElement>(null);
+  const popupRef = React.useRef<HTMLDivElement>(null);
+  const [pos, setPos] = React.useState<{ top: number; left: number } | null>(null);
+
+  // Rendered via a portal to document.body (position: fixed, viewport coords) rather
+  // than as a normal absolutely-positioned child — the table's horizontally-scrolling
+  // wrapper (.table-wrap, overflow-x: auto) clips any child that extends past its own
+  // bounds, which is what made this popup render cramped/cut-off before. A portal
+  // escapes that ancestor entirely so it can render over the table content and extend
+  // further right of the button instead of being squeezed against it.
+  const updatePosition = React.useCallback(() => {
+    const rect = btnRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const popupWidth = popupRef.current?.offsetWidth ?? 160;
+    const left = Math.min(rect.left, window.innerWidth - popupWidth - 8);
+    setPos({ top: rect.bottom + 6, left: Math.max(8, left) });
+  }, []);
 
   React.useEffect(() => {
     if (!open) return;
-    function handler(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    updatePosition();
+    function handleClickAway(e: MouseEvent) {
+      const target = e.target as Node;
+      if (btnRef.current?.contains(target) || popupRef.current?.contains(target)) return;
+      setOpen(false);
     }
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [open]);
+    document.addEventListener('mousedown', handleClickAway);
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      document.removeEventListener('mousedown', handleClickAway);
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [open, updatePosition]);
 
   if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
 
-  const label = `${voters.length} ${voters.length === 1 ? 'Vote' : 'Votes'}`;
-
   return (
-    <div ref={ref} className="relative inline-flex">
+    <>
       <button
+        ref={btnRef}
         onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
         className="inline-flex items-center gap-1 pl-1 pr-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-500 hover:bg-orange-400 transition-colors whitespace-nowrap shadow-sm">
         <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-black/20 text-black text-[9px] font-bold leading-none">
@@ -359,14 +384,25 @@ function VoterChips({ voters }: { voters: string[] }) {
         </span>
         <span className="text-black">{voters.length === 1 ? 'Vote' : 'Votes'}</span>
       </button>
-      {open && (
-        <div className="absolute right-0 top-full mt-1 z-[600] min-w-[100px] rounded-xl border border-border bg-background shadow-xl py-1.5 px-1.5">
+      {open && pos && createPortal(
+        <div
+          ref={popupRef}
+          className="fixed z-[1000] min-w-[160px] rounded-xl border border-border bg-background shadow-2xl py-1.5 px-1.5"
+          style={{ top: pos.top, left: pos.left }}
+        >
+          <div className="flex items-center justify-between px-1.5 pb-1 mb-1 border-b border-border">
+            <span className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">{voters.length === 1 ? '1 Vote' : `${voters.length} Votes`}</span>
+            <button onClick={() => setOpen(false)} className="p-0.5 -mr-0.5 rounded text-muted-foreground hover:text-foreground transition-colors" title="Close">
+              <X size={12} />
+            </button>
+          </div>
           {voters.map((v, i) => (
             <div key={i} className={`px-2 py-0.5 mb-0.5 last:mb-0 text-[10px] font-semibold rounded-full border ${VOTER_COLORS[i % VOTER_COLORS.length]}`}>{v}</div>
           ))}
-        </div>
+        </div>,
+        document.body
       )}
-    </div>
+    </>
   );
 }
 
