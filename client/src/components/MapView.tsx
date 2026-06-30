@@ -356,7 +356,10 @@ function RacePopupContent({ race, isFav, voters, onToggleFav }: {
 
   return (
     <div className="map-popup">
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8 }}>
+      {/* paddingRight clears Leaflet's close button (28px wide, top:6/right:6 — so it
+          occupies the popup's top-right ~34px corner, past this content's own 14px
+          inset) so the right-aligned voters pill doesn't sit underneath it. */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8, paddingRight: 24 }}>
         <span className="mp-badge" style={{ background: `${fill}22`, color: fill, border: `1px solid ${fill}55`, marginBottom: 0 }}>
           {label}{subLabel && <span style={{ opacity: 0.65, fontWeight: 500 }}> · {subLabel}</span>}
         </span>
@@ -387,7 +390,10 @@ function ExplorePopupContent({ site, voters }: { site: ExploreSite; voters: stri
   const desc = site.description.length > 120 ? site.description.slice(0, 120) + "…" : site.description;
   return (
     <div className="map-popup">
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8 }}>
+      {/* paddingRight clears Leaflet's close button (28px wide, top:6/right:6 — so it
+          occupies the popup's top-right ~34px corner, past this content's own 14px
+          inset) so the right-aligned voters pill doesn't sit underneath it. */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8, paddingRight: 24 }}>
         <span className="mp-badge" style={{ background: `${color}22`, color, border: `1px solid ${color}55`, marginBottom: 0 }}>{site.category}</span>
         {voters.length > 0 && <VoterChips voters={voters} />}
       </div>
