@@ -1757,6 +1757,7 @@ export default function CalendarPage() {
         favSet={favSet}
         voterName={voterName}
         votesByRace={votesByRace}
+        exploreFavSet={exploreFavSet}
         exploreVotesBySite={exploreVotesBySite}
         showFavsOnly={showFavs}
         countryFilters={countryFilters}
