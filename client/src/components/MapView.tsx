@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, SlidersHorizontal, Search } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, Search } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -18,6 +18,7 @@ interface Props {
   favSet: Set<number>;
   voterName: string;
   votesByRace: Map<number, string[]>;
+  exploreVotesBySite: Map<number, string[]>;
   showFavsOnly: boolean;
   countryFilters: string[];
   onToggleFav: (raceId: number, isFav: boolean) => void;
@@ -368,7 +369,7 @@ function RacePopupContent({ race, isFav, voters, onToggleFav }: {
   );
 }
 
-function ExplorePopupContent({ site }: { site: ExploreSite }) {
+function ExplorePopupContent({ site, voters }: { site: ExploreSite; voters: string[] }) {
   const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
   const flag = COUNTRY_WEATHER[site.country]?.flag ?? "";
   const desc = site.description.length > 120 ? site.description.slice(0, 120) + "…" : site.description;
@@ -378,6 +379,7 @@ function ExplorePopupContent({ site }: { site: ExploreSite }) {
       <div className="mp-name">{site.name}</div>
       <div className="mp-row">{flag} {site.country}{site.region ? <> · {site.region}</> : null}</div>
       <div className="mp-row" style={{ marginTop: 4, lineHeight: 1.5 }}>{desc}</div>
+      {voters.length > 0 && <div className="mp-row">👥 {voters.join(", ")}</div>}
       {site.bestMonths && <div className="mp-months">Best: {site.bestMonths}</div>}
       {site.url && (
         <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-visit-btn" style={{ marginTop: 10, display: "block", textAlign: "center" }}>
@@ -405,23 +407,23 @@ function RaceMarker({ race, coords, isFav, voters, onToggleFav }: {
   );
 }
 
-function ExploreMarker({ site, coords }: { site: ExploreSite; coords: [number, number] }) {
+function ExploreMarker({ site, coords, voters }: { site: ExploreSite; coords: [number, number]; voters: string[] }) {
   const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
   const label = site.category.toUpperCase();
   const icon = useMemo(() => buildExploreIcon(label, color), [label, color]);
   return (
     <Marker position={coords} icon={icon}>
       <Popup maxWidth={280} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
-        <ExplorePopupContent site={site} />
+        <ExplorePopupContent site={site} voters={voters} />
       </Popup>
     </Marker>
   );
 }
 
 // ── Pins layer — lives inside <MapContainer> so it can read the live map instance ──
-function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByRace, onToggleFav }: {
+function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByRace, exploreVotesBySite, onToggleFav }: {
   displayRaces: Race[]; sites: ExploreSite[]; showRaces: boolean; showExplore: boolean;
-  favSet: Set<number>; votesByRace: Map<number, string[]>; onToggleFav: Props["onToggleFav"];
+  favSet: Set<number>; votesByRace: Map<number, string[]>; exploreVotesBySite: Map<number, string[]>; onToggleFav: Props["onToggleFav"];
 }) {
   const [zoom, setZoom] = useState(() => 4);
   const map = useMapEvents({ zoomend: () => setZoom(map.getZoom()) });
@@ -532,7 +534,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
           {sites.filter(site => soloSiteIds.has(site.id)).map(site => {
             const coords = pinCoords.get(`e:${site.id}`);
             if (!coords) return null;
-            return <ExploreMarker key={site.id} site={site} coords={coords} />;
+            return <ExploreMarker key={site.id} site={site} coords={coords} voters={exploreVotesBySite.get(site.id) ?? []} />;
           })}
           <MarkerClusterGroup
             chunkedLoading
@@ -544,7 +546,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
             {sites.filter(site => !soloSiteIds.has(site.id)).map(site => {
               const coords = pinCoords.get(`e:${site.id}`);
               if (!coords) return null;
-              return <ExploreMarker key={site.id} site={site} coords={coords} />;
+              return <ExploreMarker key={site.id} site={site} coords={coords} voters={exploreVotesBySite.get(site.id) ?? []} />;
             })}
           </MarkerClusterGroup>
         </>
@@ -748,11 +750,10 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreVotesBySite, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch }: Props) {
   const [showExplore, setShowExplore] = useState(true);
   const [showRaces, setShowRaces] = useState(true);
   const [showLayersMenu, setShowLayersMenu] = useState(false);
-  const [showViewMenu, setShowViewMenu] = useState(false);
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
 
@@ -810,12 +811,19 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
   // opening the menu.
   const layersCustomized = showExplore || !showRaces || !showUnconfirmed || !hidePast;
 
-  // Races with at least one vote, among the currently filtered list — mirrors the
-  // header's own "Most Voted" badge count.
-  const racesWithVotes = useMemo(() => {
+  // Races + Explore places with at least one vote, among the currently filtered
+  // lists — mirrors the header's own "Most Voted" badge count. Most Voted now
+  // spans both pin types, so the badge reflects the combined total rather than
+  // races alone.
+  const votedRaceCount = useMemo(() => {
     const raceIdSet = new Set(races.map(r => r.id));
     return [...votesByRace.keys()].filter(id => raceIdSet.has(id)).length;
   }, [races, votesByRace]);
+  const votedSiteCount = useMemo(() => {
+    const siteIdSet = new Set(sites.map(s => s.id));
+    return [...exploreVotesBySite.keys()].filter(id => siteIdSet.has(id)).length;
+  }, [sites, exploreVotesBySite]);
+  const totalWithVotes = votedRaceCount + votedSiteCount;
 
   return (
     <div
@@ -845,6 +853,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
           showExplore={showExplore}
           favSet={favSet}
           votesByRace={votesByRace}
+          exploreVotesBySite={exploreVotesBySite}
           onToggleFav={onToggleFav}
         />
       </MapContainer>
@@ -941,61 +950,42 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
             <X size={16} />
           </button>
         )}
-        {/* View — Favourites + Most Voted, consolidated into one button + popover
-            instead of two separate pills, mirroring the Layers menu treatment below. */}
-        <div className="relative">
-          {showViewMenu && (
-            <>
-              <div className="fixed inset-0 z-10" onClick={() => setShowViewMenu(false)} />
-              <div
-                onClick={e => e.stopPropagation()}
-                className={`absolute top-full mt-2 left-0 z-20 rounded-xl border ${pillBorder} ${pillBg} backdrop-blur-sm shadow-lg p-2 flex flex-col gap-1`}
-                style={{ minWidth: 220 }}
-              >
-                <button
-                  onClick={onToggleFavs}
-                  className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                    showFavsOnly ? "text-yellow-500 bg-yellow-400/10" : `${pillText} hover:bg-white/5`
-                  }`}
-                >
-                  <Star size={16} className="shrink-0" fill={showFavsOnly ? "currentColor" : "none"} />
-                  Favourites Only
-                  {favSet.size > 0 && (
-                    <span className={`ml-auto rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${
-                      showFavsOnly ? "bg-yellow-500 text-black" : "bg-muted text-current"
-                    }`}>{favSet.size}</span>
-                  )}
-                </button>
-                <button
-                  onClick={onToggleMostVoted}
-                  className={`flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                    sortMode === "votes" ? "text-orange-500 bg-orange-400/10" : `${pillText} hover:bg-white/5`
-                  }`}
-                >
-                  <TrendingUp size={16} className="shrink-0" />
-                  Sort by Most Voted
-                  {racesWithVotes > 0 && (
-                    <span className={`ml-auto rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold ${
-                      sortMode === "votes" ? "bg-orange-500 text-black" : "bg-muted text-current"
-                    }`}>{racesWithVotes}</span>
-                  )}
-                </button>
-              </div>
-            </>
+        {/* Favourites + Most Voted — directly tappable standalone buttons rather than
+            hidden inside a "View" dropdown, so they're reachable in one tap. Icon-only
+            on mobile to save space, icon + label on desktop — same responsive pattern
+            Filters already uses (hidden sm:inline). Both now span races AND Explore
+            places (favSet/showFavsOnly already did; totalWithVotes is the combined
+            voted-races + voted-sites count). */}
+        <button
+          onClick={onToggleFavs}
+          title="Favourites Only"
+          className={`relative flex items-center gap-1.5 px-3 sm:px-2.5 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
+            showFavsOnly ? `${pillBg} border-[1.5px] border-yellow-400 text-yellow-500` : `${pillBg} border ${pillBorder} ${pillText}`
+          }`}
+        >
+          <Star size={16} className="shrink-0" fill={showFavsOnly ? "currentColor" : "none"} />
+          <span className="hidden sm:inline">Favourites</span>
+          {favSet.size > 0 && (
+            <span className={`rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold ${
+              showFavsOnly ? "bg-yellow-500 text-black" : "bg-muted text-current"
+            }`}>{favSet.size}</span>
           )}
-          <button
-            onClick={() => setShowViewMenu(v => !v)}
-            className={`relative flex items-center gap-1.5 px-3 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
-              showFavsOnly || sortMode === "votes" ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}` : `${pillBg} border ${pillBorder} ${pillText}`
-            }`}
-          >
-            <SlidersHorizontal size={16} className="shrink-0" />
-            <span className="hidden sm:inline">View</span>
-            {(showFavsOnly || sortMode === "votes") && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-teal-400 border border-background" />
-            )}
-          </button>
-        </div>
+        </button>
+        <button
+          onClick={onToggleMostVoted}
+          title="Sort by Most Voted"
+          className={`relative flex items-center gap-1.5 px-3 sm:px-2.5 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
+            sortMode === "votes" ? `${pillBg} border-[1.5px] border-orange-400 text-orange-500` : `${pillBg} border ${pillBorder} ${pillText}`
+          }`}
+        >
+          <TrendingUp size={16} className="shrink-0" />
+          <span className="hidden sm:inline">Most Voted</span>
+          {totalWithVotes > 0 && (
+            <span className={`rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold ${
+              sortMode === "votes" ? "bg-orange-500 text-black" : "bg-muted text-current"
+            }`}>{totalWithVotes}</span>
+          )}
+        </button>
       </div>
 
       {/* Theme toggle + Layers — bottom-right, stacked. Grouped together since both

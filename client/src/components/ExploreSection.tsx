@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Star, ExternalLink } from "lucide-react";
 import type { ExploreSite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
+import VoterChips from "./VoterChips";
 
 interface Props {
   sites: ExploreSite[];
@@ -13,6 +14,7 @@ interface Props {
   exploreFavSet: Set<number>;
   onToggleExploreFav: (id: number) => void;
   exploreFavPending: boolean;
+  exploreVotesBySite: Map<number, string[]>;
 }
 
 // Colored dot doubles as a quick-scan effort gauge, no extra icon import needed.
@@ -35,7 +37,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Beaches:   "#ec4899",
 };
 
-export default function ExploreSection({ sites, filteredSites, showFavsOnly, hasActiveFilters, stickyTop, exploreFavSet, onToggleExploreFav, exploreFavPending }: Props) {
+export default function ExploreSection({ sites, filteredSites, showFavsOnly, hasActiveFilters, stickyTop, exploreFavSet, onToggleExploreFav, exploreFavPending, exploreVotesBySite }: Props) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -68,6 +70,7 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
               : site.description;
 
             const isFav = exploreFavSet.has(site.id);
+            const voters = exploreVotesBySite.get(site.id) ?? [];
             return (
               <div
                 key={site.id}
@@ -103,9 +106,12 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                   <span className="text-sm font-bold leading-snug text-foreground">{site.name}</span>
                 </div>
 
-                {/* Country / region row */}
-                <div className="text-[11px] text-muted-foreground mb-1">
-                  {flag} {site.country}{site.region ? ` · ${site.region}` : ""}
+                {/* Country / region row, + voters (who's starred this place) on the right */}
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <span className="text-[11px] text-muted-foreground truncate">
+                    {flag} {site.country}{site.region ? ` · ${site.region}` : ""}
+                  </span>
+                  {voters.length > 0 && <VoterChips voters={voters} />}
                 </div>
 
                 {/* Description */}

@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
-import { createPortal } from "react-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Star, Filter, X, Globe2, Users, AlertTriangle, ChevronRight, TrendingUp, Calendar, MapPin } from "lucide-react";
 import { DayPicker } from "react-day-picker";
@@ -10,6 +9,7 @@ import { getRaceWeather } from "../lib/weatherData";
 import { API_BASE } from "../App";
 import MapView from "../components/MapView";
 import ExploreSection from "../components/ExploreSection";
+import VoterChips from "../components/VoterChips";
 
 const S = "v5:"; // bump this prefix to invalidate all users' localStorage
 const STORAGE_KEY = S+"asia-cal-voter";
@@ -322,90 +322,6 @@ function matchesSportFilters(race: Race, sportFilters: Set<string>, subFilters: 
   return false;
 }
 
-const VOTER_COLORS = [
-  "bg-rose-100 text-rose-700 border-rose-200",
-  "bg-blue-100 text-blue-700 border-blue-200",
-  "bg-emerald-100 text-emerald-700 border-emerald-200",
-  "bg-violet-100 text-violet-700 border-violet-200",
-  "bg-amber-100 text-amber-700 border-amber-200",
-  "bg-cyan-100 text-cyan-700 border-cyan-200",
-  "bg-pink-100 text-pink-700 border-pink-200",
-  "bg-indigo-100 text-indigo-700 border-indigo-200",
-];
-
-function VoterChips({ voters }: { voters: string[] }) {
-  const [open, setOpen] = React.useState(false);
-  const btnRef = React.useRef<HTMLButtonElement>(null);
-  const popupRef = React.useRef<HTMLDivElement>(null);
-  const [pos, setPos] = React.useState<{ top: number; left: number } | null>(null);
-
-  // Rendered via a portal to document.body (position: fixed, viewport coords) rather
-  // than as a normal absolutely-positioned child — the table's horizontally-scrolling
-  // wrapper (.table-wrap, overflow-x: auto) clips any child that extends past its own
-  // bounds, which is what made this popup render cramped/cut-off before. A portal
-  // escapes that ancestor entirely so it can render over the table content and extend
-  // further right of the button instead of being squeezed against it.
-  const updatePosition = React.useCallback(() => {
-    const rect = btnRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const popupWidth = popupRef.current?.offsetWidth ?? 160;
-    const left = Math.min(rect.left, window.innerWidth - popupWidth - 8);
-    setPos({ top: rect.bottom + 6, left: Math.max(8, left) });
-  }, []);
-
-  React.useEffect(() => {
-    if (!open) return;
-    updatePosition();
-    function handleClickAway(e: MouseEvent) {
-      const target = e.target as Node;
-      if (btnRef.current?.contains(target) || popupRef.current?.contains(target)) return;
-      setOpen(false);
-    }
-    document.addEventListener('mousedown', handleClickAway);
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition, true);
-    return () => {
-      document.removeEventListener('mousedown', handleClickAway);
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, true);
-    };
-  }, [open, updatePosition]);
-
-  if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
-
-  return (
-    <>
-      <button
-        ref={btnRef}
-        onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
-        className="inline-flex items-center gap-1 pl-1 pr-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-500 hover:bg-orange-400 transition-colors whitespace-nowrap shadow-sm">
-        <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-black/20 text-black text-[9px] font-bold leading-none">
-          {voters.length}
-        </span>
-        <span className="text-black">{voters.length === 1 ? 'Vote' : 'Votes'}</span>
-      </button>
-      {open && pos && createPortal(
-        <div
-          ref={popupRef}
-          className="fixed z-[1000] min-w-[160px] rounded-xl border border-border bg-background shadow-2xl py-1.5 px-1.5"
-          style={{ top: pos.top, left: pos.left }}
-        >
-          <div className="flex items-center justify-between px-1.5 pb-1 mb-1 border-b border-border">
-            <span className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">{voters.length === 1 ? '1 Vote' : `${voters.length} Votes`}</span>
-            <button onClick={() => setOpen(false)} className="p-0.5 -mr-0.5 rounded text-muted-foreground hover:text-foreground transition-colors" title="Close">
-              <X size={12} />
-            </button>
-          </div>
-          {voters.map((v, i) => (
-            <div key={i} className={`px-2 py-0.5 mb-0.5 last:mb-0 text-[10px] font-semibold rounded-full border ${VOTER_COLORS[i % VOTER_COLORS.length]}`}>{v}</div>
-          ))}
-        </div>,
-        document.body
-      )}
-    </>
-  );
-}
-
 export default function CalendarPage() {
   const qc = useQueryClient();
 
@@ -622,15 +538,18 @@ export default function CalendarPage() {
     exploreFavourites.filter(f => f.voterName === voterName).map(f => f.exploreSiteId)
   ), [exploreFavourites, voterName]);
 
-  const mostVotedCountries = useMemo(() => {
-    const s = new Set<string>();
-    for (const [raceId, voters] of votesByRace) {
-      if (voters.length === 0) continue;
-      const r = races.find(x => x.id === raceId);
-      if (r) s.add(r.country);
+  // Collective votes for Explore sites — every voterName who's starred a place, same
+  // shape and same "favouriting IS voting" relationship votesByRace already has for
+  // races. exploreFavSet above stays personal-only (this user's own stars, for "My
+  // Favourites"); this is the all-voters aggregate that "Most Voted" reads from.
+  const exploreVotesBySite = useMemo(() => {
+    const m = new Map<number, string[]>();
+    for (const f of exploreFavourites) {
+      if (!m.has(f.exploreSiteId)) m.set(f.exploreSiteId, []);
+      m.get(f.exploreSiteId)!.push(f.voterName);
     }
-    return s;
-  }, [votesByRace, races]);
+    return m;
+  }, [exploreFavourites]);
 
   const allVoters = useMemo(() => [...new Set(favourites.map(f => f.voterName))].sort(), [favourites]);
 
@@ -931,7 +850,7 @@ export default function CalendarPage() {
     const anyRaceFilterActive = raceFiltersActive || monthFilters.length > 0 || yearFilters.length > 0
       || countryFilters.length > 0 || cityFilters.length > 0 || !!personFilter || minVotesFilter;
 
-    return exploreSites.filter(s => {
+    const result = exploreSites.filter(s => {
       if (showFavs) {
         // Favourites ON: directly-favourited places, OR places in a country with a
         // favourited race (the old country-level proxy, kept as a secondary signal —
@@ -939,9 +858,11 @@ export default function CalendarPage() {
         const directlyFavourited = exploreFavSet.has(s.id);
         const inFavouritedCountry = favCountries.size > 0 && favCountries.has(s.country);
         if (!directlyFavourited && !inFavouritedCountry) return false;
-      } else if (sortMode === "votes" && mostVotedCountries.size > 0) {
-        // Most Voted ON + votes exist: only countries with voted races
-        if (!mostVotedCountries.has(s.country)) return false;
+      } else if (sortMode === "votes") {
+        // Most Voted ON: only places someone has actually starred — a direct,
+        // collective vote count per place, same as how races already work, not a
+        // country-level proxy off of voted races.
+        if ((exploreVotesBySite.get(s.id) ?? []).length === 0) return false;
       }
       // All other states (Most Voted OFF, no votes yet, race filters active):
       // show all 255 explore sites — race filters don't bleed into Explore
@@ -952,7 +873,14 @@ export default function CalendarPage() {
       }
       return true;
     });
-  }, [exploreSites, showFavs, favCountries, exploreFavSet, sortMode, mostVotedCountries, exploreCategoryFilters, search]);
+
+    if (sortMode === "votes" && !showFavs) {
+      return [...result].sort((a, b) =>
+        (exploreVotesBySite.get(b.id)?.length ?? 0) - (exploreVotesBySite.get(a.id)?.length ?? 0)
+      );
+    }
+    return result;
+  }, [exploreSites, showFavs, favCountries, exploreFavSet, sortMode, exploreVotesBySite, exploreCategoryFilters, search]);
 
   // ── Header height measurement ──
   const headerRef = useRef<HTMLElement>(null);
@@ -1829,6 +1757,7 @@ export default function CalendarPage() {
         favSet={favSet}
         voterName={voterName}
         votesByRace={votesByRace}
+        exploreVotesBySite={exploreVotesBySite}
         showFavsOnly={showFavs}
         countryFilters={countryFilters}
         onToggleFav={(raceId, isFav) => isFav ? removeFav.mutate(raceId) : addFav.mutate(raceId)}
@@ -2153,6 +2082,7 @@ export default function CalendarPage() {
         exploreFavSet={exploreFavSet}
         onToggleExploreFav={(id: number) => exploreFavSet.has(id) ? removeExploreFav.mutate(id) : addExploreFav.mutate(id)}
         exploreFavPending={addExploreFav.isPending || removeExploreFav.isPending}
+        exploreVotesBySite={exploreVotesBySite}
       />
 
       {/* Footer */}
