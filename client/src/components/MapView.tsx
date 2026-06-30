@@ -278,7 +278,7 @@ const POPUP_STYLE = `
   .map-popup a.mp-name-link { display: inline-block; text-decoration: none; cursor: pointer; }
   .map-popup a.mp-name-link:hover { color: hsl(var(--primary)); }
   .map-popup .mp-row { font-size: 11px; color: hsl(var(--muted-foreground)); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; line-height: 1.4; }
-  .map-popup .mp-icon { font-size: 15px; line-height: 1; }
+  .map-popup .mp-icon { font-size: 19px; line-height: 1; }
   .map-popup .mp-months { font-size: 11px; font-weight: 600; color: hsl(var(--primary)); margin-top: 8px; }
   .map-popup .mp-actions { display: flex; gap: 8px; margin-top: 12px; align-items: center; }
   .map-popup .mp-star-btn {
@@ -372,13 +372,13 @@ function RacePopupContent({ race, isFav, voters, onToggleFav }: {
         <div className="mp-name">{race.name}</div>
       )}
       <div className="mp-row"><span className="mp-icon">{flag}</span> {race.country}, {race.location}</div>
-      <div className="mp-row"><Calendar size={14} className="shrink-0" /> {race.date}</div>
+      <div className="mp-row"><Calendar size={13} className="shrink-0" /> {race.date}</div>
       {weather && (
         <div className="mp-row">
-          <Thermometer size={11} className="shrink-0" /> {weather.temp}°C · {weather.condition}
+          <Thermometer size={13} className="shrink-0" /> {weather.temp}°C · {weather.condition}
           {showWaterTemp && weather.waterTemp != null && (
             <span style={{ display: "inline-flex", alignItems: "center", gap: 3, marginLeft: 4 }}>
-              <Waves size={11} className="shrink-0" /> {weather.waterTemp}°C
+              <Waves size={13} className="shrink-0" /> {weather.waterTemp}°C
             </span>
           )}
         </div>
