@@ -195,11 +195,22 @@ const exploreClusterIcon = makeClusterIconFn("#22c55e");
 // Keeping this pass downstream of that decision avoids the feedback loop entirely.
 type GeoPoint = { id: string; lat: number; lng: number };
 
+// Single source of truth for cluster-bundling radii — previously duplicated as bare
+// 60/50 literals in both groupByPixelDistance's solo-pin decision and the matching
+// MarkerClusterGroup's maxClusterRadius prop, with no link between the two, so the
+// "groups this small render as individual pins" boundary and the "groups this size
+// actually get bundled into one cluster bubble" boundary could silently drift apart
+// if only one of the two literals was ever changed.
+const RACE_CLUSTER_RADIUS_PX = 60;
+const EXPLORE_CLUSTER_RADIUS_PX = 50;
+// Groups at or below this size render as individual pins instead of a cluster bubble.
+const SOLO_GROUP_MAX_SIZE = 4;
+
 function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
-  // Must be >= the largest cluster-bundling radius (60 for races) below — otherwise two
-  // points just outside this radius but still inside the bundling radius can both get
-  // marked "solo" without ever being grouped here, and render solo-but-still-overlapping.
-  const SPREAD_GROUP_PX = 60;
+  // Must be >= the largest cluster-bundling radius below — otherwise two points just
+  // outside this radius but still inside the bundling radius can both get marked
+  // "solo" without ever being grouped here, and render solo-but-still-overlapping.
+  const SPREAD_GROUP_PX = Math.max(RACE_CLUSTER_RADIUS_PX, EXPLORE_CLUSTER_RADIUS_PX);
   const groups = groupByPixelDistance(map, points, SPREAD_GROUP_PX);
 
   const zoom = map.getZoom();
@@ -441,16 +452,16 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
       const racePoints = displayRaces
         .map(race => { const c = rawCoords.get(`r:${race.id}`); return c ? { id: race.id, lat: c[0], lng: c[1] } : null; })
         .filter((p): p is { id: number; lat: number; lng: number } => p !== null);
-      groupByPixelDistance(map, racePoints, 60).forEach(group => {
-        if (group.length <= 4) group.forEach(p => soloRaceIds.add(p.id));
+      groupByPixelDistance(map, racePoints, RACE_CLUSTER_RADIUS_PX).forEach(group => {
+        if (group.length <= SOLO_GROUP_MAX_SIZE) group.forEach(p => soloRaceIds.add(p.id));
       });
     }
     if (showExplore) {
       const sitePoints = sites
         .map(site => { const c = rawCoords.get(`e:${site.id}`); return c ? { id: site.id, lat: c[0], lng: c[1] } : null; })
         .filter((p): p is { id: number; lat: number; lng: number } => p !== null);
-      groupByPixelDistance(map, sitePoints, 50).forEach(group => {
-        if (group.length <= 4) group.forEach(p => soloSiteIds.add(p.id));
+      groupByPixelDistance(map, sitePoints, EXPLORE_CLUSTER_RADIUS_PX).forEach(group => {
+        if (group.length <= SOLO_GROUP_MAX_SIZE) group.forEach(p => soloSiteIds.add(p.id));
       });
     }
     return { soloRaceIds, soloSiteIds };
@@ -494,7 +505,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
           })}
           <MarkerClusterGroup
             chunkedLoading
-            maxClusterRadius={60}
+            maxClusterRadius={RACE_CLUSTER_RADIUS_PX}
             iconCreateFunction={raceClusterIcon}
             showCoverageOnHover={false}
             zoomToBoundsOnClick
@@ -525,7 +536,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
           })}
           <MarkerClusterGroup
             chunkedLoading
-            maxClusterRadius={50}
+            maxClusterRadius={EXPLORE_CLUSTER_RADIUS_PX}
             iconCreateFunction={exploreClusterIcon}
             showCoverageOnHover={false}
             zoomToBoundsOnClick
