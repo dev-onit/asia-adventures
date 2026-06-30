@@ -144,19 +144,19 @@ h1, h2, h3 {
 .leaflet-container { background: hsl(var(--background)) !important; }
 
 /* Leaflet's base stylesheet sets touch-action: none on .leaflet-container
-   unconditionally, and adds touch-action: pinch-zoom via its own
-   .leaflet-touch-drag class whenever dragging is enabled (MapView now enables
-   dragging in both fullscreen and embedded mode, via Leaflet's native handler
-   rather than a hand-rolled mouse-pan effect). Neither of those leaves room for
-   the browser's own two-finger trackpad/wheel scroll gesture to reach the page
-   in embedded mode — Chrome/macOS routes trackpad swipes through the same
-   touch-action gate as real touchscreen gestures (unlike a plain mouse wheel),
-   and Safari's trackpad/wheel pipeline honors touch-action for non-touch input
-   too. This !important override wins regardless of which of Leaflet's own
-   classes are present on the container, since it targets the container
-   element directly rather than depending on the absence of a specific class.
-   Fullscreen keeps Leaflet's own touch-action handling (map-fullscreen
-   excluded), since it still owns 1-finger touch panning and pinch-zoom there. */
+   unconditionally — not just via the leaflet-touch-drag class dragging adds —
+   so that the browser never intercepts gestures Leaflet wants to handle itself.
+   Disabling dragging in embedded mode (see MapView's allowDragging) stops that
+   class from ever being added, but doesn't touch this base rule, so two-finger
+   trackpad swipes over the embedded map were still being treated as a gesture
+   for Leaflet rather than a page scroll in Chrome/macOS specifically (Chrome
+   appears to route trackpad swipes through the same touch-action gate as actual
+   touchscreens, unlike a plain mouse wheel). Embedded mode doesn't need
+   Leaflet to own touch-action at all now that dragging is off — panning there
+   is handled by our own custom mouse-drag effect, not Leaflet's touch/drag
+   handlers — so it's safe to restore normal page-scroll gestures there.
+   Fullscreen keeps Leaflet's own touch-action: none (map-fullscreen excluded),
+   since it still owns 1-finger touch panning there. */
 .map-container.leaflet-container:not(.map-fullscreen) { touch-action: pan-x pan-y !important; }
 
 /* Light mode sticky header */
