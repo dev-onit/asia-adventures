@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, Search, Thermometer, Waves } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, Search, Thermometer, Waves, Calendar } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -372,7 +372,7 @@ function RacePopupContent({ race, isFav, voters, onToggleFav }: {
         <div className="mp-name">{race.name}</div>
       )}
       <div className="mp-row"><span className="mp-icon">{flag}</span> {race.country}, {race.location}</div>
-      <div className="mp-row"><span className="mp-icon">📅</span> {race.date}</div>
+      <div className="mp-row"><Calendar size={14} className="shrink-0" /> {race.date}</div>
       {weather && (
         <div className="mp-row">
           <Thermometer size={11} className="shrink-0" /> {weather.temp}°C · {weather.condition}

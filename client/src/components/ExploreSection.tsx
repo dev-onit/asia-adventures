@@ -7,7 +7,6 @@ interface Props {
   sites: ExploreSite[];
   filteredSites: ExploreSite[];
   showFavsOnly: boolean;
-  favCountries: Set<string>;
   hasActiveFilters: boolean;
   stickyTop?: string;
   exploreFavSet: Set<number>;

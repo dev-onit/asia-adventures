@@ -471,15 +471,6 @@ export default function CalendarPage() {
     return m;
   }, [favourites]);
 
-  const favCountries = useMemo(() => {
-    const s = new Set<string>();
-    for (const raceId of favSet) {
-      const r = races.find(x => x.id === raceId);
-      if (r) s.add(r.country);
-    }
-    return s;
-  }, [favSet, races]);
-
   const addExploreFav = useMutation({
     mutationFn: async (exploreSiteId: number) => {
       await fetch(`${API_BASE}/api/explore-favourites`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ exploreSiteId, voterName }) });
@@ -826,12 +817,10 @@ export default function CalendarPage() {
 
     const result = exploreSites.filter(s => {
       if (showFavs) {
-        // Favourites ON: directly-favourited places, OR places in a country with a
-        // favourited race (the old country-level proxy, kept as a secondary signal —
-        // useful before someone's starred any explore places themselves).
-        const directlyFavourited = exploreFavSet.has(s.id);
-        const inFavouritedCountry = favCountries.size > 0 && favCountries.has(s.country);
-        if (!directlyFavourited && !inFavouritedCountry) return false;
+        // My Votes ON: only places this user has directly voted for — no more
+        // country-level proxy (places in a country with a voted race). My Votes
+        // shows exactly what was selected, nothing inferred from race location.
+        if (!exploreFavSet.has(s.id)) return false;
       } else if (sortMode === "votes") {
         // Most Voted ON: only places someone has actually starred — a direct,
         // collective vote count per place, same as how races already work, not a
@@ -854,7 +843,7 @@ export default function CalendarPage() {
       );
     }
     return result;
-  }, [exploreSites, showFavs, favCountries, exploreFavSet, sortMode, exploreVotesBySite, exploreCategoryFilters, search]);
+  }, [exploreSites, showFavs, exploreFavSet, sortMode, exploreVotesBySite, exploreCategoryFilters, search]);
 
   // ── Header height measurement ──
   const headerRef = useRef<HTMLElement>(null);
@@ -2052,7 +2041,6 @@ export default function CalendarPage() {
         sites={exploreSites}
         filteredSites={filteredExploreSites}
         showFavsOnly={showFavs}
-        favCountries={favCountries}
         hasActiveFilters={activeFilterCount > 0}
         stickyTop="var(--header-h, 0px)"
         exploreFavSet={exploreFavSet}
