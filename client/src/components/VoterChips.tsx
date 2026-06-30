@@ -58,11 +58,10 @@ export default function VoterChips({ voters }: { voters: string[] }) {
       <button
         ref={btnRef}
         onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
-        className="inline-flex items-center gap-1 pl-1 pr-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-500 hover:bg-orange-400 transition-colors whitespace-nowrap shadow-sm">
-        <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-black/20 text-black text-[9px] font-bold leading-none">
-          {voters.length}
-        </span>
-        <span className="text-black">{voters.length === 1 ? 'Vote' : 'Votes'}</span>
+        className="inline-flex items-center rounded-full text-[10px] font-bold uppercase tracking-[0.06em] bg-orange-500 hover:bg-orange-400 transition-colors whitespace-nowrap text-black shrink-0"
+        style={{ padding: "2px 8px" }}
+      >
+        {voters.length} {voters.length === 1 ? 'Vote' : 'Votes'}
       </button>
       {open && pos && createPortal(
         <div

@@ -1762,6 +1762,7 @@ export default function CalendarPage() {
         showFavsOnly={showFavs}
         countryFilters={countryFilters}
         onToggleFav={(raceId, isFav) => isFav ? removeFav.mutate(raceId) : addFav.mutate(raceId)}
+        onToggleExploreFav={(id: number) => exploreFavSet.has(id) ? removeExploreFav.mutate(id) : addExploreFav.mutate(id)}
         isDark={isDark}
         hidePast={hidePast}
         onToggleHidePast={() => setHidePast(v => !v)}

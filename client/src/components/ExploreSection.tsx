@@ -17,13 +17,6 @@ interface Props {
   exploreVotesBySite: Map<number, string[]>;
 }
 
-// Colored dot doubles as a quick-scan effort gauge, no extra icon import needed.
-const EFFORT_LABEL: Record<string, string> = {
-  easy: "🟢 Easy",
-  moderate: "🟡 Moderate",
-  strenuous: "🔴 Strenuous",
-};
-
 // Must match MapView.tsx's CATEGORY_COLORS — these used to diverge (this file still had
 // the pre-collision palette where Mountains/Islands/Cities shared colors with race types
 // on the map), so the same category showed two different colors depending on which view
@@ -103,10 +96,21 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                   </div>
                 </div>
 
-                {/* Emoji + Name */}
-                <div className="flex items-start gap-1.5 mb-1">
-                  <span className="text-xl leading-none mt-0.5 shrink-0">{site.emoji}</span>
-                  <span className="text-sm font-bold leading-snug text-foreground">{site.name}</span>
+                {/* Name — the official site link when one exists, plain text otherwise */}
+                <div className="mb-1">
+                  {site.url ? (
+                    <a
+                      href={site.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-bold leading-snug text-foreground hover:text-primary transition-colors inline-flex items-start gap-1"
+                    >
+                      {site.name}
+                      <ExternalLink size={11} className="shrink-0 mt-0.5 opacity-50" />
+                    </a>
+                  ) : (
+                    <span className="text-sm font-bold leading-snug text-foreground">{site.name}</span>
+                  )}
                 </div>
 
                 {/* Country / region row */}
@@ -121,32 +125,8 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
 
                 {/* Best months */}
                 {site.bestMonths && (
-                  <div className="text-[11px] font-semibold text-primary mb-2">
+                  <div className="text-[11px] font-semibold text-primary">
                     Best: {site.bestMonths}
-                  </div>
-                )}
-
-                {/* Effort / cost (left) + Visit link (bottom-right corner, icon-only) */}
-                {(site.effort || site.isPaid != null || site.url) && (
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="text-[11px] text-muted-foreground flex items-center gap-1.5 min-w-0">
-                      {site.effort && <span className="whitespace-nowrap">{EFFORT_LABEL[site.effort] ?? site.effort}</span>}
-                      {site.effort && site.isPaid != null && <span className="opacity-40">·</span>}
-                      {site.isPaid === true && <span className="whitespace-nowrap">💰 Paid</span>}
-                      {site.isPaid === false && <span className="whitespace-nowrap">Free</span>}
-                    </div>
-                    {site.url && (
-                      <a
-                        href={site.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="Visit official site"
-                        aria-label="Visit official site"
-                        className="shrink-0 p-1 -m-1 rounded text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        <ExternalLink size={15} />
-                      </a>
-                    )}
                   </div>
                 )}
               </div>
