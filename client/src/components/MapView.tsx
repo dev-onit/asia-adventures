@@ -570,21 +570,16 @@ function InvalidateSizeOnResize({ trigger }: { trigger: unknown }) {
 }
 
 // ── Imperative bits that still need direct map access: initial fit, recenter button,
-// and keeping the dragging/scrollWheelZoom/touchZoom handlers in sync with isFullscreen
-// — none of these are hacks, just things Leaflet itself doesn't expose as
-// declarative props, or (for dragging/scrollWheelZoom) that react-leaflet's MapContainer
-// only applies once at construction time and never reactively re-pushes on prop changes
-// (the same root cause as the earlier fullscreen-height bug — see InvalidateSizeOnResize). ──
-function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging }: { displayRaces: Race[]; recenterRef?: Props["recenterRef"]; isFullscreen: boolean; allowDragging: boolean }) {
+// and keeping the scrollWheelZoom/touchZoom handlers in sync with isFullscreen — none
+// of these are hacks, just things Leaflet itself doesn't expose as declarative props,
+// or that react-leaflet's MapContainer only applies once at construction time and never
+// reactively re-pushes on prop changes (the same root cause as the earlier
+// fullscreen-height bug — see InvalidateSizeOnResize). Dragging is now a static
+// construction-time prop (always on, both modes) since it no longer needs to toggle —
+// see the dragging prop on MapContainer below for why. ──
+function MapController({ displayRaces, recenterRef, isFullscreen }: { displayRaces: Race[]; recenterRef?: Props["recenterRef"]; isFullscreen: boolean }) {
   const map = useMap();
   const hasInitialFitRef = useRef(false);
-
-  // MapContainer's dragging prop is only applied once at construction time and never
-  // reactively re-pushed to the underlying Leaflet instance, so toggling fullscreen
-  // never actually re-enabled 1-finger dragging — sync it imperatively instead.
-  useEffect(() => {
-    if (allowDragging) map.dragging.enable(); else map.dragging.disable();
-  }, [map, allowDragging]);
 
   // Embedded map behaves like a standard static map embed: wheel/trackpad input always
   // scrolls the page, never zooms the map (use the visible +/- control or Fullscreen for
@@ -606,50 +601,6 @@ function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging 
   // for real touchscreens (iPad/phone), where pinch-zoom-to-touch is actually useful.
   useEffect(() => {
     if (isFullscreen) map.touchZoom.enable(); else map.touchZoom.disable();
-  }, [map, isFullscreen]);
-
-  // Embedded map: drag-to-pan via mouse, implemented by hand instead of Leaflet's own
-  // `dragging` handler. Enabling that handler — even just for mouse panning — makes
-  // Leaflet add its .leaflet-touch-drag class (touch-action: none), which is what was
-  // blocking Safari's trackpad/wheel page-scroll over the map. Listening for raw mouse
-  // events ourselves and calling map.panBy() directly gets the same drag UX without
-  // ever touching that class. Only real "mousedown" events trigger this — touch taps
-  // don't fire it — so it naturally only affects mouse users, never touchscreens.
-  useEffect(() => {
-    if (isFullscreen) return;
-    const container = map.getContainer();
-    let dragging = false;
-    let last: { x: number; y: number } | null = null;
-    const onMouseDown = (e: MouseEvent) => {
-      if (e.button !== 0) return;
-      const target = e.target as HTMLElement;
-      if (target.closest(".leaflet-marker-icon, .leaflet-popup, .leaflet-control, .marker-cluster")) return;
-      dragging = true;
-      last = { x: e.clientX, y: e.clientY };
-      container.style.cursor = "grabbing";
-    };
-    const onMouseMove = (e: MouseEvent) => {
-      if (!dragging || !last) return;
-      const dx = e.clientX - last.x;
-      const dy = e.clientY - last.y;
-      last = { x: e.clientX, y: e.clientY };
-      map.panBy([-dx, -dy], { animate: false });
-    };
-    const onMouseUp = () => {
-      dragging = false;
-      last = null;
-      container.style.cursor = "grab";
-    };
-    container.style.cursor = "grab";
-    container.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-    return () => {
-      container.style.cursor = "";
-      container.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-    };
   }, [map, isFullscreen]);
 
   useEffect(() => {
@@ -724,15 +675,6 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
     document.head.appendChild(el);
   }, []);
 
-  // Dragging (click/touch-and-pan) is only enabled in fullscreen. In the embedded map,
-  // enabling it — even just for desktop mouse-drag panning — makes Leaflet add its
-  // .leaflet-touch-drag class, which sets touch-action: none on the container; Safari's
-  // trackpad/wheel-scroll pipeline (unlike Chrome/Firefox) honors that for non-touch
-  // input too, silently blocking the page from scrolling under the cursor. Keeping
-  // dragging off entirely in embedded mode avoids that class ever being applied, so
-  // the page always scrolls normally there — pinch-to-zoom (touchZoom) is unaffected.
-  const allowDragging = isFullscreen;
-
   function handleToggleExplore() {
     const next = !showExplore;
     setShowExplore(next);
@@ -783,14 +725,14 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, s
         zoomControl={false}
         attributionControl={false}
         scrollWheelZoom={false}
-        dragging={allowDragging}
+        dragging={true}
         touchZoom={true}
         className={`map-container w-full ${isFullscreen ? "map-fullscreen" : ""}`}
         style={{ height: "100%", zIndex: 1 }}
       >
         <ZoomControl position="bottomleft" />
         <ThemeTileLayer isDark={isDark} />
-        <MapController displayRaces={displayRaces} recenterRef={recenterRef} isFullscreen={isFullscreen} allowDragging={allowDragging} />
+        <MapController displayRaces={displayRaces} recenterRef={recenterRef} isFullscreen={isFullscreen} />
         <InvalidateSizeOnResize trigger={isFullscreen} />
         <MapPins
           displayRaces={displayRaces}
