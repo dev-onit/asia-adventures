@@ -10,6 +10,7 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import type { Race, ExploreSite } from "../../../shared/schema";
 import { getCoords, COUNTRY_WEATHER } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
+import VoterChips from "./VoterChips";
 
 interface Props {
   races: Race[];
@@ -18,6 +19,7 @@ interface Props {
   favSet: Set<number>;
   voterName: string;
   votesByRace: Map<number, string[]>;
+  exploreFavSet: Set<number>;
   exploreVotesBySite: Map<number, string[]>;
   showFavsOnly: boolean;
   countryFilters: string[];
@@ -125,19 +127,26 @@ function explorePillSvg(label: string, color: string): string {
   </svg>`;
 }
 
-// ── Race icon HTML (pill + badges) ──
-function raceIconHtml(fill: string, label: string, isFav: boolean, voteCount: number, pillW: number, pillH: number): string {
-  const totalW = pillW + BADGE_PAD * 2;
-  const totalH = pillH + BADGE_PAD * 2;
+// ── Star (personal favourite) + vote-count badges overlaid on a pin icon — shared by
+// race and Explore pins so both carry the same at-a-glance signals on the map itself,
+// not just in the popup. ──
+function pinBadgesHtml(isFav: boolean, voteCount: number): string {
   const starHtml = isFav
     ? `<div style="position:absolute;top:${BADGE_PAD-7}px;right:${BADGE_PAD-7}px;width:14px;height:14px;background:#facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;line-height:1;color:#000;font-weight:900;pointer-events:none;box-shadow:0 0 5px rgba(250,204,21,0.8),0 1px 2px rgba(0,0,0,0.4);z-index:20">★</div>`
     : "";
   const voteHtml = voteCount > 0
     ? `<div style="position:absolute;bottom:${BADGE_PAD-7}px;right:${BADGE_PAD-7}px;min-width:14px;height:14px;background:#fb923c;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#000;line-height:1;padding:0 3px;pointer-events:none;box-shadow:0 0 5px rgba(251,146,60,0.8),0 1px 2px rgba(0,0,0,0.4);z-index:20">${voteCount}</div>`
     : "";
+  return starHtml + voteHtml;
+}
+
+// ── Race icon HTML (pill + badges) ──
+function raceIconHtml(fill: string, label: string, isFav: boolean, voteCount: number, pillW: number, pillH: number): string {
+  const totalW = pillW + BADGE_PAD * 2;
+  const totalH = pillH + BADGE_PAD * 2;
   return `<div style="position:relative;width:${totalW}px;height:${totalH}px;overflow:visible">
     <div style="position:absolute;top:${BADGE_PAD}px;left:${BADGE_PAD}px">${sportPillSvg(fill, label, pillW, pillH)}</div>
-    ${starHtml}${voteHtml}
+    ${pinBadgesHtml(isFav, voteCount)}
   </div>`;
 }
 
@@ -156,7 +165,7 @@ function buildRaceIcon(fill: string, label: string, isFav: boolean, voteCount: n
   });
 }
 
-function buildExploreIcon(label: string, color: string): L.DivIcon {
+function buildExploreIcon(label: string, color: string, isFav: boolean, voteCount: number): L.DivIcon {
   const ph = 10, pv = 5, fontSize = 9, charW = fontSize * 0.65;
   const pillW = Math.round(label.length * charW + ph * 2);
   const pillH = fontSize + pv * 2;
@@ -164,6 +173,7 @@ function buildExploreIcon(label: string, color: string): L.DivIcon {
   const totalH = pillH + BADGE_PAD * 2;
   const html = `<div style="position:relative;width:${totalW}px;height:${totalH}px;overflow:visible">
     <div style="position:absolute;top:${BADGE_PAD}px;left:${BADGE_PAD}px">${explorePillSvg(label, color)}</div>
+    ${pinBadgesHtml(isFav, voteCount)}
   </div>`;
   return L.divIcon({ html, className: "", iconSize: [totalW, totalH], iconAnchor: [totalW / 2, totalH / 2], popupAnchor: [0, -(totalH / 2 + 6)] });
 }
@@ -346,13 +356,15 @@ function RacePopupContent({ race, isFav, voters, onToggleFav }: {
 
   return (
     <div className="map-popup">
-      <span className="mp-badge" style={{ background: `${fill}22`, color: fill, border: `1px solid ${fill}55` }}>
-        {label}{subLabel && <span style={{ opacity: 0.65, fontWeight: 500 }}> · {subLabel}</span>}
-      </span>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8 }}>
+        <span className="mp-badge" style={{ background: `${fill}22`, color: fill, border: `1px solid ${fill}55`, marginBottom: 0 }}>
+          {label}{subLabel && <span style={{ opacity: 0.65, fontWeight: 500 }}> · {subLabel}</span>}
+        </span>
+        {voters.length > 0 && <VoterChips voters={voters} />}
+      </div>
       <div className="mp-name">{race.name}</div>
       <div className="mp-row">📍 {race.location}, {flag} {race.country}</div>
       <div className="mp-row">📅 {race.date} · {race.distance}</div>
-      {voters.length > 0 && <div className="mp-row">👥 {voters.join(", ")}</div>}
       {weather && (
         <div className="mp-row">
           🌡️ {weather.temp}°C · {weather.condition}
@@ -375,11 +387,13 @@ function ExplorePopupContent({ site, voters }: { site: ExploreSite; voters: stri
   const desc = site.description.length > 120 ? site.description.slice(0, 120) + "…" : site.description;
   return (
     <div className="map-popup">
-      <span className="mp-badge" style={{ background: `${color}22`, color, border: `1px solid ${color}55` }}>{site.category}</span>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8 }}>
+        <span className="mp-badge" style={{ background: `${color}22`, color, border: `1px solid ${color}55`, marginBottom: 0 }}>{site.category}</span>
+        {voters.length > 0 && <VoterChips voters={voters} />}
+      </div>
       <div className="mp-name">{site.name}</div>
       <div className="mp-row">{flag} {site.country}{site.region ? <> · {site.region}</> : null}</div>
       <div className="mp-row" style={{ marginTop: 4, lineHeight: 1.5 }}>{desc}</div>
-      {voters.length > 0 && <div className="mp-row">👥 {voters.join(", ")}</div>}
       {site.bestMonths && <div className="mp-months">Best: {site.bestMonths}</div>}
       {site.url && (
         <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-visit-btn" style={{ marginTop: 10, display: "block", textAlign: "center" }}>
@@ -407,10 +421,10 @@ function RaceMarker({ race, coords, isFav, voters, onToggleFav }: {
   );
 }
 
-function ExploreMarker({ site, coords, voters }: { site: ExploreSite; coords: [number, number]; voters: string[] }) {
+function ExploreMarker({ site, coords, isFav, voters }: { site: ExploreSite; coords: [number, number]; isFav: boolean; voters: string[] }) {
   const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
   const label = site.category.toUpperCase();
-  const icon = useMemo(() => buildExploreIcon(label, color), [label, color]);
+  const icon = useMemo(() => buildExploreIcon(label, color, isFav, voters.length), [label, color, isFav, voters.length]);
   return (
     <Marker position={coords} icon={icon}>
       <Popup maxWidth={280} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
@@ -421,9 +435,9 @@ function ExploreMarker({ site, coords, voters }: { site: ExploreSite; coords: [n
 }
 
 // ── Pins layer — lives inside <MapContainer> so it can read the live map instance ──
-function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByRace, exploreVotesBySite, onToggleFav }: {
+function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByRace, exploreFavSet, exploreVotesBySite, onToggleFav }: {
   displayRaces: Race[]; sites: ExploreSite[]; showRaces: boolean; showExplore: boolean;
-  favSet: Set<number>; votesByRace: Map<number, string[]>; exploreVotesBySite: Map<number, string[]>; onToggleFav: Props["onToggleFav"];
+  favSet: Set<number>; votesByRace: Map<number, string[]>; exploreFavSet: Set<number>; exploreVotesBySite: Map<number, string[]>; onToggleFav: Props["onToggleFav"];
 }) {
   const [zoom, setZoom] = useState(() => 4);
   const map = useMapEvents({ zoomend: () => setZoom(map.getZoom()) });
@@ -534,7 +548,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
           {sites.filter(site => soloSiteIds.has(site.id)).map(site => {
             const coords = pinCoords.get(`e:${site.id}`);
             if (!coords) return null;
-            return <ExploreMarker key={site.id} site={site} coords={coords} voters={exploreVotesBySite.get(site.id) ?? []} />;
+            return <ExploreMarker key={site.id} site={site} coords={coords} isFav={exploreFavSet.has(site.id)} voters={exploreVotesBySite.get(site.id) ?? []} />;
           })}
           <MarkerClusterGroup
             chunkedLoading
@@ -546,7 +560,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
             {sites.filter(site => !soloSiteIds.has(site.id)).map(site => {
               const coords = pinCoords.get(`e:${site.id}`);
               if (!coords) return null;
-              return <ExploreMarker key={site.id} site={site} coords={coords} voters={exploreVotesBySite.get(site.id) ?? []} />;
+              return <ExploreMarker key={site.id} site={site} coords={coords} isFav={exploreFavSet.has(site.id)} voters={exploreVotesBySite.get(site.id) ?? []} />;
             })}
           </MarkerClusterGroup>
         </>
@@ -750,7 +764,7 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreVotesBySite, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreFavSet, exploreVotesBySite, showFavsOnly, onToggleFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch }: Props) {
   const [showExplore, setShowExplore] = useState(true);
   const [showRaces, setShowRaces] = useState(true);
   const [showLayersMenu, setShowLayersMenu] = useState(false);
@@ -853,6 +867,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           showExplore={showExplore}
           favSet={favSet}
           votesByRace={votesByRace}
+          exploreFavSet={exploreFavSet}
           exploreVotesBySite={exploreVotesBySite}
           onToggleFav={onToggleFav}
         />

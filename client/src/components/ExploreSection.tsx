@@ -77,10 +77,10 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                 className="rounded-[14px] border border-border bg-card flex flex-col transition-all duration-150 hover:border-primary/30 hover:shadow-md"
                 style={{ padding: "12px" }}
               >
-                {/* Category badge + favourite star */}
-                <div className="flex items-start justify-between mb-2">
+                {/* Category badge + voters/favourite star, grouped on the right */}
+                <div className="flex items-start justify-between gap-1.5 mb-2">
                   <span
-                    className="text-[10px] font-bold uppercase tracking-[0.06em] rounded-full"
+                    className="text-[10px] font-bold uppercase tracking-[0.06em] rounded-full shrink-0"
                     style={{
                       padding: "2px 8px",
                       background: color + "22",
@@ -90,14 +90,17 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                   >
                     {site.category}
                   </span>
-                  <button
-                    onClick={() => onToggleExploreFav(site.id)}
-                    disabled={exploreFavPending}
-                    className={`star-btn -mt-1 -mr-1 ${isFav ? "starred" : "hover:text-yellow-400/70"} disabled:opacity-50`}
-                    title={isFav ? "Unstar" : "Star as favourite"}
-                  >
-                    <Star size={14} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
-                  </button>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {voters.length > 0 && <VoterChips voters={voters} />}
+                    <button
+                      onClick={() => onToggleExploreFav(site.id)}
+                      disabled={exploreFavPending}
+                      className={`star-btn -mt-1 -mr-1 ${isFav ? "starred" : "hover:text-yellow-400/70"} disabled:opacity-50`}
+                      title={isFav ? "Unstar" : "Star as favourite"}
+                    >
+                      <Star size={14} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Emoji + Name */}
@@ -106,12 +109,9 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                   <span className="text-sm font-bold leading-snug text-foreground">{site.name}</span>
                 </div>
 
-                {/* Country / region row, + voters (who's starred this place) on the right */}
-                <div className="flex items-center justify-between gap-2 mb-1">
-                  <span className="text-[11px] text-muted-foreground truncate">
-                    {flag} {site.country}{site.region ? ` · ${site.region}` : ""}
-                  </span>
-                  {voters.length > 0 && <VoterChips voters={voters} />}
+                {/* Country / region row */}
+                <div className="text-[11px] text-muted-foreground mb-1">
+                  {flag} {site.country}{site.region ? ` · ${site.region}` : ""}
                 </div>
 
                 {/* Description */}
