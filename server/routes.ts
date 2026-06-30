@@ -27,6 +27,55 @@ function buildLegacyDateFields(dateEntries: DateEntryInput[] | undefined, fallba
   return { date, legacyDates };
 }
 
+// Inverse of formatLegacyDate — best-effort parse of a legacy display date string
+// back into an ISO date + precision. Returns null for formats it can't confidently
+// parse (e.g. "TBC 2027") rather than guessing.
+function parseLegacyDate(display: string): { eventDate: string; precision: "exact" | "month" } | null {
+  const monthIdx = (mon: string) => MONTH_NAMES.findIndex(m => m.toLowerCase() === mon.toLowerCase());
+  let m = display.match(/^([A-Za-z]{3})\s+(\d{1,2}),\s+(\d{4})$/);
+  if (m) {
+    const mi = monthIdx(m[1]);
+    if (mi >= 0) return { eventDate: `${m[3]}-${String(mi + 1).padStart(2, "0")}-${String(Number(m[2])).padStart(2, "0")}`, precision: "exact" };
+  }
+  m = display.match(/^([A-Za-z]{3})\s+(\d{4})$/);
+  if (m) {
+    const mi = monthIdx(m[1]);
+    if (mi >= 0) return { eventDate: `${m[2]}-${String(mi + 1).padStart(2, "0")}-01`, precision: "month" };
+  }
+  return null;
+}
+
+// Keeps race_dates in sync whenever the legacy `dates` JSON field is written via the
+// single-race POST/PUT admin endpoints (POST /admin/bulk already writes race_dates
+// directly from caller-supplied dateEntries and doesn't need this). Replaces all
+// existing rows for the race with ones derived from the legacy array so the two
+// representations can't drift apart. Entries that fail to parse (e.g. "TBC 2027")
+// are silently dropped from race_dates rather than guessing at a date.
+async function syncRaceDatesFromLegacy(raceId: number, legacyDatesJson: string) {
+  const { eq } = await import("drizzle-orm");
+  let legacyEntries: { date: string; status?: string }[];
+  try {
+    legacyEntries = JSON.parse(legacyDatesJson);
+  } catch {
+    return;
+  }
+  const parsed = legacyEntries
+    .map((e, i) => {
+      const p = parseLegacyDate(e.date);
+      if (!p) return null;
+      return {
+        raceId,
+        eventDate: p.eventDate,
+        precision: p.precision,
+        confidence: e.status === "watchlist" ? "predicted" : "confirmed",
+        isPrimary: i === 0,
+      };
+    })
+    .filter((x): x is NonNullable<typeof x> => x !== null);
+  await db.delete(raceDates).where(eq(raceDates.raceId, raceId));
+  if (parsed.length) await db.insert(raceDates).values(parsed);
+}
+
 const router = Router();
 const ADMIN_KEY = process.env.ADMIN_KEY || "";
 
@@ -109,17 +158,21 @@ router.delete("/admin/votes", requireAdmin, async (req, res) => {
 });
 
 router.post("/admin/races", requireAdmin, async (req, res) => {
-  const { name, location, country, date, distance, type, venue, brand, source, team, url, note, status, badgeClass, lat, lng } = req.body;
+  const { name, location, country, date, distance, distanceLabel, type, venue, brand, source, team, url, note, status, badgeClass, lat, lng, dates } = req.body;
   if (!name || !location || !country || !date || !distance || !type) {
     return res.status(400).json({ error: "Missing required race fields" });
   }
+  const legacyDates = dates ?? JSON.stringify([{ date, status: status ?? "active" }]);
   const result = (await db.insert(races).values({
     name, location, country, date, distance, type,
+    distanceLabel: distanceLabel ?? "",
+    dates: legacyDates,
     venue: venue ?? null, brand: brand ?? null, source: source ?? null,
     team: team ?? "", url: url ?? "", note: note ?? "", status: status ?? "active",
     badgeClass: badgeClass ?? typeToBadge(type, venue, name),
     lat: lat ?? null, lng: lng ?? null,
   }).returning())[0];
+  if (result) await syncRaceDatesFromLegacy(result.id, legacyDates);
   res.json(result);
 });
 
@@ -149,6 +202,7 @@ router.put("/admin/races/:id", requireAdmin, async (req, res) => {
   if (lng !== undefined) update.lng = lng;
   update.updatedAt = new Date();
   const result = (await db.update(races).set(update).where(eq(races.id, Number(id))).returning())[0];
+  if (dates !== undefined && result) await syncRaceDatesFromLegacy(Number(id), dates);
   res.json(result);
 });
 
