@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, Search, ExternalLink, Thermometer, Waves } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, Search, Thermometer, Waves } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -10,6 +10,7 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import type { Race, ExploreSite } from "../../../shared/schema";
 import { getCoords, COUNTRY_WEATHER } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
+import { getDistPillClass } from "../lib/distancePills";
 import VoterChips from "./VoterChips";
 
 interface Props {
@@ -262,25 +263,24 @@ function groupByPixelDistance(map: L.Map, points: GeoPoint[], radius: number): G
 const POPUP_STYLE = `
   .map-popup {
     font-family: 'Satoshi', system-ui, sans-serif;
-    min-width: 210px; max-width: 270px;
+    min-width: 220px; max-width: 280px;
     background: hsl(var(--card)); color: hsl(var(--card-foreground));
     border: 1px solid hsl(var(--border)); border-radius: 14px;
-    padding: 14px; box-shadow: 0 6px 24px rgba(0,0,0,0.22);
+    padding: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.22);
   }
+  .map-popup .mp-badge-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 10px; }
   .map-popup .mp-badge {
     display: inline-block; font-size: 10px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.06em;
-    padding: 2px 8px; border-radius: 999px; margin-bottom: 8px;
+    padding: 2px 8px; border-radius: 999px;
   }
-  .map-popup .mp-name { font-size: 14px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; color: hsl(var(--card-foreground)); }
-  .map-popup a.mp-name-link {
-    display: inline-flex; align-items: flex-start; gap: 4px;
-    text-decoration: none; cursor: pointer;
-  }
+  .map-popup .mp-name { font-size: 14px; font-weight: 700; line-height: 1.3; margin-bottom: 9px; color: hsl(var(--card-foreground)); }
+  .map-popup a.mp-name-link { display: inline-block; text-decoration: none; cursor: pointer; }
   .map-popup a.mp-name-link:hover { color: hsl(var(--primary)); }
-  .map-popup .mp-row { font-size: 11px; color: hsl(var(--muted-foreground)); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
-  .map-popup .mp-months { font-size: 11px; font-weight: 600; color: hsl(var(--primary)); margin-top: 6px; }
-  .map-popup .mp-actions { display: flex; gap: 8px; margin-top: 10px; align-items: stretch; }
+  .map-popup .mp-row { font-size: 11px; color: hsl(var(--muted-foreground)); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; line-height: 1.4; }
+  .map-popup .mp-icon { font-size: 15px; line-height: 1; }
+  .map-popup .mp-months { font-size: 11px; font-weight: 600; color: hsl(var(--primary)); margin-top: 8px; }
+  .map-popup .mp-actions { display: flex; gap: 8px; margin-top: 12px; align-items: center; }
   .map-popup .mp-star-btn {
     padding: 7px 12px; border-radius: 8px;
     border: 1px solid hsl(var(--border)); background: hsl(var(--muted));
@@ -352,28 +352,27 @@ function RacePopupContent({ race, isFav, voters, onToggleFav }: {
   const flag = COUNTRY_WEATHER[race.country]?.flag ?? "";
   const weather = getRaceWeather(race.location, race.date);
   const showWaterTemp = weather?.waterTemp != null && ["triathlon", "swimming", "swimrun"].includes(race.type);
+  const distPills = (race.distanceLabel ?? "").split("·").map(p => p.trim()).filter(Boolean);
 
   return (
     <div className="map-popup">
-      {/* paddingRight clears Leaflet's close button (28px wide, top:6/right:6 — so it
-          occupies the popup's top-right ~34px corner, past this content's own 14px
-          inset) so the right-aligned voters pill doesn't sit underneath it. */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8, paddingRight: 24 }}>
-        <span className="mp-badge" style={{ background: `${fill}22`, color: fill, border: `1px solid ${fill}55`, marginBottom: 0 }}>
+      <div className="mp-badge-row">
+        <span className="mp-badge" style={{ background: `${fill}22`, color: fill, border: `1px solid ${fill}55` }}>
           {label}{subLabel && <span style={{ opacity: 0.65, fontWeight: 500 }}> · {subLabel}</span>}
         </span>
-        {voters.length > 0 && <VoterChips voters={voters} />}
+        {distPills.map((p, i) => (
+          <span key={i} className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] font-semibold leading-none whitespace-nowrap ${getDistPillClass(p)}`}>{p}</span>
+        ))}
       </div>
       {race.url ? (
         <a href={race.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link">
           {race.name}
-          <ExternalLink size={12} className="shrink-0" style={{ opacity: 0.5 }} />
         </a>
       ) : (
         <div className="mp-name">{race.name}</div>
       )}
-      <div className="mp-row">📍 {race.location}, {flag} {race.country}</div>
-      <div className="mp-row">📅 {race.date} · {race.distance}</div>
+      <div className="mp-row"><span className="mp-icon">{flag}</span> {race.country}, {race.location}</div>
+      <div className="mp-row"><span className="mp-icon">📅</span> {race.date}</div>
       {weather && (
         <div className="mp-row">
           <Thermometer size={11} className="shrink-0" /> {weather.temp}°C · {weather.condition}
@@ -386,8 +385,9 @@ function RacePopupContent({ race, isFav, voters, onToggleFav }: {
       )}
       <div className="mp-actions">
         <button className={`mp-star-btn ${isFav ? "starred" : ""}`} onClick={() => onToggleFav(race.id, isFav)}>
-          {isFav ? "★ Starred" : "☆ Star"}
+          {isFav ? "★ Voted" : "☆ Vote"}
         </button>
+        {voters.length > 0 && <VoterChips voters={voters} />}
       </div>
     </div>
   );
@@ -404,28 +404,24 @@ function ExplorePopupContent({ site, isFav, voters, onToggleExploreFav }: {
   const desc = site.description.length > 250 ? site.description.slice(0, 250) + "…" : site.description;
   return (
     <div className="map-popup">
-      {/* paddingRight clears Leaflet's close button (28px wide, top:6/right:6 — so it
-          occupies the popup's top-right ~34px corner, past this content's own 14px
-          inset) so the right-aligned voters pill doesn't sit underneath it. */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 8, paddingRight: 24 }}>
-        <span className="mp-badge" style={{ background: `${color}22`, color, border: `1px solid ${color}55`, marginBottom: 0 }}>{site.category}</span>
-        {voters.length > 0 && <VoterChips voters={voters} />}
+      <div className="mp-badge-row">
+        <span className="mp-badge" style={{ background: `${color}22`, color, border: `1px solid ${color}55` }}>{site.category}</span>
       </div>
       {site.url ? (
         <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link">
           {site.name}
-          <ExternalLink size={12} className="shrink-0" style={{ opacity: 0.5 }} />
         </a>
       ) : (
         <div className="mp-name">{site.name}</div>
       )}
-      <div className="mp-row">{flag} {site.country}{site.region ? <> · {site.region}</> : null}</div>
+      <div className="mp-row"><span className="mp-icon">{flag}</span> {site.country}{site.region ? <> · {site.region}</> : null}</div>
       <div className="mp-row" style={{ marginTop: 4, lineHeight: 1.5 }}>{desc}</div>
       {site.bestMonths && <div className="mp-months">Best: {site.bestMonths}</div>}
       <div className="mp-actions">
         <button className={`mp-star-btn ${isFav ? "starred" : ""}`} onClick={() => onToggleExploreFav(site.id)}>
-          {isFav ? "★ Starred" : "☆ Star"}
+          {isFav ? "★ Voted" : "☆ Vote"}
         </button>
+        {voters.length > 0 && <VoterChips voters={voters} />}
       </div>
     </div>
   );
@@ -995,21 +991,23 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
             <X size={16} />
           </button>
         )}
-        {/* Favourites + Most Voted — directly tappable standalone buttons rather than
+        {/* My Votes + Most Voted — directly tappable standalone buttons rather than
             hidden inside a "View" dropdown, so they're reachable in one tap. Icon-only
             on mobile to save space, icon + label on desktop — same responsive pattern
             Filters already uses (hidden sm:inline). Both now span races AND Explore
             places (favSet/showFavsOnly already did; totalWithVotes is the combined
-            voted-races + voted-sites count). */}
+            voted-races + voted-sites count). Starring something IS voting for it — same
+            single mechanism, just named "Vote" everywhere now to match the votes pill
+            and Most Voted language instead of mixing star/favourite terminology. */}
         <button
           onClick={onToggleFavs}
-          title="Favourites Only"
+          title="My Votes"
           className={`relative flex items-center gap-1.5 px-3 sm:px-2.5 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
             showFavsOnly ? `${pillBg} border-[1.5px] border-yellow-400 text-yellow-500` : `${pillBg} border ${pillBorder} ${pillText}`
           }`}
         >
           <Star size={16} className="shrink-0" fill={showFavsOnly ? "currentColor" : "none"} />
-          <span className="hidden sm:inline">Favourites</span>
+          <span className="hidden sm:inline">My Votes</span>
           {favSet.size > 0 && (
             <span className={`rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold ${
               showFavsOnly ? "bg-yellow-500 text-black" : "bg-muted text-current"

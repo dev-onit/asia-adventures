@@ -6,6 +6,7 @@ import "react-day-picker/style.css";
 import type { Race, Favourite, ExploreSite, ExploreFavourite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
+import { getDistPillClass } from "../lib/distancePills";
 import { API_BASE } from "../App";
 import MapView from "../components/MapView";
 import ExploreSection from "../components/ExploreSection";
@@ -224,33 +225,6 @@ function SportPill({ cls }: { cls: string }) {
 // Keep BadgeClass as alias for backward compatibility
 function BadgeClass({ cls }: { cls: string }) {
   return <SportPill cls={cls} />;
-}
-
-// ── Distance pill coloring ────────────────────────────────────────────────────
-function getDistPillClass(label: string): string {
-  const l = label.trim();
-  if (l === "Super Sprint") return "bg-sky-100 border-sky-400 text-sky-700 dark:bg-sky-500/15 dark:border-sky-500/50 dark:text-sky-300";
-  if (l === "Sprint")       return "bg-blue-100 border-blue-400 text-blue-700 dark:bg-blue-500/15 dark:border-blue-500/50 dark:text-blue-300";
-  if (l === "Olympic")      return "bg-violet-100 border-violet-400 text-violet-700 dark:bg-violet-500/15 dark:border-violet-500/50 dark:text-violet-300";
-  if (l === "Half IM")      return "bg-orange-100 border-orange-400 text-orange-700 dark:bg-orange-500/15 dark:border-orange-500/50 dark:text-orange-300";
-  if (l === "IM")           return "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/50 dark:text-red-300";
-  if (l === "5K")  return "bg-emerald-100 border-emerald-400 text-emerald-700 dark:bg-emerald-500/15 dark:border-emerald-500/50 dark:text-emerald-300";
-  if (l === "10K") return "bg-green-100 border-green-400 text-green-700 dark:bg-green-500/15 dark:border-green-500/50 dark:text-green-300";
-  if (l === "21.1K" || l === "21K") return "bg-teal-100 border-teal-400 text-teal-700 dark:bg-teal-500/15 dark:border-teal-500/50 dark:text-teal-300";
-  if (l === "42.2K" || l === "42K") return "bg-amber-100 border-amber-400 text-amber-700 dark:bg-amber-500/15 dark:border-amber-500/50 dark:text-amber-300";
-  const kmMatch = l.match(/^([\d.]+)K$/);
-  if (kmMatch) {
-    const km = parseFloat(kmMatch[1]);
-    if (km <= 10)  return "bg-emerald-100 border-emerald-400 text-emerald-700 dark:bg-emerald-500/15 dark:border-emerald-500/50 dark:text-emerald-300";
-    if (km <= 21)  return "bg-teal-100 border-teal-400 text-teal-700 dark:bg-teal-500/15 dark:border-teal-500/50 dark:text-teal-300";
-    if (km <= 42)  return "bg-amber-100 border-amber-400 text-amber-700 dark:bg-amber-500/15 dark:border-amber-500/50 dark:text-amber-300";
-    return "bg-rose-100 border-rose-400 text-rose-700 dark:bg-rose-500/15 dark:border-rose-500/50 dark:text-rose-300";
-  }
-  if (/Ocean|Lake|River/.test(l)) return "bg-cyan-100 border-cyan-400 text-cyan-700 dark:bg-cyan-500/15 dark:border-cyan-500/50 dark:text-cyan-300";
-  if (l === "Road")    return "bg-slate-100 border-slate-400 text-slate-700 dark:bg-slate-500/15 dark:border-slate-500/50 dark:text-slate-300";
-  if (l === "Trail")   return "bg-lime-100 border-lime-500 text-lime-700 dark:bg-lime-500/15 dark:border-lime-500/50 dark:text-lime-300";
-  if (l === "Spartan") return "bg-red-100 border-red-500 text-red-700 dark:bg-red-500/15 dark:border-red-500/50 dark:text-red-300";
-  return "bg-muted border-border text-muted-foreground";
 }
 
 // ── Sub-filter matching helper ──
@@ -1824,7 +1798,7 @@ export default function CalendarPage() {
             className="ml-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border transition-opacity hover:opacity-70"
             style={{ color: "#ca8a04", borderColor: "#ca8a04", lineHeight: 1 }}
           >
-            <Star size={9} fill="#ca8a04" /> Showing Favourites <X size={9} />
+            <Star size={9} fill="#ca8a04" /> Showing My Votes <X size={9} />
           </button>
         )}
         {sortMode === "votes" && !showFavs && (
@@ -1945,7 +1919,7 @@ export default function CalendarPage() {
                               onClick={() => isFav ? removeFav.mutate(race.id) : addFav.mutate(race.id)}
                               disabled={addFav.isPending || removeFav.isPending}
                               className={`star-btn ${isFav ? "starred" : "hover:text-yellow-400/70"} disabled:opacity-50`}
-                              title={isFav ? "Unstar" : "Star to vote"}
+                              title={isFav ? "Unvote" : "Vote"}
                             >
                               <Star size={15} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
                             </button>

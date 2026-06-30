@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Star, ExternalLink } from "lucide-react";
 import type { ExploreSite } from "../../../shared/schema";
 import { COUNTRY_WEATHER } from "../lib/raceGeo";
 import VoterChips from "./VoterChips";
@@ -68,70 +67,53 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
             const isFav = exploreFavSet.has(site.id);
             const voters = exploreVotesBySite.get(site.id) ?? [];
             return (
+              // Reuses the exact same map-popup / mp-* classes the Explore map popup
+              // uses (defined in MapView.tsx's POPUP_STYLE) so a card and its popup are
+              // structurally identical — same row order, same badge/name/actions
+              // treatment. Width/sizing is overridden inline since map-popup's own
+              // min/max-width is sized for a floating Leaflet popup, not a grid cell.
               <div
                 key={site.id}
-                className="rounded-[14px] border border-border bg-card flex flex-col transition-all duration-150 hover:border-primary/30 hover:shadow-md"
-                style={{ padding: "12px" }}
+                className="map-popup transition-shadow hover:shadow-lg"
+                style={{ width: "100%", minWidth: 0, maxWidth: "none" }}
               >
-                {/* Category badge + voters/favourite star, grouped on the right */}
-                <div className="flex items-start justify-between gap-1.5 mb-2">
+                <div className="mp-badge-row">
                   <span
-                    className="text-[10px] font-bold uppercase tracking-[0.06em] rounded-full shrink-0"
-                    style={{
-                      padding: "2px 8px",
-                      background: color + "22",
-                      color: color,
-                      border: `1px solid ${color}55`,
-                    }}
+                    className="mp-badge"
+                    style={{ background: color + "22", color: color, border: `1px solid ${color}55` }}
                   >
                     {site.category}
                   </span>
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    {voters.length > 0 && <VoterChips voters={voters} />}
-                    <button
-                      onClick={() => onToggleExploreFav(site.id)}
-                      disabled={exploreFavPending}
-                      className={`star-btn -mt-1 -mr-1 ${isFav ? "starred" : "hover:text-yellow-400/70"} disabled:opacity-50`}
-                      title={isFav ? "Unstar" : "Star as favourite"}
-                    >
-                      <Star size={14} className={isFav ? "fill-yellow-400 text-yellow-400" : ""} />
-                    </button>
-                  </div>
                 </div>
 
-                {/* Name — the official site link when one exists, plain text otherwise */}
-                <div className="mb-1">
-                  {site.url ? (
-                    <a
-                      href={site.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-bold leading-snug text-foreground hover:text-primary transition-colors inline-flex items-start gap-1"
-                    >
-                      {site.name}
-                      <ExternalLink size={11} className="shrink-0 mt-0.5 opacity-50" />
-                    </a>
-                  ) : (
-                    <span className="text-sm font-bold leading-snug text-foreground">{site.name}</span>
-                  )}
+                {site.url ? (
+                  <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link">
+                    {site.name}
+                  </a>
+                ) : (
+                  <div className="mp-name">{site.name}</div>
+                )}
+
+                <div className="mp-row">
+                  <span className="mp-icon">{flag}</span> {site.country}{site.region ? <> · {site.region}</> : null}
                 </div>
 
-                {/* Country / region row */}
-                <div className="text-[11px] text-muted-foreground mb-1">
-                  {flag} {site.country}{site.region ? ` · ${site.region}` : ""}
-                </div>
-
-                {/* Description */}
-                <div className="text-[11px] text-muted-foreground leading-relaxed mb-2 flex-1">
+                <div className="mp-row" style={{ marginTop: 4, lineHeight: 1.5 }}>
                   {desc}
                 </div>
 
-                {/* Best months */}
-                {site.bestMonths && (
-                  <div className="text-[11px] font-semibold text-primary">
-                    Best: {site.bestMonths}
-                  </div>
-                )}
+                {site.bestMonths && <div className="mp-months">Best: {site.bestMonths}</div>}
+
+                <div className="mp-actions">
+                  <button
+                    className={`mp-star-btn ${isFav ? "starred" : ""}`}
+                    onClick={() => onToggleExploreFav(site.id)}
+                    disabled={exploreFavPending}
+                  >
+                    {isFav ? "★ Voted" : "☆ Vote"}
+                  </button>
+                  {voters.length > 0 && <VoterChips voters={voters} />}
+                </div>
               </div>
             );
           })}
