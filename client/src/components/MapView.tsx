@@ -652,6 +652,52 @@ function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging 
     };
   }, [map, isFullscreen]);
 
+  // Embedded map: two-finger drag-to-pan via touch — separate from the mouse-drag
+  // effect above and from Leaflet's own dragging/touchZoom handlers (both still kept
+  // disabled here). A real two-finger touch gesture is claimed for map panning by
+  // calling preventDefault only once exactly 2 touches are active; a single finger is
+  // left completely alone (no listener logic runs, no preventDefault) so the existing
+  // touch-action: pan-x pan-y CSS keeps letting the browser scroll the page normally
+  // for that case, same as today. touchmove must be registered non-passive so
+  // preventDefault is honored for the 2-finger case — only that specific case ever
+  // calls it, so 1-finger scroll performance/behavior is unaffected.
+  useEffect(() => {
+    if (isFullscreen) return;
+    const container = map.getContainer();
+    let lastMid: { x: number; y: number } | null = null;
+
+    function midpoint(touches: TouchList): { x: number; y: number } {
+      return { x: (touches[0].clientX + touches[1].clientX) / 2, y: (touches[0].clientY + touches[1].clientY) / 2 };
+    }
+
+    const onTouchStart = (e: TouchEvent) => {
+      lastMid = e.touches.length === 2 ? midpoint(e.touches) : null;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 2) { lastMid = null; return; }
+      const mid = midpoint(e.touches);
+      if (lastMid) {
+        map.panBy([-(mid.x - lastMid.x), -(mid.y - lastMid.y)], { animate: false });
+      }
+      lastMid = mid;
+      e.preventDefault();
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      lastMid = e.touches.length === 2 ? midpoint(e.touches) : null;
+    };
+
+    container.addEventListener("touchstart", onTouchStart, { passive: true });
+    container.addEventListener("touchmove", onTouchMove, { passive: false });
+    container.addEventListener("touchend", onTouchEnd, { passive: true });
+    container.addEventListener("touchcancel", onTouchEnd, { passive: true });
+    return () => {
+      container.removeEventListener("touchstart", onTouchStart);
+      container.removeEventListener("touchmove", onTouchMove);
+      container.removeEventListener("touchend", onTouchEnd);
+      container.removeEventListener("touchcancel", onTouchEnd);
+    };
+  }, [map, isFullscreen]);
+
   useEffect(() => {
     if (hasInitialFitRef.current || displayRaces.length === 0) return;
     const coords = displayRaces.map(r => getCoords(r)).filter((c): c is [number, number] => c !== null);
