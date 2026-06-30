@@ -58,8 +58,11 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
           {filteredSites.map(site => {
             const flag = COUNTRY_WEATHER[site.country]?.flag ?? "";
             const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
-            const desc = site.description.length > 90
-              ? site.description.slice(0, 90) + "…"
+            // Real description data is already a terse 81-138 char blurb (by design) —
+            // this cap is just a safety net well above that range so the UI never
+            // truncates an already-short description on top of being short to begin with.
+            const desc = site.description.length > 200
+              ? site.description.slice(0, 200) + "…"
               : site.description;
 
             const isFav = exploreFavSet.has(site.id);

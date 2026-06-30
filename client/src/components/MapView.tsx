@@ -398,7 +398,10 @@ function ExplorePopupContent({ site, isFav, voters, onToggleExploreFav }: {
 }) {
   const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
   const flag = COUNTRY_WEATHER[site.country]?.flag ?? "";
-  const desc = site.description.length > 120 ? site.description.slice(0, 120) + "…" : site.description;
+  // Real description data is already a terse 81-138 char blurb (by design) — this cap
+  // is just a safety net well above that range so the popup never truncates an
+  // already-short description on top of being short to begin with.
+  const desc = site.description.length > 250 ? site.description.slice(0, 250) + "…" : site.description;
   return (
     <div className="map-popup">
       {/* paddingRight clears Leaflet's close button (28px wide, top:6/right:6 — so it
