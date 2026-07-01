@@ -994,7 +994,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
       <MapContainer
         center={[20, 100]}
         zoom={4}
-        minZoom={3}
+        minZoom={1}
         zoomControl={false}
         attributionControl={false}
         scrollWheelZoom={false}
