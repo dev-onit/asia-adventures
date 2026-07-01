@@ -233,8 +233,12 @@ function raceClusterRadius(zoom: number): number {
 function exploreClusterRadius(zoom: number): number {
   return zoom < 5 ? 70 : zoom < 7 ? 45 : 30;
 }
-// Groups at or below this size render as individual pins instead of a cluster bubble.
-const SOLO_GROUP_MAX_SIZE = 7;
+// Only truly isolated pins (group size 1 — no neighbour within the cluster radius)
+// skip the cluster bubble and render directly. Any group of 2+ goes through
+// MarkerClusterGroup, which collapses them into a bubble when zoomed out and
+// expands them at zoom ≥ disableClusteringAtZoom. Value > 1 caused same-city
+// pins to bypass clustering and appear spread in an artificial circle instead.
+const SOLO_GROUP_MAX_SIZE = 1;
 
 function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
   const zoom = map.getZoom();
