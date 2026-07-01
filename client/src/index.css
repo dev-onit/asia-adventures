@@ -252,4 +252,176 @@ h1, h2, h3 {
   }
 }
 
+/* ── react-day-picker (Custom Range calendar) — themed to match design system ── */
+/* Scoped to .rdp-compact wrapper so default styles don't leak into the page. */
+.rdp-compact {
+  /* Override react-day-picker v9 CSS custom properties */
+  --rdp-accent-color: hsl(183 85% 42%);
+  --rdp-accent-background-color: hsl(183 85% 42% / 0.15);
+  --rdp-day_button-border-radius: 6px;
+  --rdp-day_button-height: 32px;
+  --rdp-day_button-width: 32px;
+  --rdp-selected-border: none;
+  --rdp-range_middle-background-color: hsl(183 85% 42% / 0.12);
+  --rdp-range_middle-color: hsl(var(--foreground));
+  --rdp-range_start-color: hsl(var(--primary-foreground));
+  --rdp-range_end-color: hsl(var(--primary-foreground));
+  --rdp-range_start-background: hsl(183 85% 42%);
+  --rdp-range_end-background: hsl(183 85% 42%);
+  --rdp-range_start-date-background-color: hsl(183 85% 42%);
+  --rdp-range_end-date-background-color: hsl(183 85% 42%);
+  font-family: "Satoshi", system-ui, sans-serif;
+  font-size: 12px;
+}
+
+/* Calendar root — no outer background, transparent so it sits in the card */
+.rdp-compact .rdp-root {
+  background: transparent;
+  color: hsl(var(--foreground));
+}
+
+/* Month grid layout */
+.rdp-compact .rdp-month {
+  background: transparent;
+}
+
+/* Month caption — "July 2026" heading */
+.rdp-compact .rdp-month_caption {
+  font-size: 12px;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  padding: 4px 0 8px;
+}
+.rdp-compact .rdp-caption_label {
+  font-size: 12px;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+}
+
+/* Nav buttons — prev/next month arrows */
+.rdp-compact .rdp-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.rdp-compact .rdp-button_previous,
+.rdp-compact .rdp-button_next {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid hsl(var(--border));
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.rdp-compact .rdp-button_previous:hover,
+.rdp-compact .rdp-button_next:hover {
+  background: hsl(183 85% 42% / 0.1);
+  border-color: hsl(183 85% 42% / 0.4);
+  color: hsl(183 85% 42%);
+}
+
+/* Weekday header — Mon Tue Wed etc */
+.rdp-compact .rdp-weekday {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: hsl(var(--muted-foreground));
+  padding-bottom: 4px;
+}
+
+/* Day cells */
+.rdp-compact .rdp-day {
+  padding: 1px;
+}
+.rdp-compact .rdp-day_button {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.rdp-compact .rdp-day_button:hover {
+  background: hsl(183 85% 42% / 0.12);
+  color: hsl(183 85% 42%);
+}
+
+/* Today — subtle outline instead of a dot */
+.rdp-compact .rdp-today .rdp-day_button {
+  border: 1px solid hsl(183 85% 42% / 0.5);
+  color: hsl(183 85% 42%);
+  font-weight: 700;
+}
+
+/* Outside days (previous/next month shown via showOutsideDays) */
+.rdp-compact .rdp-outside .rdp-day_button {
+  color: hsl(var(--muted-foreground) / 0.35);
+}
+
+/* Selected single day / range endpoints */
+.rdp-compact .rdp-selected .rdp-day_button,
+.rdp-compact .rdp-range_start .rdp-day_button,
+.rdp-compact .rdp-range_end .rdp-day_button {
+  background: hsl(183 85% 42%);
+  color: hsl(220 18% 8%);
+  font-weight: 700;
+  border: none;
+}
+.rdp-compact .rdp-selected .rdp-day_button:hover,
+.rdp-compact .rdp-range_start .rdp-day_button:hover,
+.rdp-compact .rdp-range_end .rdp-day_button:hover {
+  background: hsl(183 85% 50%);
+  color: hsl(220 18% 8%);
+}
+
+/* Range middle days */
+.rdp-compact .rdp-range_middle .rdp-day_button {
+  background: hsl(183 85% 42% / 0.12);
+  color: hsl(183 85% 55%);
+  border-radius: 0;
+}
+
+/* Light mode overrides */
+.light .rdp-compact {
+  --rdp-accent-color: hsl(183 85% 26%);
+  --rdp-accent-background-color: hsl(183 85% 26% / 0.12);
+}
+.light .rdp-compact .rdp-day_button {
+  color: hsl(var(--foreground));
+}
+.light .rdp-compact .rdp-today .rdp-day_button {
+  border-color: hsl(183 85% 26% / 0.6);
+  color: hsl(183 85% 26%);
+}
+.light .rdp-compact .rdp-day_button:hover {
+  background: hsl(183 85% 26% / 0.10);
+  color: hsl(183 85% 26%);
+}
+.light .rdp-compact .rdp-selected .rdp-day_button,
+.light .rdp-compact .rdp-range_start .rdp-day_button,
+.light .rdp-compact .rdp-range_end .rdp-day_button {
+  background: hsl(183 85% 26%);
+  color: #fff;
+}
+.light .rdp-compact .rdp-range_middle .rdp-day_button {
+  background: hsl(183 85% 26% / 0.10);
+  color: hsl(183 85% 22%);
+}
+.light .rdp-compact .rdp-button_previous:hover,
+.light .rdp-compact .rdp-button_next:hover {
+  background: hsl(183 85% 26% / 0.08);
+  border-color: hsl(183 85% 26% / 0.4);
+  color: hsl(183 85% 26%);
+}
+
 
