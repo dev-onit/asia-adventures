@@ -845,7 +845,7 @@ function MapController({ displayRaces, sites, recenterRef, isFullscreen, allowDr
     if (coords.length === 1) {
       map.setView(coords[0], 8, { animate: false });
     } else {
-      map.fitBounds(L.latLngBounds(coords), { padding: [48, 48], maxZoom: 6, animate: false });
+      map.fitBounds(L.latLngBounds(coords), { padding: [48, 48], maxZoom: 4, animate: false });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, displayRaces]);
