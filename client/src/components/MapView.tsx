@@ -139,7 +139,7 @@ function pinBadgesHtml(isFav: boolean, voteCount: number): string {
     ? `<div style="position:absolute;top:${BADGE_PAD-7}px;right:${BADGE_PAD-7}px;width:14px;height:14px;background:#facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;line-height:1;color:#000;font-weight:900;pointer-events:none;box-shadow:0 0 5px rgba(250,204,21,0.8),0 1px 2px rgba(0,0,0,0.4);z-index:20">★</div>`
     : "";
   const voteHtml = voteCount > 0
-    ? `<div style="position:absolute;bottom:${BADGE_PAD-7}px;right:${BADGE_PAD-7}px;min-width:14px;height:14px;background:#fbbf24;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#000;line-height:1;padding:0 3px;pointer-events:none;box-shadow:0 0 5px rgba(251,191,36,0.8),0 1px 2px rgba(0,0,0,0.4);z-index:20">${voteCount}</div>`
+    ? `<div style="position:absolute;bottom:${BADGE_PAD-7}px;right:${BADGE_PAD-7}px;min-width:14px;height:14px;background:#3b82f6;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#fff;line-height:1;padding:0 3px;pointer-events:none;box-shadow:0 0 5px rgba(59,130,246,0.7),0 1px 2px rgba(0,0,0,0.4);z-index:20">${voteCount}</div>`
     : "";
   return starHtml + voteHtml;
 }
@@ -1062,14 +1062,14 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           onClick={onToggleMostVoted}
           title="Sort by Most Voted"
           className={`relative flex items-center gap-1.5 px-3 sm:px-2.5 h-9 sm:h-8 rounded-lg text-xs sm:text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm hover:brightness-110 whitespace-nowrap ${
-            sortMode === "votes" ? `${pillBg} border-[1.5px] border-amber-400 text-amber-500` : `${pillBg} border ${pillBorder} ${pillText}`
+            sortMode === "votes" ? `${pillBg} border-[1.5px] border-blue-400 text-blue-500` : `${pillBg} border ${pillBorder} ${pillText}`
           }`}
         >
           <TrendingUp size={16} className="shrink-0" />
           <span className="hidden sm:inline">Most Voted</span>
           {totalWithVotes > 0 && (
             <span className={`rounded-full w-5 h-5 sm:w-4 sm:h-4 flex items-center justify-center text-[11px] sm:text-[10px] font-bold ${
-              sortMode === "votes" ? "bg-amber-400 text-black" : "bg-muted text-current"
+              sortMode === "votes" ? "bg-blue-500 text-white" : "bg-muted text-current"
             }`}>{totalWithVotes}</span>
           )}
         </button>
