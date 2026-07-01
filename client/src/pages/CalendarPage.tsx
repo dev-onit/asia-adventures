@@ -1983,22 +1983,34 @@ export default function CalendarPage() {
       >
         <span style={{ lineHeight: 1 }} className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Races</span>
         <span style={{ lineHeight: 1 }} className="ml-2 text-xs text-muted-foreground/50">{filtered.length} {filtered.length === 1 ? "race" : "races"}</span>
-        {showFavs && (
+        {/* My Votes toggle — always visible */}
+        <button
+          onClick={e => { e.stopPropagation(); handleToggleFavs(); }}
+          className={`ml-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border transition-all ${
+            showFavs
+              ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 hover:bg-amber-500/25"
+              : "border-border text-muted-foreground hover:border-amber-500/40 hover:text-amber-500"
+          }`}
+          style={{ lineHeight: 1 }}
+        >
+          <Star size={9} fill={showFavs ? "currentColor" : "none"} />
+          My Votes
+          {showFavs && <X size={9} />}
+        </button>
+        {/* Most Voted toggle — hidden when My Votes is active (mutually exclusive) */}
+        {!showFavs && (
           <button
-            onClick={e => { e.stopPropagation(); setShowFavs(false); }}
-            className="ml-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border transition-opacity hover:opacity-70"
-            style={{ color: "#ca8a04", borderColor: "#ca8a04", lineHeight: 1 }}
-          >
-            <Star size={9} fill="#ca8a04" /> Showing My Votes <X size={9} />
-          </button>
-        )}
-        {sortMode === "votes" && !showFavs && (
-          <button
-            onClick={e => { e.stopPropagation(); setSortMode("date"); }}
-            className="ml-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border border-orange-500 text-orange-500 transition-opacity hover:opacity-70"
+            onClick={e => { e.stopPropagation(); handleToggleMostVoted(); }}
+            className={`ml-1.5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border transition-all ${
+              sortMode === "votes"
+                ? "bg-blue-500/15 border-blue-500/40 text-blue-600 dark:text-blue-400 hover:bg-blue-500/25"
+                : "border-border text-muted-foreground hover:border-blue-500/40 hover:text-blue-500"
+            }`}
             style={{ lineHeight: 1 }}
           >
-            <TrendingUp size={9} /> Showing Most Voted <X size={9} />
+            <TrendingUp size={9} />
+            Most Voted
+            {sortMode === "votes" && <X size={9} />}
           </button>
         )}
         {!showFavs && activeFilterCount > 0 && (
