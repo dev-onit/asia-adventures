@@ -31,6 +31,7 @@ const STORAGE_ACTIVE_SUB_PANEL = S+"asia-cal-active-sub-panel";
 const STORAGE_SHOW_FILTER_BAR = S+"asia-cal-show-filter-bar";
 const STORAGE_THEME = S+"asia-cal-theme";
 const STORAGE_SORT_MODE = S+"asia-cal-sort-mode";
+const STORAGE_BRAND_FILTERS = S+"asia-cal-brand-filters";
 
 // Extract city = first segment before comma in location
 const extractCity = (location: string) => location.split(",")[0].trim();
@@ -190,6 +191,15 @@ const SPORT_SECTIONS = [
       { value: "swim-10kplus", label: "10K+" },
     ],
   },
+];
+
+// Brand filter pills
+const BRAND_PILLS = [
+  { value: "HYROX",            label: "HYROX" },
+  { value: "Ironman",          label: "Ironman" },
+  { value: "Challenge Family", label: "Challenge" },
+  { value: "Spartan Race",     label: "Spartan" },
+  { value: "OceanMan",         label: "OceanMan" },
 ];
 
 // Format filter pills — apply across all sports
@@ -422,6 +432,9 @@ export default function CalendarPage() {
   const [cityFilters, setCityFilters] = useState<string[]>(() => {
     try { const v = localStorage.getItem(STORAGE_CITY_FILTERS); return v ? JSON.parse(v) : []; } catch { return []; }
   });
+  const [brandFilters, setBrandFilters] = useState<string[]>(() => {
+    try { const v = localStorage.getItem(STORAGE_BRAND_FILTERS); return v ? JSON.parse(v) : []; } catch { return []; }
+  });
   const [personFilter, setPersonFilter] = useState<string | null>(null);
   const [minVotesFilter, setMinVotesFilter] = useState(false);
   const [search, setSearch] = useState("");
@@ -440,6 +453,7 @@ export default function CalendarPage() {
   useEffect(() => { try { localStorage.setItem(STORAGE_EXPLORE_FILTERS, JSON.stringify(exploreCategoryFilters)); } catch {} }, [exploreCategoryFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_REGION_FILTERS, JSON.stringify(regionFilters)); } catch {} }, [regionFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_CITY_FILTERS, JSON.stringify(cityFilters)); } catch {} }, [cityFilters]);
+  useEffect(() => { try { localStorage.setItem(STORAGE_BRAND_FILTERS, JSON.stringify(brandFilters)); } catch {} }, [brandFilters]);
   useEffect(() => { try { localStorage.setItem(STORAGE_SORT_MODE, sortMode); } catch {} }, [sortMode]);
 
   // ── Data ──
@@ -536,6 +550,37 @@ export default function CalendarPage() {
 
   const allVoters = useMemo(() => [...new Set(favourites.map(f => f.voterName))].sort(), [favourites]);
 
+  // Count maps — computed against the full races array (no filters), for displaying
+  // "(n)" counts on sport/country/brand pills so users can gauge density before tapping.
+  const sportCountMap = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const r of races) {
+      if (r.status === "scratched") continue;
+      for (const section of SPORT_SECTIONS) {
+        if (section.types.includes((r.type ?? "").toLowerCase()))
+          m.set(section.key, (m.get(section.key) ?? 0) + 1);
+      }
+      for (const pill of SIMPLE_SPORT_PILLS) {
+        if ((r.type ?? "").toLowerCase() === pill.value)
+          m.set(pill.value, (m.get(pill.value) ?? 0) + 1);
+      }
+    }
+    return m;
+  }, [races]);
+  const countryCountMap = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const r of races) { if (r.status !== "scratched") m.set(r.country, (m.get(r.country) ?? 0) + 1); }
+    return m;
+  }, [races]);
+  const brandCountMap = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const r of races) {
+      const b = (r as any).brand;
+      if (r.status !== "scratched" && b) m.set(b, (m.get(b) ?? 0) + 1);
+    }
+    return m;
+  }, [races]);
+
   // ── Sport filter helpers ──
   function toggleSportPill(key: string) {
     setSportFilters(prev => {
@@ -569,26 +614,31 @@ export default function CalendarPage() {
     });
   }
 
+  function toggleBrandFilter(val: string) {
+    setBrandFilters(prev => prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]);
+  }
+
   // ── Computed: is Race Filters active? ──
-  const raceFiltersActive = sportFilters.size > 0 || subFilters.size > 0 || teamFilters.size > 0;
+  const raceFiltersActive = sportFilters.size > 0 || subFilters.size > 0 || teamFilters.size > 0 || brandFilters.length > 0;
 
   // ── Active filter count (for display) ──
   const activeFilterCount = useMemo(() => {
     let n = 0;
-    n += sportFilters.size + subFilters.size + teamFilters.size;
+    n += sportFilters.size + subFilters.size + teamFilters.size + brandFilters.length;
     n += countryFilters.length + monthFilters.length + yearFilters.length + exploreCategoryFilters.length + cityFilters.length;
     if (personFilter) n++;
     if (minVotesFilter) n++;
     if (search) n++;
     if (dateRange.from || dateRange.to) n++;
     return n;
-  }, [sportFilters, subFilters, teamFilters, countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters, search, dateRange]);
+  }, [sportFilters, subFilters, teamFilters, brandFilters, countryFilters, monthFilters, yearFilters, personFilter, minVotesFilter, exploreCategoryFilters, search, dateRange]);
 
   // ── Clear all filters ──
   const clearAll = useCallback(() => {
     setSportFilters(new Set());
     setSubFilters(new Set());
     setTeamFilters(new Set());
+    setBrandFilters([]);
     setCountryFilters([]);
     setCityFilters([]);
     setMonthFilters([]);
@@ -752,6 +802,7 @@ export default function CalendarPage() {
       if (showFavs && !favSet.has(r.id)) return false;
       if (sortMode === "votes" && (votesByRace.get(r.id) ?? []).length === 0) return false;
       if (raceFiltersActive && !matchesSportFilters(r, sportFilters, subFilters)) return false;
+      if (brandFilters.length > 0 && !brandFilters.includes((r as any).brand ?? "")) return false;
       if (teamFilters.size > 0) {
         const t = (r.team ?? "").toLowerCase();
         const matched = [...teamFilters].some(tf => {
@@ -798,7 +849,7 @@ export default function CalendarPage() {
       }
       return true;
     });
-  }, [races, sportFilters, subFilters, teamFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast, dateRange, sortMode]);
+  }, [races, sportFilters, subFilters, teamFilters, brandFilters, countryFilters, cityFilters, monthFilters, yearFilters, showFavs, favSet, personFilter, minVotesFilter, votesByRace, search, showUnconfirmed, raceFiltersActive, hidePast, dateRange, sortMode]);
 
   // ── Sorted + filtered races (year-aware sort key, or vote count) ──
   const sortedFiltered = useMemo(() => {
@@ -1211,7 +1262,7 @@ export default function CalendarPage() {
                 Races
                 {raceFiltersActive && (
                   <span className="bg-primary text-primary-foreground rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
-                    {sportFilters.size + subFilters.size + teamFilters.size}
+                    {sportFilters.size + subFilters.size + teamFilters.size + brandFilters.length}
                   </span>
                 )}
               </button>
@@ -1344,6 +1395,7 @@ export default function CalendarPage() {
                           className={`flex items-center gap-1 pl-3.5 pr-2 py-1 rounded-l-full border border-r-0 text-xs font-medium transition-all whitespace-nowrap ${pillClass}`}
                         >
                           {section.label}
+                          {(sportCountMap.get(section.key) ?? 0) > 0 && <span className="opacity-40 text-[10px]">{sportCountMap.get(section.key)}</span>}
                         </button>
                         {/* Divider */}
                         <div className={`w-px self-stretch ${isSelected || allSubsSelected ? "bg-primary/40" : hasSubActive ? "bg-amber-400/50" : "bg-border"}`} />
@@ -1423,13 +1475,14 @@ export default function CalendarPage() {
                     key={pill.value}
                     onClick={() => toggleSportPill(pill.value)}
                     style={{ marginRight: "6px" }}
-                    className={`flex items-center justify-center text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none whitespace-nowrap ${
+                    className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none whitespace-nowrap ${
                       sportFilters.has(pill.value)
                         ? "bg-primary/15 border-primary text-primary"
                         : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
                     }`}
                   >
                     {pill.label}
+                    {(sportCountMap.get(pill.value) ?? 0) > 0 && <span className="opacity-40 text-[10px]">{sportCountMap.get(pill.value)}</span>}
                   </button>
                 ))}
               </div>
@@ -1450,6 +1503,27 @@ export default function CalendarPage() {
                     }`}
                   >
                     {pill.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Brand ── */}
+            <div>
+              <div className="filter-label mb-2">Brand</div>
+              <div className="flex flex-wrap gap-1.5 items-center">
+                {BRAND_PILLS.map(pill => (
+                  <button
+                    key={pill.value}
+                    onClick={() => toggleBrandFilter(pill.value)}
+                    className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none ${
+                      brandFilters.includes(pill.value)
+                        ? "bg-primary/15 border-primary text-primary"
+                        : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                    }`}
+                  >
+                    {pill.label}
+                    {(brandCountMap.get(pill.value) ?? 0) > 0 && <span className="opacity-40 text-[10px]">{brandCountMap.get(pill.value)}</span>}
                   </button>
                 ))}
               </div>
@@ -1513,11 +1587,14 @@ export default function CalendarPage() {
               <div className="filter-label mb-2">Country</div>
               <div className="flex flex-wrap gap-1.5 items-center">
                 {COUNTRIES.map(c => (
-                  <button key={c.value} onClick={() => toggleCountry(c.value)} className={`flex items-center justify-center text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none ${
+                  <button key={c.value} onClick={() => toggleCountry(c.value)} className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none ${
                     countryFilters.includes(c.value)
                       ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-500"
                       : "border-border text-muted-foreground hover:border-emerald-500/30 hover:text-emerald-500"
-                  }`}>{c.label}</button>
+                  }`}>
+                    {c.label}
+                    {(countryCountMap.get(c.value) ?? 0) > 0 && <span className="opacity-40 text-[10px]">{countryCountMap.get(c.value)}</span>}
+                  </button>
                 ))}
               </div>
             </div>
@@ -1611,6 +1688,20 @@ export default function CalendarPage() {
         {showFilterBar && activeSubPanel === 'dates' && (
           <div className="filter-sub-panel relative">
           <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "65vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
+            {/* Unconfirmed dates toggle */}
+            <div>
+              <button
+                onClick={() => setShowUnconfirmed(v => !v)}
+                className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border font-medium transition-all leading-none ${
+                  !showUnconfirmed
+                    ? "bg-red-500/15 border-red-500/40 text-red-500"
+                    : "border-border text-muted-foreground hover:border-violet-400/30 hover:text-violet-400"
+                }`}
+              >
+                <AlertTriangle size={10} />
+                {showUnconfirmed ? "Showing unconfirmed dates" : "Unconfirmed dates hidden"}
+              </button>
+            </div>
             {/* Quick presets */}
             <div>
               <div className="filter-label">Quick Select</div>
@@ -1696,31 +1787,49 @@ export default function CalendarPage() {
           </div>
         )}
 
-        {/* Active filter pills row — Done button always at far right when filters open */}
+        {/* Active filter pills row — tapping label opens matching tab; × removes just that chip */}
         {activeFilterCount > 0 && (
           <div className="flex gap-1.5 px-4 py-2.5 text-xs items-center border-t border-border flex-nowrap overflow-x-auto bg-transparent" style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}>
-            {/* Races — blue */}
+            {/* ── Races group — blue ── */}
             {[...sportFilters].map(key => (
-              <span key={key} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium">
+              <span key={key} onClick={() => { setActiveSubPanel('race'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium cursor-pointer hover:bg-primary/20 transition-colors">
                 {getSportLabel(key)}
-                <button onClick={() => toggleSportPill(key)} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                <button onClick={e => { e.stopPropagation(); toggleSportPill(key); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
             {[...subFilters].map(val => (
-              <span key={val} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-red-500/15 border border-red-500/50 text-red-600 dark:text-red-400 font-medium">
+              <span key={val} onClick={() => { setActiveSubPanel('race'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-amber-400/10 border border-amber-400/30 text-amber-500 dark:text-amber-400 font-medium cursor-pointer hover:bg-amber-400/20 transition-colors">
                 {getSubFilterLabel(val)}
-                <button onClick={() => toggleSubFilter(val)} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                <button onClick={e => { e.stopPropagation(); toggleSubFilter(val); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
             {[...teamFilters].map(val => {
               const pill = TEAM_PILLS.find(p => p.value === val);
               return pill ? (
-                <span key={val} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium">
-                  {pill.label}<button onClick={() => toggleTeamFilter(val)} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                <span key={val} onClick={() => { setActiveSubPanel('race'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium cursor-pointer hover:bg-primary/20 transition-colors">
+                  {pill.label}
+                  <button onClick={e => { e.stopPropagation(); toggleTeamFilter(val); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
                 </span>
               ) : null;
             })}
-            {/* Locations — green: show region pill if fully selected, else individual countries */}
+            {brandFilters.map(val => {
+              const pill = BRAND_PILLS.find(p => p.value === val);
+              return pill ? (
+                <span key={val} onClick={() => { setActiveSubPanel('race'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium cursor-pointer hover:bg-primary/20 transition-colors">
+                  {pill.label}
+                  <button onClick={e => { e.stopPropagation(); toggleBrandFilter(val); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                </span>
+              ) : null;
+            })}
+            {/* Per-category clear: Sports */}
+            {(sportFilters.size + subFilters.size + teamFilters.size + brandFilters.length) >= 2 && (
+              <button onClick={() => { setSportFilters(new Set()); setSubFilters(new Set()); setTeamFilters(new Set()); setBrandFilters([]); }}
+                className="inline-flex items-center gap-0.5 px-2 py-1 rounded-full shrink-0 whitespace-nowrap text-[10px] font-medium border border-dashed border-muted-foreground/25 text-muted-foreground/50 hover:text-muted-foreground hover:border-muted-foreground/40 transition-all">
+                <X size={8} /> Sports
+              </button>
+            )}
+
+            {/* ── Locations group — green ── */}
             {(() => {
               const fullySelectedRegions = REGIONS.filter(r => r.countries.every(c => countryFilters.includes(c)));
               const coveredByRegion = new Set(fullySelectedRegions.flatMap(r => r.countries));
@@ -1728,60 +1837,76 @@ export default function CalendarPage() {
               return (
                 <>
                   {fullySelectedRegions.map(r => (
-                    <span key={r.value} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
+                    <span key={r.value} onClick={() => { setActiveSubPanel('locations'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium cursor-pointer hover:bg-emerald-500/20 transition-colors">
                       {r.label}
-                      <button onClick={() => toggleRegion(r.value)} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                      <button onClick={e => { e.stopPropagation(); toggleRegion(r.value); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
                     </span>
                   ))}
                   {remainingCountries.map(c => (
-                    <span key={c} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
+                    <span key={c} onClick={() => { setActiveSubPanel('locations'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium cursor-pointer hover:bg-emerald-500/20 transition-colors">
                       {COUNTRIES.find(x => x.value === c)?.label ?? c}
-                      <button onClick={() => toggleCountry(c)} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                      <button onClick={e => { e.stopPropagation(); toggleCountry(c); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
                     </span>
                   ))}
                 </>
               );
             })()}
-            {/* Cities — green (same as locations) */}
             {cityFilters.map(city => (
-              <span key={city} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium">
+              <span key={city} onClick={() => { setActiveSubPanel('locations'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-medium cursor-pointer hover:bg-emerald-500/20 transition-colors">
                 📍 {city}
-                <button onClick={() => setCityFilters(p => p.filter(c => c !== city))} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                <button onClick={e => { e.stopPropagation(); setCityFilters(p => p.filter(c => c !== city)); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
+            {/* Per-category clear: Locations */}
+            {(countryFilters.length + cityFilters.length) >= 2 && (
+              <button onClick={() => { setCountryFilters([]); setCityFilters([]); setRegionFilters([]); }}
+                className="inline-flex items-center gap-0.5 px-2 py-1 rounded-full shrink-0 whitespace-nowrap text-[10px] font-medium border border-dashed border-muted-foreground/25 text-muted-foreground/50 hover:text-muted-foreground hover:border-muted-foreground/40 transition-all">
+                <X size={8} /> Places
+              </button>
+            )}
+
+            {/* ── Explore group — green ── */}
             {exploreCategoryFilters.map(c => (
-              <span key={c} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-green-500/10 border border-green-500/30 text-green-500 font-medium">
+              <span key={c} onClick={() => { setActiveSubPanel('explore'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-green-500/10 border border-green-500/30 text-green-500 font-medium cursor-pointer hover:bg-green-500/20 transition-colors">
                 {c}
-                <button onClick={() => toggleExploreCategory(c)} className="hover:opacity-70 leading-none"><X size={10} /></button>
-              </span>
-            ))}
-            {/* Dates — violet */}
-            {monthFilters.map(m => (
-              <span key={m} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
-                {m}<button onClick={() => toggleMonth(m)} className="hover:opacity-70 leading-none"><X size={10} /></button>
-              </span>
-            ))}
-            {yearFilters.map(y => (
-              <span key={y} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
-                {y}<button onClick={() => toggleYear(y)} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                <button onClick={e => { e.stopPropagation(); toggleExploreCategory(c); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             ))}
 
-            {/* Date range pill */}
+            {/* ── Dates group — violet ── */}
+            {monthFilters.map(m => (
+              <span key={m} onClick={() => { setActiveSubPanel('dates'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium cursor-pointer hover:bg-violet-500/20 transition-colors">
+                {m}
+                <button onClick={e => { e.stopPropagation(); toggleMonth(m); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
+              </span>
+            ))}
+            {yearFilters.map(y => (
+              <span key={y} onClick={() => { setActiveSubPanel('dates'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium cursor-pointer hover:bg-violet-500/20 transition-colors">
+                {y}
+                <button onClick={e => { e.stopPropagation(); toggleYear(y); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
+              </span>
+            ))}
             {(dateRange.from || dateRange.to) && (
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium">
+              <span onClick={() => { setActiveSubPanel('dates'); setShowFilterBar(true); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-violet-500/10 border border-violet-400/30 text-violet-400 font-medium cursor-pointer hover:bg-violet-500/20 transition-colors">
                 <Calendar size={10} />
                 {dateRange.from ? dateRange.from.toLocaleDateString("en-GB",{day:"numeric",month:"short"}) : "?"} → {dateRange.to ? dateRange.to.toLocaleDateString("en-GB",{day:"numeric",month:"short"}) : "?"}
-                <button onClick={() => setDateRange({from:undefined,to:undefined})} className="hover:opacity-70 leading-none"><X size={10} /></button>
+                <button onClick={e => { e.stopPropagation(); setDateRange({from:undefined,to:undefined}); }} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             )}
-            {/* Search */}
+            {/* Per-category clear: Dates */}
+            {(monthFilters.length + yearFilters.length + (dateRange.from || dateRange.to ? 1 : 0)) >= 2 && (
+              <button onClick={() => { setMonthFilters([]); setYearFilters([]); setDateRange({from:undefined,to:undefined}); }}
+                className="inline-flex items-center gap-0.5 px-2 py-1 rounded-full shrink-0 whitespace-nowrap text-[10px] font-medium border border-dashed border-muted-foreground/25 text-muted-foreground/50 hover:text-muted-foreground hover:border-muted-foreground/40 transition-all">
+                <X size={8} /> Dates
+              </button>
+            )}
+
+            {/* ── Search ── */}
             {search && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full shrink-0 whitespace-nowrap bg-primary/10 border border-primary/30 text-primary font-medium">
                 "{search}"<button onClick={() => setSearch("")} className="hover:opacity-70 leading-none"><X size={10} /></button>
               </span>
             )}
-
           </div>
         )}
         </div>
