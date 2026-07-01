@@ -914,6 +914,8 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
   const [showExplore, setShowExplore] = useState(true);
   const [showRaces, setShowRaces] = useState(true);
   const [showLayersMenu, setShowLayersMenu] = useState(false);
+  const [themeLabel, setThemeLabel] = useState<string | null>(null);
+  const themeLabelTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const displayRaces = showFavsOnly ? allRaces.filter(r => favSet.has(r.id)) : races;
 
@@ -1163,13 +1165,27 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           (under viewport-fit=cover), so without it these buttons would sit right at
           the home-indicator strip instead of comfortably above it. */}
       <div className="absolute right-3 z-10 flex flex-col items-end gap-2" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
-        <button
-          onClick={onToggleTheme}
-          title={themeMode === 'light' ? "Switch to dark mode" : themeMode === 'dark' ? "Switch to auto (OS)" : "Switch to light mode"}
-          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
-        >
-          {themeMode === 'auto' ? <SunMoon size={16} /> : isDark ? <Sun size={16} /> : <Moon size={16} />}
-        </button>
+        <div className="relative flex items-center">
+          {themeLabel && (
+            <div className={`absolute right-full mr-2 whitespace-nowrap text-xs px-2.5 py-1 rounded-lg shadow-md backdrop-blur-sm pointer-events-none ${pillBg} border ${pillBorder} ${pillText}`}>
+              {themeLabel}
+            </div>
+          )}
+          <button
+            onClick={() => {
+              const next = themeMode === 'light' ? 'dark' : themeMode === 'dark' ? 'auto' : 'light';
+              const label = next === 'light' ? 'Light mode' : next === 'dark' ? 'Dark mode' : 'Auto · follows OS';
+              onToggleTheme();
+              setThemeLabel(label);
+              if (themeLabelTimer.current) clearTimeout(themeLabelTimer.current);
+              themeLabelTimer.current = setTimeout(() => setThemeLabel(null), 1800);
+            }}
+            title={themeMode === 'light' ? "Switch to dark mode" : themeMode === 'dark' ? "Switch to auto (OS)" : "Switch to light mode"}
+            className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+          >
+            {themeMode === 'auto' ? <SunMoon size={16} /> : isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+        </div>
       <div className="relative">
         {showLayersMenu && (
           <>
