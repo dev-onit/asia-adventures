@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, Search, Thermometer, Waves, Calendar, Crosshair } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, SunMoon, Layers, Search, Thermometer, Waves, Calendar, Crosshair } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -27,6 +27,7 @@ interface Props {
   onToggleFav: (raceId: number, isFav: boolean) => void;
   onToggleExploreFav: (exploreSiteId: number) => void;
   isDark: boolean;
+  themeMode: 'light' | 'dark' | 'auto';
   hidePast: boolean;
   onToggleHidePast: () => void;
   showUnconfirmed: boolean;
@@ -373,6 +374,7 @@ const POPUP_STYLE = `
     0%   { transform: translate(-50%,-50%) scale(0.5); opacity: 1; }
     100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0; }
   }
+  .ocean-color-layer { mix-blend-mode: color; }
 `;
 
 // ── Popup content (real React components — no HTML strings, no manual DOM wiring) ──
@@ -895,23 +897,24 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
         ? <TileLayer key="dark" url={darkUrl} subdomains="abcd" maxZoom={16} attribution={attr} />
         : <TileLayer key="light" url={lightUrl} subdomains="abcd" maxZoom={16} attribution={attr} />
       }
-      {/* Ocean overlay — tints water blue on the dark tile (CartoDB Dark Matter renders
-          water as near-black). Land areas on this layer are light cream; at 0.4 opacity
-          the land tint is barely visible over the near-black base, while water picks up
-          a clear blue. Removed from light mode where Voyager already has blue water. */}
+      {/* Ocean overlay — adds blue water on dark tile via mix-blend-mode:color (class
+          ocean-color-layer). color blend takes hue+saturation from this layer, luminosity
+          from the dark base: saturated-blue water areas turn dark-blue; low-saturation
+          cream land areas are unchanged — unlike plain opacity where land lightens too. */}
       {isDark && (
         <TileLayer
           url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
-          opacity={0.4}
+          opacity={1}
           maxZoom={16}
           attribution=""
+          className="ocean-color-layer"
         />
       )}
     </>
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreFavSet, exploreVotesBySite, showFavsOnly, onToggleFav, onToggleExploreFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch, highlightRaceId, highlightSiteId }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreFavSet, exploreVotesBySite, showFavsOnly, onToggleFav, onToggleExploreFav, isDark, themeMode, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch, highlightRaceId, highlightSiteId }: Props) {
   const [showExplore, setShowExplore] = useState(true);
   const [showRaces, setShowRaces] = useState(true);
   const [showLayersMenu, setShowLayersMenu] = useState(false);
@@ -1166,10 +1169,10 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
       <div className="absolute right-3 z-10 flex flex-col items-end gap-2" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
         <button
           onClick={onToggleTheme}
-          title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          title={themeMode === 'light' ? "Switch to dark mode" : themeMode === 'dark' ? "Switch to auto (OS)" : "Switch to light mode"}
           className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
         >
-          {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          {themeMode === 'auto' ? <SunMoon size={16} /> : isDark ? <Sun size={16} /> : <Moon size={16} />}
         </button>
       <div className="relative">
         {showLayersMenu && (

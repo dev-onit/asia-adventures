@@ -306,20 +306,35 @@ export default function CalendarPage() {
   const [nameInput, setNameInput] = useState("");
 
   // ── Theme ──
-  // Light is the default; explicit user choice in localStorage overrides.
-  const [isDark, setIsDark] = useState(() => {
+  // Three-state: 'light' | 'dark' | 'auto'. Auto follows OS and removes the
+  // localStorage key so the preference resets. Cycle: light → dark → auto → light.
+  const [themeMode, setThemeMode] = useState<'light' | 'dark' | 'auto'>(() => {
     try {
       const v = localStorage.getItem(STORAGE_THEME);
-      if (v !== null) return v === "dark";
+      if (v === 'dark' || v === 'light' || v === 'auto') return v as 'light' | 'dark' | 'auto';
     } catch {}
-    return false;
+    return 'light';
   });
+  const [systemDark, setSystemDark] = useState(() =>
+    window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
+  );
+  useEffect(() => {
+    const mq = window.matchMedia?.('(prefers-color-scheme: dark)');
+    if (!mq) return;
+    const handler = (e: MediaQueryListEvent) => setSystemDark(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  const isDark = themeMode === 'dark' || (themeMode === 'auto' && systemDark);
   useEffect(() => {
     document.documentElement.classList.toggle("light", !isDark);
-    try { localStorage.setItem(STORAGE_THEME, isDark ? "dark" : "light"); } catch {}
+    try {
+      if (themeMode === 'auto') localStorage.removeItem(STORAGE_THEME);
+      else localStorage.setItem(STORAGE_THEME, themeMode);
+    } catch {}
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", isDark ? "#111318" : "#f3f5f7");
-  }, [isDark]);
+  }, [isDark, themeMode]);
 
   // ── UI state ──
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
@@ -1786,6 +1801,7 @@ export default function CalendarPage() {
         onToggleFav={(raceId, isFav) => isFav ? removeFav.mutate(raceId) : addFav.mutate(raceId)}
         onToggleExploreFav={(id: number) => exploreFavSet.has(id) ? removeExploreFav.mutate(id) : addExploreFav.mutate(id)}
         isDark={isDark}
+        themeMode={themeMode}
         hidePast={hidePast}
         onToggleHidePast={() => setHidePast(v => !v)}
         showUnconfirmed={showUnconfirmed}
@@ -1800,7 +1816,7 @@ export default function CalendarPage() {
         onToggleFavs={handleToggleFavs}
         sortMode={sortMode}
         onToggleMostVoted={handleToggleMostVoted}
-        onToggleTheme={() => setIsDark(d => !d)}
+        onToggleTheme={() => setThemeMode(m => m === 'light' ? 'dark' : m === 'dark' ? 'auto' : 'light')}
         showSearch={showSearch}
         onToggleSearch={() => setShowSearch(v => !v)}
         highlightRaceId={highlightRaceId}
