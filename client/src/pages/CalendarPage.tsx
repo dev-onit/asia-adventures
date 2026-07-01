@@ -1381,6 +1381,25 @@ export default function CalendarPage() {
                     ? "bg-amber-400/15 border-amber-500 text-amber-500"
                     : "bg-amber-400/10 border-border text-amber-500/70 hover:border-border hover:bg-amber-400/15";
 
+                  // Sections with no sub-filters render as a simple toggle pill
+                  if (section.subFilters.length === 0) {
+                    return (
+                      <div key={section.key} className="flex items-center shrink-0" style={{ marginRight: "6px" }}>
+                        <button
+                          onClick={() => toggleSportPill(section.key)}
+                          className={`flex items-center gap-1 px-3.5 py-1 rounded-full border text-xs font-medium transition-all whitespace-nowrap ${
+                            isSelected
+                              ? "bg-primary/15 border-primary text-primary"
+                              : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                          }`}
+                        >
+                          {section.label}
+                          {(sportCountMap.get(section.key) ?? 0) > 0 && <span className="opacity-40 text-[10px]">{sportCountMap.get(section.key)}</span>}
+                        </button>
+                      </div>
+                    );
+                  }
+
                   return (
                     <div key={section.key} className="flex items-center shrink-0" style={{ marginRight: "6px", marginBottom: "0" }}>
                       {/* Parent pill */}
