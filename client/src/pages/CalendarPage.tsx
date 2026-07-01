@@ -2003,22 +2003,20 @@ export default function CalendarPage() {
           My Votes
           {showFavs && <X size={9} />}
         </button>
-        {/* Most Voted toggle — hidden when My Votes is active (mutually exclusive) */}
-        {!showFavs && (
-          <button
-            onClick={e => { e.stopPropagation(); handleToggleMostVoted(); }}
-            className={`ml-1.5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border transition-all ${
-              sortMode === "votes"
-                ? "bg-blue-500/15 border-blue-500/40 text-blue-600 dark:text-blue-400 hover:bg-blue-500/25"
-                : "border-border text-muted-foreground hover:border-blue-500/40 hover:text-blue-500"
-            }`}
-            style={{ lineHeight: 1 }}
-          >
-            <TrendingUp size={9} />
-            Most Voted
-            {sortMode === "votes" && <X size={9} />}
-          </button>
-        )}
+        {/* Most Voted toggle — always visible; clicking while My Votes is on switches modes */}
+        <button
+          onClick={e => { e.stopPropagation(); handleToggleMostVoted(); }}
+          className={`ml-1.5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border transition-all ${
+            sortMode === "votes"
+              ? "bg-blue-500/15 border-blue-500/40 text-blue-600 dark:text-blue-400 hover:bg-blue-500/25"
+              : "border-border text-muted-foreground hover:border-blue-500/40 hover:text-blue-500"
+          }`}
+          style={{ lineHeight: 1 }}
+        >
+          <TrendingUp size={9} />
+          Most Voted
+          {sortMode === "votes" && <X size={9} />}
+        </button>
         {!showFavs && activeFilterCount > 0 && (
           <span style={{ lineHeight: 1 }} className="ml-2 text-[10px] text-primary font-semibold inline-flex items-center gap-1">
             <Filter size={9} /> Active Filters
