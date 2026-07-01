@@ -13,7 +13,14 @@ const VOTER_COLORS = [
   "bg-indigo-100 text-indigo-700 border-indigo-200",
 ];
 
-export default function VoterChips({ voters }: { voters: string[] }) {
+interface Props {
+  voters: string[];
+  // compact: renders as a larger circle showing just the count (race table).
+  // Default pill style (popups/cards) shows "N Votes" text.
+  compact?: boolean;
+}
+
+export default function VoterChips({ voters, compact = false }: Props) {
   const [open, setOpen] = React.useState(false);
   const btnRef = React.useRef<HTMLButtonElement>(null);
   const popupRef = React.useRef<HTMLDivElement>(null);
@@ -58,10 +65,16 @@ export default function VoterChips({ voters }: { voters: string[] }) {
       <button
         ref={btnRef}
         onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
-        className="inline-flex items-center rounded-full text-[10px] font-bold uppercase tracking-[0.06em] bg-orange-500 hover:bg-orange-400 transition-colors whitespace-nowrap text-black shrink-0"
-        style={{ padding: "2px 8px" }}
+        className={
+          compact
+            // Race table: bold circle, just the number, larger touch target
+            ? "inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-400 hover:bg-amber-300 transition-colors text-black text-sm font-bold shrink-0"
+            // Popups / cards: pill with "N Votes" label
+            : "inline-flex items-center rounded-full text-[11px] font-bold uppercase tracking-[0.06em] bg-amber-400 hover:bg-amber-300 transition-colors whitespace-nowrap text-black shrink-0"
+        }
+        style={compact ? undefined : { padding: "4px 10px" }}
       >
-        {voters.length} {voters.length === 1 ? 'Vote' : 'Votes'}
+        {compact ? voters.length : `${voters.length} ${voters.length === 1 ? 'Vote' : 'Votes'}`}
       </button>
       {open && pos && createPortal(
         <div

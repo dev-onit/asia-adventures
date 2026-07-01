@@ -324,7 +324,7 @@ export default function CalendarPage() {
   const [showTimeFilters, setShowTimeFilters] = useState(false);
   // activeSubPanel: which sub-panel is open — 'race' | 'locations' | 'dates' | 'explore' | null
   const [activeSubPanel, setActiveSubPanel] = useState<'race' | 'locations' | 'dates' | 'explore' | null>(() => {
-    try { const v = localStorage.getItem(STORAGE_ACTIVE_SUB_PANEL); return (v === 'race' || v === 'locations' || v === 'dates' || v === 'explore') ? v : 'dates'; } catch { return 'dates'; }
+    try { const v = localStorage.getItem(STORAGE_ACTIVE_SUB_PANEL); return (v === 'race' || v === 'locations' || v === 'dates' || v === 'explore') ? v : 'race'; } catch { return 'race'; }
   });
   // showFilterBar: whether the second row is visible
   const [showFilterBar, setShowFilterBar] = useState(() => {
@@ -409,7 +409,7 @@ export default function CalendarPage() {
   const [search, setSearch] = useState("");
 
   // ── Persist all filters to localStorage ──
-  useEffect(() => { try { localStorage.setItem(STORAGE_ACTIVE_SUB_PANEL, activeSubPanel ?? 'dates'); } catch {} }, [activeSubPanel]);
+  useEffect(() => { try { localStorage.setItem(STORAGE_ACTIVE_SUB_PANEL, activeSubPanel ?? 'race'); } catch {} }, [activeSubPanel]);
   useEffect(() => { try { localStorage.setItem(STORAGE_SHOW_FILTER_BAR, String(showFilterBar)); } catch {} }, [showFilterBar]);
 
 
@@ -584,7 +584,7 @@ export default function CalendarPage() {
     setShowFilters(false);
     setShowTimeFilters(false);
     setRaceFilterOpen(false);
-    setActiveSubPanel('dates');
+    setActiveSubPanel('race');
   }, []);
 
   // Shared by the header's own Filters button and the floating map-overlay Filters
@@ -592,7 +592,7 @@ export default function CalendarPage() {
   const handleToggleFilterBar = useCallback(() => {
     setShowFilterBar(v => {
       if (!v) {
-        if (!activeSubPanel) setActiveSubPanel("dates");
+        if (!activeSubPanel) setActiveSubPanel("race");
         setExpandedSections(new Set());
       }
       return !v;
@@ -1418,7 +1418,7 @@ export default function CalendarPage() {
             {activeFilterCount > 0 && (
               <button
                 onClick={clearAll}
-                className="flex items-center justify-center px-4 py-3 rounded-full border border-border text-muted-foreground text-sm font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
+                className="flex items-center justify-center px-3 py-1.5 rounded-full border border-border text-muted-foreground text-xs font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
               >
                 Clear All
               </button>
@@ -1513,7 +1513,7 @@ export default function CalendarPage() {
             {activeFilterCount > 0 && (
               <button
                 onClick={clearAll}
-                className="flex items-center justify-center px-4 py-3 rounded-full border border-border text-muted-foreground text-sm font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
+                className="flex items-center justify-center px-3 py-1.5 rounded-full border border-border text-muted-foreground text-xs font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
               >
                 Clear All
               </button>
@@ -1550,7 +1550,7 @@ export default function CalendarPage() {
             {activeFilterCount > 0 && (
               <button
                 onClick={clearAll}
-                className="flex items-center justify-center px-4 py-3 rounded-full border border-border text-muted-foreground text-sm font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
+                className="flex items-center justify-center px-3 py-1.5 rounded-full border border-border text-muted-foreground text-xs font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
               >
                 Clear All
               </button>
@@ -1639,7 +1639,7 @@ export default function CalendarPage() {
             {activeFilterCount > 0 && (
               <button
                 onClick={clearAll}
-                className="flex items-center justify-center px-4 py-3 rounded-full border border-border text-muted-foreground text-sm font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
+                className="flex items-center justify-center px-3 py-1.5 rounded-full border border-border text-muted-foreground text-xs font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
               >
                 Clear All
               </button>
@@ -1952,7 +1952,7 @@ export default function CalendarPage() {
                             {(() => {
                               const voters = votesByRace.get(race.id) ?? [];
                               if (voters.length === 0) return <span className="text-muted-foreground/30 text-xs">—</span>;
-                              return <VoterChips voters={voters} />;
+                              return <VoterChips voters={voters} compact />;
                             })()}
                           </div>
                         </td>
