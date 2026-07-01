@@ -1193,7 +1193,7 @@ export default function CalendarPage() {
         >
         {/* Row 4: Sub-filter buttons (visible when Filters is open) */}
         {showFilterBar && (
-          <div className="flex items-center gap-2 px-4 pb-3 pt-3 flex-wrap">
+          <div className="filter-panel-tabs flex items-center gap-2 px-4 pb-3 pt-3 flex-wrap">
 
             {/* Tabs: Races | Dates | Locations | Explore */}
             <div className="flex gap-1">
@@ -1294,7 +1294,7 @@ export default function CalendarPage() {
 
         {/* Race sub-panel */}
         {showFilterBar && activeSubPanel === 'race' && (
-          <div className="relative">
+          <div className="filter-sub-panel relative">
           <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "60vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
 
             {/* ── Sports & Distances ── */}
@@ -1477,7 +1477,7 @@ export default function CalendarPage() {
 
         {/* Locations sub-panel */}
         {showFilterBar && activeSubPanel === 'locations' && (
-          <div className="relative">
+          <div className="filter-sub-panel relative">
           <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
             {/* Region */}
             <div>
@@ -1572,7 +1572,7 @@ export default function CalendarPage() {
 
         {/* Explore sub-panel */}
         {showFilterBar && activeSubPanel === 'explore' && (
-          <div className="relative">
+          <div className="filter-sub-panel relative">
           <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "55vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
             <div>
               <div className="filter-label mb-2">Points of Interest</div>
@@ -1609,7 +1609,7 @@ export default function CalendarPage() {
 
         {/* Dates sub-panel */}
         {showFilterBar && activeSubPanel === 'dates' && (
-          <div className="relative">
+          <div className="filter-sub-panel relative">
           <div className="px-4 pb-4 border-t border-border pt-3 space-y-4 overflow-y-auto filter-panel" style={{ maxHeight: "65vh", touchAction: "pan-y", overscrollBehavior: "contain", paddingBottom: "4.5rem" }}>
             {/* Quick presets */}
             <div>

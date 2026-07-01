@@ -94,6 +94,14 @@ h1, h2, h3 {
 @keyframes starPop { 0% { transform: scale(1); } 40% { transform: scale(1.4); } 100% { transform: scale(1); } }
 .star-btn.starred { animation: starPop 0.25s ease; }
 
+/* Filter panel entrance animation */
+@keyframes filter-slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.filter-panel-tabs { animation: filter-slide-down 160ms ease-out; }
+.filter-sub-panel  { animation: filter-slide-down 140ms ease-out; }
+
 /* Star icon — slightly more visible unfavourited state */
 .star-btn { color: hsl(var(--muted-foreground) / 0.6) !important; }
 .star-btn:hover { color: hsl(45 85% 55% / 0.8) !important; }
