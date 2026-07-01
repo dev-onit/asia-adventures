@@ -488,7 +488,7 @@ function HomeMarkers() {
   return (
     <>
       {HOME_LOCATIONS.map(loc => (
-        <Marker key={loc.name} position={[loc.lat, loc.lng]} icon={icon} zIndexOffset={-1000}>
+        <Marker key={loc.name} position={[loc.lat, loc.lng]} icon={icon} zIndexOffset={1000}>
           <Popup maxWidth={140} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
             <div style={{ padding: "6px 8px", fontWeight: 700, fontSize: 13, color: "hsl(var(--card-foreground))" }}>
               📍 {loc.name}
