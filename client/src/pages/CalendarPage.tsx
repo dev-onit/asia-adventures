@@ -306,13 +306,13 @@ export default function CalendarPage() {
   const [nameInput, setNameInput] = useState("");
 
   // ── Theme ──
-  // Explicit user choice (localStorage) takes priority; otherwise follow the OS.
+  // Light is the default; explicit user choice in localStorage overrides.
   const [isDark, setIsDark] = useState(() => {
     try {
       const v = localStorage.getItem(STORAGE_THEME);
       if (v !== null) return v === "dark";
     } catch {}
-    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? true;
+    return false;
   });
   useEffect(() => {
     document.documentElement.classList.toggle("light", !isDark);
@@ -320,17 +320,6 @@ export default function CalendarPage() {
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", isDark ? "#111318" : "#f3f5f7");
   }, [isDark]);
-  // Track OS theme changes live — only when the user hasn't set an explicit override.
-  useEffect(() => {
-    const mq = window.matchMedia?.("(prefers-color-scheme: dark)");
-    if (!mq) return;
-    const handler = (e: MediaQueryListEvent) => {
-      if (localStorage.getItem(STORAGE_THEME) !== null) return; // respect manual override
-      setIsDark(e.matches);
-    };
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
 
   // ── UI state ──
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
