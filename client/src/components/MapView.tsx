@@ -509,7 +509,7 @@ function RaceMarker({ race, coords, isFav, voters, onToggleFav, highlight }: {
   const icon = useMemo(() => buildRaceIcon(fill, label, isFav, voters.length, !!highlight), [fill, label, isFav, voters.length, highlight]);
   useEffect(() => {
     if (!highlight) return;
-    map.setView(coordsRef.current, Math.max(map.getZoom(), 7), { animate: true });
+    map.setView(coordsRef.current, Math.max(map.getZoom(), 10), { animate: true });
     const t = setTimeout(() => markerRef.current?.openPopup(), 700);
     return () => clearTimeout(t);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -535,7 +535,7 @@ function ExploreMarker({ site, coords, isFav, voters, onToggleExploreFav, highli
   const icon = useMemo(() => buildExploreIcon(label, color, isFav, voters.length, !!highlight), [label, color, isFav, voters.length, highlight]);
   useEffect(() => {
     if (!highlight) return;
-    map.setView(coordsRef.current, Math.max(map.getZoom(), 7), { animate: true });
+    map.setView(coordsRef.current, Math.max(map.getZoom(), 10), { animate: true });
     const t = setTimeout(() => markerRef.current?.openPopup(), 700);
     return () => clearTimeout(t);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -748,17 +748,13 @@ function MapController({ displayRaces, sites, recenterRef, isFullscreen, allowDr
   }, [map, isFullscreen]);
 
   // Leaflet detects "touch capable" via `window.TouchEvent` existing as a constructor —
-  // true in every desktop Chrome build regardless of actual touch hardware (Chrome
-  // exposes the constructor for web-compat even on trackpad/mouse-only Macs), not via
-  // navigator.maxTouchPoints. So Leaflet's TouchZoom handler (pinch-zoom-via-touch) ends
-  // up enabled by default even on a plain desktop trackpad, adding a non-passive
-  // touchstart/touchmove listener and the .leaflet-touch-zoom class purely for a gesture
-  // this device can't actually produce — that's what was eating two-finger trackpad
-  // swipes over the embedded map in Chrome/macOS instead of letting them scroll the page.
-  // Disabling it in embedded mode removes that listener entirely; fullscreen keeps it on
-  // for real touchscreens (iPad/phone), where pinch-zoom-to-touch is actually useful.
+  // true in every desktop Chrome build regardless of actual touch hardware. On real
+  // touchscreens (iPhone/iPad, maxTouchPoints > 1) we always want pinch-to-zoom, even
+  // in embedded mode. On mouse/trackpad desktops (maxTouchPoints ≤ 1) we disable it in
+  // embedded mode to avoid Leaflet eating two-finger trackpad scroll on the page.
   useEffect(() => {
-    if (isFullscreen) map.touchZoom.enable(); else map.touchZoom.disable();
+    const isRealTouch = navigator.maxTouchPoints > 1;
+    if (isFullscreen || isRealTouch) map.touchZoom.enable(); else map.touchZoom.disable();
   }, [map, isFullscreen]);
 
   // Embedded map: drag-to-pan via mouse, implemented by hand instead of Leaflet's own
