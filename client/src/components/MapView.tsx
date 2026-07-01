@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, Search, Thermometer, Waves, Calendar } from "lucide-react";
+import { Maximize2, Minimize2, Filter, X, Star, TrendingUp, Sun, Moon, Layers, Search, Thermometer, Waves, Calendar, Crosshair } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -237,13 +237,22 @@ function exploreClusterRadius(zoom: number): number {
 const SOLO_GROUP_MAX_SIZE = 7;
 
 function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
+  const zoom = map.getZoom();
+  // At zoom >= 9 (disableClusteringAtZoom threshold) every pin renders individually
+  // at its real coordinates — forcing a circular spread here produces a visible
+  // geometric ring right when you're close enough to see streets. Skip; let
+  // overlapping pins stack naturally and open on click.
+  if (zoom >= 9) {
+    const result = new Map<string, [number, number]>();
+    points.forEach(p => result.set(p.id, [p.lat, p.lng]));
+    return result;
+  }
   // Must be >= the largest cluster-bundling radius below — otherwise two points just
   // outside this radius but still inside the bundling radius can both get marked
   // "solo" without ever being grouped here, and render solo-but-still-overlapping.
-  const SPREAD_GROUP_PX = raceClusterRadius(map.getZoom());
+  const SPREAD_GROUP_PX = raceClusterRadius(zoom);
   const groups = groupByPixelDistance(map, points, SPREAD_GROUP_PX);
 
-  const zoom = map.getZoom();
   const result = new Map<string, [number, number]>();
   groups.forEach(group => {
     if (group.length === 1) {
@@ -857,27 +866,11 @@ function MapController({ displayRaces, sites, recenterRef, isFullscreen, allowDr
 
 function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   const lightUrl = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-  const darkUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}";
-  const lightAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, &copy; <a href="https://carto.com/">CARTO</a>';
-  const darkAttr = 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, DeLorme, NAVTEQ';
-  return (
-    <>
-      {isDark ? (
-        <TileLayer key="dark" url={darkUrl} maxZoom={16} attribution={darkAttr} />
-      ) : (
-        <TileLayer key="light" url={lightUrl} subdomains="abcd" maxZoom={16} attribution={lightAttr} />
-      )}
-      {/* Ocean Base overlay at low opacity gives blue water on the dark canvas basemap */}
-      {isDark && (
-        <TileLayer
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
-          opacity={0.45}
-          maxZoom={16}
-          attribution=""
-        />
-      )}
-    </>
-  );
+  const darkUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+  const attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, &copy; <a href="https://carto.com/">CARTO</a>';
+  return isDark
+    ? <TileLayer key="dark" url={darkUrl} subdomains="abcd" maxZoom={16} attribution={attr} />
+    : <TileLayer key="light" url={lightUrl} subdomains="abcd" maxZoom={16} attribution={attr} />;
 }
 
 export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreFavSet, exploreVotesBySite, showFavsOnly, onToggleFav, onToggleExploreFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch, highlightRaceId, highlightSiteId }: Props) {
@@ -1208,6 +1201,22 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           )}
         </button>
       </div>
+      </div>
+
+      {/* Recenter — sits above Leaflet's ± zoom control (bottom-left).
+          108px clears the two 36px zoom buttons + 4px gap + Leaflet's 20px default
+          bottom offset, with a small breathing gap, matching for safe-area-inset too. */}
+      <div
+        className="absolute left-[10px] z-10"
+        style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 108px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)" }}
+      >
+        <button
+          onClick={() => recenterRef?.current?.()}
+          title="Fit to pins"
+          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
+        >
+          <Crosshair size={16} />
+        </button>
       </div>
     </div>
   );

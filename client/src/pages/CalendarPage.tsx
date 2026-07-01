@@ -1161,6 +1161,13 @@ export default function CalendarPage() {
         className={isMapFullscreen ? "fixed inset-x-0 bottom-0 z-40 bg-background" : "relative"}
         style={isMapFullscreen ? { top: 0 } : undefined}
       >
+      {(showFilterBar || showSearch) && (
+        <div
+          className="fixed inset-0 z-[490] bg-black/40"
+          style={{ top: "var(--header-h, 0px)" }}
+          onClick={() => { setShowFilterBar(false); setShowSearch(false); setActiveSubPanel(null); }}
+        />
+      )}
       {filterPanelOpen && (
         <div
           ref={filterPanelRef}
