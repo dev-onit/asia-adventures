@@ -703,6 +703,23 @@ function InvalidateSizeOnResize({ trigger }: { trigger: unknown }) {
   return null;
 }
 
+// ── Trim coordinate outliers for fitBounds ──
+// Returns the subset of coords that fall within the 5th–95th percentile on both
+// lat and lng axes, so a handful of far-flung pins (e.g. one race in NZ while
+// the rest cluster across Asia) don't force the camera to zoom all the way out
+// to include them. Falls back to all coords when the set is too small to trim.
+function p90Coords(coords: [number, number][]): [number, number][] {
+  if (coords.length < 10) return coords;
+  const lats = [...coords.map(c => c[0])].sort((a, b) => a - b);
+  const lngs = [...coords.map(c => c[1])].sort((a, b) => a - b);
+  const lo = Math.floor(coords.length * 0.05);
+  const hi = Math.ceil(coords.length * 0.95) - 1;
+  const [latMin, latMax] = [lats[lo], lats[hi]];
+  const [lngMin, lngMax] = [lngs[lo], lngs[hi]];
+  const trimmed = coords.filter(([lat, lng]) => lat >= latMin && lat <= latMax && lng >= lngMin && lng <= lngMax);
+  return trimmed.length >= 2 ? trimmed : coords;
+}
+
 // ── Imperative bits that still need direct map access: initial fit, recenter button,
 // and keeping the dragging/scrollWheelZoom/touchZoom handlers in sync with isFullscreen
 // — none of these are hacks, just things Leaflet itself doesn't expose as
@@ -849,7 +866,7 @@ function MapController({ displayRaces, sites, recenterRef, isFullscreen, allowDr
     if (coords.length === 1) {
       map.setView(coords[0], 8, { animate: false });
     } else {
-      map.fitBounds(L.latLngBounds(coords), { padding: [48, 48], maxZoom: 4, animate: false });
+      map.fitBounds(L.latLngBounds(p90Coords(coords)), { padding: [48, 48], maxZoom: 6, animate: false });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, displayRaces]);
@@ -860,7 +877,7 @@ function MapController({ displayRaces, sites, recenterRef, isFullscreen, allowDr
       const coords = allCoords();
       if (coords.length === 0) return;
       if (coords.length === 1) map.setView(coords[0], 8, { animate: true });
-      else map.fitBounds(L.latLngBounds(coords), { padding: [40, 40], maxZoom: 8, animate: true });
+      else map.fitBounds(L.latLngBounds(p90Coords(coords)), { padding: [40, 40], maxZoom: 8, animate: true });
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, displayRaces, sites, recenterRef]);
