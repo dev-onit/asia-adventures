@@ -229,4 +229,42 @@ export async function seedIfEmpty() {
     const { seedExplore } = await import("./seedExplore.js");
     await seedExplore();
   }
+
+  // Fix Hyrox races that previously linked to generic pages — update to direct event pages.
+  // Runs idempotently on every cold start (UPDATE WHERE url != newUrl is a no-op once applied).
+  try {
+    const hyroxUrlFixes: [string, string][] = [
+      // find-my-race → direct event page
+      ['Hyrox Sydney',                           'https://hyrox.com/event/hyrox-sydney/'],
+      ['AIA Hyrox Singapore',                    'https://hyrox.com/event/aia-hyrox-singapore/'],
+      ['AirAsia Hyrox Jakarta',                  'https://hyrox.com/event/hyrox-jakarta/'],
+      ['Hyrox Shenzhen',                         'https://hyrox.com/event/hyrox-shenzhen/'],
+      ['Hyrox Abu Dhabi',                        'https://hyrox.com/event/hyrox-abu-dhabi/'],
+      ['Hyrox Perth',                            'https://hyrox.com/event/hyrox-perth/'],
+      ['Cigna Healthcare Hyrox Hong Kong',       'https://hyrox.com/event/hyrox-hong-kong-2/'],
+      ['Hyrox Wuhan',                            'https://hyrox.com/event/hyrox-wuhan-20260411/'],
+      ['Hyrox Hangzhou',                         'https://hyrox.com/event/hyrox-hangzhou/'],
+      ['Hyrox Melbourne',                        'https://hyrox.com/event/hyrox-melbourne/'],
+      ['Hyrox Sanya',                            'https://hyrox.com/event/30454'],
+      // find-my-race → APAC hub (no city-specific page on hyrox.com)
+      ['BYD Hyrox Brisbane + APAC Championship', 'https://hyrox.com/continent/asia-pacific/'],
+      ['AirAsia Hyrox Incheon',                  'https://hyrox.com/continent/asia-pacific/'],
+      ['Hyrox Kuala Lumpur',                     'https://hyrox.com/continent/asia-pacific/'],
+      // hyrox.com homepage → direct event page
+      ['Hyrox Guangzhou',                        'https://hyrox.com/event/hyrox-guangzhou/'],
+      ['Hyrox Seoul Spring',                     'https://hyrox.com/event/hyrox-seoul/'],
+      ['Hyrox Bangkok',                          'https://hyrox.com/event/hyrox-bangkok-2/'],
+      ['Hyrox Chengdu',                          'https://hyrox.com/event/hyrox-chengdu/'],
+      ['Hyrox Shanghai',                         'https://hyrox.com/event/hyrox-shanghai-1031/'],
+      ['Hyrox Beijing',                          'https://hyrox.com/event/hyrox-beijing-0912/'],
+      ['Hyrox Chiba',                            'https://hyrox.com/event/hyrox-chiba/'],
+      ['Hyrox Osaka',                            'https://japan.hyrox.com/'],
+      ['Hyrox Auckland',                         'https://hyrox.com/continent/asia-pacific/'],
+      ['Hyrox Tokyo',                            'https://hyrox.com/continent/asia-pacific/'],
+    ];
+    for (const [name, newUrl] of hyroxUrlFixes) {
+      await sql`UPDATE races SET url = ${newUrl} WHERE name = ${name} AND url != ${newUrl}`;
+    }
+    console.log('[migration] Hyrox direct event URL fixes applied');
+  } catch (e) { console.warn('[migration] Hyrox URL fix failed:', e); }
 }

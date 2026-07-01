@@ -86,7 +86,7 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                 </div>
 
                 {site.url ? (
-                  <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link">
+                  <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link ext-link">
                     {site.name}
                   </a>
                 ) : (

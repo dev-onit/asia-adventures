@@ -1961,7 +1961,7 @@ export default function CalendarPage() {
                           <div className="truncate font-bold text-sm leading-snug" title={race.name}>
                             {isWatchlist && <AlertTriangle size={11} className="inline text-red-500 dark:text-red-400 mr-1 mb-0.5" aria-label="Unconfirmed date" />}
                             {race.url ? (
-                              <a href={race.url} target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
+                              <a href={race.url} target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors ext-link">
                                 {race.name}
                               </a>
                             ) : (

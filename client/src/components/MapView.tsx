@@ -365,7 +365,7 @@ function RacePopupContent({ race, isFav, voters, onToggleFav }: {
         ))}
       </div>
       {race.url ? (
-        <a href={race.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link">
+        <a href={race.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link ext-link">
           {race.name}
         </a>
       ) : (
@@ -408,7 +408,7 @@ function ExplorePopupContent({ site, isFav, voters, onToggleExploreFav }: {
         <span className="mp-badge" style={{ background: `${color}22`, color, border: `1px solid ${color}55` }}>{site.category}</span>
       </div>
       {site.url ? (
-        <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link">
+        <a href={site.url} target="_blank" rel="noopener noreferrer" className="mp-name mp-name-link ext-link">
           {site.name}
         </a>
       ) : (

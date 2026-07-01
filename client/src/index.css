@@ -466,4 +466,15 @@ h1, h2, h3 {
   color: hsl(183 85% 26%);
 }
 
+/* External link indicator — tiny ↗ appended to any linked name, signals
+   "opens in new tab" without a visible button that could be mistaken for a
+   close/delete action. Applied via class so it only appears on deliberate
+   name links, not every <a> on the page. */
+a.ext-link::after {
+  content: " ↗";
+  font-size: 0.72em;
+  opacity: 0.38;
+  font-weight: 400;
+}
+
 
