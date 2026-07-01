@@ -324,6 +324,23 @@ h1, h2, h3 {
   border-color: hsl(183 85% 42% / 0.4);
   color: hsl(183 85% 42%);
 }
+/* Chevron SVG — fill is separate from color, must be targeted explicitly */
+.rdp-compact .rdp-chevron {
+  fill: hsl(var(--muted-foreground));
+  width: 14px;
+  height: 14px;
+}
+.rdp-compact .rdp-button_previous:hover .rdp-chevron,
+.rdp-compact .rdp-button_next:hover .rdp-chevron {
+  fill: hsl(183 85% 42%);
+}
+.light .rdp-compact .rdp-chevron {
+  fill: hsl(var(--muted-foreground));
+}
+.light .rdp-compact .rdp-button_previous:hover .rdp-chevron,
+.light .rdp-compact .rdp-button_next:hover .rdp-chevron {
+  fill: hsl(183 85% 26%);
+}
 
 /* Weekday header — Mon Tue Wed etc */
 .rdp-compact .rdp-weekday {
