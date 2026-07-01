@@ -255,7 +255,10 @@ function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [n
   // Must be >= the largest cluster-bundling radius below — otherwise two points just
   // outside this radius but still inside the bundling radius can both get marked
   // "solo" without ever being grouped here, and render solo-but-still-overlapping.
-  const SPREAD_GROUP_PX = raceClusterRadius(zoom);
+  // Use a spread radius large enough to catch pins that are visually close even when
+  // outside the cluster-bundling radius — max pill width (badge+label) is ~80px, so
+  // anything within 90px of another solo pin can overlap at its centre-to-centre gap.
+  const SPREAD_GROUP_PX = Math.max(raceClusterRadius(zoom), 90);
   const groups = groupByPixelDistance(map, points, SPREAD_GROUP_PX);
 
   const result = new Map<string, [number, number]>();
@@ -266,7 +269,9 @@ function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [n
     }
     const projected = group.map(p => map.project([p.lat, p.lng], zoom));
     const center = projected.reduce((acc, pt) => acc.add(pt), L.point(0, 0)).divideBy(group.length);
-    const radius = Math.max(40, group.length * 18);
+    // Minimum 52px radius → 104px centre-to-centre for 2 pins, safe gap even for the
+    // widest label (HYROX ≈ 81px wide). Each extra pin adds 22px to the radius.
+    const radius = Math.max(52, group.length * 22);
     group.forEach((p, i) => {
       const angle = (2 * Math.PI * i) / group.length;
       const pt = L.point(center.x + radius * Math.cos(angle), center.y + radius * Math.sin(angle));
