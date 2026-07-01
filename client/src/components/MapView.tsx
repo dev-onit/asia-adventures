@@ -427,6 +427,38 @@ function ExplorePopupContent({ site, isFav, voters, onToggleExploreFav }: {
   );
 }
 
+// ── Home-base location dots — always visible, not part of race/explore data ──
+const HOME_LOCATIONS: { name: string; lat: number; lng: number }[] = [
+  { name: "Prague",     lat: 50.0755, lng: 14.4378 },
+  { name: "Bengaluru",  lat: 12.9716, lng: 77.5946 },
+];
+
+function HomeMarkers() {
+  const icon = useMemo(() => L.divIcon({
+    className: "",
+    html: `<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="7" cy="7" r="5.5" fill="#ef4444" stroke="white" stroke-width="2"/>
+    </svg>`,
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    popupAnchor: [0, -10],
+  }), []);
+
+  return (
+    <>
+      {HOME_LOCATIONS.map(loc => (
+        <Marker key={loc.name} position={[loc.lat, loc.lng]} icon={icon}>
+          <Popup maxWidth={140} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
+            <div style={{ padding: "6px 8px", fontWeight: 700, fontSize: 13, color: "hsl(var(--card-foreground))" }}>
+              📍 {loc.name}
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+    </>
+  );
+}
+
 // ── Markers ──
 function RaceMarker({ race, coords, isFav, voters, onToggleFav }: {
   race: Race; coords: [number, number]; isFav: boolean; voters: string[]; onToggleFav: Props["onToggleFav"];
@@ -897,6 +929,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           onToggleFav={onToggleFav}
           onToggleExploreFav={onToggleExploreFav}
         />
+        <HomeMarkers />
       </MapContainer>
 
       {/* Frosted edges under the notch / home-indicator safe areas — iOS Safari's own
