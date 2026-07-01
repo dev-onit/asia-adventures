@@ -274,10 +274,33 @@ h1, h2, h3 {
   font-size: 12px;
 }
 
-/* Calendar root — no outer background, transparent so it sits in the card */
+/* Calendar root — re-declare ALL library-set CSS variables here so they win
+   over the library's own .rdp-root declarations (two-class selector beats one). */
 .rdp-compact .rdp-root {
   background: transparent;
   color: hsl(var(--foreground));
+  --rdp-accent-color: hsl(183 85% 42%);
+  --rdp-accent-background-color: hsl(183 85% 42% / 0.15);
+  --rdp-selected-border: none;
+  --rdp-range_middle-background-color: hsl(183 85% 42% / 0.12);
+  --rdp-range_middle-color: hsl(var(--foreground));
+  --rdp-range_start-color: hsl(220 18% 8%);
+  --rdp-range_end-color: hsl(220 18% 8%);
+  --rdp-range_start-background: linear-gradient(90deg, transparent 50%, hsl(183 85% 42% / 0.12) 50%);
+  --rdp-range_end-background: linear-gradient(270deg, transparent 50%, hsl(183 85% 42% / 0.12) 50%);
+  --rdp-range_start-date-background-color: hsl(183 85% 42%);
+  --rdp-range_end-date-background-color: hsl(183 85% 42%);
+}
+.light .rdp-compact .rdp-root {
+  --rdp-accent-color: hsl(183 85% 26%);
+  --rdp-accent-background-color: hsl(183 85% 26% / 0.12);
+  --rdp-range_middle-background-color: hsl(183 85% 26% / 0.10);
+  --rdp-range_start-color: #fff;
+  --rdp-range_end-color: #fff;
+  --rdp-range_start-background: linear-gradient(90deg, transparent 50%, hsl(183 85% 26% / 0.10) 50%);
+  --rdp-range_end-background: linear-gradient(270deg, transparent 50%, hsl(183 85% 26% / 0.10) 50%);
+  --rdp-range_start-date-background-color: hsl(183 85% 26%);
+  --rdp-range_end-date-background-color: hsl(183 85% 26%);
 }
 
 /* Month grid layout */
@@ -324,11 +347,13 @@ h1, h2, h3 {
   border-color: hsl(183 85% 42% / 0.4);
   color: hsl(183 85% 42%);
 }
-/* Chevron SVG — fill is separate from color, must be targeted explicitly */
+/* Chevron SVG — fill is separate from color, must be targeted explicitly.
+   !important because the library sets fill via var(--rdp-accent-color) which
+   can still win even after we override the variable on .rdp-root. */
 .rdp-compact .rdp-chevron {
-  fill: hsl(var(--muted-foreground));
-  width: 14px;
-  height: 14px;
+  fill: hsl(var(--muted-foreground)) !important;
+  width: 14px !important;
+  height: 14px !important;
 }
 .rdp-compact .rdp-button_previous:hover .rdp-chevron,
 .rdp-compact .rdp-button_next:hover .rdp-chevron {
