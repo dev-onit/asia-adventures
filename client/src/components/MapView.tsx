@@ -145,23 +145,27 @@ function pinBadgesHtml(isFav: boolean, voteCount: number): string {
 }
 
 // ── Race icon HTML (pill + badges) ──
-function raceIconHtml(fill: string, label: string, isFav: boolean, voteCount: number, pillW: number, pillH: number): string {
+function raceIconHtml(fill: string, label: string, isFav: boolean, voteCount: number, pillW: number, pillH: number, highlight: boolean): string {
   const totalW = pillW + BADGE_PAD * 2;
   const totalH = pillH + BADGE_PAD * 2;
+  const pulseHtml = highlight
+    ? `<div style="position:absolute;top:50%;left:50%;width:${totalW + 22}px;height:${totalH + 22}px;border-radius:50%;border:3px solid #3b82f6;animation:pin-pulse 0.85s ease-out 4;pointer-events:none"></div>`
+    : "";
   return `<div style="position:relative;width:${totalW}px;height:${totalH}px;overflow:visible">
+    ${pulseHtml}
     <div style="position:absolute;top:${BADGE_PAD}px;left:${BADGE_PAD}px">${sportPillSvg(fill, label, pillW, pillH)}</div>
     ${pinBadgesHtml(isFav, voteCount)}
   </div>`;
 }
 
-function buildRaceIcon(fill: string, label: string, isFav: boolean, voteCount: number): L.DivIcon {
+function buildRaceIcon(fill: string, label: string, isFav: boolean, voteCount: number, highlight = false): L.DivIcon {
   const ph = 11, pv = 6, fontSize = 10, charW = fontSize * 0.62;
   const pillW = Math.round(label.length * charW + ph * 2);
   const pillH = fontSize + pv * 2;
   const totalW = pillW + BADGE_PAD * 2;
   const totalH = pillH + BADGE_PAD * 2;
   return L.divIcon({
-    html: raceIconHtml(fill, label, isFav, voteCount, pillW, pillH),
+    html: raceIconHtml(fill, label, isFav, voteCount, pillW, pillH, highlight),
     className: "",
     iconSize: [totalW, totalH],
     iconAnchor: [totalW / 2, totalH / 2],
@@ -169,13 +173,17 @@ function buildRaceIcon(fill: string, label: string, isFav: boolean, voteCount: n
   });
 }
 
-function buildExploreIcon(label: string, color: string, isFav: boolean, voteCount: number): L.DivIcon {
+function buildExploreIcon(label: string, color: string, isFav: boolean, voteCount: number, highlight = false): L.DivIcon {
   const ph = 10, pv = 5, fontSize = 9, charW = fontSize * 0.65;
   const pillW = Math.round(label.length * charW + ph * 2);
   const pillH = fontSize + pv * 2;
   const totalW = pillW + BADGE_PAD * 2;
   const totalH = pillH + BADGE_PAD * 2;
+  const pulseHtml = highlight
+    ? `<div style="position:absolute;top:50%;left:50%;width:${totalW + 22}px;height:${totalH + 22}px;border-radius:50%;border:3px solid #3b82f6;animation:pin-pulse 0.85s ease-out 4;pointer-events:none"></div>`
+    : "";
   const html = `<div style="position:relative;width:${totalW}px;height:${totalH}px;overflow:visible">
+    ${pulseHtml}
     <div style="position:absolute;top:${BADGE_PAD}px;left:${BADGE_PAD}px">${explorePillSvg(label, color)}</div>
     ${pinBadgesHtml(isFav, voteCount)}
   </div>`;
@@ -216,16 +224,23 @@ type GeoPoint = { id: string; lat: number; lng: number };
 // "groups this small render as individual pins" boundary and the "groups this size
 // actually get bundled into one cluster bubble" boundary could silently drift apart
 // if only one of the two literals was ever changed.
-const RACE_CLUSTER_RADIUS_PX = 60;
-const EXPLORE_CLUSTER_RADIUS_PX = 50;
+// Zoom-adaptive cluster radii — tighter at higher zoom so pins break apart sooner.
+// Also passed as a function to MarkerClusterGroup's maxClusterRadius prop so the
+// library's internal bundling matches the solo-pin decision below.
+function raceClusterRadius(zoom: number): number {
+  return zoom < 5 ? 80 : zoom < 7 ? 55 : 35;
+}
+function exploreClusterRadius(zoom: number): number {
+  return zoom < 5 ? 70 : zoom < 7 ? 45 : 30;
+}
 // Groups at or below this size render as individual pins instead of a cluster bubble.
-const SOLO_GROUP_MAX_SIZE = 4;
+const SOLO_GROUP_MAX_SIZE = 7;
 
 function spreadOverlappingPoints(map: L.Map, points: GeoPoint[]): Map<string, [number, number]> {
   // Must be >= the largest cluster-bundling radius below — otherwise two points just
   // outside this radius but still inside the bundling radius can both get marked
   // "solo" without ever being grouped here, and render solo-but-still-overlapping.
-  const SPREAD_GROUP_PX = Math.max(RACE_CLUSTER_RADIUS_PX, EXPLORE_CLUSTER_RADIUS_PX);
+  const SPREAD_GROUP_PX = raceClusterRadius(map.getZoom());
   const groups = groupByPixelDistance(map, points, SPREAD_GROUP_PX);
 
   const zoom = map.getZoom();
@@ -340,6 +355,10 @@ const POPUP_STYLE = `
      otherwise it sits right at the home-indicator strip. */
   .map-fullscreen.leaflet-container .leaflet-bottom {
     bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+  @keyframes pin-pulse {
+    0%   { transform: translate(-50%,-50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0; }
   }
 `;
 
@@ -472,7 +491,7 @@ function RaceMarker({ race, coords, isFav, voters, onToggleFav, highlight }: {
   const legacyType = legacyTypeKey(race);
   const fill = TYPE_COLORS[legacyType] ?? "#6366f1";
   const label = TYPE_LETTERS[legacyType] ?? "?";
-  const icon = useMemo(() => buildRaceIcon(fill, label, isFav, voters.length), [fill, label, isFav, voters.length]);
+  const icon = useMemo(() => buildRaceIcon(fill, label, isFav, voters.length, !!highlight), [fill, label, isFav, voters.length, highlight]);
   useEffect(() => {
     if (!highlight) return;
     map.setView(coordsRef.current, Math.max(map.getZoom(), 7), { animate: true });
@@ -481,7 +500,7 @@ function RaceMarker({ race, coords, isFav, voters, onToggleFav, highlight }: {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [highlight, map]);
   return (
-    <Marker ref={markerRef as any} position={coords} icon={icon}>
+    <Marker ref={markerRef as any} position={coords} icon={icon} zIndexOffset={200}>
       <Popup maxWidth={300} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
         <RacePopupContent race={race} isFav={isFav} voters={voters} onToggleFav={onToggleFav} />
       </Popup>
@@ -498,7 +517,7 @@ function ExploreMarker({ site, coords, isFav, voters, onToggleExploreFav, highli
   coordsRef.current = coords;
   const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
   const label = site.category.toUpperCase();
-  const icon = useMemo(() => buildExploreIcon(label, color, isFav, voters.length), [label, color, isFav, voters.length]);
+  const icon = useMemo(() => buildExploreIcon(label, color, isFav, voters.length, !!highlight), [label, color, isFav, voters.length, highlight]);
   useEffect(() => {
     if (!highlight) return;
     map.setView(coordsRef.current, Math.max(map.getZoom(), 7), { animate: true });
@@ -550,7 +569,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
       const racePoints = displayRaces
         .map(race => { const c = rawCoords.get(`r:${race.id}`); return c ? { id: race.id, lat: c[0], lng: c[1] } : null; })
         .filter((p): p is { id: number; lat: number; lng: number } => p !== null);
-      groupByPixelDistance(map, racePoints, RACE_CLUSTER_RADIUS_PX).forEach(group => {
+      groupByPixelDistance(map, racePoints, raceClusterRadius(zoom)).forEach(group => {
         if (group.length <= SOLO_GROUP_MAX_SIZE) group.forEach(p => soloRaceIds.add(p.id));
       });
     }
@@ -558,7 +577,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
       const sitePoints = sites
         .map(site => { const c = rawCoords.get(`e:${site.id}`); return c ? { id: site.id, lat: c[0], lng: c[1] } : null; })
         .filter((p): p is { id: number; lat: number; lng: number } => p !== null);
-      groupByPixelDistance(map, sitePoints, EXPLORE_CLUSTER_RADIUS_PX).forEach(group => {
+      groupByPixelDistance(map, sitePoints, exploreClusterRadius(zoom)).forEach(group => {
         if (group.length <= SOLO_GROUP_MAX_SIZE) group.forEach(p => soloSiteIds.add(p.id));
       });
     }
@@ -604,10 +623,11 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
           })}
           <MarkerClusterGroup
             chunkedLoading
-            maxClusterRadius={RACE_CLUSTER_RADIUS_PX}
+            maxClusterRadius={raceClusterRadius}
             iconCreateFunction={raceClusterIcon}
             showCoverageOnHover={false}
             zoomToBoundsOnClick
+            disableClusteringAtZoom={9}
           >
             {displayRaces.filter(race => !soloRaceIds.has(race.id)).map(race => {
               const coords = pinCoords.get(`r:${race.id}`);
@@ -636,10 +656,11 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
           })}
           <MarkerClusterGroup
             chunkedLoading
-            maxClusterRadius={EXPLORE_CLUSTER_RADIUS_PX}
+            maxClusterRadius={exploreClusterRadius}
             iconCreateFunction={exploreClusterIcon}
             showCoverageOnHover={false}
             zoomToBoundsOnClick
+            disableClusteringAtZoom={9}
           >
             {sites.filter(site => !soloSiteIds.has(site.id)).map(site => {
               const coords = pinCoords.get(`e:${site.id}`);
