@@ -918,19 +918,10 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
         </>
       )}
 
-      {/* Fullscreen toggle + Search — top-right. Dodges the floating filters/search
-          panel via --filter-panel-h only while that panel is actually open. Doesn't
-          add --header-h: in embedded mode this div's own top already starts right
-          below the page header (normal document flow), and the floating panel is
-          anchored at that same point — so from this div's own coordinate space the
-          panel's bottom edge is just --filter-panel-h down, not header height again.
-          (header-h is harmless to omit in fullscreen too, since the header is hidden
-          there and its height is 0.) Adding header-h here was pushing these buttons
-          toward the middle of the embedded map whenever filters were open.
-          z-[510] (above the filter panel's z-[500]) so these buttons stay on top of
-          it once scrolled — the panel is position:fixed and stays pinned to the
-          viewport while this button cluster scrolls with the map underneath it, so
-          without a higher z-index the panel would slide over and hide them. */}
+      {/* Fullscreen toggle — top-right. Dodges the floating filter panel via
+          --filter-panel-h only while that panel is open. z-[510] (above the filter
+          panel's z-[500]) so it stays on top when the panel is fixed and scrolls
+          over it. */}
       <div
         className="absolute right-3 z-[510] flex items-center gap-2"
         style={{
@@ -941,15 +932,6 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           marginRight: "env(safe-area-inset-right, 0px)",
         }}
       >
-        <button
-          onClick={onToggleSearch}
-          title="Search"
-          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${
-            showSearch ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}` : `${pillBg} border ${pillBorder} ${pillText}`
-          }`}
-        >
-          <Search size={16} />
-        </button>
         <button
           onClick={onToggleFullscreen}
           title={isFullscreen ? "Exit fullscreen" : "Fullscreen map"}
@@ -1031,10 +1013,9 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
         </button>
       </div>
 
-      {/* Theme toggle + Layers — bottom-right, stacked. Grouped together since both
-          control what the map looks like (tile style vs. which pins/time-range
-          show), unlike Fullscreen which is purely a viewport control and now lives
-          alone at top-right. Layers consolidates the 4 pin/time-range toggles
+      {/* Search + Theme toggle + Layers — bottom-right, stacked. Grouped together
+          since all three control map content/appearance, unlike Fullscreen which
+          is a viewport control and lives alone at top-right. Layers consolidates the 4 pin/time-range toggles
           (Races, Explore, Unconfirmed, Past Events) that used to sit here as
           always-visible pills into one button + popover, so they stop competing
           for space on narrow mobile screens. The small dot signals a non-default
@@ -1050,6 +1031,15 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           (under viewport-fit=cover), so without it these buttons would sit right at
           the home-indicator strip instead of comfortably above it. */}
       <div className="absolute right-3 z-10 flex flex-col items-end gap-2" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
+        <button
+          onClick={onToggleSearch}
+          title="Search"
+          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${
+            showSearch ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}` : `${pillBg} border ${pillBorder} ${pillText}`
+          }`}
+        >
+          <Search size={16} />
+        </button>
         <button
           onClick={onToggleTheme}
           title={isDark ? "Switch to light mode" : "Switch to dark mode"}
