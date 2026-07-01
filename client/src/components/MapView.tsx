@@ -1240,14 +1240,12 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
       </div>
       </div>
 
-      {/* Recenter — directly above Leaflet's ± zoom control (bottom-left), 4px gap.
-          Non-fullscreen: Leaflet puts .leaflet-bottom at bottom:20px, two 36px buttons
-          = 96px to the top of the zoom stack; 100px keeps a 4px gap.
-          Fullscreen: Leaflet overrides .leaflet-bottom to env(safe-area-inset-bottom),
-          so zoom stack top = safe-area + 76px; 80px above that gives the same 4px gap. */}
+      {/* Recenter — above Leaflet's ± zoom control (bottom-left).
+          Non-fullscreen: zoom stack top ~96px; 100px = 4px gap.
+          Fullscreen: zoom stack top = safe-area + 76px; 112px = ~36px gap. */}
       <div
         className="absolute left-[10px] z-10"
-        style={{ bottom: isFullscreen ? "calc(env(safe-area-inset-bottom, 0px) + 80px)" : "100px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)" }}
+        style={{ bottom: isFullscreen ? "calc(env(safe-area-inset-bottom, 0px) + 112px)" : "100px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)" }}
       >
         <button
           onClick={() => recenterRef?.current?.()}
