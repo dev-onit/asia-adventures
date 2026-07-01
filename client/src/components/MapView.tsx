@@ -696,7 +696,7 @@ function InvalidateSizeOnResize({ trigger }: { trigger: unknown }) {
 // declarative props, or (for dragging/scrollWheelZoom) that react-leaflet's MapContainer
 // only applies once at construction time and never reactively re-pushes on prop changes
 // (the same root cause as the earlier fullscreen-height bug — see InvalidateSizeOnResize). ──
-function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging }: { displayRaces: Race[]; recenterRef?: Props["recenterRef"]; isFullscreen: boolean; allowDragging: boolean }) {
+function MapController({ displayRaces, sites, recenterRef, isFullscreen, allowDragging }: { displayRaces: Race[]; sites: ExploreSite[]; recenterRef?: Props["recenterRef"]; isFullscreen: boolean; allowDragging: boolean }) {
   const map = useMap();
   const hasInitialFitRef = useRef(false);
 
@@ -819,9 +819,18 @@ function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging 
     };
   }, [map, isFullscreen]);
 
+  const allCoords = (): [number, number][] => {
+    const race: [number, number][] = displayRaces.map(r => getCoords(r)).filter((c): c is [number, number] => c !== null);
+    const explore: [number, number][] = sites
+      .filter(s => s.lat && s.lng)
+      .map(s => [parseFloat(s.lat!), parseFloat(s.lng!)] as [number, number])
+      .filter(([lat, lng]) => !isNaN(lat) && !isNaN(lng));
+    return [...race, ...explore];
+  };
+
   useEffect(() => {
     if (hasInitialFitRef.current || displayRaces.length === 0) return;
-    const coords = displayRaces.map(r => getCoords(r)).filter((c): c is [number, number] => c !== null);
+    const coords = allCoords();
     if (coords.length === 0) return;
     hasInitialFitRef.current = true;
     if (coords.length === 1) {
@@ -829,17 +838,19 @@ function MapController({ displayRaces, recenterRef, isFullscreen, allowDragging 
     } else {
       map.fitBounds(L.latLngBounds(coords), { padding: [48, 48], maxZoom: 6, animate: false });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, displayRaces]);
 
   useEffect(() => {
     if (!recenterRef) return;
     recenterRef.current = () => {
-      const coords = displayRaces.map(r => getCoords(r)).filter((c): c is [number, number] => c !== null);
+      const coords = allCoords();
       if (coords.length === 0) return;
       if (coords.length === 1) map.setView(coords[0], 8, { animate: true });
-      else map.fitBounds(L.latLngBounds(coords), { padding: [40, 40], maxZoom: 6, animate: true });
+      else map.fitBounds(L.latLngBounds(coords), { padding: [40, 40], maxZoom: 8, animate: true });
     };
-  }, [map, displayRaces, recenterRef]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, displayRaces, sites, recenterRef]);
 
   return null;
 }
@@ -963,7 +974,7 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
       >
         <ZoomControl position="bottomleft" />
         <ThemeTileLayer isDark={isDark} />
-        <MapController displayRaces={displayRaces} recenterRef={recenterRef} isFullscreen={isFullscreen} allowDragging={allowDragging} />
+        <MapController displayRaces={displayRaces} sites={sites} recenterRef={recenterRef} isFullscreen={isFullscreen} allowDragging={allowDragging} />
         <InvalidateSizeOnResize trigger={isFullscreen} />
         <MapPins
           displayRaces={displayRaces}
