@@ -4,7 +4,7 @@ import { Star, Filter, X, Globe2, Users, AlertTriangle, ChevronRight, TrendingUp
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import type { Race, Favourite, ExploreSite, ExploreFavourite } from "../../../shared/schema";
-import { COUNTRY_WEATHER } from "../lib/raceGeo";
+import { COUNTRY_WEATHER, getCoords } from "../lib/raceGeo";
 import { getRaceWeather } from "../lib/weatherData";
 import { getDistPillClass } from "../lib/distancePills";
 import { API_BASE } from "../App";
@@ -853,6 +853,8 @@ export default function CalendarPage() {
   const mapWrapperRef = useRef<HTMLDivElement>(null);
   const mapRecenterRef = useRef<(() => void) | null>(null);
   const [showBackToMap, setShowBackToMap] = useState(false);
+  const [highlightRaceId, setHighlightRaceId] = useState<number | null>(null);
+  const [highlightSiteId, setHighlightSiteId] = useState<number | null>(null);
 
   // Recenter the map whenever Favourites-only or Most-Voted is toggled, so the
   // viewport reframes to fit whatever pins are now showing instead of staying on
@@ -941,6 +943,21 @@ export default function CalendarPage() {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  function showOnMap(type: 'race' | 'site', id: number) {
+    setShowFilterBar(false);
+    const setId = type === 'race' ? setHighlightRaceId : setHighlightSiteId;
+    setId(null);
+    setTimeout(() => {
+      setId(id);
+      setTimeout(() => setId(null), 3500);
+    }, 50);
+    const el = mapWrapperRef.current;
+    if (el) {
+      const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h") || "0");
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - headerH, behavior: "smooth" });
+    }
+  }
 
   // ── Name entry ──
   if (!voterName) {
@@ -1776,6 +1793,8 @@ export default function CalendarPage() {
         onToggleTheme={() => setIsDark(d => !d)}
         showSearch={showSearch}
         onToggleSearch={() => setShowSearch(v => !v)}
+        highlightRaceId={highlightRaceId}
+        highlightSiteId={highlightSiteId}
       />
       </div>
 
@@ -1973,6 +1992,14 @@ export default function CalendarPage() {
                               {race.note}
                             </div>
                           )}
+                          {getCoords(race) && (
+                            <button
+                              onClick={() => showOnMap('race', race.id)}
+                              className="text-[10px] text-muted-foreground/50 hover:text-primary transition-colors mt-0.5 block cursor-pointer"
+                            >
+                              show on map
+                            </button>
+                          )}
                         </td>
                         {/* Sport column: pill + condition inline */}
                         <td className="py-4 px-3 align-middle">
@@ -2079,6 +2106,7 @@ export default function CalendarPage() {
         onToggleExploreFav={(id: number) => exploreFavSet.has(id) ? removeExploreFav.mutate(id) : addExploreFav.mutate(id)}
         exploreFavPending={addExploreFav.isPending || removeExploreFav.isPending}
         exploreVotesBySite={exploreVotesBySite}
+        onShowOnMap={(id) => showOnMap('site', id)}
       />
 
       {/* Footer */}

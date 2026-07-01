@@ -44,6 +44,8 @@ interface Props {
   onToggleTheme: () => void;
   showSearch: boolean;
   onToggleSearch: () => void;
+  highlightRaceId?: number | null;
+  highlightSiteId?: number | null;
 }
 
 // Running (road) and Trail share the "RUN" pin label but get distinct colors
@@ -460,15 +462,26 @@ function HomeMarkers() {
 }
 
 // ── Markers ──
-function RaceMarker({ race, coords, isFav, voters, onToggleFav }: {
-  race: Race; coords: [number, number]; isFav: boolean; voters: string[]; onToggleFav: Props["onToggleFav"];
+function RaceMarker({ race, coords, isFav, voters, onToggleFav, highlight }: {
+  race: Race; coords: [number, number]; isFav: boolean; voters: string[]; onToggleFav: Props["onToggleFav"]; highlight?: boolean;
 }) {
+  const markerRef = useRef<L.Marker | null>(null);
+  const map = useMap();
+  const coordsRef = useRef(coords);
+  coordsRef.current = coords;
   const legacyType = legacyTypeKey(race);
   const fill = TYPE_COLORS[legacyType] ?? "#6366f1";
   const label = TYPE_LETTERS[legacyType] ?? "?";
   const icon = useMemo(() => buildRaceIcon(fill, label, isFav, voters.length), [fill, label, isFav, voters.length]);
+  useEffect(() => {
+    if (!highlight) return;
+    map.setView(coordsRef.current, Math.max(map.getZoom(), 7), { animate: true });
+    const t = setTimeout(() => markerRef.current?.openPopup(), 700);
+    return () => clearTimeout(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [highlight, map]);
   return (
-    <Marker position={coords} icon={icon}>
+    <Marker ref={markerRef as any} position={coords} icon={icon}>
       <Popup maxWidth={300} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
         <RacePopupContent race={race} isFav={isFav} voters={voters} onToggleFav={onToggleFav} />
       </Popup>
@@ -476,14 +489,25 @@ function RaceMarker({ race, coords, isFav, voters, onToggleFav }: {
   );
 }
 
-function ExploreMarker({ site, coords, isFav, voters, onToggleExploreFav }: {
-  site: ExploreSite; coords: [number, number]; isFav: boolean; voters: string[]; onToggleExploreFav: Props["onToggleExploreFav"];
+function ExploreMarker({ site, coords, isFav, voters, onToggleExploreFav, highlight }: {
+  site: ExploreSite; coords: [number, number]; isFav: boolean; voters: string[]; onToggleExploreFav: Props["onToggleExploreFav"]; highlight?: boolean;
 }) {
+  const markerRef = useRef<L.Marker | null>(null);
+  const map = useMap();
+  const coordsRef = useRef(coords);
+  coordsRef.current = coords;
   const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
   const label = site.category.toUpperCase();
   const icon = useMemo(() => buildExploreIcon(label, color, isFav, voters.length), [label, color, isFav, voters.length]);
+  useEffect(() => {
+    if (!highlight) return;
+    map.setView(coordsRef.current, Math.max(map.getZoom(), 7), { animate: true });
+    const t = setTimeout(() => markerRef.current?.openPopup(), 700);
+    return () => clearTimeout(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [highlight, map]);
   return (
-    <Marker position={coords} icon={icon}>
+    <Marker ref={markerRef as any} position={coords} icon={icon}>
       <Popup maxWidth={280} className="map-popup-wrapper" autoPanPadding={[28, 28]}>
         <ExplorePopupContent site={site} isFav={isFav} voters={voters} onToggleExploreFav={onToggleExploreFav} />
       </Popup>
@@ -492,9 +516,10 @@ function ExploreMarker({ site, coords, isFav, voters, onToggleExploreFav }: {
 }
 
 // ── Pins layer — lives inside <MapContainer> so it can read the live map instance ──
-function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByRace, exploreFavSet, exploreVotesBySite, onToggleFav, onToggleExploreFav }: {
+function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByRace, exploreFavSet, exploreVotesBySite, onToggleFav, onToggleExploreFav, highlightRaceId, highlightSiteId }: {
   displayRaces: Race[]; sites: ExploreSite[]; showRaces: boolean; showExplore: boolean;
   favSet: Set<number>; votesByRace: Map<number, string[]>; exploreFavSet: Set<number>; exploreVotesBySite: Map<number, string[]>; onToggleFav: Props["onToggleFav"]; onToggleExploreFav: Props["onToggleExploreFav"];
+  highlightRaceId?: number | null; highlightSiteId?: number | null;
 }) {
   const [zoom, setZoom] = useState(() => 4);
   const map = useMapEvents({ zoomend: () => setZoom(map.getZoom()) });
@@ -573,6 +598,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
                 isFav={favSet.has(race.id)}
                 voters={votesByRace.get(race.id) ?? []}
                 onToggleFav={onToggleFav}
+                highlight={highlightRaceId === race.id}
               />
             );
           })}
@@ -594,6 +620,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
                   isFav={favSet.has(race.id)}
                   voters={votesByRace.get(race.id) ?? []}
                   onToggleFav={onToggleFav}
+                  highlight={highlightRaceId === race.id}
                 />
               );
             })}
@@ -605,7 +632,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
           {sites.filter(site => soloSiteIds.has(site.id)).map(site => {
             const coords = pinCoords.get(`e:${site.id}`);
             if (!coords) return null;
-            return <ExploreMarker key={site.id} site={site} coords={coords} isFav={exploreFavSet.has(site.id)} voters={exploreVotesBySite.get(site.id) ?? []} onToggleExploreFav={onToggleExploreFav} />;
+            return <ExploreMarker key={site.id} site={site} coords={coords} isFav={exploreFavSet.has(site.id)} voters={exploreVotesBySite.get(site.id) ?? []} onToggleExploreFav={onToggleExploreFav} highlight={highlightSiteId === site.id} />;
           })}
           <MarkerClusterGroup
             chunkedLoading
@@ -617,7 +644,7 @@ function MapPins({ displayRaces, sites, showRaces, showExplore, favSet, votesByR
             {sites.filter(site => !soloSiteIds.has(site.id)).map(site => {
               const coords = pinCoords.get(`e:${site.id}`);
               if (!coords) return null;
-              return <ExploreMarker key={site.id} site={site} coords={coords} isFav={exploreFavSet.has(site.id)} voters={exploreVotesBySite.get(site.id) ?? []} onToggleExploreFav={onToggleExploreFav} />;
+              return <ExploreMarker key={site.id} site={site} coords={coords} isFav={exploreFavSet.has(site.id)} voters={exploreVotesBySite.get(site.id) ?? []} onToggleExploreFav={onToggleExploreFav} highlight={highlightSiteId === site.id} />;
             })}
           </MarkerClusterGroup>
         </>
@@ -821,7 +848,7 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   );
 }
 
-export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreFavSet, exploreVotesBySite, showFavsOnly, onToggleFav, onToggleExploreFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch }: Props) {
+export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreFavSet, exploreVotesBySite, showFavsOnly, onToggleFav, onToggleExploreFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch, highlightRaceId, highlightSiteId }: Props) {
   const [showExplore, setShowExplore] = useState(true);
   const [showRaces, setShowRaces] = useState(true);
   const [showLayersMenu, setShowLayersMenu] = useState(false);
@@ -928,6 +955,8 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           exploreVotesBySite={exploreVotesBySite}
           onToggleFav={onToggleFav}
           onToggleExploreFav={onToggleExploreFav}
+          highlightRaceId={highlightRaceId}
+          highlightSiteId={highlightSiteId}
         />
         <HomeMarkers />
       </MapContainer>

@@ -13,6 +13,7 @@ interface Props {
   onToggleExploreFav: (id: number) => void;
   exploreFavPending: boolean;
   exploreVotesBySite: Map<number, string[]>;
+  onShowOnMap?: (id: number) => void;
 }
 
 // Must match MapView.tsx's CATEGORY_COLORS — these used to diverge (this file still had
@@ -28,7 +29,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Beaches:   "#ec4899",
 };
 
-export default function ExploreSection({ sites, filteredSites, showFavsOnly, hasActiveFilters, stickyTop, exploreFavSet, onToggleExploreFav, exploreFavPending, exploreVotesBySite }: Props) {
+export default function ExploreSection({ sites, filteredSites, showFavsOnly, hasActiveFilters, stickyTop, exploreFavSet, onToggleExploreFav, exploreFavPending, exploreVotesBySite, onShowOnMap }: Props) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -112,6 +113,14 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
                     {isFav ? "★ Voted" : "☆ Vote"}
                   </button>
                   {voters.length > 0 && <VoterChips voters={voters} />}
+                  {onShowOnMap && site.lat && site.lng && (
+                    <button
+                      onClick={() => onShowOnMap(site.id)}
+                      className="text-[10px] text-muted-foreground/50 hover:text-primary transition-colors cursor-pointer ml-auto"
+                    >
+                      show on map
+                    </button>
+                  )}
                 </div>
               </div>
             );
