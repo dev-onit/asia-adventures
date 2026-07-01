@@ -872,9 +872,26 @@ function ThemeTileLayer({ isDark }: { isDark: boolean }) {
   const lightUrl = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
   const darkUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
   const attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, &copy; <a href="https://carto.com/">CARTO</a>';
-  return isDark
-    ? <TileLayer key="dark" url={darkUrl} subdomains="abcd" maxZoom={16} attribution={attr} />
-    : <TileLayer key="light" url={lightUrl} subdomains="abcd" maxZoom={16} attribution={attr} />;
+  return (
+    <>
+      {isDark
+        ? <TileLayer key="dark" url={darkUrl} subdomains="abcd" maxZoom={16} attribution={attr} />
+        : <TileLayer key="light" url={lightUrl} subdomains="abcd" maxZoom={16} attribution={attr} />
+      }
+      {/* Ocean overlay — tints water blue on the dark tile (CartoDB Dark Matter renders
+          water as near-black). Land areas on this layer are light cream; at 0.4 opacity
+          the land tint is barely visible over the near-black base, while water picks up
+          a clear blue. Removed from light mode where Voyager already has blue water. */}
+      {isDark && (
+        <TileLayer
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
+          opacity={0.4}
+          maxZoom={16}
+          attribution=""
+        />
+      )}
+    </>
+  );
 }
 
 export default function MapView({ races, allRaces, sites, favSet, votesByRace, exploreFavSet, exploreVotesBySite, showFavsOnly, onToggleFav, onToggleExploreFav, isDark, hidePast, onToggleHidePast, showUnconfirmed, onToggleUnconfirmed, recenterRef, isFullscreen, onToggleFullscreen, showFilterBar, onToggleFilterBar, activeFilterCount, onClearAllFilters, onToggleFavs, sortMode, onToggleMostVoted, onToggleTheme, showSearch, onToggleSearch, highlightRaceId, highlightSiteId }: Props) {
@@ -1009,12 +1026,11 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
         </>
       )}
 
-      {/* Fullscreen toggle — top-right. Dodges the floating filter panel via
-          --filter-panel-h only while that panel is open. z-[510] (above the filter
-          panel's z-[500]) so it stays on top when the panel is fixed and scrolls
-          over it. */}
+      {/* Fullscreen + Search — top-right, stacked vertically. z-[510] stays above
+          the fixed filter panel. Search moved here from bottom-right so all
+          navigation/discovery controls are in one corner. */}
       <div
-        className="absolute right-3 z-[510] flex items-center gap-2"
+        className="absolute right-3 z-[510] flex flex-col items-end gap-2"
         style={{
           top: filterPanelOpen
             ? "calc(var(--filter-panel-h, 0px) + env(safe-area-inset-top, 0px) + 12px)"
@@ -1029,6 +1045,15 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg text-[11px] font-semibold shadow-md transition-all backdrop-blur-sm ${pillBg} border ${pillBorder} ${pillText} hover:brightness-110`}
         >
           {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+        </button>
+        <button
+          onClick={onToggleSearch}
+          title="Search"
+          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${
+            showSearch ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}` : `${pillBg} border ${pillBorder} ${pillText}`
+          }`}
+        >
+          <Search size={16} />
         </button>
       </div>
 
@@ -1123,15 +1148,6 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
           the home-indicator strip instead of comfortably above it. */}
       <div className="absolute right-3 z-10 flex flex-col items-end gap-2" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 12px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginRight: "env(safe-area-inset-right, 0px)" }}>
         <button
-          onClick={onToggleSearch}
-          title="Search"
-          className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${
-            showSearch ? `${pillBg} border-[1.5px] border-teal-400 ${tealText}` : `${pillBg} border ${pillBorder} ${pillText}`
-          }`}
-        >
-          <Search size={16} />
-        </button>
-        <button
           onClick={onToggleTheme}
           title={isDark ? "Switch to light mode" : "Switch to dark mode"}
           className={`flex items-center justify-center w-9 h-9 sm:w-8 sm:h-8 rounded-lg shadow-md transition-all backdrop-blur-sm hover:brightness-110 ${pillBg} border ${pillBorder} ${pillText}`}
@@ -1207,12 +1223,14 @@ export default function MapView({ races, allRaces, sites, favSet, votesByRace, e
       </div>
       </div>
 
-      {/* Recenter — sits above Leaflet's ± zoom control (bottom-left).
-          108px clears the two 36px zoom buttons + 4px gap + Leaflet's 20px default
-          bottom offset, with a small breathing gap, matching for safe-area-inset too. */}
+      {/* Recenter — directly above Leaflet's ± zoom control (bottom-left), 4px gap.
+          Non-fullscreen: Leaflet puts .leaflet-bottom at bottom:20px, two 36px buttons
+          = 96px to the top of the zoom stack; 100px keeps a 4px gap.
+          Fullscreen: Leaflet overrides .leaflet-bottom to env(safe-area-inset-bottom),
+          so zoom stack top = safe-area + 76px; 80px above that gives the same 4px gap. */}
       <div
         className="absolute left-[10px] z-10"
-        style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 108px)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)" }}
+        style={{ bottom: isFullscreen ? "calc(env(safe-area-inset-bottom, 0px) + 80px)" : "100px", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))", marginLeft: "env(safe-area-inset-left, 0px)" }}
       >
         <button
           onClick={() => recenterRef?.current?.()}
