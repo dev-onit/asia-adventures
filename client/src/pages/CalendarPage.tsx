@@ -86,10 +86,8 @@ const EXPLORE_CATEGORIES = ["Mountains","Islands","Cities","Temples","Nature","B
 // ── Race Filter Definitions ──
 // Simple sport pills — no sub-filters
 const SIMPLE_SPORT_PILLS = [
-  { value: "hyrox", label: "Hyrox" },
   { value: "swimrun", label: "SwimRun" },
-  { value: "ocr", label: "OCR" },
-  { value: "xenom", label: "Xenom" },
+  { value: "ocr",     label: "OCR" },
 ];
 
 // All TYPE_LABELS show the sport name only — conditions live separately in the cell.
@@ -191,11 +189,19 @@ const SPORT_SECTIONS = [
       { value: "swim-10kplus", label: "10K+" },
     ],
   },
+  {
+    key: "fitness",
+    label: "Fitness Race",
+    types: ["hyrox", "xenom"],
+    subFilters: [],
+  },
 ];
 
 // Brand filter pills
 const BRAND_PILLS = [
   { value: "HYROX",            label: "HYROX" },
+  { value: "Xenom",            label: "Xenom" },
+  { value: "XTERRA",           label: "XTERRA" },
   { value: "Ironman",          label: "Ironman" },
   { value: "Challenge Family", label: "Challenge" },
   { value: "Spartan Race",     label: "Spartan" },
@@ -284,7 +290,7 @@ function matchesSportFilters(race: Race, sportFilters: Set<string>, subFilters: 
   const type = (race.type ?? "").toLowerCase();
 
   // Check simple pills
-  for (const pill of ["hyrox", "swimrun", "ocr", "xenom"]) {
+  for (const pill of ["swimrun", "ocr"]) {
     if (sportFilters.has(pill) && type === pill) return true;
   }
 
