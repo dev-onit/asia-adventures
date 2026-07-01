@@ -1153,8 +1153,27 @@ export default function CalendarPage() {
         {showFilterBar && (
           <div className="flex items-center gap-2 px-4 pb-3 pt-3 flex-wrap">
 
-            {/* Tabs: Dates | Locations | Races */}
+            {/* Tabs: Races | Dates | Locations | Explore */}
             <div className="flex gap-1">
+              {/* Races tab */}
+              <button
+                onClick={() => setActiveSubPanel(p => p === 'race' ? null : 'race')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-all border rounded-lg hover:bg-primary/10 hover:text-primary ${
+                  activeSubPanel === 'race'
+                    ? "bg-primary/15 text-primary border-primary"
+                    : raceFiltersActive
+                    ? "text-primary border-transparent"
+                    : "text-primary/70 border-transparent"
+                }`}
+              >
+                Races
+                {raceFiltersActive && (
+                  <span className="bg-primary text-primary-foreground rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
+                    {sportFilters.size + subFilters.size + teamFilters.size}
+                  </span>
+                )}
+              </button>
+
               {/* Dates tab */}
               <button
                 onClick={() => setActiveSubPanel(p => p === 'dates' ? null : 'dates')}
@@ -1189,25 +1208,6 @@ export default function CalendarPage() {
                 {countryFilters.length > 0 && (
                   <span className="bg-emerald-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
                     {countryFilters.length}
-                  </span>
-                )}
-              </button>
-
-              {/* Races tab */}
-              <button
-                onClick={() => setActiveSubPanel(p => p === 'race' ? null : 'race')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-all border rounded-lg hover:bg-primary/10 hover:text-primary ${
-                  activeSubPanel === 'race'
-                    ? "bg-primary/15 text-primary border-primary"
-                    : raceFiltersActive
-                    ? "text-primary border-transparent"
-                    : "text-primary/70 border-transparent"
-                }`}
-              >
-                Races
-                {raceFiltersActive && (
-                  <span className="bg-primary text-primary-foreground rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">
-                    {sportFilters.size + subFilters.size + teamFilters.size}
                   </span>
                 )}
               </button>
@@ -1414,7 +1414,15 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10">
+          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10 flex items-center gap-2">
+            {activeFilterCount > 0 && (
+              <button
+                onClick={clearAll}
+                className="flex items-center justify-center px-4 py-3 rounded-full border border-border text-muted-foreground text-sm font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
+              >
+                Clear All
+              </button>
+            )}
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
               className="flex items-center justify-center px-4 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
@@ -1501,7 +1509,15 @@ export default function CalendarPage() {
             })()}
           </div>
 
-          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10">
+          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10 flex items-center gap-2">
+            {activeFilterCount > 0 && (
+              <button
+                onClick={clearAll}
+                className="flex items-center justify-center px-4 py-3 rounded-full border border-border text-muted-foreground text-sm font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
+              >
+                Clear All
+              </button>
+            )}
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
               className="flex items-center justify-center px-4 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
@@ -1530,7 +1546,15 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10">
+          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10 flex items-center gap-2">
+            {activeFilterCount > 0 && (
+              <button
+                onClick={clearAll}
+                className="flex items-center justify-center px-4 py-3 rounded-full border border-border text-muted-foreground text-sm font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
+              >
+                Clear All
+              </button>
+            )}
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
               className="flex items-center justify-center px-4 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"
@@ -1611,7 +1635,15 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10">
+          <div className="absolute bottom-5 right-4 sm:right-auto sm:left-4 z-10 flex items-center gap-2">
+            {activeFilterCount > 0 && (
+              <button
+                onClick={clearAll}
+                className="flex items-center justify-center px-4 py-3 rounded-full border border-border text-muted-foreground text-sm font-semibold hover:opacity-80 transition-all shadow-md leading-none bg-card/80 backdrop-blur-sm"
+              >
+                Clear All
+              </button>
+            )}
             <button
               onClick={() => { setShowFilterBar(false); setActiveSubPanel(null); }}
               className="flex items-center justify-center px-4 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-all shadow-md leading-none"

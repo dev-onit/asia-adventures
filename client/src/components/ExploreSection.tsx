@@ -52,7 +52,7 @@ export default function ExploreSection({ sites, filteredSites, showFavsOnly, has
 
       {/* Card grid */}
       {isExpanded && (
-        <div className="p-3 sm:p-4 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
+        <div className="p-3 sm:p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
           {filteredSites.map(site => {
             const flag = COUNTRY_WEATHER[site.country]?.flag ?? "";
             const color = CATEGORY_COLORS[site.category] ?? "#94a3b8";
